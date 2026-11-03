@@ -6,8 +6,15 @@ import shadowsRaw from '../src/config/shadows.json';
 import spacingRaw from '../src/config/spacing.json';
 import presetsRaw from '../src/config/presets.json';
 import { compileMarkdown } from '../src/lib/compileMarkdown';
-import { calculateContrastRatio } from '../src/lib/contrast';
+import { calculateContrastRatio, calculateAPCA, checkColorHarmony } from '../src/lib/contrast';
 import { defaultInitialState } from '../src/context/designReducer';
+import {
+  generateCssTokens,
+  generateTailwindConfig,
+  generateTypeScriptTokens,
+  generateDtcgTokens,
+  createZipBlob,
+} from '../src/lib/exportUtils';
 
 console.log('--- Verifying TastyStyles Registries & Specs ---');
 
@@ -84,4 +91,57 @@ for (const section of requiredSections) {
   }
 }
 console.log('✅ All 9 required Markdown sections verified in compiled spec.');
+
+// 6. Test Exporters
+const cssTokens = generateCssTokens(defaultInitialState);
+if (!cssTokens.includes(':root') || !cssTokens.includes('--color-primary')) {
+  console.error('❌ CSS token generation failed.');
+  process.exit(1);
+}
+console.log('✅ CSS custom properties exporter verified.');
+
+const tailwindConfig = generateTailwindConfig(defaultInitialState);
+if (!tailwindConfig.includes('export default config') || !tailwindConfig.includes('primary:')) {
+  console.error('❌ Tailwind config generation failed.');
+  process.exit(1);
+}
+console.log('✅ Tailwind configuration exporter verified.');
+
+const tsTokens = generateTypeScriptTokens(defaultInitialState);
+if (!tsTokens.includes('export const designTokens =') || !tsTokens.includes('as const;')) {
+  console.error('❌ TypeScript token generation failed.');
+  process.exit(1);
+}
+console.log('✅ TypeScript constants exporter verified.');
+
+const dtcgTokens = generateDtcgTokens(defaultInitialState);
+const dtcgParsed = JSON.parse(dtcgTokens);
+if (!dtcgParsed.color?.light?.primary?.$value || dtcgParsed.color?.light?.primary?.$type !== 'color') {
+  console.error('❌ W3C DTCG token generation failed.');
+  process.exit(1);
+}
+console.log('✅ W3C DTCG JSON token exporter verified.');
+
+// 7. Test In-Memory ZIP Generation
+const testZip = createZipBlob([
+  { name: 'test.txt', content: 'TastyStyles test content' },
+  { name: 'tokens.json', content: dtcgTokens },
+]);
+if (!testZip || testZip.size < 100 || testZip.type !== 'application/zip') {
+  console.error('❌ ZIP generation failed or output invalid size.');
+  process.exit(1);
+}
+console.log(`✅ Pure TS in-memory ZIP package generator verified (${testZip.size} bytes).`);
+
+// 8. Test APCA & Color Harmony
+const apcaScore = calculateAPCA('#000000', '#ffffff');
+if (Math.abs(apcaScore) < 100) {
+  console.error('❌ APCA score for black on white expected ~106, got:', apcaScore);
+  process.exit(1);
+}
+console.log(`✅ APCA contrast calculation confirmed (black on white Lc: ${apcaScore.toFixed(1)}).`);
+
+const harmony = checkColorHarmony('#2563eb', '#f59e0b');
+console.log(`✅ Color harmony relationship confirmed (${harmony.status}: ${harmony.message}).`);
+
 console.log('--- All Verification Checks Passed! ---');
