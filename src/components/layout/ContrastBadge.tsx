@@ -29,8 +29,13 @@ export const ContrastBadge: React.FC<ContrastBadgeProps> = ({ foreground, backgr
         <span className="font-medium text-[11px] text-slate-800 dark:text-slate-200">{label}:</span>
       </div>
 
-      <div className="flex items-center gap-2">
-        <span className="font-mono font-semibold">{result.formattedRatio}</span>
+      <div className="flex items-center gap-1.5">
+        <span
+          className="font-mono font-semibold"
+          title={`WCAG 2.1 Ratio: ${result.formattedRatio}\nAPCA Lc Score: ${result.apcaScore} (${result.apcaRating})`}
+        >
+          {result.formattedRatio}
+        </span>
         <span
           className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
             isPassing
@@ -39,9 +44,18 @@ export const ContrastBadge: React.FC<ContrastBadgeProps> = ({ foreground, backgr
                 : 'bg-sky-500/20 text-sky-700 dark:text-sky-300'
               : 'bg-red-500/20 text-red-700 dark:text-red-300'
           }`}
+          title={`WCAG 2.1: ${result.level}`}
         >
           {result.level}
         </span>
+        {result.apcaScore !== undefined && (
+          <span
+            className="hidden sm:inline-block px-1 py-0.5 rounded text-[9px] font-mono font-medium bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+            title={`APCA Lc (Lightness contrast): ${result.apcaScore} — ${result.apcaRating}`}
+          >
+            Lc {result.apcaScore}
+          </span>
+        )}
       </div>
     </div>
   );

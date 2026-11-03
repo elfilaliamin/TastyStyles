@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { useEditorTheme } from '../../context/EditorThemeContext';
 import { exportJsonState, parseImportedJson } from '../../lib/exportUtils';
-import { Download, Upload, RotateCcw, Sun, Moon, FileCode } from 'lucide-react';
+import { Download, Upload, RotateCcw, Sun, Moon, FileCode, Undo2, Redo2 } from 'lucide-react';
 
 interface HeaderProps {
   onNotify: (title: string, desc?: string, type?: 'success' | 'error' | 'info') => void;
@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onNotify, onOpenExportModal }) => {
-  const { state, dispatch } = useDesign();
+  const { state, dispatch, canUndo, canRedo, undo, redo } = useDesign();
   const { editorTheme, setEditorTheme } = useEditorTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -108,6 +108,30 @@ export const Header: React.FC<HeaderProps> = ({ onNotify, onOpenExportModal }) =
             </>
           )}
         </button>
+
+        {/* Undo / Redo History Controls */}
+        <div className="hidden sm:flex items-center gap-0.5 border border-slate-300 dark:border-slate-800 rounded-lg p-0.5 bg-slate-100 dark:bg-slate-900">
+          <button
+            type="button"
+            onClick={undo}
+            disabled={!canUndo}
+            className="p-1.5 rounded text-xs text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer"
+            title="Undo token adjustment (Ctrl+Z)"
+            aria-label="Undo"
+          >
+            <Undo2 className="w-3.5 h-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={redo}
+            disabled={!canRedo}
+            className="p-1.5 rounded text-xs text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer"
+            title="Redo token adjustment (Ctrl+Y or Ctrl+Shift+Z)"
+            aria-label="Redo"
+          >
+            <Redo2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
 
         {/* JSON Import Button */}
         <button

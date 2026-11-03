@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ContrastBadge } from '../layout/ContrastBadge';
-import { Dices } from 'lucide-react';
+import { Dices, Sparkles, AlertCircle } from 'lucide-react';
 import type { ColorPalette } from '../../config/schema';
-import { getBestContrastingColor } from '../../lib/contrast';
+import { getBestContrastingColor, checkColorHarmony } from '../../lib/contrast';
 
 const COLOR_TOKENS: Array<{ key: keyof ColorPalette; label: string; desc: string }> = [
   { key: 'primary', label: 'Primary Brand', desc: 'Main interactive elements & buttons' },
@@ -123,6 +123,36 @@ export const ColorSection: React.FC = () => {
           background={currentPalette.primary}
         />
       </div>
+
+      {/* Color Harmony Analysis */}
+      {(() => {
+        const harmony = checkColorHarmony(currentPalette.primary, currentPalette.accent);
+        const isClash = harmony.status === 'clashing';
+        return (
+          <div
+            className={`p-2.5 rounded-lg border text-xs flex items-start gap-2 transition-colors ${
+              isClash
+                ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-500/40 text-amber-800 dark:text-amber-200'
+                : 'bg-slate-100 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'
+            }`}
+          >
+            {isClash ? (
+              <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            ) : (
+              <Sparkles className="w-4 h-4 text-sky-500 flex-shrink-0 mt-0.5" />
+            )}
+            <div>
+              <div className="font-semibold text-[11px] text-slate-900 dark:text-slate-100 flex items-center gap-1.5 capitalize">
+                <span>Color Harmony: {harmony.status}</span>
+                <span className="text-[10px] opacity-75 font-mono">({harmony.hueDiff}° Δ)</span>
+              </div>
+              <div className="text-[10.5px] opacity-80 mt-0.5 leading-snug">
+                {harmony.message}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 };

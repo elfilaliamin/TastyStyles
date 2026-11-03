@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { DesignStateSchema, type DesignState, type ColorPalette } from '../config/schema';
 import { designReducer, defaultInitialState, type DesignAction } from './designReducer';
 import { compileMarkdown } from '../lib/compileMarkdown';
@@ -13,6 +13,10 @@ interface DesignContextType {
   compiledMarkdown: string;
   activePreview: PreviewComponentType;
   setActivePreview: (preview: PreviewComponentType) => void;
+  canUndo: boolean;
+  canRedo: boolean;
+  undo: () => void;
+  redo: () => void;
 }
 
 const STORAGE_KEY = 'tastystyles_design_state_v1';
@@ -76,6 +80,77 @@ export const DesignProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [state, dispatch] = useReducer(designReducer, undefined, getInitialState);
   const [activePreview, setActivePreview] = useState<PreviewComponentType>('overview');
 
+  // History stack for Undo / Redo
+  const [past, setPast] = useState<DesignState[]>([]);
+  const [future, setFuture] = useState<DesignState[]>([]);
+  const isNavigatingHistory = useRef(false);
+  const previousStateRef = useRef<DesignState>(state);
+
+  // Record history on state changes
+  useEffect(() => {
+    if (isNavigatingHistory.current) {
+      isNavigatingHistory.current = false;
+      previousStateRef.current = state;
+      return;
+    }
+    // Only push if state actually changed (deep compare via JSON)
+    const prevJson = JSON.stringify(previousStateRef.current);
+    const currJson = JSON.stringify(state);
+    if (prevJson !== currJson) {
+      setPast((prevPast) => [...prevPast.slice(-29), previousStateRef.current]);
+      setFuture([]); // Clear future on new branch
+      previousStateRef.current = state;
+    }
+  }, [state]);
+
+  const undo = useCallback(() => {
+    setPast((prevPast) => {
+      if (prevPast.length === 0) return prevPast;
+      const previousState = prevPast[prevPast.length - 1];
+      const newPast = prevPast.slice(0, prevPast.length - 1);
+      setFuture((prevFuture) => [state, ...prevFuture]);
+      isNavigatingHistory.current = true;
+      dispatch({ type: 'IMPORT_STATE', state: previousState });
+      return newPast;
+    });
+  }, [state]);
+
+  const redo = useCallback(() => {
+    setFuture((prevFuture) => {
+      if (prevFuture.length === 0) return prevFuture;
+      const nextState = prevFuture[0];
+      const newFuture = prevFuture.slice(1);
+      setPast((prevPast) => [...prevPast, state]);
+      isNavigatingHistory.current = true;
+      dispatch({ type: 'IMPORT_STATE', state: nextState });
+      return newFuture;
+    });
+  }, [state]);
+
+  // Global Keyboard Shortcuts (Ctrl+Z, Ctrl+Y, Ctrl+Shift+Z)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+        return;
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+        if (e.shiftKey) {
+          e.preventDefault();
+          redo();
+        } else {
+          e.preventDefault();
+          undo();
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
+        e.preventDefault();
+        redo();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo]);
+
   // Sync state to localStorage
   useEffect(() => {
     try {
@@ -115,6 +190,10 @@ export const DesignProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         compiledMarkdown,
         activePreview,
         setActivePreview,
+        canUndo: past.length > 0,
+        canRedo: future.length > 0,
+        undo,
+        redo,
       }}
     >
       {children}

@@ -27,6 +27,28 @@ const ErrorPage = lazy(() => import('./pages/system/ErrorPage').then(m => ({ def
 const EmptyStatePage = lazy(() => import('./pages/system/EmptyStatePage').then(m => ({ default: m.EmptyStatePage })));
 const SuccessConfirmPage = lazy(() => import('./pages/system/SuccessConfirmPage').then(m => ({ default: m.SuccessConfirmPage })));
 
+// Preloader for instant transition on hover/focus
+const preloadComponent = (type: string) => {
+  switch (type) {
+    case 'landing': void import('./pages/public/LandingPage'); break;
+    case 'pricing': void import('./pages/public/PricingPage'); break;
+    case 'blog': void import('./pages/public/BlogArticlePage'); break;
+    case 'contact': void import('./pages/public/ContactPage'); break;
+    case 'auth': void import('./pages/auth/AuthPage'); break;
+    case 'onboarding': void import('./pages/auth/OnboardingPage'); break;
+    case 'dashboard': void import('./pages/core/DashboardPage'); break;
+    case 'detail': void import('./pages/core/ItemDetailPage'); break;
+    case 'kanban': void import('./pages/core/KanbanPage'); break;
+    case 'chat': void import('./pages/core/ChatInboxPage'); break;
+    case 'settings': void import('./pages/account/SettingsPage'); break;
+    case 'billing': void import('./pages/account/BillingPage'); break;
+    case 'team': void import('./pages/account/TeamMembersPage'); break;
+    case 'error': void import('./pages/system/ErrorPage'); break;
+    case 'empty-state': void import('./pages/system/EmptyStatePage'); break;
+    case 'success': void import('./pages/system/SuccessConfirmPage'); break;
+  }
+};
+
 import {
   getFontEntry,
   getRadiusEntry,
@@ -194,7 +216,22 @@ export const PreviewPane: React.FC = () => {
             <select
               id="preview-component-select"
               value={activePreview}
-              onChange={(e) => setActivePreview(e.target.value as PreviewComponentType)}
+              onMouseEnter={() => {
+                preloadComponent('landing');
+                preloadComponent('auth');
+                preloadComponent('error');
+              }}
+              onFocus={() => {
+                preloadComponent('landing');
+                preloadComponent('dashboard');
+                preloadComponent('auth');
+                preloadComponent('error');
+              }}
+              onChange={(e) => {
+                const val = e.target.value as PreviewComponentType;
+                preloadComponent(val);
+                setActivePreview(val);
+              }}
               className="min-h-[40px] px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 focus-ring cursor-pointer transition-colors shadow-sm max-w-[280px] sm:max-w-none"
             >
               <optgroup label="Component Primitives">
