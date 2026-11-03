@@ -4,9 +4,10 @@ import { getBestContrastingColor } from '../../../../lib/contrast';
 import { Check, ArrowRight } from 'lucide-react';
 
 export const PricingPage: React.FC = () => {
-  const { activeColors } = useDesign();
+  const { activeColors, state } = useDesign();
   const [annual, setAnnual] = useState(true);
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
+  const layout = state.pageLayouts?.pricing ?? 'cards-3col';
 
   const plans = [
     {
@@ -51,7 +52,7 @@ export const PricingPage: React.FC = () => {
         margin: '0 auto',
       }}
     >
-      {/* Header */}
+      {/* Header with Title & Cycle Switcher */}
       <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--ts-space-xs)' }}>
         <h1
           style={{
@@ -118,146 +119,207 @@ export const PricingPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Plan Cards Grid */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: 'var(--ts-space-md)',
-          alignItems: 'stretch',
-        }}
-      >
-        {plans.map((p) => (
-          <div
-            key={p.name}
-            style={{
-              backgroundColor: 'var(--ts-color-surface)',
-              border: p.highlight ? '2px solid var(--ts-color-accent)' : '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
-              boxShadow: 'var(--ts-shadow)',
-              padding: 'var(--ts-space-lg)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: 'var(--ts-space-md)',
-              position: 'relative',
-            }}
-          >
-            {p.highlight && (
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '-12px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  backgroundColor: 'var(--ts-color-accent)',
-                  color: getBestContrastingColor(activeColors.accent),
-                  padding: '2px 10px',
-                  borderRadius: '9999px',
-                  fontSize: 'calc(var(--ts-base-size) * 0.72)',
-                  fontWeight: 700,
-                  letterSpacing: '0.04em',
-                }}
-              >
-                MOST POPULAR
-              </span>
-            )}
-
-            <div>
-              <div style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))' }}>
-                {p.name}
-              </div>
-              <p style={{ margin: '4px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.8)', opacity: 0.75, minHeight: '36px' }}>
-                {p.desc}
-              </p>
-
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', margin: 'var(--ts-space-md) 0' }}>
-                <span
-                  style={{
-                    fontFamily: 'var(--ts-font-heading)',
-                    fontSize: 'calc(var(--ts-base-size) * var(--ts-scale) * var(--ts-scale) * 1.3)',
-                    fontWeight: 800,
-                  }}
-                >
-                  {p.price}
-                </span>
-                <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', opacity: 0.7 }}>{p.period}</span>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {p.features.map((feat) => (
-                  <div key={feat} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
-                    <Check style={{ width: '15px', height: '15px', color: 'var(--ts-color-accent)', flexShrink: 0 }} />
-                    <span>{feat}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <button
-              type="button"
+      {/* 1. COMPACT LIST VIEW LAYOUT */}
+      {layout === 'compact-toggle' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
+          {plans.map((p) => (
+            <div
+              key={p.name}
               style={{
-                width: '100%',
-                backgroundColor: p.highlight ? 'var(--ts-color-primary)' : 'transparent',
-                color: p.highlight ? primaryTextColor : 'var(--ts-color-text)',
-                border: p.highlight ? 'none' : '1px solid var(--ts-color-border)',
+                backgroundColor: 'var(--ts-color-surface)',
+                border: p.highlight ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
                 borderRadius: 'var(--ts-radius)',
-                padding: 'var(--ts-space-sm) var(--ts-space-md)',
-                fontSize: 'calc(var(--ts-base-size) * 0.9)',
-                fontWeight: 600,
+                boxShadow: 'var(--ts-shadow)',
+                padding: 'var(--ts-space-md)',
                 display: 'flex',
+                justifyContent: 'space-between',
                 alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                cursor: 'pointer',
+                flexWrap: 'wrap',
+                gap: '12px',
               }}
             >
-              <span>{p.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}</span>
-              <ArrowRight style={{ width: '14px', height: '14px' }} />
-            </button>
-          </div>
-        ))}
-      </div>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: '16px' }}>{p.name}</span>
+                  {p.highlight && (
+                    <span style={{ backgroundColor: 'var(--ts-color-accent)', color: getBestContrastingColor(activeColors.accent), padding: '1px 8px', borderRadius: '9999px', fontSize: '10px', fontWeight: 700 }}>
+                      RECOMMENDED
+                    </span>
+                  )}
+                </div>
+                <p style={{ margin: '2px 0 0 0', fontSize: '12px', opacity: 0.75 }}>{p.desc}</p>
+              </div>
 
-      {/* Comparison Snapshot Table */}
-      <div
-        style={{
-          backgroundColor: 'var(--ts-color-surface)',
-          border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
-          boxShadow: 'var(--ts-shadow)',
-          padding: 'var(--ts-space-md)',
-          overflowX: 'auto',
-        }}
-      >
-        <div style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 700, marginBottom: 'var(--ts-space-sm)' }}>
-          Feature Matrix Snapshot
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{ textAlign: 'right' }}>
+                  <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: '20px' }}>{p.price}</span>
+                  <span style={{ fontSize: '11px', opacity: 0.7, marginLeft: '4px' }}>{p.period}</span>
+                </div>
+                <button
+                  type="button"
+                  style={{
+                    backgroundColor: p.highlight ? 'var(--ts-color-primary)' : 'transparent',
+                    color: p.highlight ? primaryTextColor : 'var(--ts-color-text)',
+                    border: p.highlight ? 'none' : '1px solid var(--ts-color-border)',
+                    borderRadius: 'var(--ts-radius)',
+                    padding: '6px 14px',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Choose {p.name}
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-        <table style={{ width: '100%', minWidth: '480px', borderCollapse: 'collapse', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
-          <thead>
-            <tr style={{ borderBottom: '1px solid var(--ts-color-border)', textAlign: 'left' }}>
-              <th style={{ padding: '8px 12px' }}>Capability</th>
-              <th style={{ padding: '8px 12px' }}>Starter</th>
-              <th style={{ padding: '8px 12px' }}>Professional</th>
-              <th style={{ padding: '8px 12px' }}>Enterprise</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { cap: 'Markdown AI Spec Generation', free: 'Basic', pro: 'Full (9 Sections)', ent: 'Full + Custom' },
-              { cap: 'Automated WCAG Auditing', free: 'Normal Text', pro: 'AA & AAA + Alerts', ent: 'Custom Thresholds' },
-              { cap: 'Multi-Stage Dockerfile', free: '—', pro: 'Included', ent: 'Hardened Distroless' },
-            ].map((row, idx) => (
-              <tr key={idx} style={{ borderBottom: idx === 2 ? 'none' : '1px solid var(--ts-color-border)', opacity: 0.9 }}>
-                <td style={{ padding: '8px 12px', fontWeight: 500 }}>{row.cap}</td>
-                <td style={{ padding: '8px 12px' }}>{row.free}</td>
-                <td style={{ padding: '8px 12px', color: 'var(--ts-color-accent)', fontWeight: 600 }}>{row.pro}</td>
-                <td style={{ padding: '8px 12px' }}>{row.ent}</td>
+      )}
+
+      {/* 2. MATRIX TABLE COMPARISON LAYOUT */}
+      {layout === 'table-matrix' && (
+        <div
+          style={{
+            backgroundColor: 'var(--ts-color-surface)',
+            border: '1px solid var(--ts-color-border)',
+            borderRadius: 'var(--ts-radius)',
+            boxShadow: 'var(--ts-shadow)',
+            padding: 'var(--ts-space-lg)',
+            overflowX: 'auto',
+          }}
+        >
+          <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
+            <thead>
+              <tr style={{ borderBottom: '2px solid var(--ts-color-border)', textAlign: 'left' }}>
+                <th style={{ padding: '12px', fontSize: '14px' }}>Platform Features</th>
+                <th style={{ padding: '12px', fontSize: '14px' }}>Starter ($0)</th>
+                <th style={{ padding: '12px', fontSize: '14px', color: 'var(--ts-color-primary)' }}>Professional ({annual ? '$24' : '$29'})</th>
+                <th style={{ padding: '12px', fontSize: '14px' }}>Enterprise ({annual ? '$79' : '$99'})</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {[
+                { feat: 'Active Design Systems', f1: '3', f2: 'Unlimited', f3: 'Unlimited' },
+                { feat: 'Markdown AI Spec Generation', f1: '✓', f2: '✓', f3: '✓' },
+                { feat: 'W3C DTCG Token Export (Figma)', f1: '—', f2: '✓', f3: '✓' },
+                { feat: 'Full In-Memory ZIP Bundler', f1: '—', f2: '✓', f3: '✓' },
+                { feat: 'WCAG 2.1 AAA Realtime Contrast', f1: 'Normal Text', f2: 'AA & AAA', f3: 'Custom Audits' },
+                { feat: 'Dedicated SAML SSO & Slack Support', f1: '—', f2: '—', f3: '✓' },
+              ].map((row, idx) => (
+                <tr key={idx} style={{ borderBottom: '1px solid var(--ts-color-border)' }}>
+                  <td style={{ padding: '10px 12px', fontWeight: 600 }}>{row.feat}</td>
+                  <td style={{ padding: '10px 12px', opacity: 0.8 }}>{row.f1}</td>
+                  <td style={{ padding: '10px 12px', fontWeight: 700, color: 'var(--ts-color-primary)' }}>{row.f2}</td>
+                  <td style={{ padding: '10px 12px', fontWeight: 600 }}>{row.f3}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* 3. DEFAULT: 3-COLUMN TIER CARDS LAYOUT */}
+      {layout === 'cards-3col' && (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: 'var(--ts-space-md)',
+            alignItems: 'stretch',
+          }}
+        >
+          {plans.map((p) => (
+            <div
+              key={p.name}
+              style={{
+                backgroundColor: 'var(--ts-color-surface)',
+                border: p.highlight ? '2px solid var(--ts-color-accent)' : '1px solid var(--ts-color-border)',
+                borderRadius: 'var(--ts-radius)',
+                boxShadow: 'var(--ts-shadow)',
+                padding: 'var(--ts-space-lg)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: 'var(--ts-space-md)',
+                position: 'relative',
+              }}
+            >
+              {p.highlight && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '-12px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: 'var(--ts-color-accent)',
+                    color: getBestContrastingColor(activeColors.accent),
+                    padding: '2px 10px',
+                    borderRadius: '9999px',
+                    fontSize: 'calc(var(--ts-base-size) * 0.72)',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  MOST POPULAR
+                </span>
+              )}
+
+              <div>
+                <div style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))' }}>
+                  {p.name}
+                </div>
+                <p style={{ margin: '4px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.8)', opacity: 0.75, minHeight: '36px' }}>
+                  {p.desc}
+                </p>
+
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', margin: 'var(--ts-space-md) 0' }}>
+                  <span
+                    style={{
+                      fontFamily: 'var(--ts-font-heading)',
+                      fontSize: 'calc(var(--ts-base-size) * var(--ts-scale) * var(--ts-scale) * 1.3)',
+                      fontWeight: 800,
+                    }}
+                  >
+                    {p.price}
+                  </span>
+                  <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', opacity: 0.7 }}>{p.period}</span>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {p.features.map((feat) => (
+                    <div key={feat} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
+                      <Check style={{ width: '15px', height: '15px', color: 'var(--ts-color-accent)', flexShrink: 0 }} />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                style={{
+                  width: '100%',
+                  backgroundColor: p.highlight ? 'var(--ts-color-primary)' : 'transparent',
+                  color: p.highlight ? primaryTextColor : 'var(--ts-color-text)',
+                  border: p.highlight ? 'none' : '1px solid var(--ts-color-border)',
+                  borderRadius: 'var(--ts-radius)',
+                  padding: 'var(--ts-space-sm) var(--ts-space-md)',
+                  fontSize: 'calc(var(--ts-base-size) * 0.9)',
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  cursor: 'pointer',
+                }}
+              >
+                <span>{p.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}</span>
+                <ArrowRight style={{ width: '14px', height: '14px' }} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

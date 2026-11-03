@@ -26,6 +26,16 @@ export const PageLayoutsSchema = z.object({
   error: z.enum(['giant-hero', 'split-terminal', 'dialog-card', 'minimal']).default('giant-hero'),
   errorCode: z.enum(['404', '403', '500']).default('404'),
   errorShowTrace: z.boolean().default(true),
+  dashboard: z.enum(['sidebar-grid', 'header-compact', 'analytical', 'feed-focus']).default('sidebar-grid'),
+  landing: z.enum(['hero-split', 'hero-centered', 'feature-grid']).default('hero-split'),
+  pricing: z.enum(['cards-3col', 'table-matrix', 'compact-toggle']).default('cards-3col'),
+  kanban: z.enum(['board-columns', 'timeline-list', 'compact-grid']).default('board-columns'),
+  chat: z.enum(['split-pane', 'compact-feed', 'minimal-bubble']).default('split-pane'),
+  settings: z.enum(['tabbed', 'stacked-cards', 'sidebar-nav']).default('tabbed'),
+  detail: z.enum(['split-sidepanel', 'full-document', 'tabbed-media']).default('split-sidepanel'),
+  onboarding: z.enum(['wizard-stepper', 'card-stack', 'minimal-modal']).default('wizard-stepper'),
+  emptyState: z.enum(['centered-action', 'illustration-card', 'checklist-guide']).default('centered-action'),
+  success: z.enum(['celebration-card', 'receipt-summary', 'minimal-banner']).default('celebration-card'),
 });
 
 export const DesignStateSchema = z.object({
@@ -41,14 +51,7 @@ export const DesignStateSchema = z.object({
   radius: z.string().min(1),
   shadow: z.string().min(1),
   spacing: z.string().min(1),
-  pageLayouts: PageLayoutsSchema.optional().default({
-    auth: 'split',
-    authSocialButtons: true,
-    authCardStyle: 'elevated',
-    error: 'giant-hero',
-    errorCode: '404',
-    errorShowTrace: true,
-  }),
+  pageLayouts: PageLayoutsSchema.optional().default(() => PageLayoutsSchema.parse({})),
 });
 
 export type HexColor = z.infer<typeof HexColorSchema>;

@@ -56,7 +56,8 @@ import {
   getSpacingEntry,
 } from '../../lib/registry';
 import type { ViewportMode, PreviewComponentType } from '../../types';
-import { Layers } from 'lucide-react';
+import { Layers, ChevronLeft, ChevronRight } from 'lucide-react';
+import { PREVIEW_REGISTRY, getPreviewIndex, getNextPreview, getPrevPreview } from '../../config/previews';
 
 export const PreviewPane: React.FC = () => {
   const { state, activeColors, activePreview, setActivePreview } = useDesign();
@@ -106,6 +107,41 @@ export const PreviewPane: React.FC = () => {
     '--ts-space-lg': spacingEntry.scale.lg,
     '--ts-space-xl': spacingEntry.scale.xl,
   };
+
+  const currentIndex = getPreviewIndex(activePreview);
+
+  const handlePrev = React.useCallback(() => {
+    const prev = getPrevPreview(activePreview);
+    preloadComponent(prev);
+    setActivePreview(prev);
+  }, [activePreview, setActivePreview]);
+
+  const handleNext = React.useCallback(() => {
+    const next = getNextPreview(activePreview);
+    preloadComponent(next);
+    setActivePreview(next);
+  }, [activePreview, setActivePreview]);
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA' ||
+        document.activeElement?.tagName === 'SELECT'
+      ) {
+        return;
+      }
+      if (e.shiftKey && (e.key === '{' || e.key === '[')) {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.shiftKey && (e.key === '}' || e.key === ']')) {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handlePrev, handleNext]);
 
   // Frame width for viewport simulator
   const viewportWidth =
@@ -203,8 +239,8 @@ export const PreviewPane: React.FC = () => {
     <div className="flex flex-col h-full w-full bg-slate-100/50 dark:bg-slate-950 overflow-hidden transition-colors">
       {/* Top toolbar */}
       <div className="p-3 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm flex-shrink-0 z-10 transition-colors">
-        {/* Component / Page Selector Dropdown Menu */}
-        <div className="flex items-center gap-2">
+        {/* Component / Page Selector with Navigation Buttons */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <label
             htmlFor="preview-component-select"
             className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5"
@@ -212,6 +248,18 @@ export const PreviewPane: React.FC = () => {
             <Layers className="w-4 h-4 text-sky-500" />
             <span className="hidden sm:inline">Preview:</span>
           </label>
+
+          {/* Navigation Prev Button */}
+          <button
+            type="button"
+            onClick={handlePrev}
+            className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer"
+            title="Previous preview (Shift+[)"
+            aria-label="Previous preview"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
           <div className="relative">
             <select
               id="preview-component-select"
@@ -232,7 +280,7 @@ export const PreviewPane: React.FC = () => {
                 preloadComponent(val);
                 setActivePreview(val);
               }}
-              className="min-h-[40px] px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 focus-ring cursor-pointer transition-colors shadow-sm max-w-[280px] sm:max-w-none"
+              className="min-h-[40px] px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 focus-ring cursor-pointer transition-colors shadow-sm max-w-[220px] sm:max-w-none"
             >
               <optgroup label="Component Primitives">
                 <option value="overview">Component Card (Overview)</option>
@@ -276,6 +324,22 @@ export const PreviewPane: React.FC = () => {
               </optgroup>
             </select>
           </div>
+
+          {/* Navigation Next Button */}
+          <button
+            type="button"
+            onClick={handleNext}
+            className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer"
+            title="Next preview (Shift+])"
+            aria-label="Next preview"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+
+          {/* Step indicator */}
+          <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 hidden md:inline ml-0.5">
+            {currentIndex + 1}/{PREVIEW_REGISTRY.length}
+          </span>
         </div>
 
         {/* Viewport switcher */}

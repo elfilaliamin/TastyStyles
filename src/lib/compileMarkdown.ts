@@ -244,6 +244,12 @@ module.exports = {
 - **Error & System State Pages**: \`${state.pageLayouts?.error ?? 'giant-hero'}\`
   - Default Status Code: HTTP \`${state.pageLayouts?.errorCode ?? '404'}\`
   - Technical Trace Diagnostics: ${state.pageLayouts?.errorShowTrace !== false ? 'Visible' : 'Hidden'}
+- **Dashboard & Telemetry**: \`${state.pageLayouts?.dashboard ?? 'sidebar-grid'}\`
+- **Landing & Public Marketing**: \`${state.pageLayouts?.landing ?? 'hero-split'}\`
+- **Pricing & Plans**: \`${state.pageLayouts?.pricing ?? 'cards-3col'}\`
+- **Kanban & Sprint Board**: \`${state.pageLayouts?.kanban ?? 'board-columns'}\`
+- **Chat & Autonomous Inbox**: \`${state.pageLayouts?.chat ?? 'split-pane'}\`
+- **Settings & Preferences**: \`${state.pageLayouts?.settings ?? 'tabbed'}\`
 
 ---
 

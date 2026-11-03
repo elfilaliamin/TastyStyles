@@ -57,6 +57,16 @@ export const defaultInitialState: DesignState = {
     error: 'giant-hero',
     errorCode: '404',
     errorShowTrace: true,
+    dashboard: 'sidebar-grid',
+    landing: 'hero-split',
+    pricing: 'cards-3col',
+    kanban: 'board-columns',
+    chat: 'split-pane',
+    settings: 'tabbed',
+    detail: 'split-sidepanel',
+    onboarding: 'wizard-stepper',
+    emptyState: 'centered-action',
+    success: 'celebration-card',
   },
 };
 
@@ -140,12 +150,8 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
       return {
         ...state,
         pageLayouts: {
-          auth: state.pageLayouts?.auth ?? 'split',
-          authSocialButtons: state.pageLayouts?.authSocialButtons ?? true,
-          authCardStyle: state.pageLayouts?.authCardStyle ?? 'elevated',
-          error: state.pageLayouts?.error ?? 'giant-hero',
-          errorCode: state.pageLayouts?.errorCode ?? '404',
-          errorShowTrace: state.pageLayouts?.errorShowTrace ?? true,
+          ...defaultInitialState.pageLayouts,
+          ...state.pageLayouts,
           ...action.updates,
         },
       };
