@@ -87,7 +87,7 @@ export const DashboardPage: React.FC = () => {
         </div>
 
         {/* Dual Analytics Panels */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--ts-space-md)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--ts-space-md)' }}>
           <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)' }}>
             <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '8px' }}>Throughput Distribution</div>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', height: '110px' }}>
@@ -218,7 +218,7 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--ts-space-md)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--ts-space-md)' }}>
           {/* Live Activity Stream */}
           <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ fontWeight: 700, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>

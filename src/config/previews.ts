@@ -69,3 +69,4 @@ export function getPrevPreview(id: PreviewComponentType): PreviewComponentType {
 export function getPreviewDefinition(id: PreviewComponentType): PreviewDefinition {
   return PREVIEW_REGISTRY.find((p) => p.id === id) ?? PREVIEW_REGISTRY[0];
 }
+

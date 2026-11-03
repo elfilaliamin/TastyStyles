@@ -4,10 +4,9 @@ import { Accordion } from '../common/Accordion';
 import { ColorSection } from './ColorSection';
 import { TypographySection } from './TypographySection';
 import { LayoutSection } from './LayoutSection';
-import { PageLayoutSection } from './PageLayoutSection';
 import { ComponentSection } from './ComponentSection';
 import { PresetSection } from './PresetSection';
-import { Palette, Type, LayoutGrid, Sliders, Sparkles, LayoutTemplate } from 'lucide-react';
+import { Palette, Type, LayoutGrid, Sliders, Sparkles } from 'lucide-react';
 
 export const ControlsPanel: React.FC = () => {
   const { state, dispatch } = useDesign();
@@ -59,21 +58,12 @@ export const ControlsPanel: React.FC = () => {
         </Accordion>
 
         <Accordion
-          title="Layout Archetype"
-          subtitle="Structural wireframe & responsive rules"
-          icon={<LayoutGrid className="w-4 h-4" />}
+          title="Layout"
+          subtitle="Responsive layout options for active preview"
+          icon={<LayoutGrid className="w-4 h-4 text-sky-500" />}
           defaultOpen={true}
         >
           <LayoutSection />
-        </Accordion>
-
-        <Accordion
-          title="Page & Screen Layouts"
-          subtitle="Custom layout styles for Auth, Errors & Pages"
-          icon={<LayoutTemplate className="w-4 h-4" />}
-          defaultOpen={true}
-        >
-          <PageLayoutSection />
         </Accordion>
 
         <Accordion

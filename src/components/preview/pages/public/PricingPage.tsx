@@ -184,11 +184,13 @@ export const PricingPage: React.FC = () => {
             border: '1px solid var(--ts-color-border)',
             borderRadius: 'var(--ts-radius)',
             boxShadow: 'var(--ts-shadow)',
-            padding: 'var(--ts-space-lg)',
+            padding: 'var(--ts-space-md)',
             overflowX: 'auto',
+            width: '100%',
+            boxSizing: 'border-box',
           }}
         >
-          <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
+          <table style={{ width: '100%', minWidth: '480px', borderCollapse: 'collapse', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--ts-color-border)', textAlign: 'left' }}>
                 <th style={{ padding: '12px', fontSize: '14px' }}>Platform Features</th>

@@ -169,7 +169,7 @@ export const ErrorPage: React.FC = () => {
           minHeight: '100%',
           padding: 'var(--ts-space-lg)',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
           gap: 'var(--ts-space-lg)',
           alignItems: 'center',
           maxWidth: '1060px',

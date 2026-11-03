@@ -305,7 +305,8 @@ export const AuthPage: React.FC = () => {
           width: '100%',
           minHeight: '100%',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+          boxSizing: 'border-box',
         }}
       >
         {/* Left Side: Branded Hero Showcase Banner */}

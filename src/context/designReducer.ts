@@ -186,7 +186,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
       return {
         version: 1,
         name: preset.state.name,
-        activeMode: preset.state.activeMode,
+        activeMode: state.activeMode, // Preserve the user's current light or dark mode
         colors: preset.state.colors,
         typography: preset.state.typography,
         layout: preset.state.layout,

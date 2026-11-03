@@ -354,6 +354,8 @@ export const PreviewPane: React.FC = () => {
         >
           {/* Isolated sandbox frame fixed to container height with internal scrolling */}
           <div
+            data-viewport={viewportMode}
+            className="ts-preview-frame"
             style={
               {
                 ...cssVariables,
@@ -367,6 +369,7 @@ export const PreviewPane: React.FC = () => {
                 borderRadius: 'calc(var(--ts-radius) + 4px)',
                 boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)',
                 overflow: 'hidden',
+                containerType: 'inline-size',
               } as React.CSSProperties
             }
           >
