@@ -3,14 +3,12 @@ import { useDesign } from '../../context/DesignContext';
 import {
   copyToClipboard,
   downloadFile,
-  downloadZipBundle,
   generateCssTokens,
   generateTailwindConfig,
   generateTypeScriptTokens,
-  generateDtcgTokens,
   generateAgyCliCommand,
 } from '../../lib/exportUtils';
-import { Copy, Download, FileCode, X, Terminal, Code2, Palette, FileText, Package, Braces } from 'lucide-react';
+import { Copy, Download, FileCode, X, Terminal, Code2, Palette, FileText } from 'lucide-react';
 
 interface MarkdownModalProps {
   isOpen: boolean;
@@ -18,7 +16,7 @@ interface MarkdownModalProps {
   onNotify?: (title: string, desc?: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-type ExportTab = 'markdown' | 'css' | 'tailwind' | 'typescript' | 'dtcg' | 'cli';
+type ExportTab = 'markdown' | 'css' | 'tailwind' | 'typescript' | 'cli';
 
 export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, onNotify }) => {
   const { compiledMarkdown, state } = useDesign();
@@ -62,13 +60,6 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
           mime: 'text/typescript',
           label: 'TypeScript Tokens',
         };
-      case 'dtcg':
-        return {
-          content: generateDtcgTokens(state),
-          filename: 'tokens.dtcg.json',
-          mime: 'application/json',
-          label: 'W3C DTCG Token JSON',
-        };
       case 'cli':
         return {
           content: generateAgyCliCommand(state),
@@ -103,12 +94,6 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
     onNotify?.('Downloaded File!', `Saved as ${filename}`, 'success');
   };
 
-  const handleDownloadZip = () => {
-    downloadZipBundle(state, compiledMarkdown);
-    const slug = state.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    onNotify?.('Downloaded Bundle!', `Saved complete package as ${slug}-design-tokens.zip`, 'success');
-  };
-
   return (
     <div
       role="dialog"
@@ -131,7 +116,7 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
               <h2 id="modal-title" className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2 truncate">
                 <span>Export System Artifacts</span>
                 <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
-                  Ready for AI Agents & Figma
+                  Ready for AI Agents
                 </span>
               </h2>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
@@ -164,16 +149,6 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
 
             <button
               type="button"
-              onClick={handleDownloadZip}
-              className="min-h-[38px] px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 transition-colors shadow-sm focus-ring cursor-pointer"
-              title="Download all formats in a single .zip bundle"
-            >
-              <Package className="w-3.5 h-3.5" />
-              <span>All (.zip)</span>
-            </button>
-
-            <button
-              type="button"
               onClick={onClose}
               className="min-h-[38px] min-w-[38px] p-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg flex items-center justify-center transition-colors focus-ring ml-1 cursor-pointer"
               aria-label="Close dialog"
@@ -190,7 +165,6 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
             { id: 'css', label: 'Pure CSS (.css)', icon: <Palette className="w-3.5 h-3.5" /> },
             { id: 'tailwind', label: 'Tailwind Config (.ts)', icon: <Code2 className="w-3.5 h-3.5" /> },
             { id: 'typescript', label: 'TypeScript (.ts)', icon: <Code2 className="w-3.5 h-3.5" /> },
-            { id: 'dtcg', label: 'Figma DTCG (.json)', icon: <Braces className="w-3.5 h-3.5" /> },
             { id: 'cli', label: 'AGY CLI Command', icon: <Terminal className="w-3.5 h-3.5" /> },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
@@ -222,7 +196,7 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
         {/* Modal Footer */}
         <div className="p-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 transition-colors">
           <span className="text-[11px]">
-            Target: <strong>{filename}</strong> • Zero placeholders • Validated for Claude, Cursor, Gemini & Figma Tokens
+            Target: <strong>{filename}</strong> • Zero placeholders • Validated for Claude, Cursor, and Gemini
           </span>
           <button
             type="button"
@@ -236,4 +210,3 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
     </div>
   );
 };
-
