@@ -1,0 +1,28 @@
+[
+  {
+    "id": "sharp",
+    "label": "Sharp (0px)",
+    "value": "0px"
+  },
+  {
+    "id": "rounded-sm",
+    "label": "Subtle (4px)",
+    "value": "4px"
+  },
+  {
+    "id": "rounded",
+    "label": "Rounded (8px)",
+    "value": "8px"
+  },
+  {
+    "id": "rounded-lg",
+    "label": "Curved (16px)",
+    "value": "16px"
+  },
+  {
+    "id": "pill",
+    "label": "Pill (9999px)",
+    "value": "9999px"
+  }
+]
+

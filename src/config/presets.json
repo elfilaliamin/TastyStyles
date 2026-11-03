@@ -1,0 +1,198 @@
+[
+  {
+    "id": "zinc-minimal",
+    "label": "Zinc Minimal",
+    "description": "Sophisticated monochrome palette for modern enterprise developer tools and utilities.",
+    "state": {
+      "name": "Zinc Minimal Design System",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#18181b",
+          "secondary": "#71717a",
+          "accent": "#2563eb",
+          "background": "#ffffff",
+          "surface": "#f4f4f5",
+          "text": "#09090b",
+          "border": "#e4e4e7"
+        },
+        "dark": {
+          "primary": "#fafafa",
+          "secondary": "#a1a1aa",
+          "accent": "#38bdf8",
+          "background": "#09090b",
+          "surface": "#18181b",
+          "text": "#f4f4f5",
+          "border": "#27272a"
+        }
+      },
+      "typography": {
+        "headingFont": "inter",
+        "bodyFont": "inter",
+        "scale": 1.125,
+        "baseSize": 16
+      },
+      "layout": "sidebar-content",
+      "radius": "rounded",
+      "shadow": "soft",
+      "spacing": "comfortable"
+    }
+  },
+  {
+    "id": "cyber-neon",
+    "label": "Cyber Neon",
+    "description": "High-contrast electric cyan and purple theme designed for futuristic crypto and AI dashboards.",
+    "state": {
+      "name": "Cyber Neon Spec",
+      "activeMode": "dark",
+      "colors": {
+        "light": {
+          "primary": "#0284c7",
+          "secondary": "#7c3aed",
+          "accent": "#06b6d4",
+          "background": "#f8fafc",
+          "surface": "#ffffff",
+          "text": "#0f172a",
+          "border": "#cbd5e1"
+        },
+        "dark": {
+          "primary": "#38bdf8",
+          "secondary": "#a855f7",
+          "accent": "#22d3ee",
+          "background": "#050814",
+          "surface": "#0d1326",
+          "text": "#f1f5f9",
+          "border": "#1e293b"
+        }
+      },
+      "typography": {
+        "headingFont": "space-grotesk",
+        "bodyFont": "jetbrains-mono",
+        "scale": 1.15,
+        "baseSize": 15
+      },
+      "layout": "dashboard-split",
+      "radius": "sharp",
+      "shadow": "glow",
+      "spacing": "compact"
+    }
+  },
+  {
+    "id": "editorial-luxury",
+    "label": "Editorial Serif",
+    "description": "Timeless, refined typographic balance tailored for long-form publishing and premium lifestyle brands.",
+    "state": {
+      "name": "Editorial Luxury Spec",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#1c1917",
+          "secondary": "#78716c",
+          "accent": "#b45309",
+          "background": "#fafaf9",
+          "surface": "#f5f5f4",
+          "text": "#292524",
+          "border": "#e7e5e4"
+        },
+        "dark": {
+          "primary": "#f5f5f4",
+          "secondary": "#a8a29e",
+          "accent": "#f59e0b",
+          "background": "#1c1917",
+          "surface": "#292524",
+          "text": "#fafaf9",
+          "border": "#44403c"
+        }
+      },
+      "typography": {
+        "headingFont": "playfair-display",
+        "bodyFont": "lora",
+        "scale": 1.2,
+        "baseSize": 17
+      },
+      "layout": "landing",
+      "radius": "rounded-sm",
+      "shadow": "flat",
+      "spacing": "spacious"
+    }
+  },
+  {
+    "id": "sunset-amber",
+    "label": "Sunset Amber",
+    "description": "Warm coral, tangerine, and rich amber tones radiating friendly energy for creative studios.",
+    "state": {
+      "name": "Sunset Amber Design System",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#ea580c",
+          "secondary": "#f59e0b",
+          "accent": "#e11d48",
+          "background": "#fffbeb",
+          "surface": "#ffffff",
+          "text": "#451a03",
+          "border": "#fed7aa"
+        },
+        "dark": {
+          "primary": "#fb923c",
+          "secondary": "#fcd34d",
+          "accent": "#fb7185",
+          "background": "#1a0f07",
+          "surface": "#2d1b0f",
+          "text": "#fef3c7",
+          "border": "#451a03"
+        }
+      },
+      "typography": {
+        "headingFont": "poppins",
+        "bodyFont": "dm-sans",
+        "scale": 1.1,
+        "baseSize": 16
+      },
+      "layout": "bento-grid",
+      "radius": "rounded-lg",
+      "shadow": "elevated",
+      "spacing": "comfortable"
+    }
+  },
+  {
+    "id": "nordic-forest",
+    "label": "Nordic Forest",
+    "description": "Earthy pine green, spruce, and crisp sage palette promoting focus and calm organic structure.",
+    "state": {
+      "name": "Nordic Forest Spec",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#065f46",
+          "secondary": "#059669",
+          "accent": "#10b981",
+          "background": "#f0fdf4",
+          "surface": "#ffffff",
+          "text": "#064e3b",
+          "border": "#bbf7d0"
+        },
+        "dark": {
+          "primary": "#34d399",
+          "secondary": "#6ee7b7",
+          "accent": "#a7f3d0",
+          "background": "#062319",
+          "surface": "#0c3b2c",
+          "text": "#ecfdf5",
+          "border": "#134e3a"
+        }
+      },
+      "typography": {
+        "headingFont": "plus-jakarta-sans",
+        "bodyFont": "inter",
+        "scale": 1.1,
+        "baseSize": 16
+      },
+      "layout": "sidebar-content",
+      "radius": "rounded",
+      "shadow": "soft",
+      "spacing": "comfortable"
+    }
+  }
+]
+

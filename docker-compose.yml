@@ -1,0 +1,9 @@
+services:
+  tastystyles:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tastystyles-app
+    ports:
+      - "3004:80"
+    restart: unless-stopped

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "sidebar-content",
+    "label": "Sidebar + Content",
+    "description": "Fixed or collapsible left sidebar navigation with a flexible primary content area and top breadcrumbs bar.",
+    "wireframe": "sidebar-content",
+    "responsiveRules": "Collapses to bottom nav or hamburger drawer below 1024px; desktop maintains a 240px to 280px left rail."
+  },
+  {
+    "id": "bento-grid",
+    "label": "Bento Grid",
+    "description": "Modern modular multi-span grid featuring diverse card dimensions, micro-dashboards, and high visual hierarchy.",
+    "wireframe": "bento-grid",
+    "responsiveRules": "Single column stack on mobile (<640px), 2-column masonry on tablet (640-1024px), full 3-4 column bento grid on desktop (>1024px)."
+  },
+  {
+    "id": "landing",
+    "label": "Marketing Landing",
+    "description": "High-impact storytelling structure with hero section, feature alternating columns, testimonial band, and sticky CTA footer.",
+    "wireframe": "landing",
+    "responsiveRules": "Full-width hero with vertical feature stacks on mobile; horizontally centered max-w-7xl containers on desktop."
+  },
+  {
+    "id": "dashboard-split",
+    "label": "Dashboard Split",
+    "description": "Dual-pane operational layout featuring metric KPI headers, real-time analytics graphs, and a right-hand activity inspector.",
+    "wireframe": "dashboard-split",
+    "responsiveRules": "Inspector shifts into sliding drawer on tablet/mobile; main analytics panel takes 100% width."
+  }
+]
+
