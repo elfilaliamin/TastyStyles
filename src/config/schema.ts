@@ -26,6 +26,7 @@ export const PageLayoutsSchema = z.object({
     'split-image',
     'social-first',
     'full-background',
+    'full-background-image',
     'single-field',
     'modal-overlay',
     'minimal',

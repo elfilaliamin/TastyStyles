@@ -151,6 +151,20 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
         </div>
       );
 
+    // 4c2. Full-Page Floating with Image Background
+    case 'full-background-image':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-900 transition-colors relative overflow-hidden`}>
+          <div className="absolute inset-0 bg-gradient-to-tr from-slate-950 via-slate-800 to-slate-700 opacity-90" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,var(--tw-gradient-stops))] from-sky-400/30 via-transparent to-transparent" />
+          <div className={`w-7/12 h-5/6 rounded-md border border-white/40 dark:border-white/20 bg-white/70 dark:bg-slate-900/80 backdrop-blur-sm shadow-sm flex flex-col items-center justify-center gap-1 p-1 z-10`}>
+            <div className={`w-4 h-1.5 rounded-[2px] ${accent}`} />
+            <div className={`w-full h-1 rounded-[2px] ${fill}`} />
+            <div className={`w-2/3 h-1.5 rounded-[2px] ${accent}`} />
+          </div>
+        </div>
+      );
+
     // 4d. Minimal Single-Field / Multi-Step
     case 'single-field':
       return (
@@ -345,8 +359,14 @@ export const LayoutSection: React.FC = () => {
             {
               id: 'full-background',
               title: 'Full-Page Floating',
-              description: 'Vibrant full-bleed background with floating frosted-glass card',
+              description: 'Vibrant full-bleed gradient mesh with floating frosted-glass card',
               variant: 'full-background',
+            },
+            {
+              id: 'full-background-image',
+              title: 'Full-Page Floating 2 (Image)',
+              description: 'Full-bleed atmospheric photography with floating frosted-glass card',
+              variant: 'full-background-image',
             },
             {
               id: 'single-field',

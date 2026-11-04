@@ -943,6 +943,85 @@ export const AuthPage: React.FC = () => {
   }
 
   // =========================================================================
+  // 4b. FULL-PAGE FLOATING 2 (IMAGE BACKGROUND)
+  // =========================================================================
+  if (authLayout === 'full-background-image') {
+    return (
+      <div
+        style={{
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          minHeight: '100%',
+          flex: 1,
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundColor: '#090d16',
+        }}
+      >
+        {/* Full-bleed atmospheric workplace background photography */}
+        <img
+          src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1600&q=80"
+          alt="Modern Architecture Workspace Studio"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            filter: 'brightness(0.6) contrast(1.08)',
+          }}
+        />
+
+        {/* Brand tint and vignette overlay for maximum field contrast */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: `radial-gradient(ellipse at 50% 50%, rgba(9, 13, 22, 0.45) 0%, rgba(9, 13, 22, 0.85) 100%), linear-gradient(135deg, ${activeColors.primary}22 0%, transparent 60%)`,
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Floating Frosted Glass Form Card */}
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '440px',
+            padding: 'var(--ts-space-xl)',
+            borderRadius: 'calc(var(--ts-radius) * 1.25)',
+            backgroundColor: `${activeColors.surface}dd`,
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: `1px solid ${activeColors.border}ee`,
+            boxShadow: '0 30px 60px -15px rgba(0,0,0,0.5)',
+            position: 'relative',
+            zIndex: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--ts-space-md)',
+          }}
+        >
+          {renderHeader()}
+          {showSocial && (
+            <>
+              {renderSocialButtons()}
+              {renderDivider()}
+            </>
+          )}
+          {renderFormFields()}
+          {renderBottomLinks()}
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
   // 5. MINIMAL SINGLE-FIELD / MULTI-STEP (Google / Notion style)
   // =========================================================================
   if (authLayout === 'single-field' || authLayout === 'minimal') {
