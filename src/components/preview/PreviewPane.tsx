@@ -14,6 +14,15 @@ import type { ViewportMode, PreviewComponentType } from '../../types';
 import { ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
 import { PREVIEW_REGISTRY, getPreviewIndex, getNextPreview, getPrevPreview } from '../../config/previews';
 
+const CATEGORY_LABELS: Record<string, string> = {
+  Primitives: 'Component Primitives',
+  Public: 'Public Pages',
+  Auth: 'Auth & Onboarding',
+  Core: 'Core Application',
+  Account: 'Account & Workspace',
+  System: 'System States',
+};
+
 // Page Archetypes (Lazy Loaded for Optimal Bundle Splitting)
 const LandingPage = lazy(() => import('./pages/public/LandingPage').then(m => ({ default: m.LandingPage })));
 const PricingPage = lazy(() => import('./pages/public/PricingPage').then(m => ({ default: m.PricingPage })));
@@ -256,46 +265,19 @@ export const PreviewPane: React.FC = () => {
               aria-label="Select preview archetype"
               className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[145px] sm:max-w-[210px] md:max-w-xs truncate"
             >
-              <optgroup label="Component Primitives">
-                <option value="buttons">Buttons & Actions</option>
-                <option value="forms">Input Controls & Select</option>
-                <option value="cards">Surfaces & Containers</option>
-                <option value="feedback">Alerts & Status Toasts</option>
-                <option value="table">Data Tables & Records</option>
-                <option value="navbar">Navigation Header Bar</option>
-                <option value="sidebar">Application Sidebar Nav</option>
-              </optgroup>
-
-              <optgroup label="Public & Marketing">
-                <option value="landing">Marketing Landing Page</option>
-                <option value="pricing">Pricing & Subscription Tiers</option>
-                <option value="blog">Editorial Article / Blog</option>
-                <option value="contact">Contact & Support Inquiry</option>
-              </optgroup>
-
-              <optgroup label="Auth & Onboarding">
-                <option value="auth">Auth (Login / Signup / Reset)</option>
-                <option value="onboarding">Onboarding Wizard (3 Steps)</option>
-              </optgroup>
-
-              <optgroup label="Core Application">
-                <option value="dashboard">Dashboard & Telemetry</option>
-                <option value="detail">Item Detail & Diagnostics</option>
-                <option value="kanban">Kanban & Sprint Board</option>
-                <option value="chat">Chat & Autonomous Inbox</option>
-              </optgroup>
-
-              <optgroup label="Account & Workspace">
-                <option value="settings">Settings & Preferences</option>
-                <option value="billing">Billing & Invoices</option>
-                <option value="team">Team & Access Control</option>
-              </optgroup>
-
-              <optgroup label="System States">
-                <option value="error">System Error & Status (404/500/403)</option>
-                <option value="empty-state">Empty State (No Data)</option>
-                <option value="success">Success & Confirmation</option>
-              </optgroup>
+              {(['Primitives', 'Public', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
+                const items = PREVIEW_REGISTRY.filter((p) => p.category === cat);
+                if (items.length === 0) return null;
+                return (
+                  <optgroup key={cat} label={CATEGORY_LABELS[cat]}>
+                    {items.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              })}
             </select>
           </div>
 
