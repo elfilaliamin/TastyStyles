@@ -297,6 +297,22 @@ export const PreviewPane: React.FC = () => {
             {currentIndex + 1}/{PREVIEW_REGISTRY.length}
           </span>
 
+          {/* Active icon spec pill */}
+          <span
+            className="text-[10px] px-2 py-0.5 rounded-md font-mono bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hidden xl:inline-flex items-center gap-1 border border-slate-300 dark:border-slate-700"
+            title="Active Icon Specification in Previews"
+          >
+            <span>Icon:</span>
+            <strong className="text-slate-900 dark:text-slate-200 capitalize">
+              {state.icons?.library ?? 'lucide'}
+            </strong>
+            <span>•</span>
+            <span>{state.icons?.mode ?? 'outline'}</span>
+            {state.icons?.duotone && <span>(duotone)</span>}
+            <span>•</span>
+            <span>{state.icons?.weight ?? 'regular'}</span>
+          </span>
+
           {/* Overflow detection indicator */}
           {hasOverflow && (
             <span

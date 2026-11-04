@@ -47,6 +47,123 @@
   container-type: inline-size;
 }
 
+/* ==========================================================================
+   Icon Design System Styling (Icons & Libraries Live Preview Overrides)
+   ========================================================================== */
+
+/* Universal SVG Icon Geometry & Dynamic Stroke Width */
+.ts-preview-frame .lucide,
+.ts-preview-frame svg[data-icon],
+.ts-preview-frame svg:not([data-brand]):not([class*="brand"]) {
+  stroke-width: var(--ts-icon-stroke, 1.75px) !important;
+  transition: stroke-width 0.15s ease, fill 0.15s ease, fill-opacity 0.15s ease, stroke 0.15s ease;
+}
+
+.ts-preview-frame .lucide *,
+.ts-preview-frame svg[data-icon] *,
+.ts-preview-frame svg:not([data-brand]):not([class*="brand"]) * {
+  stroke-width: var(--ts-icon-stroke, 1.75px) !important;
+}
+
+/* 1. Stroke Weights */
+.ts-preview-frame[data-icon-weight='thin'] .lucide,
+.ts-preview-frame[data-icon-weight='thin'] .lucide * {
+  stroke-width: 1.25px !important;
+}
+
+.ts-preview-frame[data-icon-weight='light'] .lucide,
+.ts-preview-frame[data-icon-weight='light'] .lucide * {
+  stroke-width: 1.5px !important;
+}
+
+.ts-preview-frame[data-icon-weight='regular'] .lucide,
+.ts-preview-frame[data-icon-weight='regular'] .lucide * {
+  stroke-width: 1.75px !important;
+}
+
+.ts-preview-frame[data-icon-weight='medium'] .lucide,
+.ts-preview-frame[data-icon-weight='medium'] .lucide * {
+  stroke-width: 2.25px !important;
+}
+
+.ts-preview-frame[data-icon-weight='bold'] .lucide,
+.ts-preview-frame[data-icon-weight='bold'] .lucide * {
+  stroke-width: 2.85px !important;
+}
+
+/* 2. Style Mode: Outline vs Solid */
+.ts-preview-frame[data-icon-mode='outline'] .lucide:not([data-always-solid]) {
+  fill: none !important;
+  stroke: currentColor !important;
+}
+
+.ts-preview-frame[data-icon-mode='solid'] .lucide {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  stroke-width: calc(var(--ts-icon-stroke, 1.75px) * 0.8) !important;
+}
+
+.ts-preview-frame[data-icon-mode='solid'] .lucide circle,
+.ts-preview-frame[data-icon-mode='solid'] .lucide rect,
+.ts-preview-frame[data-icon-mode='solid'] .lucide polygon,
+.ts-preview-frame[data-icon-mode='solid'] .lucide path {
+  fill: currentColor !important;
+  fill-opacity: 1 !important;
+}
+
+/* 3. Duotone Accent: 22% fill underneath stroke path */
+.ts-preview-frame[data-icon-duotone='true'] .lucide {
+  fill: currentColor !important;
+  fill-opacity: 0.22 !important;
+  stroke: currentColor !important;
+}
+
+.ts-preview-frame[data-icon-duotone='true'] .lucide circle,
+.ts-preview-frame[data-icon-duotone='true'] .lucide rect,
+.ts-preview-frame[data-icon-duotone='true'] .lucide polygon,
+.ts-preview-frame[data-icon-duotone='true'] .lucide path {
+  fill: currentColor !important;
+  fill-opacity: 0.22 !important;
+}
+
+/* 4. Icon Library Specific Geometry Traits */
+/* Heroicons: Tailwind sharp corners & square stroke caps */
+.ts-preview-frame[data-icon-library='heroicons'] .lucide,
+.ts-preview-frame[data-icon-library='heroicons'] .lucide * {
+  stroke-linecap: square !important;
+  stroke-linejoin: miter !important;
+  stroke-miterlimit: 4 !important;
+}
+
+/* Tabler Icons: Tech grid mitered corners */
+.ts-preview-frame[data-icon-library='tabler'] .lucide,
+.ts-preview-frame[data-icon-library='tabler'] .lucide * {
+  stroke-linecap: round !important;
+  stroke-linejoin: miter !important;
+}
+
+/* Phosphor Icons: Smooth circular curves */
+.ts-preview-frame[data-icon-library='phosphor'] .lucide,
+.ts-preview-frame[data-icon-library='phosphor'] .lucide * {
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  filter: drop-shadow(0 0.5px 0 rgba(0, 0, 0, 0.08));
+}
+
+/* Remix Icon: Sharp flat butt caps */
+.ts-preview-frame[data-icon-library='remix'] .lucide,
+.ts-preview-frame[data-icon-library='remix'] .lucide * {
+  stroke-linecap: butt !important;
+  stroke-linejoin: round !important;
+}
+
+/* Lucide: Modern rounded standard */
+.ts-preview-frame[data-icon-library='lucide'] .lucide,
+.ts-preview-frame[data-icon-library='lucide'] .lucide * {
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
 /* Base mobile font adjustments */
 .ts-preview-frame[data-viewport='mobile'] {
   font-size: calc(var(--ts-base-size) * 0.9);
