@@ -103,3 +103,144 @@
   overflow-x: auto !important;
   -webkit-overflow-scrolling: touch;
 }
+
+/* ==========================================================================
+   Mobile & Tablet Auth Layout Adaptations
+   ========================================================================== */
+
+/* Split Screen & Split Image: On mobile, hide visual marketing/image side */
+.ts-preview-frame[data-viewport='mobile'] .ts-auth-split-visual,
+.ts-preview-frame[data-viewport='mobile'] .ts-auth-split-image-visual {
+  display: none !important;
+}
+
+@container (max-width: 640px) {
+  .ts-auth-split-visual,
+  .ts-auth-split-image-visual {
+    display: none !important;
+  }
+}
+
+.ts-preview-frame[data-viewport='mobile'] .ts-auth-split-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: var(--ts-space-xs) !important;
+  width: 100% !important;
+  min-height: 100% !important;
+}
+
+@container (max-width: 640px) {
+  .ts-auth-split-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: var(--ts-space-xs) !important;
+    width: 100% !important;
+    min-height: 100% !important;
+  }
+}
+
+.ts-preview-frame[data-viewport='mobile'] .ts-auth-form-container {
+  width: 100% !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+@container (max-width: 640px) {
+  .ts-auth-form-container {
+    width: 100% !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+/* Tablet: Side-by-side balanced 50/50 split */
+.ts-preview-frame[data-viewport='tablet'] .ts-auth-split-grid {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+@container (min-width: 641px) and (max-width: 900px) {
+  .ts-auth-split-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+.ts-preview-frame[data-viewport='tablet'] .ts-auth-split-visual,
+.ts-preview-frame[data-viewport='tablet'] .ts-auth-split-image-visual {
+  padding: var(--ts-space-md) !important;
+}
+
+@container (min-width: 641px) and (max-width: 900px) {
+  .ts-auth-split-visual,
+  .ts-auth-split-image-visual {
+    padding: var(--ts-space-md) !important;
+  }
+}
+
+/* Auth Cards on Mobile */
+.ts-preview-frame[data-viewport='mobile'] .ts-auth-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: var(--ts-space-md) var(--ts-space-sm) !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  border-radius: var(--ts-radius) !important;
+}
+
+@container (max-width: 540px) {
+  .ts-auth-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: var(--ts-space-md) var(--ts-space-sm) !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    border-radius: var(--ts-radius) !important;
+  }
+}
+
+/* Auth Container on Mobile */
+.ts-preview-frame[data-viewport='mobile'] .ts-auth-container {
+  padding: var(--ts-space-xs) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@container (max-width: 540px) {
+  .ts-auth-container {
+    padding: var(--ts-space-xs) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Modal Overlay on Mobile: Slides up as bottom sheet drawer */
+.ts-preview-frame[data-viewport='mobile'] .ts-auth-modal {
+  width: 100% !important;
+  max-width: 100% !important;
+  align-self: flex-end !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  padding: var(--ts-space-md) var(--ts-space-sm) !important;
+  margin-top: auto !important;
+  box-sizing: border-box !important;
+}
+
+@container (max-width: 540px) {
+  .ts-auth-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: flex-end !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    padding: var(--ts-space-md) var(--ts-space-sm) !important;
+    margin-top: auto !important;
+    box-sizing: border-box !important;
+  }
+}

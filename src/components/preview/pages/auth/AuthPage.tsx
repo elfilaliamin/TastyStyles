@@ -396,7 +396,7 @@ export const AuthPage: React.FC = () => {
   // =========================================================================
   if (authLayout === 'split') {
     return (
-      <div
+      <div className="ts-auth-split-grid"
         style={{
           backgroundColor: 'var(--ts-color-background)',
           color: 'var(--ts-color-text)',
@@ -410,7 +410,7 @@ export const AuthPage: React.FC = () => {
         }}
       >
         {/* Left Side: Branded Hero Showcase Banner */}
-        <div
+        <div className="ts-auth-split-visual"
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             borderRight: '1px solid var(--ts-color-border)',
@@ -530,7 +530,7 @@ export const AuthPage: React.FC = () => {
         </div>
 
         {/* Right Side: Form Container */}
-        <div
+        <div className="ts-auth-form-container"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -538,7 +538,7 @@ export const AuthPage: React.FC = () => {
             padding: 'var(--ts-space-lg)',
           }}
         >
-          <div
+          <div className="ts-auth-card"
             style={{
               width: '100%',
               maxWidth: '400px',
@@ -569,7 +569,7 @@ export const AuthPage: React.FC = () => {
   // =========================================================================
   if (authLayout === 'split-image') {
     return (
-      <div
+      <div className="ts-auth-split-grid"
         style={{
           backgroundColor: 'var(--ts-color-background)',
           color: 'var(--ts-color-text)',
@@ -583,7 +583,7 @@ export const AuthPage: React.FC = () => {
         }}
       >
         {/* Left / Side: Rich Editorial Work Image with Tinted Gradient & Testimonial Overlay */}
-        <div
+        <div className="ts-auth-split-image-visual"
           style={{
             position: 'relative',
             minHeight: '360px',
@@ -715,7 +715,7 @@ export const AuthPage: React.FC = () => {
         </div>
 
         {/* Right Side: Form Container */}
-        <div
+        <div className="ts-auth-form-container"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -723,7 +723,7 @@ export const AuthPage: React.FC = () => {
             padding: 'var(--ts-space-lg)',
           }}
         >
-          <div
+          <div className="ts-auth-card"
             style={{
               width: '100%',
               maxWidth: '400px',
@@ -754,7 +754,7 @@ export const AuthPage: React.FC = () => {
   // =========================================================================
   if (authLayout === 'social-first') {
     return (
-      <div
+      <div className="ts-auth-container"
         style={{
           backgroundColor: 'var(--ts-color-background)',
           color: 'var(--ts-color-text)',
@@ -871,7 +871,7 @@ export const AuthPage: React.FC = () => {
   // =========================================================================
   if (authLayout === 'full-background' || authLayout === 'glassmorphism') {
     return (
-      <div
+      <div className="ts-auth-container"
         style={{
           backgroundColor: 'var(--ts-color-background)',
           color: 'var(--ts-color-text)',
@@ -910,7 +910,7 @@ export const AuthPage: React.FC = () => {
         />
 
         {/* Floating Frosted Glass Card */}
-        <div
+        <div className="ts-auth-card"
           style={{
             width: '100%',
             maxWidth: '440px',
@@ -947,7 +947,7 @@ export const AuthPage: React.FC = () => {
   // =========================================================================
   if (authLayout === 'full-background-image') {
     return (
-      <div
+      <div className="ts-auth-container"
         style={{
           color: 'var(--ts-color-text)',
           fontFamily: 'var(--ts-font-body)',
@@ -1026,7 +1026,7 @@ export const AuthPage: React.FC = () => {
   // =========================================================================
   if (authLayout === 'single-field' || authLayout === 'minimal') {
     return (
-      <div
+      <div className="ts-auth-container"
         style={{
           backgroundColor: 'var(--ts-color-background)',
           color: 'var(--ts-color-text)',
@@ -1289,7 +1289,7 @@ export const AuthPage: React.FC = () => {
   // =========================================================================
   if (authLayout === 'modal-overlay') {
     return (
-      <div
+      <div className="ts-auth-container"
         style={{
           backgroundColor: 'var(--ts-color-background)',
           color: 'var(--ts-color-text)',
@@ -1403,7 +1403,7 @@ export const AuthPage: React.FC = () => {
   // 1. DEFAULT: CENTERED CARD LAYOUT
   // =========================================================================
   return (
-    <div
+    <div className="ts-auth-container"
       style={{
         backgroundColor: 'var(--ts-color-background)',
         color: 'var(--ts-color-text)',
@@ -1417,7 +1417,7 @@ export const AuthPage: React.FC = () => {
         justifyContent: 'center',
       }}
     >
-      <div
+      <div className="ts-auth-card"
         style={{
           width: '100%',
           maxWidth: '440px',
