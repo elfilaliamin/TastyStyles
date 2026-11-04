@@ -2,6 +2,7 @@ import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 
 export const LandingPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -20,66 +21,8 @@ export const LandingPage: React.FC = () => {
         flexDirection: 'column',
       }}
     >
-      {/* Universal Navbar */}
-      <header
-        style={{
-          borderBottom: '1px solid var(--ts-color-border)',
-          backgroundColor: 'var(--ts-color-surface)',
-          padding: 'var(--ts-space-md) var(--ts-space-lg)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div
-            style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: 'var(--ts-radius)',
-              backgroundColor: 'var(--ts-color-primary)',
-              color: primaryTextColor,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: 'calc(var(--ts-base-size) * 0.85)',
-            }}
-          >
-            A
-          </div>
-          <span
-            style={{
-              fontFamily: 'var(--ts-font-heading)',
-              fontWeight: 700,
-              fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))',
-            }}
-          >
-            ApexDesign
-          </span>
-        </div>
-
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-md)' }}>
-          <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.8, cursor: 'pointer' }}>Features</span>
-          <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.8, cursor: 'pointer' }}>Documentation</span>
-          <button
-            type="button"
-            style={{
-              backgroundColor: 'var(--ts-color-primary)',
-              color: primaryTextColor,
-              borderRadius: 'var(--ts-radius)',
-              padding: 'var(--ts-space-xs) var(--ts-space-md)',
-              border: 'none',
-              fontSize: 'calc(var(--ts-base-size) * 0.85)',
-              fontWeight: 600,
-              boxShadow: 'var(--ts-shadow)',
-              cursor: 'pointer',
-            }}
-          >
-            Get Started
-          </button>
-        </nav>
-      </header>
+      {/* Dynamic Navbar connected to Navbar layout selection */}
+      <DynamicNavbar />
 
       {/* 1. HERO SPLIT SHOWCASE LAYOUT */}
       {layout === 'hero-split' && (

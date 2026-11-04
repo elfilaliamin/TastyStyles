@@ -2,6 +2,8 @@ import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicSidebar } from '../../navigation/DynamicSidebar';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 
 export const DashboardPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -132,29 +134,8 @@ export const DashboardPage: React.FC = () => {
           flexDirection: 'column',
         }}
       >
-        {/* Top Navbar */}
-        <div
-          style={{
-            borderBottom: '1px solid var(--ts-color-border)',
-            backgroundColor: 'var(--ts-color-surface)',
-            padding: 'var(--ts-space-sm) var(--ts-space-lg)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <AppIcon name="barChart" size={18} style={{ color: 'var(--ts-color-primary)' }} />
-            <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: '14px' }}>
-              Executive Telemetry
-            </span>
-          </div>
-          <div style={{ display: 'flex', gap: '12px', fontSize: '12px' }}>
-            <span style={{ fontWeight: 600, color: 'var(--ts-color-primary)' }}>Overview</span>
-            <span style={{ opacity: 0.7 }}>Infrastructure</span>
-            <span style={{ opacity: 0.7 }}>Agents</span>
-          </div>
-        </div>
+        {/* Dynamic Navbar connected to Navbar layout selection */}
+        <DynamicNavbar />
 
         <div style={{ padding: 'var(--ts-space-lg)', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)', maxWidth: '960px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
           {/* Horizontal metric strips */}
@@ -270,7 +251,7 @@ export const DashboardPage: React.FC = () => {
     );
   }
 
-  // 4. DEFAULT: SIDEBAR & GRID LAYOUT
+  // 4. DEFAULT: SIDEBAR & GRID LAYOUT (Connected to Sidebar layout selection)
   return (
     <div
       style={{
@@ -278,15 +259,34 @@ export const DashboardPage: React.FC = () => {
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
+        height: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-lg)',
         display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--ts-space-md)',
-        maxWidth: '920px',
-        margin: '0 auto',
+        overflow: 'hidden',
       }}
     >
+      <DynamicSidebar />
+      <main
+        style={{
+          flex: 1,
+          height: '100%',
+          overflowY: 'auto',
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          flexDirection: 'column',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1040px',
+            width: '100%',
+            margin: '0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--ts-space-md)',
+          }}
+        >
       {/* Top Header Row */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--ts-space-sm)' }}>
         <div>
@@ -472,6 +472,8 @@ export const DashboardPage: React.FC = () => {
           </div>
         ))}
       </div>
+    </div>
+      </main>
     </div>
   );
 };
