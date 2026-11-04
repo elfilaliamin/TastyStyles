@@ -564,6 +564,190 @@ export const AuthPage: React.FC = () => {
   }
 
   // =========================================================================
+  // 2b. SPLIT SCREEN (IMAGE COVER) LAYOUT
+  // =========================================================================
+  if (authLayout === 'split-image') {
+    return (
+      <div
+        style={{
+          backgroundColor: 'var(--ts-color-background)',
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          minHeight: '100%',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Left / Side: Rich Editorial Work Image with Tinted Gradient & Testimonial Overlay */}
+        <div
+          style={{
+            position: 'relative',
+            minHeight: '360px',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            padding: 'var(--ts-space-xl)',
+            backgroundColor: '#090d16',
+          }}
+        >
+          {/* Work background image */}
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
+            alt="Modern Creative Work Studio"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              filter: 'brightness(0.68) contrast(1.05)',
+            }}
+          />
+
+          {/* Color harmony overlay utilizing brand primary and background tokens */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: `linear-gradient(135deg, rgba(9, 13, 22, 0.75) 0%, ${activeColors.primary}33 50%, rgba(9, 13, 22, 0.9) 100%)`,
+            }}
+          />
+
+          {/* Top Brand Badge */}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 10,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            <div
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: 'var(--ts-radius)',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 800,
+                fontSize: 'calc(var(--ts-base-size) * 0.95)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              }}
+            >
+              TS
+            </div>
+            <span
+              style={{
+                fontFamily: 'var(--ts-font-heading)',
+                fontWeight: 800,
+                fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))',
+                color: '#ffffff',
+                textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+              }}
+            >
+              {state.name}
+            </span>
+          </div>
+
+          {/* Bottom Quote & Feature Overlay Card in Frosted Glass */}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 10,
+              padding: 'var(--ts-space-lg)',
+              borderRadius: 'var(--ts-radius)',
+              backgroundColor: 'rgba(15, 23, 42, 0.75)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              color: '#ffffff',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
+              marginTop: 'var(--ts-space-lg)',
+            }}
+          >
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#38bdf8', fontSize: 'calc(var(--ts-base-size) * 0.75)', fontWeight: 600, marginBottom: '8px' }}>
+              <Sparkles style={{ width: '13px', height: '13px' }} />
+              <span>Enterprise Design Engineering</span>
+            </div>
+            <h3
+              style={{
+                fontFamily: 'var(--ts-font-heading)',
+                fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))',
+                fontWeight: 700,
+                margin: '0 0 8px 0',
+                color: '#ffffff',
+                lineHeight: 1.3,
+              }}
+            >
+              &ldquo;TastyStyles keeps our cross-functional teams in lockstep across 14 product surfaces.&rdquo;
+            </h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.85, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
+              <div
+                style={{
+                  width: '22px',
+                  height: '22px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--ts-color-primary)',
+                  color: primaryTextColor,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: '9px',
+                }}
+              >
+                SR
+              </div>
+              <span style={{ fontWeight: 600 }}>Sarah Reynolds</span>
+              <span>— VP of Product Experience</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side: Form Container */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 'var(--ts-space-lg)',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '400px',
+              padding: 'var(--ts-space-xl)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--ts-space-md)',
+              ...getCardStyle(),
+            }}
+          >
+            {renderHeader()}
+            {showSocial && (
+              <>
+                {renderSocialButtons()}
+                {renderDivider()}
+              </>
+            )}
+            {renderFormFields()}
+            {renderBottomLinks()}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
   // 3. SOCIAL-LOGIN-FIRST LAYOUT
   // =========================================================================
   if (authLayout === 'social-first') {

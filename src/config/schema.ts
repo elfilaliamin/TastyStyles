@@ -23,6 +23,7 @@ export const PageLayoutsSchema = z.object({
   auth: z.enum([
     'centered-card',
     'split',
+    'split-image',
     'social-first',
     'full-background',
     'single-field',

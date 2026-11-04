@@ -91,6 +91,22 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
         </div>
       );
 
+    // 3b. Split Screen (Image Cover)
+    case 'split-image':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex gap-1.5 bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className="w-1/2 h-full rounded-[2px] bg-gradient-to-br from-slate-500 via-slate-600 to-slate-800 dark:from-slate-700 dark:to-slate-950 flex flex-col justify-end p-1 relative overflow-hidden">
+            <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_top_right,var(--tw-gradient-stops))] from-sky-400 via-transparent to-transparent" />
+            <div className="w-3/4 h-1 rounded-[2px] bg-white/90 z-10" />
+            <div className="w-1/2 h-0.5 rounded-[2px] bg-white/60 z-10 mt-0.5" />
+          </div>
+          <div className={`w-1/2 h-full rounded-[2px] ${fill} border ${border} p-1 flex flex-col justify-center gap-1`}>
+            <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+            <div className={`w-3/4 h-1.5 rounded-[2px] ${fill}`} />
+          </div>
+        </div>
+      );
+
     // 4. Centered Card / Modal Dialog
     case 'centered-card':
     case 'dialog-card':
@@ -310,9 +326,15 @@ export const LayoutSection: React.FC = () => {
             },
             {
               id: 'split',
-              title: 'Split Screen',
+              title: 'Split Showcase',
               description: 'Brand marketing showcase on one half, form on the other',
               variant: 'split',
+            },
+            {
+              id: 'split-image',
+              title: 'Split Screen 2 (Image)',
+              description: 'Editorial workspace photograph with glass overlay and form',
+              variant: 'split-image',
             },
             {
               id: 'social-first',
