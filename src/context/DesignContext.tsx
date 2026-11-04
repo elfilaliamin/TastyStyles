@@ -94,6 +94,8 @@ function migrateDesignState(raw: any): DesignState {
     weight: raw.icons?.weight ?? defaultInitialState.icons?.weight ?? 'regular',
   };
 
+  const projectGoal = typeof raw.projectGoal === 'string' ? raw.projectGoal : 'saas';
+
   const pageLayouts = {
     ...defaultInitialState.pageLayouts,
     ...(typeof raw.pageLayouts === 'object' && raw.pageLayouts !== null ? raw.pageLayouts : {}),
@@ -112,6 +114,7 @@ function migrateDesignState(raw: any): DesignState {
     iconStyle: defaultInitialState.iconStyle,
     icons,
     pageLayouts,
+    projectGoal,
   };
 }
 

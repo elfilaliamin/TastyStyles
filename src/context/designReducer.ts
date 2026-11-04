@@ -1,4 +1,5 @@
 import type {
+  ProjectGoal,
   DesignState,
   ColorPalette,
   TypographyState,
@@ -16,6 +17,7 @@ export type DesignAction =
   | { type: 'SET_TYPOGRAPHY'; updates: Partial<TypographyState> }
   | { type: 'SET_LAYOUT'; id: string }
   | { type: 'SET_PAGE_LAYOUT'; updates: Partial<PageLayouts> }
+  | { type: 'SET_PROJECT_GOAL'; goal: ProjectGoal }
   | { type: 'SET_RADIUS'; id: string }
   | { type: 'SET_SHADOW'; id: string }
   | { type: 'SET_SPACING'; id: string }
@@ -72,6 +74,7 @@ export const defaultInitialState: DesignState = {
     duotone: false,
     weight: 'regular',
   },
+  projectGoal: 'saas',
   pageLayouts: {
     auth: 'centered-card',
     authSocialButtons: true,
@@ -91,6 +94,16 @@ export const defaultInitialState: DesignState = {
     success: 'celebration-card',
     navbar: 'saas-header',
     sidebar: 'classic-grouped',
+    ecommerceCatalog: 'faceted-sidebar',
+    productDetail: 'split-sticky-buy',
+    checkout: 'slide-over-cart',
+    marketplace: 'split-map-list',
+    booking: 'split-calendar-slots',
+    editorial: 'masonry-frontpage',
+    charity: 'hero-impact-thermometer',
+    forum: 'three-column-reddit',
+    streaming: 'cinema-theater',
+    portfolio: 'case-study-hero',
   },
 };
 
@@ -173,6 +186,13 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         layout: action.id,
       };
     }
+    case 'SET_PROJECT_GOAL': {
+      return {
+        ...state,
+        projectGoal: action.goal,
+      };
+    }
+
     case 'SET_PAGE_LAYOUT': {
       return {
         ...state,
@@ -274,6 +294,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         iconStyle: preset.state.iconStyle ?? state.iconStyle ?? 'clean-outline',
         icons: preset.state.icons ?? state.icons ?? defaultInitialState.icons,
         pageLayouts: state.pageLayouts ?? defaultInitialState.pageLayouts,
+        projectGoal: state.projectGoal ?? 'saas',
       };
     }
     case 'RANDOMIZE_PALETTE': {
@@ -299,6 +320,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
           iconStyle: firstPreset.state.iconStyle ?? 'clean-outline',
           icons: firstPreset.state.icons ?? defaultInitialState.icons,
           pageLayouts: defaultInitialState.pageLayouts,
+          projectGoal: defaultInitialState.projectGoal,
         };
       }
       return defaultInitialState;

@@ -17,6 +17,8 @@ import { PREVIEW_REGISTRY, getPreviewIndex, getNextPreview, getPrevPreview } fro
 const CATEGORY_LABELS: Record<string, string> = {
   Primitives: 'Component Primitives',
   Public: 'Public Pages',
+  Commerce: 'Commerce & Transactions',
+  Community: 'Community & Social',
   Auth: 'Auth & Onboarding',
   Core: 'Core Application',
   Account: 'Account & Workspace',
@@ -41,6 +43,20 @@ const ErrorPage = lazy(() => import('./pages/system/ErrorPage').then(m => ({ def
 const EmptyStatePage = lazy(() => import('./pages/system/EmptyStatePage').then(m => ({ default: m.EmptyStatePage })));
 const SuccessConfirmPage = lazy(() => import('./pages/system/SuccessConfirmPage').then(m => ({ default: m.SuccessConfirmPage })));
 
+// Commerce & Domain Archetypes (Lazy Loaded)
+const ProductCatalogPage = lazy(() => import('./pages/commerce/ProductCatalogPage').then(m => ({ default: m.ProductCatalogPage })));
+const ProductDetailPage = lazy(() => import('./pages/commerce/ProductDetailPage').then(m => ({ default: m.ProductDetailPage })));
+const CheckoutPage = lazy(() => import('./pages/commerce/CheckoutPage').then(m => ({ default: m.CheckoutPage })));
+const MarketplacePage = lazy(() => import('./pages/commerce/MarketplacePage').then(m => ({ default: m.MarketplacePage })));
+const BookingPage = lazy(() => import('./pages/commerce/BookingPage').then(m => ({ default: m.BookingPage })));
+
+// Content & Community Archetypes (Lazy Loaded)
+const EditorialPage = lazy(() => import('./pages/content/EditorialPage').then(m => ({ default: m.EditorialPage })));
+const PortfolioPage = lazy(() => import('./pages/content/PortfolioPage').then(m => ({ default: m.PortfolioPage })));
+const CharityPage = lazy(() => import('./pages/content/CharityPage').then(m => ({ default: m.CharityPage })));
+const CommunityForumPage = lazy(() => import('./pages/content/CommunityForumPage').then(m => ({ default: m.CommunityForumPage })));
+const StreamingPage = lazy(() => import('./pages/content/StreamingPage').then(m => ({ default: m.StreamingPage })));
+
 // Preloader for instant transition on hover/focus
 const preloadComponent = (type: string) => {
   switch (type) {
@@ -60,6 +76,16 @@ const preloadComponent = (type: string) => {
     case 'error': void import('./pages/system/ErrorPage'); break;
     case 'empty-state': void import('./pages/system/EmptyStatePage'); break;
     case 'success': void import('./pages/system/SuccessConfirmPage'); break;
+    case 'ecommerce-catalog': void import('./pages/commerce/ProductCatalogPage'); break;
+    case 'product-detail': void import('./pages/commerce/ProductDetailPage'); break;
+    case 'checkout': void import('./pages/commerce/CheckoutPage'); break;
+    case 'marketplace': void import('./pages/commerce/MarketplacePage'); break;
+    case 'booking': void import('./pages/commerce/BookingPage'); break;
+    case 'editorial': void import('./pages/content/EditorialPage'); break;
+    case 'portfolio': void import('./pages/content/PortfolioPage'); break;
+    case 'charity': void import('./pages/content/CharityPage'); break;
+    case 'forum': void import('./pages/content/CommunityForumPage'); break;
+    case 'streaming': void import('./pages/content/StreamingPage'); break;
   }
 };
 
@@ -148,6 +174,18 @@ export const PreviewPane: React.FC = () => {
     // Navigation & Application Shells
     'sidebar',
     'navbar',
+    // Commerce & Transactional
+    'ecommerce-catalog',
+    'product-detail',
+    'checkout',
+    'marketplace',
+    'booking',
+    // Community & Content
+    'editorial',
+    'portfolio',
+    'charity',
+    'forum',
+    'streaming',
     // Public Pages
     'landing',
     'pricing',
@@ -192,6 +230,30 @@ export const PreviewPane: React.FC = () => {
         return <NavbarPreview />;
       case 'sidebar':
         return <SidebarPreview />;
+
+      // Commerce & Transactional
+      case 'ecommerce-catalog':
+        return <ProductCatalogPage />;
+      case 'product-detail':
+        return <ProductDetailPage />;
+      case 'checkout':
+        return <CheckoutPage />;
+      case 'marketplace':
+        return <MarketplacePage />;
+      case 'booking':
+        return <BookingPage />;
+
+      // Content & Community
+      case 'editorial':
+        return <EditorialPage />;
+      case 'portfolio':
+        return <PortfolioPage />;
+      case 'charity':
+        return <CharityPage />;
+      case 'forum':
+        return <CommunityForumPage />;
+      case 'streaming':
+        return <StreamingPage />;
 
       // Public Pages
       case 'landing':
@@ -265,7 +327,7 @@ export const PreviewPane: React.FC = () => {
               aria-label="Select preview archetype"
               className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[145px] sm:max-w-[210px] md:max-w-xs truncate"
             >
-              {(['Primitives', 'Public', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
+              {(['Primitives', 'Public', 'Commerce', 'Community', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
                 const items = PREVIEW_REGISTRY.filter((p) => p.category === cat);
                 if (items.length === 0) return null;
                 return (

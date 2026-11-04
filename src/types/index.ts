@@ -18,6 +18,18 @@ export type PreviewComponentType =
   | 'pricing'
   | 'blog'
   | 'contact'
+  | 'editorial'
+  | 'portfolio'
+  // Commerce & Transactional
+  | 'ecommerce-catalog'
+  | 'product-detail'
+  | 'checkout'
+  | 'marketplace'
+  | 'booking'
+  // Community & Social
+  | 'charity'
+  | 'forum'
+  | 'streaming'
   // Auth & Onboarding
   | 'auth'
   | 'onboarding'

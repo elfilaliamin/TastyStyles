@@ -1,6 +1,7 @@
 import type { DesignState, PageLayouts } from '../config/schema';
 import { resolveTokens, generateUnifiedCssTokens } from './tokenModel';
 import { LAYOUT_CATALOG, type LayoutCatalogItem } from '../config/layoutCatalog';
+import { GOAL_DEFINITIONS } from '../config/previews';
 import { COMPONENT_RECIPES } from '../config/recipes';
 import { generateTailwindConfig } from './exportUtils';
 
@@ -20,6 +21,16 @@ export function compileMarkdown(state: DesignState): string {
     'dashboard',
     'landing',
     'pricing',
+    'ecommerceCatalog',
+    'productDetail',
+    'checkout',
+    'marketplace',
+    'booking',
+    'editorial',
+    'charity',
+    'forum',
+    'streaming',
+    'portfolio',
     'kanban',
     'chat',
     'settings',
@@ -33,7 +44,8 @@ export function compileMarkdown(state: DesignState): string {
   const activePageEntries: LayoutCatalogItem[] = [];
   pageKeys.forEach((key) => {
     const chosenVariantId = pageLayouts[key];
-    const catalogForPage = LAYOUT_CATALOG[key] ?? [];
+    const catalogKey = key === 'ecommerceCatalog' ? 'ecommerce-catalog' : key === 'productDetail' ? 'product-detail' : key;
+    const catalogForPage = LAYOUT_CATALOG[catalogKey] ?? LAYOUT_CATALOG[key] ?? [];
     const item =
       catalogForPage.find((l) => l.id === chosenVariantId) ??
       catalogForPage[0];
@@ -198,6 +210,10 @@ ${COMPONENT_RECIPES.map(
 ---
 
 ## 7. Page Inventory & Wireframe Architecture
+
+### 7.0 Active Target Project Goal: ${(state.projectGoal ?? 'saas').toUpperCase()}
+This application architecture is configured specifically for the **${GOAL_DEFINITIONS[state.projectGoal ?? 'saas']?.label ?? 'B2B SaaS Platform'}** sector:
+> *${GOAL_DEFINITIONS[state.projectGoal ?? 'saas']?.tagline ?? 'Multi-tenant analytics, permissions & subscription operations'}*
 
 ### 7.1 Configured Layout Archetypes Matrix
 The following layout variants have been selected in this design system. Any AI agent or developer generating pages must adhere to these chosen archetypes:

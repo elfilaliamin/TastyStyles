@@ -49,7 +49,35 @@ export const PageLayoutsSchema = z.object({
   success: z.enum(['celebration-card', 'receipt-summary', 'minimal-banner']).default('celebration-card'),
   navbar: z.enum(['saas-header', 'minimal-center', 'floating-pill', 'tabbed-nav', 'ecommerce-action']).default('saas-header'),
   sidebar: z.enum(['classic-grouped', 'compact-rail', 'dual-pane', 'floating-card', 'workspace-shell']).default('classic-grouped'),
+  ecommerceCatalog: z.enum(['faceted-sidebar', 'top-filter-bar', 'split-map-view']).default('faceted-sidebar'),
+  productDetail: z.enum(['split-sticky-buy', 'vertical-scroll-story', 'two-column-tabs']).default('split-sticky-buy'),
+  checkout: z.enum(['slide-over-cart', 'one-page-accordion', 'split-order-rail']).default('slide-over-cart'),
+  marketplace: z.enum(['split-map-list', 'hero-directory-categories', 'supplier-operator-dashboard']).default('split-map-list'),
+  booking: z.enum(['split-calendar-slots', 'stepped-service-wizard', 'horizontal-timeline-roster']).default('split-calendar-slots'),
+  editorial: z.enum(['masonry-frontpage', 'focused-prose-toc', 'paywall-meter-overlay']).default('masonry-frontpage'),
+  charity: z.enum(['hero-impact-thermometer', 'split-cause-calculator', 'donor-wall-transparency']).default('hero-impact-thermometer'),
+  forum: z.enum(['three-column-reddit', 'split-qa-solved', 'compact-thread-table']).default('three-column-reddit'),
+  streaming: z.enum(['cinema-theater', 'live-stream-split', 'audio-queue-rail']).default('cinema-theater'),
+  portfolio: z.enum(['case-study-hero', 'minimalist-editorial', 'interactive-grid-gallery']).default('case-study-hero'),
 });
+
+
+export const ProjectGoalSchema = z.enum([
+  'saas',
+  'ecommerce',
+  'marketplace',
+  'booking',
+  'editorial',
+  'charity',
+  'forum',
+  'streaming',
+  'lms',
+  'devtools',
+  'portfolio',
+  'agency',
+]).default('saas');
+
+export type ProjectGoal = z.infer<typeof ProjectGoalSchema>;
 
 export const IconLibrarySchema = z.enum([
   'lucide',
@@ -97,6 +125,7 @@ export const DesignStateSchema = z.object({
   iconStyle: z.enum(['clean-outline', 'bold-stroke', 'minimal-thin', 'duotone', 'solid-badge']).default('clean-outline'),
   icons: IconConfigSchema.optional().default(() => IconConfigSchema.parse({})),
   pageLayouts: PageLayoutsSchema.optional().default(() => PageLayoutsSchema.parse({})),
+  projectGoal: ProjectGoalSchema.default('saas'),
 });
 
 export type HexColor = z.infer<typeof HexColorSchema>;

@@ -592,6 +592,76 @@ export const LayoutSection: React.FC = () => {
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { sidebar: id as PageLayouts['sidebar'] } }),
         };
 
+      case 'ecommerce-catalog':
+        return {
+          options: getLayoutsForPage('ecommerce-catalog'),
+          selectedId: pageLayouts.ecommerceCatalog ?? 'faceted-sidebar',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { ecommerceCatalog: id as PageLayouts['ecommerceCatalog'] } }),
+        };
+
+      case 'product-detail':
+        return {
+          options: getLayoutsForPage('product-detail'),
+          selectedId: pageLayouts.productDetail ?? 'split-sticky-buy',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { productDetail: id as PageLayouts['productDetail'] } }),
+        };
+
+      case 'checkout':
+        return {
+          options: getLayoutsForPage('checkout'),
+          selectedId: pageLayouts.checkout ?? 'slide-over-cart',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { checkout: id as PageLayouts['checkout'] } }),
+        };
+
+      case 'marketplace':
+        return {
+          options: getLayoutsForPage('marketplace'),
+          selectedId: pageLayouts.marketplace ?? 'split-map-list',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { marketplace: id as PageLayouts['marketplace'] } }),
+        };
+
+      case 'booking':
+        return {
+          options: getLayoutsForPage('booking'),
+          selectedId: pageLayouts.booking ?? 'split-calendar-slots',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { booking: id as PageLayouts['booking'] } }),
+        };
+
+      case 'editorial':
+        return {
+          options: getLayoutsForPage('editorial'),
+          selectedId: pageLayouts.editorial ?? 'masonry-frontpage',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { editorial: id as PageLayouts['editorial'] } }),
+        };
+
+      case 'charity':
+        return {
+          options: getLayoutsForPage('charity'),
+          selectedId: pageLayouts.charity ?? 'hero-impact-thermometer',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { charity: id as PageLayouts['charity'] } }),
+        };
+
+      case 'forum':
+        return {
+          options: getLayoutsForPage('forum'),
+          selectedId: pageLayouts.forum ?? 'three-column-reddit',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { forum: id as PageLayouts['forum'] } }),
+        };
+
+      case 'streaming':
+        return {
+          options: getLayoutsForPage('streaming'),
+          selectedId: pageLayouts.streaming ?? 'cinema-theater',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { streaming: id as PageLayouts['streaming'] } }),
+        };
+
+      case 'portfolio':
+        return {
+          options: getLayoutsForPage('portfolio'),
+          selectedId: pageLayouts.portfolio ?? 'case-study-hero',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolio: id as PageLayouts['portfolio'] } }),
+        };
+
       // Component Primitives & Single-Layout Views: Always keep a single layout named 'Default'
       case 'buttons':
       case 'forms':
