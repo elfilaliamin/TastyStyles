@@ -151,7 +151,7 @@ const DesignContext = createContext<DesignContextType | undefined>(undefined);
 
 export const DesignProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(designReducer, undefined, getInitialState);
-  const [activePreview, setActivePreview] = useState<PreviewComponentType>('overview');
+  const [activePreview, setActivePreview] = useState<PreviewComponentType>('buttons');
 
   // History stack for Undo / Redo
   const [past, setPast] = useState<DesignState[]>([]);

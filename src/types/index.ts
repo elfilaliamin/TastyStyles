@@ -5,11 +5,11 @@ export type MobileTab = 'controls' | 'preview';
 
 export type PreviewComponentType =
   // Component Primitives
-  | 'overview'
   | 'buttons'
   | 'forms'
   | 'cards'
   | 'feedback'
+  | 'popups'
   | 'table'
   | 'navbar'
   | 'sidebar'

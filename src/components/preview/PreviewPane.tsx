@@ -5,6 +5,7 @@ import { ButtonsPreview } from './components/ButtonsPreview';
 import { FormsPreview } from './components/FormsPreview';
 import { CardsPreview } from './components/CardsPreview';
 import { FeedbackPreview } from './components/FeedbackPreview';
+import { PopupsPreview } from './components/PopupsPreview';
 import { TablePreview } from './components/TablePreview';
 import { NavbarPreview } from './components/NavbarPreview';
 import { SidebarPreview } from './components/SidebarPreview';
@@ -174,6 +175,8 @@ export const PreviewPane: React.FC = () => {
         return <CardsPreview />;
       case 'feedback':
         return <FeedbackPreview />;
+      case 'popups':
+        return <PopupsPreview />;
       case 'table':
         return <TablePreview />;
       case 'navbar':
@@ -381,8 +384,8 @@ export const PreviewPane: React.FC = () => {
                   flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: activePreview === 'overview' ? 'center' : 'stretch',
-                  justifyContent: activePreview === 'overview' ? 'center' : 'flex-start',
+                  alignItems: 'stretch',
+                  justifyContent: 'flex-start',
                   width: '100%',
                 }}
               >

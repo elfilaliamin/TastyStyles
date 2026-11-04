@@ -11,11 +11,11 @@ export interface PreviewDefinition {
 
 export const PREVIEW_REGISTRY: PreviewDefinition[] = [
   // Component Primitives
-  { id: 'overview', label: 'Component Card (Overview)', shortLabel: 'Overview', category: 'Primitives', description: 'Core component design token stress test card', hasCustomLayouts: false },
   { id: 'buttons', label: 'Buttons & Actions', shortLabel: 'Buttons', category: 'Primitives', description: 'Primary, secondary, outline, ghost and icon buttons', hasCustomLayouts: false },
   { id: 'forms', label: 'Form Controls & Inputs', shortLabel: 'Forms', category: 'Primitives', description: 'Text inputs, selects, toggles, checkboxes and validation states', hasCustomLayouts: false },
   { id: 'cards', label: 'Cards & Surfaces Showcase', shortLabel: 'Cards', category: 'Primitives', description: 'Card elevations, borders, glass surfaces, and badges', hasCustomLayouts: false },
-  { id: 'feedback', label: 'Feedback, Badges & Alerts', shortLabel: 'Feedback', category: 'Primitives', description: 'Banners, toasts, pill badges, and status indicators', hasCustomLayouts: false },
+  { id: 'feedback', label: 'Feedback & Status Chips', shortLabel: 'Feedback', category: 'Primitives', description: 'Status indicators, chips, pills, and inline badges', hasCustomLayouts: false },
+  { id: 'popups', label: 'Notifications, Alerts & Confirmation Popups', shortLabel: 'Popups & Alerts', category: 'Primitives', description: 'Toast notifications, banner alerts, and confirmation dialog popups', hasCustomLayouts: false },
   { id: 'table', label: 'Data Tables & Lists', shortLabel: 'Tables', category: 'Primitives', description: 'Tabular data display, search filters, and pagination', hasCustomLayouts: false },
   { id: 'navbar', label: 'Navbar & Navigation Header', shortLabel: 'Navbar', category: 'Primitives', description: 'Application headers, top navigation bars, actions and breadcrumbs', hasCustomLayouts: true },
   { id: 'sidebar', label: 'Sidebar Navigation & Rails', shortLabel: 'Sidebar', category: 'Primitives', description: 'Left sidebar navigation, icon rails, dual pane and tree menus', hasCustomLayouts: true },

@@ -13,7 +13,7 @@ export const FeedbackPreview: React.FC = () => {
         backgroundColor: 'var(--ts-color-surface)',
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         border: '1px solid var(--ts-color-border)',
         boxShadow: 'var(--ts-shadow)',
         padding: 'var(--ts-space-lg)',
@@ -191,7 +191,7 @@ export const FeedbackPreview: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-background)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             padding: 'var(--ts-space-md)',
             boxShadow: 'var(--ts-shadow)',
             display: 'flex',

@@ -13,6 +13,7 @@ import {
 import {
   ChevronLeft,
   ChevronRight,
+  Bell,
   Lock,
   AlertTriangle,
   LayoutDashboard,
@@ -408,6 +409,22 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
         </div>
       );
 
+    // Component Primitives Showcase (Default)
+    case 'default':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex flex-col justify-between bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className="flex items-center gap-1.5">
+            <div className={`w-3.5 h-2 rounded-[2px] ${accent}`} />
+            <div className={`w-1/3 h-1.5 rounded-[2px] ${fill}`} />
+          </div>
+          <div className="flex gap-1.5">
+            <div className={`flex-1 h-4 rounded-[2px] ${fill}`} />
+            <div className={`flex-1 h-4 rounded-[2px] ${fill}`} />
+          </div>
+          <div className={`w-1/2 h-1.5 rounded-[2px] ${accent}`} />
+        </div>
+      );
+
     // 9. Minimalist Clean / Terminal
     case 'minimal':
     case 'split-terminal':
@@ -465,6 +482,7 @@ export const LayoutSection: React.FC = () => {
       case 'empty-state': return <HelpCircle className="w-3.5 h-3.5 text-amber-500" />;
       case 'navbar': return <PanelTop className="w-3.5 h-3.5 text-indigo-500" />;
       case 'sidebar': return <PanelLeft className="w-3.5 h-3.5 text-sky-500" />;
+      case 'popups': return <Bell className="w-3.5 h-3.5 text-amber-500" />;
       default: return <Layers className="w-3.5 h-3.5 text-sky-500" />;
     }
   };
@@ -574,6 +592,30 @@ export const LayoutSection: React.FC = () => {
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { sidebar: id as PageLayouts['sidebar'] } }),
         };
 
+      // Component Primitives & Single-Layout Views: Always keep a single layout named 'Default'
+      case 'buttons':
+      case 'forms':
+      case 'cards':
+      case 'feedback':
+      case 'popups':
+      case 'table':
+      case 'blog':
+      case 'contact':
+      case 'billing':
+      case 'team':
+        return {
+          options: [
+            {
+              id: 'default',
+              title: 'Default',
+              description: 'Standard responsive showcase layout for this view',
+              variant: 'default',
+            },
+          ],
+          selectedId: 'default',
+          onSelect: () => {},
+        };
+
       // Default: Component Primitives & System Wireframe (sets state.layout)
       default:
         return {
@@ -638,7 +680,7 @@ export const LayoutSection: React.FC = () => {
       </div>
 
       {/* Grid of Layout Cards matching screenshot style */}
-      <div className="grid grid-cols-2 gap-2.5">
+      <div className={`grid ${options.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} gap-2.5`}>
         {options.map((layout) => {
           const isSelected = selectedId === layout.id;
 

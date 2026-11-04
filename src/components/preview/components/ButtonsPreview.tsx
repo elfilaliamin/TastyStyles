@@ -14,7 +14,7 @@ export const ButtonsPreview: React.FC = () => {
         backgroundColor: 'var(--ts-color-surface)',
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         border: '1px solid var(--ts-color-border)',
         boxShadow: 'var(--ts-shadow)',
         padding: 'var(--ts-space-lg)',
