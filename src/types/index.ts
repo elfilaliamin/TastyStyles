@@ -11,6 +11,8 @@ export type PreviewComponentType =
   | 'cards'
   | 'feedback'
   | 'table'
+  | 'navbar'
+  | 'sidebar'
   // Layout Wireframe
   | 'layout'
   // Public Pages

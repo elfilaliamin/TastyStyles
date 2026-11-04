@@ -24,6 +24,8 @@ import {
   CheckCircle,
   HelpCircle,
   Layers,
+  PanelTop,
+  PanelLeft,
 } from 'lucide-react';
 
 /* ==========================================================================
@@ -263,6 +265,148 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
         </div>
       );
 
+    // 8b. Navbar Variations
+    case 'navbar-saas':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col gap-1 bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-full h-3 rounded-[2px] border ${border} px-1 flex items-center justify-between bg-white dark:bg-slate-900`}>
+            <div className="flex items-center gap-1">
+              <div className={`w-2 h-2 rounded-[1px] ${accent}`} />
+              <div className={`w-5 h-1 rounded-[1px] ${fill}`} />
+            </div>
+            <div className={`w-10 h-1.5 rounded-[1px] ${fill}`} />
+            <div className={`w-2 h-2 rounded-full ${accent}`} />
+          </div>
+          <div className="flex-1 rounded-[2px] bg-slate-200/50 dark:bg-slate-800/40 p-1 flex flex-col gap-1">
+            <div className={`w-1/3 h-1.5 rounded-[1px] ${fill}`} />
+            <div className={`w-full h-2 rounded-[1px] ${fill}`} />
+          </div>
+        </div>
+      );
+
+    case 'navbar-center':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col gap-1 bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-full h-3 rounded-[2px] border ${border} px-1 flex items-center justify-between bg-white dark:bg-slate-900`}>
+            <div className={`w-3 h-1.5 rounded-[1px] ${accent}`} />
+            <div className="flex items-center gap-1">
+              <div className={`w-4 h-1 rounded-[1px] ${fill}`} />
+              <div className={`w-4 h-1 rounded-[1px] ${fill}`} />
+              <div className={`w-4 h-1 rounded-[1px] ${fill}`} />
+            </div>
+            <div className={`w-4 h-1.5 rounded-[1px] ${accent}`} />
+          </div>
+          <div className="flex-1 rounded-[2px] bg-slate-200/50 dark:bg-slate-800/40 p-1 flex flex-col items-center justify-center gap-1">
+            <div className={`w-1/2 h-1.5 rounded-[1px] ${accent}`} />
+            <div className={`w-2/3 h-1 rounded-[1px] ${fill}`} />
+          </div>
+        </div>
+      );
+
+    case 'navbar-floating':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col gap-1 bg-slate-50 dark:bg-slate-950 transition-colors relative`}>
+          <div className={`mx-auto w-4/5 h-2.5 rounded-full border ${border} px-1.5 flex items-center justify-between bg-white/90 dark:bg-slate-900/90 shadow-sm z-10`}>
+            <div className={`w-2 h-1.5 rounded-full ${accent}`} />
+            <div className="flex items-center gap-1">
+              <div className={`w-3 h-0.5 rounded-[1px] ${fill}`} />
+              <div className={`w-3 h-0.5 rounded-[1px] ${fill}`} />
+            </div>
+            <div className={`w-3 h-1 rounded-full ${accent}`} />
+          </div>
+          <div className="flex-1 rounded-[2px] bg-slate-200/50 dark:bg-slate-800/40 p-1 flex flex-col justify-end">
+            <div className={`w-full h-2 rounded-[1px] ${fill}`} />
+          </div>
+        </div>
+      );
+
+    case 'navbar-tabbed':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col gap-0.5 bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-full h-2.5 rounded-t-[2px] border-b ${border} px-1 flex items-center justify-between bg-white dark:bg-slate-900`}>
+            <div className={`w-3 h-1 rounded-[1px] ${accent}`} />
+            <div className={`w-2 h-1 rounded-full ${fill}`} />
+          </div>
+          <div className="w-full flex gap-1 px-1 py-0.5 border-b border-slate-200 dark:border-slate-800">
+            <div className={`w-4 h-1 rounded-[1px] ${accent}`} />
+            <div className={`w-4 h-1 rounded-[1px] ${fill}`} />
+            <div className={`w-4 h-1 rounded-[1px] ${fill}`} />
+          </div>
+          <div className="flex-1 rounded-b-[2px] bg-slate-200/50 dark:bg-slate-800/40 p-1 flex flex-col gap-1">
+            <div className={`w-full h-2 rounded-[1px] ${fill}`} />
+          </div>
+        </div>
+      );
+
+    case 'navbar-command':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col gap-1 bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-full h-3 rounded-[2px] border ${border} px-1 flex items-center justify-between bg-white dark:bg-slate-900`}>
+            <div className={`w-2.5 h-2 rounded-[1px] ${accent}`} />
+            <div className={`w-14 h-1.5 rounded-[1px] border ${border} bg-slate-100 dark:bg-slate-800`} />
+            <div className="flex gap-0.5">
+              <div className={`w-2 h-2 rounded-[1px] ${fill}`} />
+              <div className={`w-2 h-2 rounded-[1px] ${accent}`} />
+            </div>
+          </div>
+          <div className="flex-1 rounded-[2px] bg-slate-200/50 dark:bg-slate-800/40 p-1 flex flex-col gap-1">
+            <div className={`w-2/3 h-1.5 rounded-[1px] ${fill}`} />
+            <div className={`w-full h-2 rounded-[1px] ${fill}`} />
+          </div>
+        </div>
+      );
+
+    // 8c. Sidebar Variations
+    case 'sidebar-rail':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex gap-1 bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-3.5 h-full rounded-[2px] border ${border} bg-white dark:bg-slate-900 flex flex-col items-center py-1 gap-1`}>
+            <div className={`w-2 h-2 rounded-[1px] ${accent}`} />
+            <div className={`w-2 h-1.5 rounded-[1px] ${fill}`} />
+            <div className={`w-2 h-1.5 rounded-[1px] ${fill}`} />
+            <div className={`w-2 h-1.5 rounded-[1px] ${fill}`} />
+          </div>
+          <div className="flex-1 flex flex-col gap-1">
+            <div className={`w-full h-2 rounded-[1px] ${fill}`} />
+            <div className={`w-full flex-1 rounded-[2px] bg-slate-200/50 dark:bg-slate-800/40`} />
+          </div>
+        </div>
+      );
+
+    case 'sidebar-dual':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex gap-0.5 bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-3 h-full rounded-[2px] bg-slate-300 dark:bg-slate-800 flex flex-col items-center py-1 gap-1`}>
+            <div className={`w-1.5 h-1.5 rounded-[1px] ${accent}`} />
+            <div className={`w-1.5 h-1 rounded-[1px] ${fill}`} />
+          </div>
+          <div className={`w-1/4 h-full rounded-[2px] border ${border} bg-white dark:bg-slate-900 p-0.5 flex flex-col gap-1`}>
+            <div className={`w-full h-1 rounded-[1px] ${accent}`} />
+            <div className={`w-3/4 h-1 rounded-[1px] ${fill}`} />
+            <div className={`w-full h-1 rounded-[1px] ${fill}`} />
+          </div>
+          <div className="flex-1 flex flex-col gap-1 pl-0.5">
+            <div className={`w-full h-2 rounded-[1px] ${fill}`} />
+            <div className={`w-full flex-1 rounded-[2px] bg-slate-200/50 dark:bg-slate-800/40`} />
+          </div>
+        </div>
+      );
+
+    case 'sidebar-floating':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex gap-1.5 bg-slate-100 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-1/3 h-full rounded-md border ${border} bg-white dark:bg-slate-900 shadow-sm p-1 flex flex-col gap-1`}>
+            <div className={`w-3 h-1.5 rounded-[1px] ${accent}`} />
+            <div className={`w-full h-1 rounded-[1px] ${fill}`} />
+            <div className={`w-4/5 h-1 rounded-[1px] ${fill}`} />
+          </div>
+          <div className={`flex-1 h-full rounded-md border ${border} bg-white dark:bg-slate-900 p-1 flex flex-col gap-1`}>
+            <div className={`w-1/2 h-1.5 rounded-[1px] ${accent}`} />
+            <div className={`w-full h-2 rounded-[1px] ${fill}`} />
+          </div>
+        </div>
+      );
+
     // 9. Minimalist Clean / Terminal
     case 'minimal':
     case 'split-terminal':
@@ -318,6 +462,8 @@ export const LayoutSection: React.FC = () => {
       case 'onboarding': return <Sparkles className="w-3.5 h-3.5 text-violet-500" />;
       case 'success': return <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />;
       case 'empty-state': return <HelpCircle className="w-3.5 h-3.5 text-amber-500" />;
+      case 'navbar': return <PanelTop className="w-3.5 h-3.5 text-indigo-500" />;
+      case 'sidebar': return <PanelLeft className="w-3.5 h-3.5 text-sky-500" />;
       default: return <Layers className="w-3.5 h-3.5 text-sky-500" />;
     }
   };
@@ -506,6 +652,32 @@ export const LayoutSection: React.FC = () => {
           ],
           selectedId: pageLayouts.detail ?? 'split-sidepanel',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { detail: id as PageLayouts['detail'] } }),
+        };
+
+      case 'navbar':
+        return {
+          options: [
+            { id: 'saas-header', title: 'Modern SaaS Header', description: 'Brand breadcrumb, command search, quick actions & user menu', variant: 'navbar-saas' },
+            { id: 'minimal-center', title: 'Minimalist Clean', description: 'Centered navigation links, brand logo, and primary CTA', variant: 'navbar-center' },
+            { id: 'floating-pill', title: 'Floating Island Pill', description: 'Detached pill navbar with glassmorphism backdrop blur', variant: 'navbar-floating' },
+            { id: 'tabbed-nav', title: 'Tabbed Subnav Header', description: 'Two-tier header with global context and tabbed navigation', variant: 'navbar-tabbed' },
+            { id: 'ecommerce-action', title: 'Command & Actions Bar', description: 'Dense operational toolbar with search, metrics & quick tools', variant: 'navbar-command' },
+          ],
+          selectedId: pageLayouts.navbar ?? 'saas-header',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { navbar: id as PageLayouts['navbar'] } }),
+        };
+
+      case 'sidebar':
+        return {
+          options: [
+            { id: 'classic-grouped', title: 'Classic Grouped', description: 'Categorized menu links with badges, user card & quick search', variant: 'sidebar-content' },
+            { id: 'compact-rail', title: 'Compact Icon Rail', description: 'Space-saving slim icon rail with tooltips and flyout targets', variant: 'sidebar-rail' },
+            { id: 'dual-pane', title: 'Dual-Pane Master Nav', description: 'Workspace switcher rail paired with contextual sub-menu', variant: 'sidebar-dual' },
+            { id: 'floating-card', title: 'Floating Detached Card', description: 'Elevated floating card sidebar detached from screen edges', variant: 'sidebar-floating' },
+            { id: 'workspace-shell', title: 'Enterprise App Shell', description: 'Full-bleed sidebar with org switcher, breadcrumb and footer', variant: 'sidebar-nav' },
+          ],
+          selectedId: pageLayouts.sidebar ?? 'classic-grouped',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { sidebar: id as PageLayouts['sidebar'] } }),
         };
 
       // Default: Component Primitives & System Wireframe (sets state.layout)

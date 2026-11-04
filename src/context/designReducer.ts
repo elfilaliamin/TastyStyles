@@ -10,6 +10,7 @@ export type DesignAction =
   | { type: 'SET_RADIUS'; id: string }
   | { type: 'SET_SHADOW'; id: string }
   | { type: 'SET_SPACING'; id: string }
+  | { type: 'SET_ICON_STYLE'; style: DesignState['iconStyle'] }
   | { type: 'SET_NAME'; name: string }
   | { type: 'LOAD_PRESET'; id: string }
   | { type: 'RANDOMIZE_PALETTE' }
@@ -50,6 +51,7 @@ export const defaultInitialState: DesignState = {
   radius: 'rounded',
   shadow: 'soft',
   spacing: 'comfortable',
+  iconStyle: 'clean-outline',
   pageLayouts: {
     auth: 'centered-card',
     authSocialButtons: true,
@@ -67,6 +69,8 @@ export const defaultInitialState: DesignState = {
     onboarding: 'wizard-stepper',
     emptyState: 'centered-action',
     success: 'celebration-card',
+    navbar: 'saas-header',
+    sidebar: 'classic-grouped',
   },
 };
 
@@ -174,6 +178,12 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         spacing: action.id,
       };
     }
+    case 'SET_ICON_STYLE': {
+      return {
+        ...state,
+        iconStyle: action.style,
+      };
+    }
     case 'SET_NAME': {
       return {
         ...state,
@@ -193,6 +203,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         radius: preset.state.radius,
         shadow: preset.state.shadow,
         spacing: preset.state.spacing,
+        iconStyle: preset.state.iconStyle ?? state.iconStyle ?? 'clean-outline',
         pageLayouts: state.pageLayouts ?? defaultInitialState.pageLayouts,
       };
     }
@@ -216,6 +227,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
           radius: firstPreset.state.radius,
           shadow: firstPreset.state.shadow,
           spacing: firstPreset.state.spacing,
+          iconStyle: firstPreset.state.iconStyle ?? 'clean-outline',
           pageLayouts: defaultInitialState.pageLayouts,
         };
       }

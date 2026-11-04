@@ -5,8 +5,9 @@ import { ColorSection } from './ColorSection';
 import { TypographySection } from './TypographySection';
 import { LayoutSection } from './LayoutSection';
 import { ComponentSection } from './ComponentSection';
+import { IconSection } from './IconSection';
 import { PresetSection } from './PresetSection';
-import { Palette, Type, LayoutGrid, Sliders, Sparkles } from 'lucide-react';
+import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes } from 'lucide-react';
 
 export const ControlsPanel: React.FC = () => {
   const { state, dispatch } = useDesign();
@@ -55,6 +56,15 @@ export const ControlsPanel: React.FC = () => {
           defaultOpen={true}
         >
           <TypographySection />
+        </Accordion>
+
+        <Accordion
+          title="Icon Sets & Style"
+          subtitle="Stroke weight, duotone depth, and geometry"
+          icon={<Shapes className="w-4 h-4 text-sky-500" />}
+          defaultOpen={false}
+        >
+          <IconSection />
         </Accordion>
 
         <Accordion

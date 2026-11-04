@@ -8,6 +8,8 @@ import { FormsPreview } from './components/FormsPreview';
 import { CardsPreview } from './components/CardsPreview';
 import { FeedbackPreview } from './components/FeedbackPreview';
 import { TablePreview } from './components/TablePreview';
+import { NavbarPreview } from './components/NavbarPreview';
+import { SidebarPreview } from './components/SidebarPreview';
 
 // Page Archetypes (Lazy Loaded for Optimal Bundle Splitting)
 const LandingPage = lazy(() => import('./pages/public/LandingPage').then(m => ({ default: m.LandingPage })));
@@ -106,6 +108,14 @@ export const PreviewPane: React.FC = () => {
     '--ts-space-md': spacingEntry.scale.md,
     '--ts-space-lg': spacingEntry.scale.lg,
     '--ts-space-xl': spacingEntry.scale.xl,
+
+    '--ts-icon-stroke':
+      state.iconStyle === 'bold-stroke'
+        ? '2.5px'
+        : state.iconStyle === 'minimal-thin'
+        ? '1.25px'
+        : '1.75px',
+    '--ts-icon-fill-opacity': state.iconStyle === 'duotone' ? '0.2' : '0',
   };
 
   const currentIndex = getPreviewIndex(activePreview);
@@ -184,6 +194,10 @@ export const PreviewPane: React.FC = () => {
         return <FeedbackPreview />;
       case 'table':
         return <TablePreview />;
+      case 'navbar':
+        return <NavbarPreview />;
+      case 'sidebar':
+        return <SidebarPreview />;
       case 'layout':
         return <LayoutWireframe />;
 
@@ -289,6 +303,8 @@ export const PreviewPane: React.FC = () => {
                 <option value="cards">Cards & Surfaces Showcase</option>
                 <option value="feedback">Feedback, Badges & Alerts</option>
                 <option value="table">Data Tables & Lists</option>
+                <option value="navbar">Navbar & Navigation Header</option>
+                <option value="sidebar">Sidebar Navigation & Rails</option>
                 <option value="layout">Home Page Wireframe</option>
               </optgroup>
 
@@ -355,6 +371,7 @@ export const PreviewPane: React.FC = () => {
           {/* Isolated sandbox frame fixed to container height with internal scrolling */}
           <div
             data-viewport={viewportMode}
+            data-icon-style={state.iconStyle}
             className="ts-preview-frame"
             style={
               {

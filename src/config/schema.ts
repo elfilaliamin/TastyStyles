@@ -47,6 +47,8 @@ export const PageLayoutsSchema = z.object({
   onboarding: z.enum(['wizard-stepper', 'card-stack', 'minimal-modal']).default('wizard-stepper'),
   emptyState: z.enum(['centered-action', 'illustration-card', 'checklist-guide']).default('centered-action'),
   success: z.enum(['celebration-card', 'receipt-summary', 'minimal-banner']).default('celebration-card'),
+  navbar: z.enum(['saas-header', 'minimal-center', 'floating-pill', 'tabbed-nav', 'ecommerce-action']).default('saas-header'),
+  sidebar: z.enum(['classic-grouped', 'compact-rail', 'dual-pane', 'floating-card', 'workspace-shell']).default('classic-grouped'),
 });
 
 export const DesignStateSchema = z.object({
@@ -62,6 +64,7 @@ export const DesignStateSchema = z.object({
   radius: z.string().min(1),
   shadow: z.string().min(1),
   spacing: z.string().min(1),
+  iconStyle: z.enum(['clean-outline', 'bold-stroke', 'minimal-thin', 'duotone', 'solid-badge']).default('clean-outline'),
   pageLayouts: PageLayoutsSchema.optional().default(() => PageLayoutsSchema.parse({})),
 });
 

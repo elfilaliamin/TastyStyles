@@ -67,6 +67,7 @@ function getInitialState(): DesignState {
       radius: preset.state.radius,
       shadow: preset.state.shadow,
       spacing: preset.state.spacing,
+      iconStyle: defaultInitialState.iconStyle,
       pageLayouts: defaultInitialState.pageLayouts,
     };
   }

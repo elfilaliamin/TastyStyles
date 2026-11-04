@@ -17,6 +17,8 @@ export const PREVIEW_REGISTRY: PreviewDefinition[] = [
   { id: 'cards', label: 'Cards & Surfaces Showcase', shortLabel: 'Cards', category: 'Primitives', description: 'Card elevations, borders, glass surfaces, and badges', hasCustomLayouts: false },
   { id: 'feedback', label: 'Feedback, Badges & Alerts', shortLabel: 'Feedback', category: 'Primitives', description: 'Banners, toasts, pill badges, and status indicators', hasCustomLayouts: false },
   { id: 'table', label: 'Data Tables & Lists', shortLabel: 'Tables', category: 'Primitives', description: 'Tabular data display, search filters, and pagination', hasCustomLayouts: false },
+  { id: 'navbar', label: 'Navbar & Navigation Header', shortLabel: 'Navbar', category: 'Primitives', description: 'Application headers, top navigation bars, actions and breadcrumbs', hasCustomLayouts: true },
+  { id: 'sidebar', label: 'Sidebar Navigation & Rails', shortLabel: 'Sidebar', category: 'Primitives', description: 'Left sidebar navigation, icon rails, dual pane and tree menus', hasCustomLayouts: true },
   { id: 'layout', label: 'Home Page Wireframe', shortLabel: 'Wireframe', category: 'Primitives', description: 'Structural wireframe matching selected layout archetype', hasCustomLayouts: false },
 
   // Public Pages

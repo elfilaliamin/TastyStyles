@@ -174,6 +174,10 @@ Paste this block into your global stylesheet (e.g. \`:root\` in \`index.css\`):
   /* Shape & Elevation */
   --radius-base: ${radius.value};
   --shadow-base: ${shadow.value};
+
+  /* Icon System (${state.iconStyle}) */
+  --icon-stroke: ${state.iconStyle === 'bold-stroke' ? '2.5px' : state.iconStyle === 'minimal-thin' ? '1.25px' : '1.75px'};
+  --icon-fill-opacity: ${state.iconStyle === 'duotone' ? '0.2' : '0'};
 }
 
 /* Dark Mode Overrides */
@@ -250,6 +254,8 @@ module.exports = {
 - **Kanban & Sprint Board**: \`${state.pageLayouts?.kanban ?? 'board-columns'}\`
 - **Chat & Autonomous Inbox**: \`${state.pageLayouts?.chat ?? 'split-pane'}\`
 - **Settings & Preferences**: \`${state.pageLayouts?.settings ?? 'tabbed'}\`
+- **Navbar & Navigation Header**: \`${state.pageLayouts?.navbar ?? 'saas-header'}\`
+- **Sidebar Navigation & Rails**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`
 
 ---
 
