@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import {
-  LogOut,
-  GitBranch,
-  Terminal,
-} from 'lucide-react';
 import { AppIcon, type IconName } from '../../common/AppIcon';
 
 
@@ -27,14 +22,6 @@ export const SidebarPreview: React.FC = () => {
   const layout = state.pageLayouts?.sidebar ?? 'classic-grouped';
   const [activeItem, setActiveItem] = useState('tokens');
 
-  const weightMap: Record<string, number> = {
-    thin: 1.25,
-    light: 1.5,
-    regular: 1.75,
-    medium: 2.25,
-    bold: 2.75,
-  };
-  const strokeWidth = state.icons?.weight ? weightMap[state.icons.weight] ?? 1.75 : 1.75;
 
   // =========================================================================
   // 1. CLASSIC GROUPED SIDEBAR (Default)
@@ -227,7 +214,7 @@ export const SidebarPreview: React.FC = () => {
               style={{ background: 'none', border: 'none', color: 'var(--ts-color-text)', opacity: 0.5, cursor: 'pointer', padding: '4px' }}
               title="Sign out"
             >
-              <LogOut style={{ width: '14px', height: '14px' }} strokeWidth={strokeWidth} />
+              <AppIcon name="logOut" size={14} />
             </button>
           </div>
         </aside>
@@ -640,14 +627,14 @@ export const SidebarPreview: React.FC = () => {
 
           {/* Git Branch & Sync */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', opacity: 0.7, padding: '0 4px 12px 4px', borderBottom: '1px solid var(--ts-color-border)' }}>
-            <GitBranch style={{ width: '13px', height: '13px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+            <AppIcon name="gitBranch" size={13} style={{ color: 'var(--ts-color-primary)' }} />
             <span style={{ fontWeight: 600 }}>Branch: main</span>
             <span style={{ marginLeft: 'auto', color: '#10b981', fontWeight: 700 }}>● Synced</span>
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', fontSize: '11px' }}>
-          <Terminal style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+          <AppIcon name="terminal" size={14} style={{ color: 'var(--ts-color-primary)' }} />
           <span style={{ fontWeight: 600 }}>CLI Daemon Active</span>
         </div>
       </aside>

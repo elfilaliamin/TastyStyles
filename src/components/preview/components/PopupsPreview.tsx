@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import { RotateCcw } from 'lucide-react';
 import { AppIcon } from '../../common/AppIcon';
 
 export const PopupsPreview: React.FC = () => {
@@ -106,7 +105,7 @@ export const PopupsPreview: React.FC = () => {
                 cursor: 'pointer',
               }}
             >
-              <RotateCcw style={{ width: '12px', height: '12px' }} />
+              <AppIcon name="rotateCw" size={12} />
               Reset Dismissed Alerts
             </button>
           )}

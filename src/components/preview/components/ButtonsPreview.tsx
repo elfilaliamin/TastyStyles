@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import { Loader2 } from 'lucide-react';
 import { AppIcon } from '../../common/AppIcon';
 
 export const ButtonsPreview: React.FC = () => {
@@ -290,7 +289,7 @@ export const ButtonsPreview: React.FC = () => {
               cursor: 'wait',
             }}
           >
-            <Loader2 style={{ width: '15px', height: '15px', animation: 'spin 1s linear infinite' }} />
+            <AppIcon name="loader" size={15} style={{ animation: 'spin 1s linear infinite' }} />
             <span>Processing...</span>
           </button>
 

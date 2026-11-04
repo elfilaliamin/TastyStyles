@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import {
-  Command,
-  ChevronDown,
-  Activity,
-} from 'lucide-react';
 import { AppIcon } from '../../common/AppIcon';
 
 export const NavbarPreview: React.FC = () => {
@@ -14,14 +9,6 @@ export const NavbarPreview: React.FC = () => {
   const layout = state.pageLayouts?.navbar ?? 'saas-header';
   const [activeTab, setActiveTab] = useState('overview');
 
-  const weightMap: Record<string, number> = {
-    thin: 1.25,
-    light: 1.5,
-    regular: 1.75,
-    medium: 2.25,
-    bold: 2.75,
-  };
-  const strokeWidth = state.icons?.weight ? weightMap[state.icons.weight] ?? 1.75 : 1.75;
 
   // =========================================================================
   // 1. MODERN SAAS APP HEADER (Default)
@@ -122,7 +109,7 @@ export const NavbarPreview: React.FC = () => {
                   opacity: 0.7,
                 }}
               >
-                <Command style={{ width: '10px', height: '10px' }} strokeWidth={strokeWidth} />
+                <AppIcon name="command" size={10} />
                 <span>K</span>
               </span>
             </div>
@@ -190,7 +177,7 @@ export const NavbarPreview: React.FC = () => {
               >
                 AR
               </div>
-              <ChevronDown style={{ width: '12px', height: '12px', opacity: 0.6 }} strokeWidth={strokeWidth} />
+              <AppIcon name="chevronDown" size={12} style={{ opacity: 0.6 }} />
             </div>
           </div>
         </header>
@@ -493,7 +480,7 @@ export const NavbarPreview: React.FC = () => {
                   fontSize: '12px',
                 }}
               >
-                <Activity style={{ width: '13px', height: '13px', color: '#10b981' }} strokeWidth={strokeWidth} />
+                <AppIcon name="activity" size={13} style={{ color: '#10b981' }} />
                 <span style={{ fontWeight: 600 }}>v2.4.0 Live</span>
               </div>
               <div

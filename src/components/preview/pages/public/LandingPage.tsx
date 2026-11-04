@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import { ArrowRight, Sparkles, Zap, Shield, Layers, CheckCircle2, Code2 } from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const LandingPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -110,7 +110,7 @@ export const LandingPage: React.FC = () => {
                 alignSelf: 'flex-start',
               }}
             >
-              <Sparkles style={{ width: '13px', height: '13px' }} />
+              <AppIcon name="sparkles" size={13} />
               Next-Gen Design System Token Compiler
             </span>
             <h1
@@ -146,7 +146,7 @@ export const LandingPage: React.FC = () => {
                 }}
               >
                 <span>Compile Specification</span>
-                <ArrowRight style={{ width: '16px', height: '16px' }} />
+                <AppIcon name="arrowRight" size={16} />
               </button>
             </div>
           </div>
@@ -165,7 +165,7 @@ export const LandingPage: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Code2 style={{ width: '18px', height: '18px', color: 'var(--ts-color-accent)' }} />
+              <AppIcon name="code" size={18} style={{ color: 'var(--ts-color-accent)' }} />
               <span style={{ fontFamily: 'monospace', fontWeight: 700, fontSize: '13px' }}>tokens.config.json</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px', fontFamily: 'monospace', opacity: 0.9 }}>
@@ -175,7 +175,7 @@ export const LandingPage: React.FC = () => {
               <div>--font-heading: <span>{state.typography.headingFont}</span></div>
             </div>
             <div style={{ padding: '8px', borderRadius: 'var(--ts-radius)', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981', fontSize: '11px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CheckCircle2 style={{ width: '14px', height: '14px' }} />
+              <AppIcon name="checkCircle" size={14} />
               <span>WCAG 2.1 Contrast Verified</span>
             </div>
           </div>
@@ -209,7 +209,7 @@ export const LandingPage: React.FC = () => {
               fontWeight: 600,
             }}
           >
-            <Sparkles style={{ width: '13px', height: '13px' }} />
+            <AppIcon name="sparkles" size={13} />
             Next-Gen Design System Token Compiler
           </span>
 
@@ -248,7 +248,7 @@ export const LandingPage: React.FC = () => {
               }}
             >
               <span>Compile Specification</span>
-              <ArrowRight style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="arrowRight" size={16} />
             </button>
           </div>
         </section>
@@ -267,10 +267,10 @@ export const LandingPage: React.FC = () => {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--ts-space-md)' }}>
             {[
-              { title: 'Zero Hallucinations', desc: 'Strict machine-readable rules eliminating guesswork.', icon: <Zap style={{ width: '20px', height: '20px', color: 'var(--ts-color-primary)' }} /> },
-              { title: 'WCAG 2.1 AAA', desc: 'Real-time mathematical luminance verification formula.', icon: <Shield style={{ width: '20px', height: '20px', color: 'var(--ts-color-accent)' }} /> },
-              { title: 'Pure CSS Variables', desc: 'Scoped custom properties preventing collision cascades.', icon: <Layers style={{ width: '20px', height: '20px', color: 'var(--ts-color-primary)' }} /> },
-              { title: 'W3C DTCG Standard', desc: 'Figma Tokens and Style Dictionary ready exports.', icon: <Code2 style={{ width: '20px', height: '20px', color: 'var(--ts-color-accent)' }} /> },
+              { title: 'Zero Hallucinations', desc: 'Strict machine-readable rules eliminating guesswork.', icon: <AppIcon name="zap" size={20} style={{ color: 'var(--ts-color-primary)' }} /> },
+              { title: 'WCAG 2.1 AAA', desc: 'Real-time mathematical luminance verification formula.', icon: <AppIcon name="shield" size={20} style={{ color: 'var(--ts-color-accent)' }} /> },
+              { title: 'Pure CSS Variables', desc: 'Scoped custom properties preventing collision cascades.', icon: <AppIcon name="layers" size={20} style={{ color: 'var(--ts-color-primary)' }} /> },
+              { title: 'W3C DTCG Standard', desc: 'Figma Tokens and Style Dictionary ready exports.', icon: <AppIcon name="code" size={20} style={{ color: 'var(--ts-color-accent)' }} /> },
             ].map((f, i) => (
               <div
                 key={i}
@@ -313,9 +313,9 @@ export const LandingPage: React.FC = () => {
           }}
         >
           {[
-            { icon: <Zap style={{ width: '20px', height: '20px', color: 'var(--ts-color-primary)' }} />, title: 'Deterministic Compiler', desc: 'Mathematical ratios ensure identical rendering across browsers and runtimes.' },
-            { icon: <Shield style={{ width: '20px', height: '20px', color: 'var(--ts-color-accent)' }} />, title: 'Accessibility First', desc: 'High-precision sRGB contrast calculations prevent unreadable color combinations.' },
-            { icon: <Layers style={{ width: '20px', height: '20px', color: 'var(--ts-color-primary)' }} />, title: 'Pure CSS Isolation', desc: 'Strictly zero stylesheet interference between sandbox views and your design tokens.' },
+            { icon: <AppIcon name="zap" size={20} style={{ color: 'var(--ts-color-primary)' }} />, title: 'Deterministic Compiler', desc: 'Mathematical ratios ensure identical rendering across browsers and runtimes.' },
+            { icon: <AppIcon name="shield" size={20} style={{ color: 'var(--ts-color-accent)' }} />, title: 'Accessibility First', desc: 'High-precision sRGB contrast calculations prevent unreadable color combinations.' },
+            { icon: <AppIcon name="layers" size={20} style={{ color: 'var(--ts-color-primary)' }} />, title: 'Pure CSS Isolation', desc: 'Strictly zero stylesheet interference between sandbox views and your design tokens.' },
           ].map((f, i) => (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-xs)' }}>
               <div>{f.icon}</div>

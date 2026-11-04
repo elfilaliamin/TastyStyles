@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import { TrendingUp, Check, ArrowRight, Mail } from 'lucide-react';
+import { AppIcon } from '../../common/AppIcon';
 
 export const CardsPreview: React.FC = () => {
   const { activeColors } = useDesign();
@@ -86,7 +86,7 @@ export const CardsPreview: React.FC = () => {
                 fontWeight: 600,
               }}
             >
-              <TrendingUp style={{ width: '12px', height: '12px' }} />
+              <AppIcon name="trendingUp" size={12} />
               +24.8%
             </span>
           </div>
@@ -209,7 +209,7 @@ export const CardsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Mail style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="mail" size={14} />
             <span>Connect Agent</span>
           </button>
         </div>
@@ -271,7 +271,7 @@ export const CardsPreview: React.FC = () => {
             <div style={{ marginTop: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {['Unlimited Token Sync', 'Multi-Agent Handoff', 'WCAG Contrast Guard'].map((feat) => (
                 <div key={feat} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
-                  <Check style={{ width: '14px', height: '14px', color: 'var(--ts-color-accent)', flexShrink: 0 }} />
+                  <AppIcon name="check" size={14} style={{ color: 'var(--ts-color-accent)' }} />
                   <span>{feat}</span>
                 </div>
               ))}
@@ -297,7 +297,7 @@ export const CardsPreview: React.FC = () => {
             }}
           >
             <span>Upgrade Workspace</span>
-            <ArrowRight style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="arrowRight" size={14} />
           </button>
         </div>
       </div>

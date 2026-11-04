@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import { Info, CheckCircle2, AlertTriangle, X, Bell } from 'lucide-react';
+import { AppIcon } from '../../common/AppIcon';
 
 export const FeedbackPreview: React.FC = () => {
   const { activeColors } = useDesign();
@@ -58,7 +58,7 @@ export const FeedbackPreview: React.FC = () => {
             gap: '12px',
           }}
         >
-          <Info style={{ width: '18px', height: '18px', color: 'var(--ts-color-accent)', flexShrink: 0, marginTop: '2px' }} />
+          <AppIcon name="info" size={18} style={{ color: 'var(--ts-color-accent)', flexShrink: 0, marginTop: '2px' }} />
           <div>
             <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.9)' }}>
               Design Spec Synced
@@ -81,7 +81,7 @@ export const FeedbackPreview: React.FC = () => {
             gap: '12px',
           }}
         >
-          <CheckCircle2 style={{ width: '18px', height: '18px', color: '#10b981', flexShrink: 0, marginTop: '2px' }} />
+          <AppIcon name="checkCircle" size={18} style={{ color: '#10b981', flexShrink: 0, marginTop: '2px' }} />
           <div>
             <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.9)', color: '#10b981' }}>
               WCAG 2.1 AA Compliance Verified
@@ -104,7 +104,7 @@ export const FeedbackPreview: React.FC = () => {
             gap: '12px',
           }}
         >
-          <AlertTriangle style={{ width: '18px', height: '18px', color: '#f59e0b', flexShrink: 0, marginTop: '2px' }} />
+          <AppIcon name="alert" size={18} style={{ color: '#f59e0b', flexShrink: 0, marginTop: '2px' }} />
           <div>
             <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.9)', color: '#f59e0b' }}>
               Unsaved Local Token Overrides
@@ -201,12 +201,12 @@ export const FeedbackPreview: React.FC = () => {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Bell style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} />
+              <AppIcon name="bell" size={16} style={{ color: 'var(--ts-color-primary)' }} />
               <span style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.95)' }}>
                 Publish Spec to Repository?
               </span>
             </div>
-            <X style={{ width: '16px', height: '16px', opacity: 0.6, cursor: 'pointer' }} />
+            <AppIcon name="close" size={16} style={{ opacity: 0.6, cursor: 'pointer' }} />
           </div>
           <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.8 }}>
             This will commit the updated Tailwind and CSS custom properties snippet directly to your git worktree.

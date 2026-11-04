@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import { TrendingUp, Plus, Activity, Cpu, Database, Server, Terminal, ShieldCheck, BarChart2 } from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const DashboardPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -144,7 +144,7 @@ export const DashboardPage: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <BarChart2 style={{ width: '18px', height: '18px', color: 'var(--ts-color-primary)' }} />
+            <AppIcon name="barChart" size={18} style={{ color: 'var(--ts-color-primary)' }} />
             <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: '14px' }}>
               Executive Telemetry
             </span>
@@ -160,9 +160,9 @@ export const DashboardPage: React.FC = () => {
           {/* Horizontal metric strips */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--ts-space-sm)' }}>
             {[
-              { label: 'System Health', val: '99.98%', icon: <ShieldCheck style={{ width: '16px', height: '16px', color: '#10b981' }} /> },
-              { label: 'Active Edge Nodes', val: '48 / 50', icon: <Server style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} /> },
-              { label: 'Avg Cycle Duration', val: '42.6 s', icon: <Activity style={{ width: '16px', height: '16px', color: 'var(--ts-color-accent)' }} /> },
+              { label: 'System Health', val: '99.98%', icon: <AppIcon name="shieldCheck" size={16} style={{ color: '#10b981' }} /> },
+              { label: 'Active Edge Nodes', val: '48 / 50', icon: <AppIcon name="server" size={16} style={{ color: 'var(--ts-color-primary)' }} /> },
+              { label: 'Avg Cycle Duration', val: '42.6 s', icon: <AppIcon name="activity" size={16} style={{ color: 'var(--ts-color-accent)' }} /> },
             ].map((m, i) => (
               <div key={i} style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', display: 'flex', alignItems: 'center', gap: '12px' }}>
                 {m.icon}
@@ -222,7 +222,7 @@ export const DashboardPage: React.FC = () => {
           {/* Live Activity Stream */}
           <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ fontWeight: 700, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Terminal style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} />
+              <AppIcon name="terminal" size={14} style={{ color: 'var(--ts-color-primary)' }} />
               <span>Event Audit Stream</span>
             </div>
             {[
@@ -322,7 +322,7 @@ export const DashboardPage: React.FC = () => {
             boxShadow: 'var(--ts-shadow)',
           }}
         >
-          <Plus style={{ width: '15px', height: '15px' }} />
+          <AppIcon name="plus" size={15} />
           <span>Deploy Cluster</span>
         </button>
       </div>
@@ -330,10 +330,10 @@ export const DashboardPage: React.FC = () => {
       {/* 4 Metric KPI Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--ts-space-sm)' }}>
         {[
-          { label: 'Active Clusters', value: '48 Nodes', delta: '+4 today', icon: <Server style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} /> },
-          { label: 'Avg Latency', value: '18.4 ms', delta: '-2.1 ms', icon: <Activity style={{ width: '16px', height: '16px', color: 'var(--ts-color-accent)' }} /> },
-          { label: 'CPU Utilization', value: '42.8%', delta: 'Optimal', icon: <Cpu style={{ width: '16px', height: '16px', color: '#10b981' }} /> },
-          { label: 'Memory Storage', value: '1.2 TB', delta: '82% free', icon: <Database style={{ width: '16px', height: '16px', color: 'var(--ts-color-secondary)' }} /> },
+          { label: 'Active Clusters', value: '48 Nodes', delta: '+4 today', icon: <AppIcon name="server" size={16} style={{ color: 'var(--ts-color-primary)' }} /> },
+          { label: 'Avg Latency', value: '18.4 ms', delta: '-2.1 ms', icon: <AppIcon name="activity" size={16} style={{ color: 'var(--ts-color-accent)' }} /> },
+          { label: 'CPU Utilization', value: '42.8%', delta: 'Optimal', icon: <AppIcon name="cpu" size={16} style={{ color: '#10b981' }} /> },
+          { label: 'Memory Storage', value: '1.2 TB', delta: '82% free', icon: <AppIcon name="database" size={16} style={{ color: 'var(--ts-color-secondary)' }} /> },
         ].map((stat, i) => (
           <div
             key={i}
@@ -395,7 +395,7 @@ export const DashboardPage: React.FC = () => {
               fontWeight: 600,
             }}
           >
-            <TrendingUp style={{ width: '13px', height: '13px' }} />
+            <AppIcon name="trendingUp" size={13} />
             +18.2% vs last cycle
           </span>
         </div>

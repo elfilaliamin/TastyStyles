@@ -1,20 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  Search,
-  Send,
-  Paperclip,
-  Smile,
-  MoreVertical,
-  Phone,
-  Video,
-  Bot,
-  Circle,
-  ArrowLeft,
-  Users,
-  Hash,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 interface ChatThread {
   id: string;
@@ -136,7 +123,7 @@ export const ChatInboxPage: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Hash style={{ width: '18px', height: '18px', color: 'var(--ts-color-primary)' }} />
+            <AppIcon name="hash" size={18} style={{ color: 'var(--ts-color-primary)' }} />
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.95)' }}>#design-tokens-team</div>
               <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.65 }}>Continuous synchronization for autonomous coding agents</div>
@@ -144,7 +131,7 @@ export const ChatInboxPage: React.FC = () => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.7, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Users style={{ width: '14px', height: '14px' }} /> 18 members
+              <AppIcon name="users" size={14} /> 18 members
             </span>
           </div>
         </div>
@@ -168,7 +155,7 @@ export const ChatInboxPage: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                {msg.isAi ? <Bot style={{ width: '16px', height: '16px' }} /> : msg.avatar}
+                {msg.isAi ? <AppIcon name="bot" size={16} /> : msg.avatar}
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '2px' }}>
@@ -228,7 +215,7 @@ export const ChatInboxPage: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Send style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="send" size={14} />
           </button>
         </div>
       </div>
@@ -286,7 +273,7 @@ export const ChatInboxPage: React.FC = () => {
                       flexShrink: 0,
                     }}
                   >
-                    {msg.isAi ? <Bot style={{ width: '14px', height: '14px' }} /> : msg.avatar}
+                    {msg.isAi ? <AppIcon name="bot" size={14} /> : msg.avatar}
                   </div>
                 )}
                 <div
@@ -354,7 +341,7 @@ export const ChatInboxPage: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Send style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="send" size={14} />
           </button>
         </div>
       </div>
@@ -434,7 +421,7 @@ export const ChatInboxPage: React.FC = () => {
               fontSize: 'calc(var(--ts-base-size) * 0.8)',
             }}
           >
-            <Search style={{ width: '13px', height: '13px', opacity: 0.5 }} />
+            <AppIcon name="search" size={13} style={{ opacity: 0.5 }} />
             <input
               type="text"
               placeholder="Search chats..."
@@ -489,7 +476,7 @@ export const ChatInboxPage: React.FC = () => {
                       justifyContent: 'center',
                     }}
                   >
-                    {thread.isAi ? <Bot style={{ width: '18px', height: '18px' }} /> : thread.avatarText}
+                    {thread.isAi ? <AppIcon name="bot" size={18} /> : thread.avatarText}
                   </div>
                   <div
                     style={{
@@ -597,7 +584,7 @@ export const ChatInboxPage: React.FC = () => {
               }}
               aria-label="Toggle threads list"
             >
-              <ArrowLeft style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="arrowLeft" size={16} />
             </button>
             <div
               style={{
@@ -613,14 +600,14 @@ export const ChatInboxPage: React.FC = () => {
                 justifyContent: 'center',
               }}
             >
-              {activeThread.isAi ? <Bot style={{ width: '16px', height: '16px' }} /> : activeThread.avatarText}
+              {activeThread.isAi ? <AppIcon name="bot" size={16} /> : activeThread.avatarText}
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.9)' }}>
                 {activeThread.name}
               </div>
               <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Circle style={{ width: '6px', height: '6px', fill: '#10b981', color: '#10b981' }} />
+                <AppIcon name="circle" size={6} style={{ fill: '#10b981', color: '#10b981' }} />
                 <span>Active now</span>
               </div>
             </div>
@@ -628,13 +615,13 @@ export const ChatInboxPage: React.FC = () => {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7 }}>
             <button type="button" aria-label="Audio Call" style={{ background: 'none', border: 'none', color: 'var(--ts-color-text)', cursor: 'pointer', padding: '6px' }}>
-              <Phone style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="phone" size={16} />
             </button>
             <button type="button" aria-label="Video Call" style={{ background: 'none', border: 'none', color: 'var(--ts-color-text)', cursor: 'pointer', padding: '6px' }}>
-              <Video style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="video" size={16} />
             </button>
             <button type="button" aria-label="More Options" style={{ background: 'none', border: 'none', color: 'var(--ts-color-text)', cursor: 'pointer', padding: '6px' }}>
-              <MoreVertical style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="moreVertical" size={16} />
             </button>
           </div>
         </div>
@@ -658,7 +645,7 @@ export const ChatInboxPage: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                {msg.isAi ? <Bot style={{ width: '16px', height: '16px' }} /> : msg.avatar}
+                {msg.isAi ? <AppIcon name="bot" size={16} /> : msg.avatar}
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '2px' }}>
@@ -703,7 +690,7 @@ export const ChatInboxPage: React.FC = () => {
             aria-label="Attach file"
             style={{ background: 'none', border: 'none', color: 'var(--ts-color-text)', opacity: 0.6, cursor: 'pointer', padding: '6px' }}
           >
-            <Paperclip style={{ width: '16px', height: '16px' }} />
+            <AppIcon name="paperclip" size={16} />
           </button>
           <input
             type="text"
@@ -726,7 +713,7 @@ export const ChatInboxPage: React.FC = () => {
             aria-label="Insert emoji"
             style={{ background: 'none', border: 'none', color: 'var(--ts-color-text)', opacity: 0.6, cursor: 'pointer', padding: '6px' }}
           >
-            <Smile style={{ width: '16px', height: '16px' }} />
+            <AppIcon name="smile" size={16} />
           </button>
           <button
             type="button"
@@ -743,7 +730,7 @@ export const ChatInboxPage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Send style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="send" size={14} />
           </button>
         </div>
       </div>

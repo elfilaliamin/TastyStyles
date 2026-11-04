@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import { Check, ArrowRight } from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const PricingPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -290,7 +290,7 @@ export const PricingPage: React.FC = () => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {p.features.map((feat) => (
                     <div key={feat} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
-                      <Check style={{ width: '15px', height: '15px', color: 'var(--ts-color-accent)', flexShrink: 0 }} />
+                      <AppIcon name="check" size={15} style={{ color: 'var(--ts-color-accent)', flexShrink: 0 }} />
                       <span>{feat}</span>
                     </div>
                   ))}
@@ -316,7 +316,7 @@ export const PricingPage: React.FC = () => {
                 }}
               >
                 <span>{p.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}</span>
-                <ArrowRight style={{ width: '14px', height: '14px' }} />
+                <AppIcon name="arrowRight" size={14} />
               </button>
             </div>
           ))}

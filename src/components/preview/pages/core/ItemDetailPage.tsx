@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  Server,
-  Activity,
-  CheckCircle2,
-  ChevronRight,
-  RotateCw,
-  ExternalLink,
-  Terminal,
-  Cpu,
-  HardDrive,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const ItemDetailPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -42,7 +32,7 @@ export const ItemDetailPage: React.FC = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 'var(--ts-space-sm)' }}>
         <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
-            <Cpu style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="cpu" size={14} />
             <span>CPU Cores</span>
           </div>
           <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>32 vCPUs</div>
@@ -51,7 +41,7 @@ export const ItemDetailPage: React.FC = () => {
 
         <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
-            <Activity style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="activity" size={14} />
             <span>Memory RAM</span>
           </div>
           <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>128 GB</div>
@@ -60,7 +50,7 @@ export const ItemDetailPage: React.FC = () => {
 
         <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
-            <HardDrive style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="hardDrive" size={14} />
             <span>NVMe Storage</span>
           </div>
           <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>2.0 TB</div>
@@ -172,10 +162,10 @@ export const ItemDetailPage: React.FC = () => {
           }}
         >
           <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Terminal style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} />
+            <AppIcon name="terminal" size={14} style={{ color: 'var(--ts-color-primary)' }} />
             <span>SSH Web Terminal</span>
           </span>
-          <ExternalLink style={{ width: '12px', height: '12px', opacity: 0.6 }} />
+          <AppIcon name="externalLink" size={12} style={{ opacity: 0.6 }} />
         </button>
       </div>
     </div>
@@ -208,9 +198,9 @@ export const ItemDetailPage: React.FC = () => {
         }}
       >
         <span>Infrastructure</span>
-        <ChevronRight style={{ width: '14px', height: '14px' }} />
+        <AppIcon name="chevronRight" size={14} />
         <span>Edge Clusters</span>
-        <ChevronRight style={{ width: '14px', height: '14px' }} />
+        <AppIcon name="chevronRight" size={14} />
         <span style={{ fontWeight: 600, color: 'var(--ts-color-primary)', opacity: 1 }}>
           cluster-amber-09
         </span>
@@ -244,7 +234,7 @@ export const ItemDetailPage: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            <Server style={{ width: '22px', height: '22px' }} />
+            <AppIcon name="server" size={22} />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -252,7 +242,7 @@ export const ItemDetailPage: React.FC = () => {
                 cluster-amber-09.prod
               </h2>
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', padding: '1px 8px', borderRadius: '9999px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981', fontWeight: 600 }}>
-                <CheckCircle2 style={{ width: '11px', height: '11px' }} /> Healthy
+                <AppIcon name="checkCircle" size={11} /> Healthy
               </span>
             </div>
             <p style={{ margin: '2px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.78)', opacity: 0.7 }}>
@@ -278,7 +268,7 @@ export const ItemDetailPage: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <RotateCw style={{ width: '13px', height: '13px' }} />
+            <AppIcon name="rotateCw" size={13} />
             <span>Restart Pods</span>
           </button>
         </div>

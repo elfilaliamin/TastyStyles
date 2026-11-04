@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
-import { Calendar, Clock, Share2, Bookmark } from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const BlogArticlePage: React.FC = () => {
   const { state } = useDesign();
@@ -41,8 +41,8 @@ export const BlogArticlePage: React.FC = () => {
         </span>
 
         <div style={{ display: 'flex', gap: '8px', opacity: 0.7 }}>
-          <Bookmark style={{ width: '16px', height: '16px', cursor: 'pointer' }} />
-          <Share2 style={{ width: '16px', height: '16px', cursor: 'pointer' }} />
+          <AppIcon name="bookmark" size={16} style={{ cursor: 'pointer' }} />
+          <AppIcon name="share" size={16} style={{ cursor: 'pointer' }} />
         </div>
       </div>
 
@@ -91,10 +91,10 @@ export const BlogArticlePage: React.FC = () => {
           <div style={{ fontWeight: 600, color: 'var(--ts-color-text)' }}>Alex Rivers</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.8 }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Calendar style={{ width: '12px', height: '12px' }} /> Nov 3, 2026
+              <AppIcon name="calendar" size={12} /> Nov 3, 2026
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Clock style={{ width: '12px', height: '12px' }} /> 6 min read
+              <AppIcon name="clock" size={12} /> 6 min read
             </span>
           </div>
         </div>

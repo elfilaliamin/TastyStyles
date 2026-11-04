@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import { MoreHorizontal, ArrowUpDown, ExternalLink } from 'lucide-react';
+import { AppIcon } from '../../common/AppIcon';
 
 export const TablePreview: React.FC = () => {
   const { activeColors } = useDesign();
@@ -87,7 +87,7 @@ export const TablePreview: React.FC = () => {
               <th style={{ padding: 'var(--ts-space-sm) var(--ts-space-md)', fontWeight: 600 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <span>Entity Name</span>
-                  <ArrowUpDown style={{ width: '12px', height: '12px', opacity: 0.5 }} />
+                  <AppIcon name="arrowUpDown" size={12} style={{ opacity: 0.5 }} />
                 </div>
               </th>
               <th style={{ padding: 'var(--ts-space-sm) var(--ts-space-md)', fontWeight: 600 }}>Category</th>
@@ -108,7 +108,7 @@ export const TablePreview: React.FC = () => {
                 <td style={{ padding: 'var(--ts-space-sm) var(--ts-space-md)', fontWeight: 600 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <span>{row.name}</span>
-                    <ExternalLink style={{ width: '12px', height: '12px', opacity: 0.4 }} />
+                    <AppIcon name="externalLink" size={12} style={{ opacity: 0.4 }} />
                   </div>
                 </td>
                 <td style={{ padding: 'var(--ts-space-sm) var(--ts-space-md)', opacity: 0.8 }}>
@@ -143,7 +143,7 @@ export const TablePreview: React.FC = () => {
                       padding: '4px',
                     }}
                   >
-                    <MoreHorizontal style={{ width: '16px', height: '16px' }} />
+                    <AppIcon name="moreHorizontal" size={16} />
                   </button>
                 </td>
               </tr>

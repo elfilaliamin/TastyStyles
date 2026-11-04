@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  Plus,
-  Search,
-  Filter,
-  MessageSquare,
-  Paperclip,
-  Clock,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 interface KanbanTask {
   id: string;
@@ -196,7 +189,7 @@ export const KanbanPage: React.FC = () => {
               fontSize: 'calc(var(--ts-base-size) * 0.82)',
             }}
           >
-            <Search style={{ width: '14px', height: '14px', opacity: 0.5 }} />
+            <AppIcon name="search" size={14} style={{ opacity: 0.5 }} />
             <input
               type="text"
               placeholder="Search tasks..."
@@ -229,7 +222,7 @@ export const KanbanPage: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Filter style={{ width: '13px', height: '13px' }} />
+            <AppIcon name="filter" size={13} />
             <span>Filter</span>
           </button>
 
@@ -250,7 +243,7 @@ export const KanbanPage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Plus style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="plus" size={14} />
             <span>New Task</span>
           </button>
         </div>
@@ -424,7 +417,7 @@ export const KanbanPage: React.FC = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <Plus style={{ width: '14px', height: '14px' }} />
+                  <AppIcon name="plus" size={14} />
                 </button>
               </div>
 
@@ -498,17 +491,17 @@ export const KanbanPage: React.FC = () => {
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.7 }}>
                           {task.dueDate && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: 'calc(var(--ts-base-size) * 0.7)' }}>
-                              <Clock style={{ width: '11px', height: '11px' }} />
+                              <AppIcon name="clock" size={11} />
                               <span>{task.dueDate}</span>
                             </div>
                           )}
                           <div style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: 'calc(var(--ts-base-size) * 0.7)' }}>
-                            <MessageSquare style={{ width: '11px', height: '11px' }} />
+                            <AppIcon name="messageSquare" size={11} />
                             <span>{task.comments}</span>
                           </div>
                           {task.attachments && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '3px', fontSize: 'calc(var(--ts-base-size) * 0.7)' }}>
-                              <Paperclip style={{ width: '11px', height: '11px' }} />
+                              <AppIcon name="paperclip" size={11} />
                               <span>{task.attachments}</span>
                             </div>
                           )}

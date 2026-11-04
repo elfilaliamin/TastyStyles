@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import { Send, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const ContactPage: React.FC = () => {
   const { activeColors } = useDesign();
@@ -166,7 +166,7 @@ export const ContactPage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Send style={{ width: '15px', height: '15px' }} />
+            <AppIcon name="send" size={15} />
             <span>Send Message</span>
           </button>
         </div>
@@ -174,9 +174,9 @@ export const ContactPage: React.FC = () => {
         {/* Sidebar Info Cards */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
           {[
-            { icon: <Mail style={{ width: '20px', height: '20px', color: 'var(--ts-color-accent)' }} />, title: 'Email Support', detail: 'support@apexdesign.system', note: 'Average response under 2 hours.' },
-            { icon: <MessageSquare style={{ width: '20px', height: '20px', color: 'var(--ts-color-primary)' }} />, title: 'Live Chat', detail: 'Available Mon–Fri, 9am–6pm EST', note: 'Direct line to systems architects.' },
-            { icon: <MapPin style={{ width: '20px', height: '20px', color: 'var(--ts-color-secondary)' }} />, title: 'Headquarters', detail: '450 Mission St, Suite 800', note: 'San Francisco, CA 94105' },
+            { icon: <AppIcon name="mail" size={20} style={{ color: 'var(--ts-color-accent)' }} />, title: 'Email Support', detail: 'support@apexdesign.system', note: 'Average response under 2 hours.' },
+            { icon: <AppIcon name="messageSquare" size={20} style={{ color: 'var(--ts-color-primary)' }} />, title: 'Live Chat', detail: 'Available Mon–Fri, 9am–6pm EST', note: 'Direct line to systems architects.' },
+            { icon: <AppIcon name="mapPin" size={20} style={{ color: 'var(--ts-color-secondary)' }} />, title: 'Headquarters', detail: '450 Mission St, Suite 800', note: 'San Francisco, CA 94105' },
           ].map((card, i) => (
             <div
               key={i}

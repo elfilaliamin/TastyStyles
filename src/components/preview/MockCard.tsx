@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { getBestContrastingColor } from '../../lib/contrast';
-import { Sparkles, ArrowRight, Check } from 'lucide-react';
+import { AppIcon } from '../common/AppIcon';
 
 export const MockCard: React.FC = () => {
   const { activeColors } = useDesign();
@@ -53,7 +53,7 @@ export const MockCard: React.FC = () => {
             letterSpacing: '0.02em',
           }}
         >
-          <Sparkles style={{ width: '12px', height: '12px' }} />
+          <AppIcon name="sparkles" size={12} />
           Verified Token Spec
         </span>
 
@@ -170,13 +170,13 @@ export const MockCard: React.FC = () => {
         >
           {submitted ? (
             <>
-              <Check style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="check" size={16} />
               <span>Spec Deployed</span>
             </>
           ) : (
             <>
               <span>Deploy Specification</span>
-              <ArrowRight style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="arrowRight" size={16} />
             </>
           )}
         </button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import { Check, ArrowRight, ArrowLeft, Layers, Palette, Type, Sliders, Sparkles } from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const OnboardingPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -38,10 +38,10 @@ export const OnboardingPage: React.FC = () => {
 
         <div style={{ maxWidth: '580px', width: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
           {[
-            { id: 1, title: 'Choose Token Palette & Accent', done: true, icon: <Palette style={{ width: '16px', height: '16px' }} /> },
-            { id: 2, title: 'Configure Typography Scale & Google Fonts', done: true, icon: <Type style={{ width: '16px', height: '16px' }} /> },
-            { id: 3, title: 'Calibrate Spacing & Border Radius', active: true, icon: <Sliders style={{ width: '16px', height: '16px' }} /> },
-            { id: 4, title: 'Verify WCAG 2.1 Contrast Pass', pending: true, icon: <Layers style={{ width: '16px', height: '16px' }} /> },
+            { id: 1, title: 'Choose Token Palette & Accent', done: true, icon: <AppIcon name="palette" size={16} /> },
+            { id: 2, title: 'Configure Typography Scale & Google Fonts', done: true, icon: <AppIcon name="type" size={16} /> },
+            { id: 3, title: 'Calibrate Spacing & Border Radius', active: true, icon: <AppIcon name="sliders" size={16} /> },
+            { id: 4, title: 'Verify WCAG 2.1 Contrast Pass', pending: true, icon: <AppIcon name="layers" size={16} /> },
           ].map((step) => (
             <div
               key={step.id}
@@ -71,7 +71,7 @@ export const OnboardingPage: React.FC = () => {
                     fontWeight: 700,
                   }}
                 >
-                  {step.done ? <Check style={{ width: '14px', height: '14px' }} /> : step.id}
+                  {step.done ? <AppIcon name="check" size={14} /> : step.id}
                 </div>
                 <div>
                   <div style={{ fontWeight: step.active ? 700 : 600, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>{step.title}</div>
@@ -146,7 +146,7 @@ export const OnboardingPage: React.FC = () => {
               justifyContent: 'center',
             }}
           >
-            <Sparkles style={{ width: '26px', height: '26px' }} />
+            <AppIcon name="sparkles" size={26} />
           </div>
 
           <div>
@@ -297,7 +297,7 @@ export const OnboardingPage: React.FC = () => {
               opacity: 0.7,
             }}
           >
-            <ArrowLeft style={{ width: '14px', height: '14px' }} /> Back
+            <AppIcon name="arrowLeft" size={14} /> Back
           </button>
           <button
             type="button"
@@ -317,7 +317,7 @@ export const OnboardingPage: React.FC = () => {
             }}
           >
             <span>Continue</span>
-            <ArrowRight style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="arrowRight" size={14} />
           </button>
         </div>
       </div>

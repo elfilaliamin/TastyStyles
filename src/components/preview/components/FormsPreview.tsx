@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, AlertCircle, Check } from 'lucide-react';
+import { AppIcon } from '../../common/AppIcon';
 
 export const FormsPreview: React.FC = () => {
   const [toggleActive, setToggleActive] = useState(true);
@@ -73,12 +73,12 @@ export const FormsPreview: React.FC = () => {
             Search Repository
           </label>
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            <Search
+            <AppIcon
+              name="search"
+              size={16}
               style={{
                 position: 'absolute',
                 left: '12px',
-                width: '16px',
-                height: '16px',
                 opacity: 0.6,
                 color: 'var(--ts-color-text)',
               }}
@@ -150,12 +150,12 @@ export const FormsPreview: React.FC = () => {
                 fontFamily: 'var(--ts-font-body)',
               }}
             />
-            <AlertCircle
+            <AppIcon
+              name="alertCircle"
+              size={16}
               style={{
                 position: 'absolute',
                 right: '12px',
-                width: '16px',
-                height: '16px',
                 color: '#ef4444',
               }}
             />
@@ -254,7 +254,7 @@ export const FormsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            {checkedBox && <Check style={{ width: '14px', height: '14px', color: '#ffffff' }} />}
+            {checkedBox && <AppIcon name="check" size={14} style={{ color: '#ffffff' }} />}
           </div>
           <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 500 }}>
             Strict Token Enforcement

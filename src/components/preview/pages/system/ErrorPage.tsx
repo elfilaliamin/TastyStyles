@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  AlertTriangle,
-  ShieldAlert,
-  ServerCrash,
-  Home,
-  RotateCw,
-  Copy,
-  ChevronRight,
-  Terminal,
-  Search,
-  WifiOff,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export interface ErrorDetails {
   title: string;
@@ -36,25 +25,25 @@ export const ErrorPage: React.FC = () => {
       title: 'Resource Specification Not Found',
       desc: 'The requested design token route, preset, or namespace does not exist in this workspace.',
       color: 'var(--ts-color-primary)',
-      icon: <AlertTriangle style={{ width: '42px', height: '42px', color: 'var(--ts-color-accent)' }} />,
+      icon: <AppIcon name="alert" size={42} style={{ color: 'var(--ts-color-accent)' }} />,
     },
     '500': {
       title: 'Internal Compiler Exception',
       desc: 'The autonomous AST token compiler encountered an unexpected runtime parsing error.',
       color: '#ef4444',
-      icon: <ServerCrash style={{ width: '42px', height: '42px', color: '#ef4444' }} />,
+      icon: <AppIcon name="serverCrash" size={42} style={{ color: '#ef4444' }} />,
     },
     '403': {
       title: 'Access Restricted / Forbidden',
       desc: 'Your active agent session lacks permissions to mutate production design tokens in this namespace.',
       color: '#f59e0b',
-      icon: <ShieldAlert style={{ width: '42px', height: '42px', color: '#f59e0b' }} />,
+      icon: <AppIcon name="shieldAlert" size={42} style={{ color: '#f59e0b' }} />,
     },
     '502': {
       title: 'Bad Gateway / Upstream Disconnected',
       desc: 'Unable to establish connection with the upstream agent runner inference endpoint.',
       color: '#8b5cf6',
-      icon: <WifiOff style={{ width: '42px', height: '42px', color: '#8b5cf6' }} />,
+      icon: <AppIcon name="wifiOff" size={42} style={{ color: '#8b5cf6' }} />,
     },
   };
 
@@ -148,7 +137,7 @@ export const ErrorPage: React.FC = () => {
             padding: 0,
           }}
         >
-          <Copy style={{ width: '11px', height: '11px' }} />
+          <AppIcon name="copy" size={11} />
           <span>{copied ? 'Copied!' : 'Copy'}</span>
         </button>
       </div>
@@ -247,7 +236,7 @@ export const ErrorPage: React.FC = () => {
                 boxShadow: 'var(--ts-shadow)',
               }}
             >
-              <Home style={{ width: '14px', height: '14px' }} />
+              <AppIcon name="home" size={14} />
               <span>Back to Safety</span>
             </button>
 
@@ -267,7 +256,7 @@ export const ErrorPage: React.FC = () => {
                 cursor: 'pointer',
               }}
             >
-              <RotateCw style={{ width: '14px', height: '14px' }} />
+              <AppIcon name="rotateCw" size={14} />
               <span>Retry Request</span>
             </button>
           </div>
@@ -301,7 +290,7 @@ export const ErrorPage: React.FC = () => {
               <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10b981' }} />
             </div>
             <div style={{ fontSize: '11px', color: '#94a3b8', fontFamily: 'monospace', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <Terminal style={{ width: '12px', height: '12px' }} />
+              <AppIcon name="terminal" size={12} />
               <span>spec-debugger — zsh</span>
             </div>
             <div style={{ width: '40px' }} />
@@ -499,9 +488,9 @@ export const ErrorPage: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'calc(var(--ts-base-size) * 0.8)', opacity: 0.7 }}>
             <span>TastyStyles</span>
-            <ChevronRight style={{ width: '13px', height: '13px' }} />
+            <AppIcon name="chevronRight" size={13} />
             <span>Specifications</span>
-            <ChevronRight style={{ width: '13px', height: '13px' }} />
+            <AppIcon name="chevronRight" size={13} />
             <span style={{ fontWeight: 600 }}>Status</span>
           </div>
           <div>{renderCodeSelector()}</div>
@@ -541,7 +530,7 @@ export const ErrorPage: React.FC = () => {
               padding: 'var(--ts-space-xs) var(--ts-space-sm)',
             }}
           >
-            <Search style={{ width: '15px', height: '15px', opacity: 0.5 }} />
+            <AppIcon name="search" size={15} style={{ opacity: 0.5 }} />
             <input
               type="text"
               placeholder="Search components, design tokens, color scales..."
@@ -674,7 +663,7 @@ export const ErrorPage: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <RotateCw style={{ width: '13px', height: '13px' }} />
+            <AppIcon name="rotateCw" size={13} />
             <span>Retry Request</span>
           </button>
 
@@ -695,7 +684,7 @@ export const ErrorPage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Home style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="home" size={14} />
             <span>Return to Safety</span>
           </button>
         </div>

@@ -1,13 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  FolderPlus,
-  Plus,
-  BookOpen,
-  ArrowRight,
-  Sparkles,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const EmptyStatePage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -59,7 +53,7 @@ export const EmptyStatePage: React.FC = () => {
                 marginBottom: 'var(--ts-space-xs)',
               }}
             >
-              <Sparkles style={{ width: '24px', height: '24px' }} />
+              <AppIcon name="sparkles" size={24} />
             </div>
             <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.25)', fontWeight: 800, margin: 0 }}>
               Kickstart with a Starter Kit
@@ -196,7 +190,7 @@ export const EmptyStatePage: React.FC = () => {
                   <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>{item.title}</div>
                   <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.65 }}>{item.desc}</div>
                 </div>
-                <ArrowRight style={{ width: '14px', height: '14px', opacity: 0.5 }} />
+                <AppIcon name="arrowRight" size={14} style={{ opacity: 0.5 }} />
               </div>
             ))}
           </div>
@@ -251,7 +245,7 @@ export const EmptyStatePage: React.FC = () => {
             color: 'var(--ts-color-primary)',
           }}
         >
-          <FolderPlus style={{ width: '32px', height: '32px' }} />
+          <AppIcon name="folderPlus" size={32} />
         </div>
 
         {/* Text Details */}
@@ -307,7 +301,7 @@ export const EmptyStatePage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Plus style={{ width: '16px', height: '16px' }} />
+            <AppIcon name="plus" size={16} />
             <span>Create Token Palette</span>
           </button>
 
@@ -327,7 +321,7 @@ export const EmptyStatePage: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <BookOpen style={{ width: '14px', height: '14px', opacity: 0.7 }} />
+            <AppIcon name="bookOpen" size={14} style={{ opacity: 0.7 }} />
             <span>Browse Templates</span>
           </button>
         </div>

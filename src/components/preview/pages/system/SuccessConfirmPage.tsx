@@ -1,17 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  CheckCircle2,
-  Copy,
-  ExternalLink,
-  ShieldCheck,
-  Sparkles,
-  FileText,
-  Download,
-  X,
-  Check,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const SuccessConfirmPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -57,7 +47,7 @@ export const SuccessConfirmPage: React.FC = () => {
               <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.65 }}>ID: #TS-94827 • Target: Autonomous AI Agents</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', fontWeight: 700, color: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.12)', padding: '2px 8px', borderRadius: '9999px' }}>
-              <Check style={{ width: '12px', height: '12px' }} /> Compiled
+              <AppIcon name="check" size={12} /> Compiled
             </div>
           </div>
 
@@ -81,7 +71,7 @@ export const SuccessConfirmPage: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <FileText style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} />
+                  <AppIcon name="fileText" size={14} style={{ color: 'var(--ts-color-primary)' }} />
                   <div>
                     <span style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.82)', fontFamily: 'monospace' }}>{item.file}</span>
                     <div style={{ fontSize: '11px', opacity: 0.65 }}>{item.desc}</div>
@@ -109,7 +99,7 @@ export const SuccessConfirmPage: React.FC = () => {
                 cursor: 'pointer',
               }}
             >
-              <Download style={{ width: '14px', height: '14px' }} />
+              <AppIcon name="download" size={14} />
               <span>Download ZIP Bundle</span>
             </button>
           </div>
@@ -151,7 +141,7 @@ export const SuccessConfirmPage: React.FC = () => {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CheckCircle2 style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="checkCircle" size={16} />
             </div>
             <div>
               <span style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>Specification Compiled Successfully</span>
@@ -177,7 +167,7 @@ export const SuccessConfirmPage: React.FC = () => {
               View Spec
             </button>
             <button type="button" aria-label="Dismiss banner" style={{ background: 'none', border: 'none', color: 'var(--ts-color-text)', opacity: 0.5, cursor: 'pointer', padding: '4px' }}>
-              <X style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="close" size={16} />
             </button>
           </div>
         </div>
@@ -231,7 +221,7 @@ export const SuccessConfirmPage: React.FC = () => {
             color: '#10b981',
           }}
         >
-          <CheckCircle2 style={{ width: '36px', height: '36px' }} />
+          <AppIcon name="checkCircle" size={36} />
         </div>
 
         {/* Text Details */}
@@ -251,7 +241,7 @@ export const SuccessConfirmPage: React.FC = () => {
               margin: '0 auto',
             }}
           >
-            <Sparkles style={{ width: '12px', height: '12px' }} />
+            <AppIcon name="sparkles" size={12} />
             <span>Agent Spec Handoff Ready</span>
           </div>
 
@@ -301,7 +291,7 @@ export const SuccessConfirmPage: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.65 }}>WCAG 2.1 Contrast</span>
             <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', color: '#10b981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <ShieldCheck style={{ width: '13px', height: '13px' }} />
+              <AppIcon name="shieldCheck" size={13} />
               Certified AAA Pass
             </span>
           </div>
@@ -344,7 +334,7 @@ export const SuccessConfirmPage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Copy style={{ width: '15px', height: '15px' }} />
+            <AppIcon name="copy" size={15} />
             <span>Copy Spec URL</span>
           </button>
 
@@ -368,7 +358,7 @@ export const SuccessConfirmPage: React.FC = () => {
             }}
           >
             <span>Back to Dashboard</span>
-            <ExternalLink style={{ width: '13px', height: '13px', opacity: 0.7 }} />
+            <AppIcon name="externalLink" size={13} style={{ opacity: 0.7 }} />
           </button>
         </div>
       </div>

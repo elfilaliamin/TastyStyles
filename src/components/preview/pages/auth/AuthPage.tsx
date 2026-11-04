@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  Lock,
-  Mail,
-  ArrowRight,
-  ArrowLeft,
-  Sparkles,
-  CheckCircle2,
-  Eye,
-  EyeOff,
-  AlertCircle,
-  X,
-  Apple,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const AuthPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -114,7 +102,7 @@ export const AuthPage: React.FC = () => {
             cursor: 'pointer',
           }}
         >
-          <Apple style={{ width: '14px', height: '14px' }} />
+          <AppIcon name="apple" size={14} />
           <span>Apple</span>
         </button>
         <button
@@ -213,7 +201,7 @@ export const AuthPage: React.FC = () => {
             transition: 'border-color 0.15s ease',
           }}
         >
-          <Mail style={{ width: '15px', height: '15px', opacity: 0.5 }} />
+          <AppIcon name="mail" size={15} style={{ opacity: 0.5 }} />
           <input
             type="email"
             value={emailInput}
@@ -231,7 +219,7 @@ export const AuthPage: React.FC = () => {
         </div>
         {showErrors && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#ef4444', fontSize: 'calc(var(--ts-base-size) * 0.72)', marginTop: '4px', fontWeight: 500 }}>
-            <AlertCircle style={{ width: '12px', height: '12px' }} />
+            <AppIcon name="alertCircle" size={12} />
             <span>Please enter a valid work email address.</span>
           </div>
         )}
@@ -265,7 +253,7 @@ export const AuthPage: React.FC = () => {
             transition: 'border-color 0.15s ease',
           }}
         >
-          <Lock style={{ width: '15px', height: '15px', opacity: 0.5 }} />
+          <AppIcon name="lock" size={15} style={{ opacity: 0.5 }} />
           <input
             type={showPassword ? 'text' : 'password'}
             value={passwordInput}
@@ -296,12 +284,12 @@ export const AuthPage: React.FC = () => {
             title={showPassword ? 'Hide password' : 'Show password'}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
-            {showPassword ? <EyeOff style={{ width: '15px', height: '15px' }} /> : <Eye style={{ width: '15px', height: '15px' }} />}
+            {showPassword ? <AppIcon name="eyeOff" size={15} /> : <AppIcon name="eye" size={15} />}
           </button>
         </div>
         {showErrors && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#ef4444', fontSize: 'calc(var(--ts-base-size) * 0.72)', marginTop: '4px', fontWeight: 500 }}>
-            <AlertCircle style={{ width: '12px', height: '12px' }} />
+            <AppIcon name="alertCircle" size={12} />
             <span>Password must be at least 8 characters with a symbol.</span>
           </div>
         )}
@@ -330,7 +318,7 @@ export const AuthPage: React.FC = () => {
         }}
       >
         <span>{tab === 'signin' ? 'Sign In to Workspace' : 'Create Free Account'}</span>
-        <ArrowRight style={{ width: '15px', height: '15px' }} />
+        <AppIcon name="arrowRight" size={15} />
       </button>
     </form>
   );
@@ -460,7 +448,7 @@ export const AuthPage: React.FC = () => {
                 marginBottom: 'var(--ts-space-sm)',
               }}
             >
-              <Sparkles style={{ width: '13px', height: '13px' }} />
+              <AppIcon name="sparkles" size={13} />
               Deterministic Token Handoff
             </span>
 
@@ -487,7 +475,7 @@ export const AuthPage: React.FC = () => {
                 'Zero-drift JSON registry schema compiler',
               ].map((text, idx) => (
                 <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'calc(var(--ts-base-size) * 0.82)' }}>
-                  <CheckCircle2 style={{ width: '15px', height: '15px', color: 'var(--ts-color-primary)', flexShrink: 0 }} />
+                  <AppIcon name="checkCircle" size={15} style={{ color: 'var(--ts-color-primary)', flexShrink: 0 }} />
                   <span>{text}</span>
                 </div>
               ))}
@@ -676,7 +664,7 @@ export const AuthPage: React.FC = () => {
             }}
           >
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#38bdf8', fontSize: 'calc(var(--ts-base-size) * 0.75)', fontWeight: 600, marginBottom: '8px' }}>
-              <Sparkles style={{ width: '13px', height: '13px' }} />
+              <AppIcon name="sparkles" size={13} />
               <span>Enterprise Design Engineering</span>
             </div>
             <h3
@@ -829,7 +817,7 @@ export const AuthPage: React.FC = () => {
                 boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
               }}
             >
-              <Apple style={{ width: '16px', height: '16px' }} />
+              <AppIcon name="apple" size={16} />
               <span>Continue with Apple</span>
             </button>
             <button
@@ -1105,7 +1093,7 @@ export const AuthPage: React.FC = () => {
                     padding: 'var(--ts-space-xs) var(--ts-space-sm)',
                   }}
                 >
-                  <Mail style={{ width: '15px', height: '15px', opacity: 0.5 }} />
+                  <AppIcon name="mail" size={15} style={{ opacity: 0.5 }} />
                   <input
                     type="email"
                     value={emailInput}
@@ -1145,7 +1133,7 @@ export const AuthPage: React.FC = () => {
                 }}
               >
                 <span>Continue</span>
-                <ArrowRight style={{ width: '15px', height: '15px' }} />
+                <AppIcon name="arrowRight" size={15} />
               </button>
 
               {showSocial && (
@@ -1210,7 +1198,7 @@ export const AuthPage: React.FC = () => {
                     padding: 'var(--ts-space-xs) var(--ts-space-sm)',
                   }}
                 >
-                  <Lock style={{ width: '15px', height: '15px', opacity: 0.5 }} />
+                  <AppIcon name="lock" size={15} style={{ opacity: 0.5 }} />
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={passwordInput}
@@ -1231,7 +1219,7 @@ export const AuthPage: React.FC = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', opacity: 0.6 }}
                   >
-                    {showPassword ? <EyeOff style={{ width: '15px', height: '15px' }} /> : <Eye style={{ width: '15px', height: '15px' }} />}
+                    {showPassword ? <AppIcon name="eyeOff" size={15} /> : <AppIcon name="eye" size={15} />}
                   </button>
                 </div>
               </div>
@@ -1254,7 +1242,7 @@ export const AuthPage: React.FC = () => {
                     gap: '4px',
                   }}
                 >
-                  <ArrowLeft style={{ width: '14px', height: '14px' }} />
+                  <AppIcon name="arrowLeft" size={14} />
                   <span>Back</span>
                 </button>
                 <button
@@ -1382,7 +1370,7 @@ export const AuthPage: React.FC = () => {
             title="Close dialog"
             aria-label="Close dialog"
           >
-            <X style={{ width: '18px', height: '18px' }} />
+            <AppIcon name="close" size={18} />
           </button>
 
           {renderHeader()}
