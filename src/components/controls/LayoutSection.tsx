@@ -2,6 +2,7 @@ import React from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { registries } from '../../lib/registry';
 import type { PageLayouts } from '../../config/schema';
+import { getLayoutsForPage } from '../../config/layoutCatalog';
 import {
   PREVIEW_REGISTRY,
   getPreviewDefinition,
@@ -477,205 +478,98 @@ export const LayoutSection: React.FC = () => {
     switch (activePreview) {
       case 'auth':
         return {
-          options: [
-            {
-              id: 'centered-card',
-              title: 'Centered Card (Default)',
-              description: 'Single centered card, mobile-first and collapses seamlessly',
-              variant: 'centered-card',
-            },
-            {
-              id: 'split',
-              title: 'Split Showcase',
-              description: 'Brand marketing showcase on one half, form on the other',
-              variant: 'split',
-            },
-            {
-              id: 'split-image',
-              title: 'Split Screen 2 (Image)',
-              description: 'Editorial workspace photograph with glass overlay and form',
-              variant: 'split-image',
-            },
-            {
-              id: 'social-first',
-              title: 'Social-Login-First',
-              description: 'Prominent Google/Apple/GitHub buttons on top with email divider',
-              variant: 'social-first',
-            },
-            {
-              id: 'full-background',
-              title: 'Full-Page Floating',
-              description: 'Vibrant full-bleed gradient mesh with floating frosted-glass card',
-              variant: 'full-background',
-            },
-            {
-              id: 'full-background-image',
-              title: 'Full-Page Floating 2 (Image)',
-              description: 'Full-bleed atmospheric photography with floating frosted-glass card',
-              variant: 'full-background-image',
-            },
-            {
-              id: 'single-field',
-              title: 'Minimal Multi-Step',
-              description: 'Progressive single-field flow (Google/Notion style) with steps',
-              variant: 'single-field',
-            },
-            {
-              id: 'modal-overlay',
-              title: 'Modal Overlay',
-              description: 'In-app dialog overlay with blurred backdrop and close button',
-              variant: 'modal-overlay',
-            },
-          ],
+          options: getLayoutsForPage('auth'),
           selectedId: pageLayouts.auth ?? 'centered-card',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { auth: id as PageLayouts['auth'] } }),
         };
 
       case 'dashboard':
         return {
-          options: [
-            { id: 'sidebar-grid', title: 'Sidebar + Content', description: 'Left sidebar navigation with stat cards and chart', variant: 'sidebar-grid' },
-            { id: 'header-compact', title: 'Header Compact', description: 'Top navbar with horizontal metric strips', variant: 'header-compact' },
-            { id: 'analytical', title: 'Analytical Matrix', description: 'Dense multi-metric KPI matrix and dual graphs', variant: 'analytical' },
-            { id: 'feed-focus', title: 'Feed & Telemetry', description: 'Realtime event stream alongside system gauges', variant: 'sidebar-content' },
-          ],
+          options: getLayoutsForPage('dashboard'),
           selectedId: pageLayouts.dashboard ?? 'sidebar-grid',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { dashboard: id as PageLayouts['dashboard'] } }),
         };
 
       case 'landing':
         return {
-          options: [
-            { id: 'hero-split', title: 'Marketing Landing', description: 'Split hero with product mockup card and features', variant: 'hero-split' },
-            { id: 'hero-centered', title: 'Hero Centered', description: 'Centered headline with trust badges and CTA', variant: 'hero-centered' },
-            { id: 'feature-grid', title: 'Feature Grid', description: 'Problem/solution ecosystem cards with live tokens', variant: 'feature-grid' },
-          ],
+          options: getLayoutsForPage('landing'),
           selectedId: pageLayouts.landing ?? 'hero-split',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { landing: id as PageLayouts['landing'] } }),
         };
 
       case 'pricing':
         return {
-          options: [
-            { id: 'cards-3col', title: '3-Card Tier', description: 'Side-by-side tier cards with highlighted popular plan', variant: 'cards-3col' },
-            { id: 'table-matrix', title: 'Matrix Table', description: 'Feature comparison grid table with checkmarks', variant: 'table-matrix' },
-            { id: 'compact-toggle', title: 'Compact List', description: 'Toggleable horizontal plan tier rows', variant: 'compact-toggle' },
-          ],
+          options: getLayoutsForPage('pricing'),
           selectedId: pageLayouts.pricing ?? 'cards-3col',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { pricing: id as PageLayouts['pricing'] } }),
         };
 
       case 'kanban':
         return {
-          options: [
-            { id: 'board-columns', title: 'Columns Board', description: 'Multi-stage sprint pipeline columns', variant: 'board-columns' },
-            { id: 'timeline-list', title: 'Roadmap List', description: 'Milestone timeline with progress status bars', variant: 'timeline-list' },
-            { id: 'compact-grid', title: 'Compact Grid', description: 'Dense task cards matrix with priority tags', variant: 'compact-grid' },
-          ],
+          options: getLayoutsForPage('kanban'),
           selectedId: pageLayouts.kanban ?? 'board-columns',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { kanban: id as PageLayouts['kanban'] } }),
         };
 
       case 'chat':
         return {
-          options: [
-            { id: 'split-pane', title: 'Master Split', description: 'Left thread list alongside active conversation', variant: 'split-pane' },
-            { id: 'compact-feed', title: 'Floating Feed', description: 'Single focused conversation thread with composer', variant: 'compact-feed' },
-            { id: 'minimal-bubble', title: 'Minimal Bubbles', description: 'Streamlined conversational bubble stream', variant: 'minimal-bubble' },
-          ],
+          options: getLayoutsForPage('chat'),
           selectedId: pageLayouts.chat ?? 'split-pane',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { chat: id as PageLayouts['chat'] } }),
         };
 
       case 'settings':
         return {
-          options: [
-            { id: 'tabbed', title: 'Horizontal Tabs', description: 'Tabbed panel switcher for account categories', variant: 'tabbed' },
-            { id: 'stacked-cards', title: 'Stacked Cards', description: 'Vertical section cards on a scrollable page', variant: 'stacked-cards' },
-            { id: 'sidebar-nav', title: 'Sidebar Nav', description: 'Left sub-navigation links with right settings body', variant: 'sidebar-nav' },
-          ],
+          options: getLayoutsForPage('settings'),
           selectedId: pageLayouts.settings ?? 'tabbed',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { settings: id as PageLayouts['settings'] } }),
         };
 
       case 'error':
         return {
-          options: [
-            { id: 'giant-hero', title: 'Giant Hero', description: 'Bold status typography and illustration', variant: 'giant-hero' },
-            { id: 'split-terminal', title: 'Split Debugger', description: 'Simulated CLI trace logs and endpoint diagnostics', variant: 'split-terminal' },
-            { id: 'dialog-card', title: 'Dialog Card', description: 'In-app alert modal card with action buttons', variant: 'dialog-card' },
-            { id: 'minimal', title: 'Minimal Clean', description: 'Editorial documentation link layout', variant: 'minimal' },
-          ],
+          options: getLayoutsForPage('error'),
           selectedId: pageLayouts.error ?? 'giant-hero',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { error: id as PageLayouts['error'] } }),
         };
 
       case 'onboarding':
         return {
-          options: [
-            { id: 'wizard-stepper', title: 'Wizard Stepper', description: 'Horizontal multi-step progress stepper', variant: 'header-compact' },
-            { id: 'card-stack', title: 'Card Stack', description: 'Interactive stacked setup cards with actions', variant: 'cards-3col' },
-            { id: 'minimal-modal', title: 'Minimal Modal', description: 'Centered focused dialog with task list', variant: 'minimal-modal' },
-          ],
+          options: getLayoutsForPage('onboarding'),
           selectedId: pageLayouts.onboarding ?? 'wizard-stepper',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { onboarding: id as PageLayouts['onboarding'] } }),
         };
 
       case 'empty-state':
         return {
-          options: [
-            { id: 'centered-action', title: 'Centered Action', description: 'Illustration with primary creation button', variant: 'centered-action' },
-            { id: 'illustration-card', title: 'Illustrated Card', description: 'Elevated template starter card', variant: 'dialog-card' },
-            { id: 'checklist-guide', title: 'Guided Checklist', description: 'Interactive onboarding setup checklist', variant: 'stacked-cards' },
-          ],
+          options: getLayoutsForPage('emptyState'),
           selectedId: pageLayouts.emptyState ?? 'centered-action',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { emptyState: id as PageLayouts['emptyState'] } }),
         };
 
       case 'success':
         return {
-          options: [
-            { id: 'celebration-card', title: 'Celebration Card', description: 'Centered confirmation modal with receipt badge', variant: 'celebration-card' },
-            { id: 'receipt-summary', title: 'Receipt Summary', description: 'Itemized transaction breakdown with next steps', variant: 'table-matrix' },
-            { id: 'minimal-banner', title: 'Minimal Banner', description: 'Clean top-flush notification bar', variant: 'minimal-banner' },
-          ],
+          options: getLayoutsForPage('success'),
           selectedId: pageLayouts.success ?? 'celebration-card',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { success: id as PageLayouts['success'] } }),
         };
 
       case 'detail':
         return {
-          options: [
-            { id: 'split-sidepanel', title: 'Split Sidepanel', description: 'Main entity summary with right metadata panel', variant: 'sidebar-content' },
-            { id: 'full-document', title: 'Full Document', description: 'Single column longform editorial view', variant: 'minimal' },
-            { id: 'tabbed-media', title: 'Tabbed Inspector', description: 'Tabbed inspector with specs and logs', variant: 'tabbed' },
-          ],
+          options: getLayoutsForPage('detail'),
           selectedId: pageLayouts.detail ?? 'split-sidepanel',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { detail: id as PageLayouts['detail'] } }),
         };
 
       case 'navbar':
         return {
-          options: [
-            { id: 'saas-header', title: 'Modern SaaS Header', description: 'Brand breadcrumb, command search, quick actions & user menu', variant: 'navbar-saas' },
-            { id: 'minimal-center', title: 'Minimalist Clean', description: 'Centered navigation links, brand logo, and primary CTA', variant: 'navbar-center' },
-            { id: 'floating-pill', title: 'Floating Island Pill', description: 'Detached pill navbar with glassmorphism backdrop blur', variant: 'navbar-floating' },
-            { id: 'tabbed-nav', title: 'Tabbed Subnav Header', description: 'Two-tier header with global context and tabbed navigation', variant: 'navbar-tabbed' },
-            { id: 'ecommerce-action', title: 'Command & Actions Bar', description: 'Dense operational toolbar with search, metrics & quick tools', variant: 'navbar-command' },
-          ],
+          options: getLayoutsForPage('navbar'),
           selectedId: pageLayouts.navbar ?? 'saas-header',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { navbar: id as PageLayouts['navbar'] } }),
         };
 
       case 'sidebar':
         return {
-          options: [
-            { id: 'classic-grouped', title: 'Classic Grouped', description: 'Categorized menu links with badges, user card & quick search', variant: 'sidebar-content' },
-            { id: 'compact-rail', title: 'Compact Icon Rail', description: 'Space-saving slim icon rail with tooltips and flyout targets', variant: 'sidebar-rail' },
-            { id: 'dual-pane', title: 'Dual-Pane Master Nav', description: 'Workspace switcher rail paired with contextual sub-menu', variant: 'sidebar-dual' },
-            { id: 'floating-card', title: 'Floating Detached Card', description: 'Elevated floating card sidebar detached from screen edges', variant: 'sidebar-floating' },
-            { id: 'workspace-shell', title: 'Enterprise App Shell', description: 'Full-bleed sidebar with org switcher, breadcrumb and footer', variant: 'sidebar-nav' },
-          ],
+          options: getLayoutsForPage('sidebar'),
           selectedId: pageLayouts.sidebar ?? 'classic-grouped',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { sidebar: id as PageLayouts['sidebar'] } }),
         };

@@ -15,7 +15,7 @@ export const ColorPaletteSchema = z.object({
 export const TypographyStateSchema = z.object({
   headingFont: z.string().min(1),
   bodyFont: z.string().min(1),
-  scale: z.number().min(0.875).max(1.25),
+  scale: z.number().min(1.0).max(1.333),
   baseSize: z.number().min(12).max(24),
 });
 

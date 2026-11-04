@@ -19,15 +19,51 @@ export const ColorSection: React.FC = () => {
   const { state, dispatch } = useDesign();
   const currentMode = state.activeMode;
   const currentPalette = state.colors[currentMode];
+  const [drafts, setDrafts] = React.useState<Partial<Record<keyof ColorPalette, string>>>({});
 
-  const handleColorChange = (key: keyof ColorPalette, value: string) => {
-    let clean = value;
+  const getDisplayValue = (key: keyof ColorPalette) => {
+    return drafts[key] !== undefined ? drafts[key]! : currentPalette[key];
+  };
+
+  const handleInputChange = (key: keyof ColorPalette, value: string) => {
+    setDrafts((prev) => ({ ...prev, [key]: value }));
+    let clean = value.trim();
     if (!clean.startsWith('#')) clean = `#${clean}`;
+
+    // Expand 3-digit hex (#abc -> #aabbcc)
+    if (/^#[0-9A-Fa-f]{3}$/.test(clean)) {
+      clean = `#${clean[1]}${clean[1]}${clean[2]}${clean[2]}${clean[3]}${clean[3]}`;
+    }
+
+    if (/^#[0-9A-Fa-f]{6}$/.test(clean)) {
+      dispatch({
+        type: 'SET_COLOR',
+        mode: currentMode,
+        token: key,
+        value: clean.toLowerCase(),
+      });
+    }
+  };
+
+  const handleInputBlur = (key: keyof ColorPalette) => {
+    setDrafts((prev) => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+  };
+
+  const handlePickerChange = (key: keyof ColorPalette, value: string) => {
+    setDrafts((prev) => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
     dispatch({
       type: 'SET_COLOR',
       mode: currentMode,
       token: key,
-      value: clean,
+      value: value.toLowerCase(),
     });
   };
 
@@ -78,7 +114,7 @@ export const ColorSection: React.FC = () => {
                   <input
                     type="color"
                     value={hex.length === 7 ? hex : '#000000'}
-                    onChange={(e) => handleColorChange(key, e.target.value)}
+                    onChange={(e) => handlePickerChange(key, e.target.value)}
                     className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
                   />
                   <div
@@ -91,8 +127,9 @@ export const ColorSection: React.FC = () => {
                 <input
                   type="text"
                   maxLength={7}
-                  value={hex}
-                  onChange={(e) => handleColorChange(key, e.target.value)}
+                  value={getDisplayValue(key)}
+                  onChange={(e) => handleInputChange(key, e.target.value)}
+                  onBlur={() => handleInputBlur(key)}
                   className="w-20 px-2 py-1.5 text-xs font-mono rounded-lg bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-200 focus-ring"
                 />
               </div>

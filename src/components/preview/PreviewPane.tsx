@@ -1,7 +1,6 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ViewportSwitcher } from './ViewportSwitcher';
-import { MockCard } from './MockCard';
 import { ButtonsPreview } from './components/ButtonsPreview';
 import { FormsPreview } from './components/FormsPreview';
 import { CardsPreview } from './components/CardsPreview';
@@ -9,6 +8,10 @@ import { FeedbackPreview } from './components/FeedbackPreview';
 import { TablePreview } from './components/TablePreview';
 import { NavbarPreview } from './components/NavbarPreview';
 import { SidebarPreview } from './components/SidebarPreview';
+import { getPreviewCssVariables } from '../../lib/tokenModel';
+import type { ViewportMode, PreviewComponentType } from '../../types';
+import { ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
+import { PREVIEW_REGISTRY, getPreviewIndex, getNextPreview, getPrevPreview } from '../../config/previews';
 
 // Page Archetypes (Lazy Loaded for Optimal Bundle Splitting)
 const LandingPage = lazy(() => import('./pages/public/LandingPage').then(m => ({ default: m.LandingPage })));
@@ -50,79 +53,14 @@ const preloadComponent = (type: string) => {
   }
 };
 
-import {
-  getFontEntry,
-  getRadiusEntry,
-  getShadowEntry,
-  getSpacingEntry,
-} from '../../lib/registry';
-import type { ViewportMode, PreviewComponentType } from '../../types';
-import { Layers, ChevronLeft, ChevronRight } from 'lucide-react';
-import { PREVIEW_REGISTRY, getPreviewIndex, getNextPreview, getPrevPreview } from '../../config/previews';
-
 export const PreviewPane: React.FC = () => {
-  const { state, activeColors, activePreview, setActivePreview } = useDesign();
+  const { state, activePreview, setActivePreview } = useDesign();
   const [viewportMode, setViewportMode] = useState<ViewportMode>('desktop');
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const headingFont = getFontEntry(state.typography.headingFont) ?? {
-    family: state.typography.headingFont,
-    category: 'sans-serif',
-  };
-  const bodyFont = getFontEntry(state.typography.bodyFont) ?? {
-    family: state.typography.bodyFont,
-    category: 'sans-serif',
-  };
-  const radiusEntry = getRadiusEntry(state.radius) ?? { value: '8px' };
-  const shadowEntry = getShadowEntry(state.shadow) ?? { value: 'none' };
-  const spacingEntry = getSpacingEntry(state.spacing) ?? {
-    scale: {
-      xs: '0.25rem',
-      sm: '0.5rem',
-      md: '1rem',
-      lg: '1.5rem',
-      xl: '2rem',
-    },
-  };
-
-  // Scoped CSS Custom Properties for the preview sandbox
-  const cssVariables: Record<string, string> = {
-    '--ts-color-primary': activeColors.primary,
-    '--ts-color-secondary': activeColors.secondary,
-    '--ts-color-accent': activeColors.accent,
-    '--ts-color-background': activeColors.background,
-    '--ts-color-surface': activeColors.surface,
-    '--ts-color-text': activeColors.text,
-    '--ts-color-border': activeColors.border,
-
-    '--ts-font-heading': `'${headingFont.family}', ${headingFont.category}`,
-    '--ts-font-body': `'${bodyFont.family}', ${bodyFont.category}`,
-    '--ts-base-size': `${state.typography.baseSize}px`,
-    '--ts-scale': `${state.typography.scale}`,
-
-    '--ts-radius': radiusEntry.value,
-    '--ts-shadow': shadowEntry.value,
-
-    '--ts-space-xs': spacingEntry.scale.xs,
-    '--ts-space-sm': spacingEntry.scale.sm,
-    '--ts-space-md': spacingEntry.scale.md,
-    '--ts-space-lg': spacingEntry.scale.lg,
-    '--ts-space-xl': spacingEntry.scale.xl,
-
-    '--ts-icon-stroke':
-      state.icons?.weight === 'thin'
-        ? '1.25px'
-        : state.icons?.weight === 'light'
-        ? '1.5px'
-        : state.icons?.weight === 'medium'
-        ? '2.25px'
-        : state.icons?.weight === 'bold'
-        ? '2.75px'
-        : '1.75px',
-    '--ts-icon-fill-opacity':
-      state.icons?.mode === 'solid' ? '1' : state.icons?.duotone ? '0.22' : '0',
-    '--ts-icon-library': state.icons?.library ?? 'lucide',
-    '--ts-icon-mode': state.icons?.mode ?? 'outline',
-  };
+  // Scoped CSS Custom Properties derived canonically from tokenModel
+  const cssVariables = getPreviewCssVariables(state);
 
   const currentIndex = getPreviewIndex(activePreview);
 
@@ -138,7 +76,8 @@ export const PreviewPane: React.FC = () => {
     setActivePreview(next);
   }, [activePreview, setActivePreview]);
 
-  React.useEffect(() => {
+  // Keyboard navigation
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
         document.activeElement?.tagName === 'INPUT' ||
@@ -158,6 +97,34 @@ export const PreviewPane: React.FC = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handlePrev, handleNext]);
+
+  // Overflow detection observer
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    const checkOverflow = () => {
+      const overflowing = el.scrollWidth > el.clientWidth + 1;
+      setHasOverflow(overflowing);
+    };
+
+    // Run after DOM render
+    const frame = requestAnimationFrame(checkOverflow);
+
+    const ro = new ResizeObserver(() => {
+      checkOverflow();
+    });
+
+    ro.observe(el);
+    if (el.firstElementChild) {
+      ro.observe(el.firstElementChild);
+    }
+
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+    };
+  }, [activePreview, viewportMode, state]);
 
   // Frame width for viewport simulator
   const viewportWidth =
@@ -246,26 +213,17 @@ export const PreviewPane: React.FC = () => {
       case 'success':
         return <SuccessConfirmPage />;
 
-      case 'overview':
       default:
-        return <MockCard />;
+        return <ButtonsPreview />;
     }
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-slate-100/50 dark:bg-slate-950 overflow-hidden transition-colors">
-      {/* Top toolbar */}
-      <div className="p-3 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-white/80 dark:bg-slate-900/60 backdrop-blur-sm flex-shrink-0 z-10 transition-colors">
-        {/* Component / Page Selector with Navigation Buttons */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          <label
-            htmlFor="preview-component-select"
-            className="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5"
-          >
-            <Layers className="w-4 h-4 text-sky-500" />
-            <span className="hidden sm:inline">Preview:</span>
-          </label>
-
+    <div className="flex-1 flex flex-col h-full bg-slate-100 dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 transition-colors overflow-hidden min-h-0">
+      {/* Top Preview Control Header */}
+      <div className="h-14 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-4 flex items-center justify-between bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-10 shrink-0 gap-2">
+        {/* Navigation Selector Bar */}
+        <div className="flex items-center gap-1 sm:gap-2 min-w-0">
           {/* Navigation Prev Button */}
           <button
             type="button"
@@ -277,44 +235,29 @@ export const PreviewPane: React.FC = () => {
             <ChevronLeft className="w-4 h-4" />
           </button>
 
-          <div className="relative">
+          {/* Quick Selection Dropdown */}
+          <div className="relative min-w-0">
             <select
-              id="preview-component-select"
               value={activePreview}
-              onMouseEnter={() => {
-                preloadComponent('landing');
-                preloadComponent('auth');
-                preloadComponent('error');
-              }}
-              onFocus={() => {
-                preloadComponent('landing');
-                preloadComponent('dashboard');
-                preloadComponent('auth');
-                preloadComponent('error');
-              }}
-              onChange={(e) => {
-                const val = e.target.value as PreviewComponentType;
-                preloadComponent(val);
-                setActivePreview(val);
-              }}
-              className="min-h-[40px] px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 focus-ring cursor-pointer transition-colors shadow-sm max-w-[220px] sm:max-w-none"
+              onChange={(e) => setActivePreview(e.target.value as PreviewComponentType)}
+              aria-label="Select preview archetype"
+              className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[145px] sm:max-w-[210px] md:max-w-xs truncate"
             >
               <optgroup label="Component Primitives">
-                <option value="overview">Component Card (Overview)</option>
                 <option value="buttons">Buttons & Actions</option>
-                <option value="forms">Form Controls & Inputs</option>
-                <option value="cards">Cards & Surfaces Showcase</option>
-                <option value="feedback">Feedback, Badges & Alerts</option>
-                <option value="table">Data Tables & Lists</option>
-                <option value="navbar">Navbar & Navigation Header</option>
-                <option value="sidebar">Sidebar Navigation & Rails</option>
+                <option value="forms">Input Controls & Select</option>
+                <option value="cards">Surfaces & Containers</option>
+                <option value="feedback">Alerts & Status Toasts</option>
+                <option value="table">Data Tables & Records</option>
+                <option value="navbar">Navigation Header Bar</option>
+                <option value="sidebar">Application Sidebar Nav</option>
               </optgroup>
 
-              <optgroup label="Public Pages">
-                <option value="landing">Landing / Homepage</option>
-                <option value="pricing">Pricing & Plans</option>
-                <option value="blog">Blog / Long Article</option>
-                <option value="contact">Contact & Validation Form</option>
+              <optgroup label="Public & Marketing">
+                <option value="landing">Marketing Landing Page</option>
+                <option value="pricing">Pricing & Subscription Tiers</option>
+                <option value="blog">Editorial Article / Blog</option>
+                <option value="contact">Contact & Support Inquiry</option>
               </optgroup>
 
               <optgroup label="Auth & Onboarding">
@@ -358,6 +301,17 @@ export const PreviewPane: React.FC = () => {
           <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 hidden md:inline ml-0.5">
             {currentIndex + 1}/{PREVIEW_REGISTRY.length}
           </span>
+
+          {/* Overflow detection indicator */}
+          {hasOverflow && (
+            <span
+              className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 flex items-center gap-1 animate-pulse"
+              title="Container content exceeds viewport width"
+            >
+              <AlertTriangle className="w-3 h-3" />
+              <span>↔ Overflow</span>
+            </span>
+          )}
         </div>
 
         {/* Viewport switcher */}
@@ -397,6 +351,7 @@ export const PreviewPane: React.FC = () => {
           >
             {/* Scrollable Viewport inside the preview frame */}
             <div
+              ref={scrollContainerRef}
               style={{
                 flex: 1,
                 width: '100%',

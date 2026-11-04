@@ -29,8 +29,9 @@ interface KanbanColumn {
 }
 
 export const KanbanPage: React.FC = () => {
-  const { activeColors } = useDesign();
+  const { state, activeColors } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
+  const layout = state.pageLayouts?.kanban ?? 'board-columns';
   const [searchQuery, setSearchQuery] = useState('');
 
   const columns: KanbanColumn[] = [
@@ -255,7 +256,89 @@ export const KanbanPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Kanban Board Columns Container */}
+      {/* Layout Variant: 2. TIMELINE LIST */}
+      {layout === 'timeline-list' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
+          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--ts-space-sm)' }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700 }}>Q4 Engineering Milestones</h3>
+                <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.7 }}>4 of 7 deliverables completed (68%)</span>
+              </div>
+              <div style={{ width: '120px', height: '8px', backgroundColor: 'var(--ts-color-background)', borderRadius: '9999px', overflow: 'hidden' }}>
+                <div style={{ width: '68%', height: '100%', backgroundColor: 'var(--ts-color-primary)', borderRadius: '9999px' }} />
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-xs)' }}>
+              {columns.flatMap((c) => c.tasks.map((t) => ({ ...t, status: c.title }))).map((task) => (
+                <div
+                  key={task.id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: 'var(--ts-space-sm)',
+                    borderRadius: 'var(--ts-radius)',
+                    border: '1px solid var(--ts-color-border)',
+                    backgroundColor: 'var(--ts-color-background)',
+                    gap: 'var(--ts-space-md)',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: '220px', flex: 1 }}>
+                    <span style={{ fontSize: '11px', fontFamily: 'monospace', opacity: 0.6 }}>{task.tag}</span>
+                    <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 600 }}>{task.title}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <span style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)' }}>
+                      {task.status}
+                    </span>
+                    <span style={{ fontSize: '11px', opacity: 0.7 }}>{task.dueDate ?? 'Ongoing'}</span>
+                    <div style={{ width: '22px', height: '22px', borderRadius: '50%', backgroundColor: 'var(--ts-color-primary)', color: primaryTextColor, fontSize: '9px', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {task.assignee}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Layout Variant: 3. COMPACT GRID */}
+      {layout === 'compact-grid' && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--ts-space-sm)' }}>
+          {columns.flatMap((c) => c.tasks.map((t) => ({ ...t, status: c.title }))).map((task) => (
+            <div
+              key={task.id}
+              style={{
+                backgroundColor: 'var(--ts-color-surface)',
+                border: '1px solid var(--ts-color-border)',
+                borderRadius: 'var(--ts-radius)',
+                padding: 'var(--ts-space-sm)',
+                boxShadow: 'var(--ts-shadow)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '10px', fontFamily: 'monospace', opacity: 0.6 }}>{task.tag}</span>
+                <span style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--ts-color-primary)' }}>{task.status}</span>
+              </div>
+              <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 600, lineHeight: 1.3 }}>{task.title}</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '4px', borderTop: '1px solid var(--ts-color-border)', fontSize: '11px', opacity: 0.7 }}>
+                <span>{task.dueDate ?? 'Backlog'}</span>
+                <span>{task.comments} notes</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Layout Variant: 1. BOARD COLUMNS (Default) */}
+      {(layout === 'board-columns' || !['timeline-list', 'compact-grid'].includes(layout)) && (
       <div
         style={{
           display: 'grid',
@@ -457,6 +540,7 @@ export const KanbanPage: React.FC = () => {
           );
         })}
       </div>
+      )}
     </div>
   );
 };

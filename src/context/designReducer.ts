@@ -138,6 +138,9 @@ export function generateHarmoniousPalette(): { light: ColorPalette; dark: ColorP
 export function designReducer(state: DesignState, action: DesignAction): DesignState {
   switch (action.type) {
     case 'SET_COLOR': {
+      if (!/^#[0-9A-Fa-f]{6}$/.test(action.value)) {
+        return state;
+      }
       return {
         ...state,
         colors: {

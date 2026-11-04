@@ -6,12 +6,206 @@ import {
   Plus,
   BookOpen,
   ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 
 export const EmptyStatePage: React.FC = () => {
-  const { activeColors } = useDesign();
+  const { state, activeColors } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
+  const layout = state.pageLayouts?.emptyState ?? 'centered-action';
 
+  // VARIANT 2: ILLUSTRATION CARD (Starter Template Kit)
+  if (layout === 'illustration-card') {
+    return (
+      <div
+        style={{
+          backgroundColor: 'var(--ts-color-background)',
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          minHeight: '100%',
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '620px',
+            width: '100%',
+            backgroundColor: 'var(--ts-color-surface)',
+            border: '1px solid var(--ts-color-border)',
+            borderRadius: 'var(--ts-radius)',
+            padding: 'var(--ts-space-xl)',
+            boxShadow: 'var(--ts-shadow)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--ts-space-md)',
+          }}
+        >
+          <div style={{ textAlign: 'center' }}>
+            <div
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(var(--ts-color-primary), 0.12)',
+                color: 'var(--ts-color-primary)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 'var(--ts-space-xs)',
+              }}
+            >
+              <Sparkles style={{ width: '24px', height: '24px' }} />
+            </div>
+            <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.25)', fontWeight: 800, margin: 0 }}>
+              Kickstart with a Starter Kit
+            </h2>
+            <p style={{ margin: '4px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.82)', opacity: 0.7 }}>
+              You don’t have any active tokens yet. Pick a verified starter kit below to pre-populate your design spec:
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--ts-space-sm)' }}>
+            {[
+              { title: 'SaaS Dashboard Pro', desc: 'Enterprise data tables, status badges & metric cards', archetype: 'Neo-Brutalist' },
+              { title: 'Editorial Minimalist', desc: 'Focus on serif typography, generous whitespace & contrast', archetype: 'Swiss Minimal' },
+              { title: 'DevOps Cloud Console', desc: 'Dark-mode first, dense monospaced terminal grids', archetype: 'Cyberpunk' },
+              { title: 'Mobile E-Commerce', desc: 'Rounded pill buttons, soft shadows & vibrant accents', archetype: 'Soft UI Pastel' },
+            ].map((kit, i) => (
+              <div
+                key={i}
+                style={{
+                  backgroundColor: 'var(--ts-color-background)',
+                  border: '1px solid var(--ts-color-border)',
+                  borderRadius: 'var(--ts-radius)',
+                  padding: 'var(--ts-space-sm)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  gap: '8px',
+                }}
+              >
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>{kit.title}</div>
+                  <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.7, marginTop: '2px' }}>{kit.desc}</div>
+                </div>
+                <button
+                  type="button"
+                  style={{
+                    backgroundColor: 'var(--ts-color-primary)',
+                    color: primaryTextColor,
+                    border: 'none',
+                    borderRadius: 'var(--ts-radius)',
+                    padding: '4px 10px',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    alignSelf: 'flex-start',
+                  }}
+                >
+                  Apply Kit
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // VARIANT 3: CHECKLIST GUIDE
+  if (layout === 'checklist-guide') {
+    return (
+      <div
+        style={{
+          backgroundColor: 'var(--ts-color-background)',
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          minHeight: '100%',
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '560px',
+            width: '100%',
+            backgroundColor: 'var(--ts-color-surface)',
+            border: '1px solid var(--ts-color-border)',
+            borderRadius: 'var(--ts-radius)',
+            padding: 'var(--ts-space-xl)',
+            boxShadow: 'var(--ts-shadow)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--ts-space-md)',
+          }}
+        >
+          <div>
+            <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.25)', fontWeight: 800, margin: 0 }}>
+              Quick Start Checklist
+            </h2>
+            <p style={{ margin: '4px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.82)', opacity: 0.7 }}>
+              Follow these three simple steps to prepare your system for autonomous agent code generation.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
+            {[
+              { num: '1', title: 'Pick Brand Colors & Status Spectrum', desc: 'Ensure WCAG 2.1 AAA passes on primary & background', done: false },
+              { num: '2', title: 'Calibrate Type Scale & Google Fonts', desc: 'Select harmonious heading and body font pairings', done: false },
+              { num: '3', title: 'Export DESIGN.md & tokens.css', desc: 'Handoff the truth to Gemini, Claude, or Copilot agents', done: false },
+            ].map((item) => (
+              <div
+                key={item.num}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: 'var(--ts-space-sm)',
+                  borderRadius: 'var(--ts-radius)',
+                  backgroundColor: 'var(--ts-color-background)',
+                  border: '1px solid var(--ts-color-border)',
+                }}
+              >
+                <div
+                  style={{
+                    width: '26px',
+                    height: '26px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--ts-color-primary)',
+                    color: primaryTextColor,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 700,
+                    fontSize: '12px',
+                    flexShrink: 0,
+                  }}
+                >
+                  {item.num}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>{item.title}</div>
+                  <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.65 }}>{item.desc}</div>
+                </div>
+                <ArrowRight style={{ width: '14px', height: '14px', opacity: 0.5 }} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // VARIANT 1: CENTERED ACTION (Default)
   return (
     <div
       style={{
@@ -60,33 +254,42 @@ export const EmptyStatePage: React.FC = () => {
           <FolderPlus style={{ width: '32px', height: '32px' }} />
         </div>
 
-        {/* Text Copy */}
-        <div>
+        {/* Text Details */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-xs)' }}>
           <h2
             style={{
               fontFamily: 'var(--ts-font-heading)',
-              fontSize: 'calc(var(--ts-base-size) * var(--ts-scale) * 1.1)',
+              fontSize: 'calc(var(--ts-base-size) * var(--ts-scale) * var(--ts-scale))',
               fontWeight: 800,
-              margin: '0 0 var(--ts-space-xs) 0',
+              margin: 0,
             }}
           >
-            No Design Specifications Yet
+            No Design Tokens Found
           </h2>
           <p
             style={{
               margin: 0,
-              fontSize: 'calc(var(--ts-base-size) * 0.85)',
+              fontSize: 'calc(var(--ts-base-size) * 0.9)',
               opacity: 0.75,
+              maxWidth: '380px',
               lineHeight: 1.5,
-              maxWidth: '420px',
             }}
           >
-            You haven't compiled any design tokens or component rules for your autonomous AI agents. Start from scratch or load an archetype.
+            Your current workspace has no active style tokens registered. Start by assembling your brand palette or load a curated archetype.
           </p>
         </div>
 
-        {/* Primary Call to Actions */}
-        <div style={{ display: 'flex', gap: 'var(--ts-space-xs)', flexWrap: 'wrap', justifyContent: 'center' }}>
+        {/* Action Button Group */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 'var(--ts-space-sm)',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            marginTop: 'var(--ts-space-xs)',
+          }}
+        >
           <button
             type="button"
             style={{
@@ -104,14 +307,14 @@ export const EmptyStatePage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Plus style={{ width: '15px', height: '15px' }} />
-            <span>Create New Specification</span>
+            <Plus style={{ width: '16px', height: '16px' }} />
+            <span>Create Token Palette</span>
           </button>
 
           <button
             type="button"
             style={{
-              backgroundColor: 'var(--ts-color-background)',
+              backgroundColor: 'transparent',
               color: 'var(--ts-color-text)',
               border: '1px solid var(--ts-color-border)',
               borderRadius: 'var(--ts-radius)',
@@ -124,58 +327,9 @@ export const EmptyStatePage: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <BookOpen style={{ width: '15px', height: '15px' }} />
-            <span>Documentation Guide</span>
+            <BookOpen style={{ width: '14px', height: '14px', opacity: 0.7 }} />
+            <span>Browse Templates</span>
           </button>
-        </div>
-
-        {/* Quick Starter Presets Pills */}
-        <div
-          style={{
-            borderTop: '1px solid var(--ts-color-border)',
-            paddingTop: 'var(--ts-space-sm)',
-            width: '100%',
-          }}
-        >
-          <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.7, marginBottom: '8px' }}>
-            Or quick start from curated archetype presets:
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', flexWrap: 'wrap' }}>
-            {[
-              { name: 'Nordic Forest', color: '#1b4332' },
-              { name: 'Cyber Neon', color: '#00f5d4' },
-              { name: 'Zinc Minimal', color: '#18181b' },
-              { name: 'Sunset Amber', color: '#f97316' },
-            ].map((preset) => (
-              <span
-                key={preset.name}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  padding: '3px 8px',
-                  borderRadius: 'var(--ts-radius)',
-                  backgroundColor: 'var(--ts-color-background)',
-                  border: '1px solid var(--ts-color-border)',
-                  fontSize: 'calc(var(--ts-base-size) * 0.72)',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                }}
-              >
-                <span
-                  style={{
-                    width: '7px',
-                    height: '7px',
-                    borderRadius: '50%',
-                    backgroundColor: preset.color,
-                  }}
-                />
-                <span>{preset.name}</span>
-                <ArrowRight style={{ width: '10px', height: '10px', opacity: 0.5 }} />
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </div>

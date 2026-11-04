@@ -1,13 +1,203 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Check, ArrowRight, ArrowLeft, Layers, Palette, Type, Sliders, Sparkles } from 'lucide-react';
 
 export const OnboardingPage: React.FC = () => {
-  const { activeColors } = useDesign();
-  const [teamSize, setTeamSize] = useState('5-20');
+  const { state, activeColors } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
+  const layout = state.pageLayouts?.onboarding ?? 'wizard-stepper';
+  const [teamSize, setTeamSize] = useState('5-20');
 
+  // VARIANT 2: CARD STACK
+  if (layout === 'card-stack') {
+    return (
+      <div
+        style={{
+          backgroundColor: 'var(--ts-color-background)',
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          minHeight: '100%',
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 'var(--ts-space-md)',
+        }}
+      >
+        <div style={{ maxWidth: '580px', width: '100%', textAlign: 'center', marginBottom: 'var(--ts-space-xs)' }}>
+          <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.3)', fontWeight: 800, margin: 0 }}>
+            Workspace Setup Checklist
+          </h2>
+          <p style={{ fontSize: 'calc(var(--ts-base-size) * 0.82)', opacity: 0.7, margin: '4px 0 0 0' }}>
+            Complete the milestones below to calibrate your agent design token handoff.
+          </p>
+        </div>
+
+        <div style={{ maxWidth: '580px', width: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
+          {[
+            { id: 1, title: 'Choose Token Palette & Accent', done: true, icon: <Palette style={{ width: '16px', height: '16px' }} /> },
+            { id: 2, title: 'Configure Typography Scale & Google Fonts', done: true, icon: <Type style={{ width: '16px', height: '16px' }} /> },
+            { id: 3, title: 'Calibrate Spacing & Border Radius', active: true, icon: <Sliders style={{ width: '16px', height: '16px' }} /> },
+            { id: 4, title: 'Verify WCAG 2.1 Contrast Pass', pending: true, icon: <Layers style={{ width: '16px', height: '16px' }} /> },
+          ].map((step) => (
+            <div
+              key={step.id}
+              style={{
+                backgroundColor: 'var(--ts-color-surface)',
+                border: step.active ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
+                borderRadius: 'var(--ts-radius)',
+                padding: 'var(--ts-space-sm) var(--ts-space-md)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                boxShadow: 'var(--ts-shadow)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    backgroundColor: step.done ? 'rgba(16, 185, 129, 0.15)' : step.active ? 'var(--ts-color-primary)' : 'var(--ts-color-background)',
+                    color: step.done ? '#10b981' : step.active ? primaryTextColor : 'var(--ts-color-text)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                  }}
+                >
+                  {step.done ? <Check style={{ width: '14px', height: '14px' }} /> : step.id}
+                </div>
+                <div>
+                  <div style={{ fontWeight: step.active ? 700 : 600, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>{step.title}</div>
+                  <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.65 }}>
+                    {step.done ? 'Configured and locked in schema' : step.active ? 'In progress — awaiting confirmation' : 'Queued next'}
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
+                style={{
+                  padding: 'var(--ts-space-xs) var(--ts-space-sm)',
+                  borderRadius: 'var(--ts-radius)',
+                  border: '1px solid var(--ts-color-border)',
+                  backgroundColor: step.active ? 'var(--ts-color-primary)' : 'var(--ts-color-background)',
+                  color: step.active ? primaryTextColor : 'var(--ts-color-text)',
+                  fontSize: 'calc(var(--ts-base-size) * 0.75)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                {step.done ? 'Edit' : step.active ? 'Configure' : 'Start'}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // VARIANT 3: MINIMAL MODAL
+  if (layout === 'minimal-modal') {
+    return (
+      <div
+        style={{
+          backgroundColor: 'var(--ts-color-background)',
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          minHeight: '100%',
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '460px',
+            width: '100%',
+            backgroundColor: 'var(--ts-color-surface)',
+            border: '1px solid var(--ts-color-border)',
+            borderRadius: 'var(--ts-radius)',
+            padding: 'var(--ts-space-xl)',
+            boxShadow: 'var(--ts-shadow)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            gap: 'var(--ts-space-md)',
+          }}
+        >
+          <div
+            style={{
+              width: '54px',
+              height: '54px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--ts-color-primary)',
+              color: primaryTextColor,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Sparkles style={{ width: '26px', height: '26px' }} />
+          </div>
+
+          <div>
+            <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.2)', fontWeight: 800, margin: 0 }}>
+              Welcome to TastyStyles
+            </h2>
+            <p style={{ margin: '8px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75, lineHeight: 1.5 }}>
+              Deterministic token compilation and UI/UX sandbox tailored for autonomous coding agents.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+            <button
+              type="button"
+              style={{
+                width: '100%',
+                padding: 'var(--ts-space-xs) var(--ts-space-md)',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                border: 'none',
+                borderRadius: 'var(--ts-radius)',
+                fontWeight: 700,
+                fontSize: 'calc(var(--ts-base-size) * 0.88)',
+                cursor: 'pointer',
+                boxShadow: 'var(--ts-shadow)',
+              }}
+            >
+              Get Started with Preset
+            </button>
+            <button
+              type="button"
+              style={{
+                width: '100%',
+                padding: 'var(--ts-space-xs) var(--ts-space-md)',
+                backgroundColor: 'transparent',
+                border: '1px solid var(--ts-color-border)',
+                borderRadius: 'var(--ts-radius)',
+                color: 'var(--ts-color-text)',
+                fontSize: 'calc(var(--ts-base-size) * 0.82)',
+                cursor: 'pointer',
+              }}
+            >
+              Skip Setup
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // VARIANT 1: WIZARD STEPPER (Default)
   return (
     <div
       style={{
@@ -59,89 +249,56 @@ export const OnboardingPage: React.FC = () => {
           >
             Tell us about your team
           </h2>
-          <p style={{ margin: '4px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.8 }}>
-            We'll tailor your design system token scale and component defaults based on your setup.
+          <p style={{ margin: '4px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75 }}>
+            Help us calibrate default workspace permissions and AI agent quota.
           </p>
         </div>
 
-        {/* Workspace Name Input */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>Workspace Name</label>
-          <input
-            type="text"
-            defaultValue="Acme Frontend Core"
-            style={{
-              backgroundColor: 'var(--ts-color-background)',
-              color: 'var(--ts-color-text)',
-              border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
-              padding: 'var(--ts-space-sm)',
-              fontSize: 'calc(var(--ts-base-size) * 0.85)',
-              outline: 'none',
-            }}
-          />
-        </div>
-
-        {/* Team Size Radio Grid */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>How many engineers build UI?</label>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 'var(--ts-space-xs)' }}>
-            {[
-              { id: '1-4', label: '1–4 devs', desc: 'Solo / Tiny team' },
-              { id: '5-20', label: '5–20 devs', desc: 'Growing squad' },
-              { id: '20+', label: '20+ devs', desc: 'Enterprise division' },
-            ].map((size) => {
-              const active = teamSize === size.id;
-              return (
-                <button
-                  key={size.id}
-                  type="button"
-                  onClick={() => setTeamSize(size.id)}
-                  style={{
-                    backgroundColor: active ? 'var(--ts-color-background)' : 'transparent',
-                    border: `2px solid ${active ? 'var(--ts-color-accent)' : 'var(--ts-color-border)'}`,
-                    borderRadius: 'var(--ts-radius)',
-                    padding: 'var(--ts-space-sm)',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    color: 'var(--ts-color-text)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '2px',
-                  }}
-                >
-                  <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.85)', display: 'flex', justifyContent: 'space-between' }}>
-                    <span>{size.label}</span>
-                    {active && <Check style={{ width: '14px', height: '14px', color: 'var(--ts-color-accent)' }} />}
-                  </div>
-                  <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.7 }}>{size.desc}</span>
-                </button>
-              );
-            })}
+        {/* Form Body */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
+          <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>Team / Organization Size</label>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--ts-space-xs)' }}>
+            {['1-5', '5-20', '20+'].map((sz) => (
+              <button
+                key={sz}
+                type="button"
+                onClick={() => setTeamSize(sz)}
+                style={{
+                  padding: 'var(--ts-space-sm)',
+                  borderRadius: 'var(--ts-radius)',
+                  border: teamSize === sz ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
+                  backgroundColor: teamSize === sz ? 'var(--ts-color-background)' : 'transparent',
+                  color: teamSize === sz ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
+                  fontWeight: 700,
+                  fontSize: 'calc(var(--ts-base-size) * 0.85)',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                }}
+              >
+                {sz} Members
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'var(--ts-space-xs)' }}>
+        {/* Actions */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'var(--ts-space-sm)' }}>
           <button
             type="button"
             style={{
-              backgroundColor: 'transparent',
-              border: '1px solid var(--ts-color-border)',
+              background: 'none',
+              border: 'none',
               color: 'var(--ts-color-text)',
-              borderRadius: 'var(--ts-radius)',
-              padding: 'var(--ts-space-sm) var(--ts-space-md)',
-              fontSize: 'calc(var(--ts-base-size) * 0.85)',
+              fontSize: 'calc(var(--ts-base-size) * 0.82)',
+              cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              cursor: 'pointer',
+              gap: '4px',
+              opacity: 0.7,
             }}
           >
-            <ArrowLeft style={{ width: '14px', height: '14px' }} />
-            <span>Previous</span>
+            <ArrowLeft style={{ width: '14px', height: '14px' }} /> Back
           </button>
-
           <button
             type="button"
             style={{
@@ -149,9 +306,9 @@ export const OnboardingPage: React.FC = () => {
               color: primaryTextColor,
               border: 'none',
               borderRadius: 'var(--ts-radius)',
-              padding: 'var(--ts-space-sm) var(--ts-space-lg)',
-              fontWeight: 600,
+              padding: 'var(--ts-space-xs) var(--ts-space-lg)',
               fontSize: 'calc(var(--ts-base-size) * 0.85)',
+              fontWeight: 600,
               display: 'flex',
               alignItems: 'center',
               gap: '6px',

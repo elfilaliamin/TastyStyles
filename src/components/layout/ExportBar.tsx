@@ -9,11 +9,11 @@ interface ExportBarProps {
 }
 
 export const ExportBar: React.FC<ExportBarProps> = ({ onNotify, onOpenExportModal }) => {
-  const { compiledMarkdown, state, dispatch } = useDesign();
+  const { compiledMarkdown, dispatch } = useDesign();
 
   const handleDownload = () => {
-    downloadFile(compiledMarkdown, `${state.name.toLowerCase().replace(/\s+/g, '-')}-spec.md`);
-    onNotify('Downloaded Spec!', 'File saved as design-spec.md', 'success');
+    downloadFile(compiledMarkdown, 'DESIGN.md');
+    onNotify('Downloaded Spec!', 'File saved as DESIGN.md', 'success');
   };
 
   const handleReset = () => {

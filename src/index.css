@@ -40,46 +40,21 @@
 }
 
 /* ==========================================================================
-   Mobile & Tablet Friendly Sandbox Viewport Rules
-   Ensures preview screens adapt and never overflow on small viewports
+   TastyStyles Preview Frame Sandbox & Container Queries
    ========================================================================== */
 
 .ts-preview-frame {
   container-type: inline-size;
 }
 
-/* Mobile Viewport Simulation & Small Screens (< 540px) */
+/* Base mobile font adjustments */
 .ts-preview-frame[data-viewport='mobile'] {
   font-size: calc(var(--ts-base-size) * 0.9);
-}
-
-.ts-preview-frame[data-viewport='mobile'] div[style*="display: grid"],
-.ts-preview-frame[data-viewport='mobile'] div[style*="display:grid"] {
-  grid-template-columns: 1fr !important;
-}
-
-.ts-preview-frame[data-viewport='mobile'] header,
-.ts-preview-frame[data-viewport='mobile'] nav {
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-}
-
-.ts-preview-frame[data-viewport='mobile'] section,
-.ts-preview-frame[data-viewport='mobile'] div[style*="padding: var(--ts-space-lg)"],
-.ts-preview-frame[data-viewport='mobile'] div[style*="padding: var(--ts-space-xl)"] {
-  padding: var(--ts-space-sm) !important;
 }
 
 .ts-preview-frame[data-viewport='mobile'] h1 {
   font-size: calc(var(--ts-base-size) * var(--ts-scale) * 1.15) !important;
   line-height: 1.25 !important;
-}
-
-.ts-preview-frame[data-viewport='mobile'] div,
-.ts-preview-frame[data-viewport='mobile'] input,
-.ts-preview-frame[data-viewport='mobile'] button {
-  max-width: 100% !important;
-  box-sizing: border-box !important;
 }
 
 .ts-preview-frame[data-viewport='mobile'] table {
@@ -89,23 +64,48 @@
   width: 100% !important;
 }
 
-/* Tablet Viewport Simulation (541px to 840px) */
-.ts-preview-frame[data-viewport='tablet'] div[style*="gridTemplateColumns: repeat(auto-fit, minmax(320px"] {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
-}
-
-.ts-preview-frame[data-viewport='tablet'] section {
-  padding: var(--ts-space-md) !important;
-}
-
-.ts-preview-frame[data-viewport='tablet'] table {
-  display: block !important;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
+@container (max-width: 640px) {
+  table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+  }
 }
 
 /* ==========================================================================
-   Mobile & Tablet Auth Layout Adaptations
+   Responsive Architecture Utility Classes
+   ========================================================================== */
+
+/* Page-level splits (e.g. Master/Detail, Landing Hero, Error CLI) */
+@container (max-width: 768px) {
+  .ts-responsive-split {
+    grid-template-columns: 1fr !important;
+    flex-direction: column !important;
+  }
+}
+
+/* Chat inbox mobile adaptation */
+.ts-preview-frame[data-viewport='mobile'] .ts-chat-mobile-toggle {
+  display: inline-flex !important;
+}
+
+.ts-preview-frame[data-viewport='mobile'] .ts-chat-thread-column {
+  display: none !important;
+}
+
+@container (max-width: 640px) {
+  .ts-chat-mobile-toggle {
+    display: inline-flex !important;
+  }
+  
+  .ts-chat-thread-column {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Auth Layout Adaptations (Split screen, Modal, Cards)
    ========================================================================== */
 
 /* Split Screen & Split Image: On mobile, hide visual marketing/image side */
@@ -166,18 +166,15 @@
   grid-template-columns: 1fr 1fr !important;
 }
 
-@container (min-width: 641px) and (max-width: 900px) {
-  .ts-auth-split-grid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-}
-
 .ts-preview-frame[data-viewport='tablet'] .ts-auth-split-visual,
 .ts-preview-frame[data-viewport='tablet'] .ts-auth-split-image-visual {
   padding: var(--ts-space-md) !important;
 }
 
 @container (min-width: 641px) and (max-width: 900px) {
+  .ts-auth-split-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
   .ts-auth-split-visual,
   .ts-auth-split-image-visual {
     padding: var(--ts-space-md) !important;

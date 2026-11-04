@@ -6,20 +6,180 @@ import {
   Activity,
   CheckCircle2,
   ChevronRight,
-  MoreVertical,
   RotateCw,
   ExternalLink,
-  Shield,
-  Clock,
   Terminal,
   Cpu,
   HardDrive,
 } from 'lucide-react';
 
 export const ItemDetailPage: React.FC = () => {
-  const { activeColors } = useDesign();
+  const { state, activeColors } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
+  const layout = state.pageLayouts?.detail ?? 'split-sidepanel';
   const [activeTab, setActiveTab] = useState<'overview' | 'logs' | 'network' | 'security'>('overview');
+
+  const renderHardwareSpecs = () => (
+    <div
+      style={{
+        backgroundColor: 'var(--ts-color-surface)',
+        border: '1px solid var(--ts-color-border)',
+        borderRadius: 'var(--ts-radius)',
+        boxShadow: 'var(--ts-shadow)',
+        padding: 'var(--ts-space-md)',
+      }}
+    >
+      <h3
+        style={{
+          fontFamily: 'var(--ts-font-heading)',
+          fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))',
+          fontWeight: 700,
+          margin: '0 0 var(--ts-space-sm) 0',
+        }}
+      >
+        Hardware Allocation
+      </h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 'var(--ts-space-sm)' }}>
+        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
+            <Cpu style={{ width: '14px', height: '14px' }} />
+            <span>CPU Cores</span>
+          </div>
+          <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>32 vCPUs</div>
+          <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>28% utilized</div>
+        </div>
+
+        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
+            <Activity style={{ width: '14px', height: '14px' }} />
+            <span>Memory RAM</span>
+          </div>
+          <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>128 GB</div>
+          <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>54.2 GB in use</div>
+        </div>
+
+        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
+            <HardDrive style={{ width: '14px', height: '14px' }} />
+            <span>NVMe Storage</span>
+          </div>
+          <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>2.0 TB</div>
+          <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>RAID 10 Striped</div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderTimeline = () => (
+    <div
+      style={{
+        backgroundColor: 'var(--ts-color-surface)',
+        border: '1px solid var(--ts-color-border)',
+        borderRadius: 'var(--ts-radius)',
+        boxShadow: 'var(--ts-shadow)',
+        padding: 'var(--ts-space-md)',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--ts-space-sm)' }}>
+        <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))', fontWeight: 700, margin: 0 }}>
+          Recent Activity & Deployments
+        </h3>
+        <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.7 }}>Realtime sync</span>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
+        {[
+          { time: '3 mins ago', title: 'Automated health-check passed', desc: 'All 6 replica pods responded within 12ms', status: 'ok' },
+          { time: '42 mins ago', title: 'Hot reload config synced', desc: 'Applied token spec update #814f9a to runner', status: 'ok' },
+          { time: '2 hours ago', title: 'Auto-scaled up +2 worker threads', desc: 'High load spike detected in pipeline ingress', status: 'warn' },
+        ].map((log, idx) => (
+          <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--ts-space-sm)', fontSize: 'calc(var(--ts-base-size) * 0.8)' }}>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: log.status === 'ok' ? '#10b981' : '#f59e0b', marginTop: '6px' }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600 }}>{log.title}</div>
+              <div style={{ opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.72)' }}>{log.desc}</div>
+            </div>
+            <div style={{ opacity: 0.55, fontSize: 'calc(var(--ts-base-size) * 0.7)' }}>{log.time}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderMetadataSidebar = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
+      {/* Node Info */}
+      <div
+        style={{
+          backgroundColor: 'var(--ts-color-surface)',
+          border: '1px solid var(--ts-color-border)',
+          borderRadius: 'var(--ts-radius)',
+          boxShadow: 'var(--ts-shadow)',
+          padding: 'var(--ts-space-md)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--ts-space-sm)',
+        }}
+      >
+        <h4 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 0.9)', fontWeight: 700, margin: 0 }}>
+          Cluster Diagnostics
+        </h4>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: 'calc(var(--ts-base-size) * 0.78)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ opacity: 0.7 }}>Control Plane:</span>
+            <span style={{ fontWeight: 600 }}>us-east-virginia-1</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ opacity: 0.7 }}>Kubernetes Version:</span>
+            <span style={{ fontFamily: 'monospace' }}>v1.29.3-eks</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ opacity: 0.7 }}>Ingress IP:</span>
+            <span style={{ fontFamily: 'monospace' }}>192.168.42.108</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Developer Tools */}
+      <div
+        style={{
+          backgroundColor: 'var(--ts-color-surface)',
+          border: '1px solid var(--ts-color-border)',
+          borderRadius: 'var(--ts-radius)',
+          boxShadow: 'var(--ts-shadow)',
+          padding: 'var(--ts-space-md)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--ts-space-xs)',
+        }}
+      >
+        <h4 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 0.9)', fontWeight: 700, margin: '0 0 var(--ts-space-xs) 0' }}>
+          Developer Tools
+        </h4>
+        <button
+          type="button"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 'var(--ts-space-xs) var(--ts-space-sm)',
+            backgroundColor: 'var(--ts-color-background)',
+            border: '1px solid var(--ts-color-border)',
+            borderRadius: 'var(--ts-radius)',
+            color: 'var(--ts-color-text)',
+            fontSize: 'calc(var(--ts-base-size) * 0.8)',
+            cursor: 'pointer',
+          }}
+        >
+          <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Terminal style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} />
+            <span>SSH Web Terminal</span>
+          </span>
+          <ExternalLink style={{ width: '12px', height: '12px', opacity: 0.6 }} />
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -33,7 +193,7 @@ export const ItemDetailPage: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 'var(--ts-space-md)',
-        maxWidth: '1020px',
+        maxWidth: layout === 'full-document' ? '820px' : '1020px',
         margin: '0 auto',
       }}
     >
@@ -59,463 +219,134 @@ export const ItemDetailPage: React.FC = () => {
       {/* Entity Header Banner */}
       <div
         style={{
+          backgroundColor: 'var(--ts-color-surface)',
+          border: '1px solid var(--ts-color-border)',
+          borderRadius: 'var(--ts-radius)',
+          boxShadow: 'var(--ts-shadow)',
+          padding: 'var(--ts-space-md)',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           flexWrap: 'wrap',
-          gap: 'var(--ts-space-md)',
-          paddingBottom: 'var(--ts-space-sm)',
-          borderBottom: '1px solid var(--ts-color-border)',
+          gap: 'var(--ts-space-sm)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-md)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-sm)' }}>
           <div
             style={{
-              width: '48px',
-              height: '48px',
+              width: '42px',
+              height: '42px',
               borderRadius: 'var(--ts-radius)',
-              backgroundColor: 'var(--ts-color-surface)',
-              border: '1px solid var(--ts-color-border)',
+              backgroundColor: 'var(--ts-color-primary)',
+              color: primaryTextColor,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Server style={{ width: '24px', height: '24px', color: 'var(--ts-color-primary)' }} />
+            <Server style={{ width: '22px', height: '22px' }} />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-sm)', flexWrap: 'wrap' }}>
-              <h1
-                style={{
-                  fontFamily: 'var(--ts-font-heading)',
-                  fontSize: 'calc(var(--ts-base-size) * var(--ts-scale) * var(--ts-scale))',
-                  fontWeight: 800,
-                  margin: 0,
-                }}
-              >
-                cluster-amber-09
-              </h1>
-              <span
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '2px 8px',
-                  borderRadius: '9999px',
-                  fontSize: 'calc(var(--ts-base-size) * 0.75)',
-                  fontWeight: 600,
-                  backgroundColor: 'rgba(16, 185, 129, 0.15)',
-                  color: '#10b981',
-                  border: '1px solid rgba(16, 185, 129, 0.3)',
-                }}
-              >
-                <CheckCircle2 style={{ width: '12px', height: '12px' }} />
-                Healthy
-              </span>
-              <span
-                style={{
-                  padding: '2px 8px',
-                  borderRadius: 'var(--ts-radius)',
-                  fontSize: 'calc(var(--ts-base-size) * 0.72)',
-                  backgroundColor: 'var(--ts-color-surface)',
-                  border: '1px solid var(--ts-color-border)',
-                  opacity: 0.8,
-                }}
-              >
-                v2.14.0-stable
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h2 style={{ margin: 0, fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.15)', fontWeight: 800 }}>
+                cluster-amber-09.prod
+              </h2>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11px', padding: '1px 8px', borderRadius: '9999px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10b981', fontWeight: 600 }}>
+                <CheckCircle2 style={{ width: '11px', height: '11px' }} /> Healthy
               </span>
             </div>
-            <p style={{ margin: '4px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75 }}>
-              Dedicated inference worker fleet in eu-central-1 (Frankfurt).
+            <p style={{ margin: '2px 0 0 0', fontSize: 'calc(var(--ts-base-size) * 0.78)', opacity: 0.7 }}>
+              High-concurrency token compilation node — Region: US-East
             </p>
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-xs)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-xs)' }}>
           <button
             type="button"
             style={{
-              backgroundColor: 'var(--ts-color-surface)',
-              color: 'var(--ts-color-text)',
-              border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
               padding: 'var(--ts-space-xs) var(--ts-space-sm)',
-              fontSize: 'calc(var(--ts-base-size) * 0.82)',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              cursor: 'pointer',
-              boxShadow: 'var(--ts-shadow)',
-            }}
-          >
-            <RotateCw style={{ width: '14px', height: '14px' }} />
-            <span>Restart</span>
-          </button>
-          <button
-            type="button"
-            style={{
-              backgroundColor: 'var(--ts-color-primary)',
-              color: primaryTextColor,
-              border: 'none',
+              backgroundColor: 'var(--ts-color-background)',
+              border: '1px solid var(--ts-color-border)',
               borderRadius: 'var(--ts-radius)',
-              padding: 'var(--ts-space-xs) var(--ts-space-md)',
-              fontSize: 'calc(var(--ts-base-size) * 0.82)',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              cursor: 'pointer',
-              boxShadow: 'var(--ts-shadow)',
-            }}
-          >
-            <span>Edit Configuration</span>
-          </button>
-          <button
-            type="button"
-            aria-label="More options"
-            style={{
-              backgroundColor: 'var(--ts-color-surface)',
               color: 'var(--ts-color-text)',
-              border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
-              padding: 'var(--ts-space-xs)',
-              cursor: 'pointer',
+              fontSize: 'calc(var(--ts-base-size) * 0.8)',
+              fontWeight: 600,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              gap: '6px',
+              cursor: 'pointer',
             }}
           >
-            <MoreVertical style={{ width: '16px', height: '16px' }} />
+            <RotateCw style={{ width: '13px', height: '13px' }} />
+            <span>Restart Pods</span>
           </button>
         </div>
       </div>
 
-      {/* Tabs Bar */}
-      <div
-        style={{
-          display: 'flex',
-          gap: 'var(--ts-space-sm)',
-          borderBottom: '1px solid var(--ts-color-border)',
-          overflowX: 'auto',
-        }}
-      >
-        {[
-          { id: 'overview', label: 'Overview' },
-          { id: 'logs', label: 'Live Logs & Traces' },
-          { id: 'network', label: 'Network & Ingress' },
-          { id: 'security', label: 'Security & Certs' },
-        ].map((tab) => {
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id as typeof activeTab)}
-              style={{
-                background: 'none',
-                border: 'none',
-                borderBottom: isActive ? '2px solid var(--ts-color-primary)' : '2px solid transparent',
-                color: isActive ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
-                fontWeight: isActive ? 700 : 500,
-                fontSize: 'calc(var(--ts-base-size) * 0.85)',
-                padding: 'var(--ts-space-xs) var(--ts-space-sm)',
-                cursor: 'pointer',
-                opacity: isActive ? 1 : 0.7,
-                whiteSpace: 'nowrap',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              {tab.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Two Column Layout (Main content 2/3 + Sidebar 1/3) */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 'var(--ts-space-md)',
-          alignItems: 'start',
-        }}
-      >
-        {/* Main Column */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)', flex: '2' }}>
-          {/* Hardware Specs Card */}
-          <div
-            style={{
-              backgroundColor: 'var(--ts-color-surface)',
-              border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
-              boxShadow: 'var(--ts-shadow)',
-              padding: 'var(--ts-space-md)',
-            }}
-          >
-            <h3
-              style={{
-                fontFamily: 'var(--ts-font-heading)',
-                fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))',
-                fontWeight: 700,
-                margin: '0 0 var(--ts-space-sm) 0',
-              }}
-            >
-              Hardware Allocation
-            </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 'var(--ts-space-sm)' }}>
-              <div
-                style={{
-                  padding: 'var(--ts-space-sm)',
-                  borderRadius: 'var(--ts-radius)',
-                  backgroundColor: 'var(--ts-color-background)',
-                  border: '1px solid var(--ts-color-border)',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
-                  <Cpu style={{ width: '14px', height: '14px' }} />
-                  <span>CPU Cores</span>
-                </div>
-                <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>32 vCPUs</div>
-                <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>28% utilized</div>
-              </div>
-
-              <div
-                style={{
-                  padding: 'var(--ts-space-sm)',
-                  borderRadius: 'var(--ts-radius)',
-                  backgroundColor: 'var(--ts-color-background)',
-                  border: '1px solid var(--ts-color-border)',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
-                  <Activity style={{ width: '14px', height: '14px' }} />
-                  <span>Memory RAM</span>
-                </div>
-                <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>128 GB</div>
-                <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>54.2 GB in use</div>
-              </div>
-
-              <div
-                style={{
-                  padding: 'var(--ts-space-sm)',
-                  borderRadius: 'var(--ts-radius)',
-                  backgroundColor: 'var(--ts-color-background)',
-                  border: '1px solid var(--ts-color-border)',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
-                  <HardDrive style={{ width: '14px', height: '14px' }} />
-                  <span>NVMe Storage</span>
-                </div>
-                <div style={{ fontSize: 'calc(var(--ts-base-size) * 1.1)', fontWeight: 700, marginTop: '4px' }}>2.0 TB</div>
-                <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>RAID 10 Striped</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Activity Timeline Card */}
-          <div
-            style={{
-              backgroundColor: 'var(--ts-color-surface)',
-              border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
-              boxShadow: 'var(--ts-shadow)',
-              padding: 'var(--ts-space-md)',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--ts-space-sm)' }}>
-              <h3
-                style={{
-                  fontFamily: 'var(--ts-font-heading)',
-                  fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))',
-                  fontWeight: 700,
-                  margin: 0,
-                }}
-              >
-                Recent Activity & Deployments
-              </h3>
-              <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.7 }}>Realtime sync</span>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
-              {[
-                { time: '3 mins ago', title: 'Automated health-check passed', desc: 'All 6 replica pods responded within 12ms', status: 'ok' },
-                { time: '42 mins ago', title: 'Hot reload config synced', desc: 'Applied token spec update #814f9a to runner', status: 'ok' },
-                { time: '2 hours ago', title: 'Auto-scaled up +2 worker threads', desc: 'High load spike detected in pipeline ingress', status: 'warn' },
-                { time: '1 day ago', title: 'Cluster certificate renewed', desc: 'Let\'s Encrypt TLS wildcard cert auto-renewed', status: 'ok' },
-              ].map((log, idx) => (
-                <div
-                  key={idx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: 'var(--ts-space-sm)',
-                    padding: 'var(--ts-space-xs) 0',
-                    borderBottom: idx < 3 ? '1px solid var(--ts-color-border)' : 'none',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: '8px',
-                      height: '8px',
-                      borderRadius: '50%',
-                      backgroundColor: log.status === 'ok' ? '#10b981' : 'var(--ts-color-accent)',
-                      marginTop: '6px',
-                      flexShrink: 0,
-                    }}
-                  />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>{log.title}</span>
-                      <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.6 }}>{log.time}</span>
-                    </div>
-                    <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.78)', opacity: 0.8, marginTop: '2px' }}>
-                      {log.desc}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* VARIANT: FULL DOCUMENT (Single-column editorial view) */}
+      {layout === 'full-document' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
+          {renderHardwareSpecs()}
+          {renderTimeline()}
+          {renderMetadataSidebar()}
         </div>
+      )}
 
-        {/* Sidebar Column (1/3) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)', minWidth: '240px' }}>
-          {/* Metadata Card */}
-          <div
-            style={{
-              backgroundColor: 'var(--ts-color-surface)',
-              border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
-              boxShadow: 'var(--ts-shadow)',
-              padding: 'var(--ts-space-md)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--ts-space-sm)',
-            }}
-          >
-            <h4
-              style={{
-                fontFamily: 'var(--ts-font-heading)',
-                fontSize: 'calc(var(--ts-base-size) * 0.9)',
-                fontWeight: 700,
-                margin: 0,
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                opacity: 0.75,
-              }}
-            >
-              Cluster Details
-            </h4>
-
+      {/* VARIANT: TABBED MEDIA */}
+      {layout === 'tabbed-media' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
+          <div style={{ display: 'flex', gap: 'var(--ts-space-sm)', borderBottom: '1px solid var(--ts-color-border)' }}>
             {[
-              { label: 'Cluster ID', value: 'cl-amber-9428-eu' },
-              { label: 'Region', value: 'eu-central-1a' },
-              { label: 'Primary IP', value: '194.28.10.42' },
-              { label: 'Created By', value: 'alex.rivers@agentic' },
-              { label: 'Created At', value: 'Oct 14, 2026' },
-            ].map((meta, i) => (
-              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'calc(var(--ts-base-size) * 0.8)' }}>
-                <span style={{ opacity: 0.7 }}>{meta.label}</span>
-                <span style={{ fontWeight: 600 }}>{meta.value}</span>
-              </div>
+              { id: 'overview' as const, label: 'Overview Metrics' },
+              { id: 'logs' as const, label: 'Live Pod Logs' },
+              { id: 'network' as const, label: 'Cluster Config' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  borderBottom: activeTab === tab.id ? '2px solid var(--ts-color-primary)' : '2px solid transparent',
+                  color: activeTab === tab.id ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
+                  fontWeight: activeTab === tab.id ? 700 : 500,
+                  fontSize: 'calc(var(--ts-base-size) * 0.85)',
+                  padding: 'var(--ts-space-xs) var(--ts-space-sm)',
+                  cursor: 'pointer',
+                }}
+              >
+                {tab.label}
+              </button>
             ))}
-
-            <div style={{ paddingTop: 'var(--ts-space-xs)', borderTop: '1px solid var(--ts-color-border)' }}>
-              <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', opacity: 0.7, marginBottom: '6px' }}>
-                Resource Tags
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-                {['production', 'inference', 'v2', 'billing-tier-1'].map((tag) => (
-                  <span
-                    key={tag}
-                    style={{
-                      fontSize: 'calc(var(--ts-base-size) * 0.7)',
-                      padding: '2px 6px',
-                      borderRadius: 'var(--ts-radius)',
-                      backgroundColor: 'var(--ts-color-background)',
-                      border: '1px solid var(--ts-color-border)',
-                    }}
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Quick Actions Card */}
-          <div
-            style={{
-              backgroundColor: 'var(--ts-color-surface)',
-              border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
-              boxShadow: 'var(--ts-shadow)',
-              padding: 'var(--ts-space-md)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--ts-space-xs)',
-            }}
-          >
-            <h4
-              style={{
-                fontFamily: 'var(--ts-font-heading)',
-                fontSize: 'calc(var(--ts-base-size) * 0.9)',
-                fontWeight: 700,
-                margin: '0 0 var(--ts-space-xs) 0',
-              }}
-            >
-              Developer Tools
-            </h4>
-            <button
-              type="button"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: 'var(--ts-space-xs) var(--ts-space-sm)',
-                backgroundColor: 'var(--ts-color-background)',
-                border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
-                color: 'var(--ts-color-text)',
-                fontSize: 'calc(var(--ts-base-size) * 0.8)',
-                cursor: 'pointer',
-              }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Terminal style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} />
-                <span>SSH Web Terminal</span>
-              </span>
-              <ExternalLink style={{ width: '12px', height: '12px', opacity: 0.6 }} />
-            </button>
-            <button
-              type="button"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: 'var(--ts-space-xs) var(--ts-space-sm)',
-                backgroundColor: 'var(--ts-color-background)',
-                border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
-                color: 'var(--ts-color-text)',
-                fontSize: 'calc(var(--ts-base-size) * 0.8)',
-                cursor: 'pointer',
-              }}
-            >
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Shield style={{ width: '14px', height: '14px', color: 'var(--ts-color-accent)' }} />
-                <span>Security Sandbox Log</span>
-              </span>
-              <Clock style={{ width: '12px', height: '12px', opacity: 0.6 }} />
-            </button>
+          {activeTab === 'overview' && renderHardwareSpecs()}
+          {activeTab === 'logs' && renderTimeline()}
+          {activeTab === 'network' && renderMetadataSidebar()}
+        </div>
+      )}
+
+      {/* VARIANT: SPLIT SIDEPANEL (Default) */}
+      {(layout === 'split-sidepanel' || !['full-document', 'tabbed-media'].includes(layout)) && (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 'var(--ts-space-md)',
+            alignItems: 'start',
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)', gridColumn: 'span 2' }}>
+            {renderHardwareSpecs()}
+            {renderTimeline()}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
+            {renderMetadataSidebar()}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
-

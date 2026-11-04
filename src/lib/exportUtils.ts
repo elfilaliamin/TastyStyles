@@ -1,5 +1,5 @@
 import { DesignStateSchema, type DesignState } from '../config/schema';
-import { getFontEntry, getRadiusEntry, getShadowEntry, getSpacingEntry } from './registry';
+import { getFontEntry, getRadiusEntry, getSpacingEntry } from './registry';
 
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
@@ -61,119 +61,64 @@ export function parseImportedJson(jsonString: string): { success: true; state: D
   }
 }
 
+import { generateUnifiedCssTokens, resolveTokens } from './tokenModel';
+
 /**
  * Generate pure CSS Custom Properties block
+ * Uses canonical single source of truth from tokenModel
  */
 export function generateCssTokens(state: DesignState): string {
-  const headingFont = getFontEntry(state.typography.headingFont) ?? { family: state.typography.headingFont, category: 'sans-serif' };
-  const bodyFont = getFontEntry(state.typography.bodyFont) ?? { family: state.typography.bodyFont, category: 'sans-serif' };
-  const radius = getRadiusEntry(state.radius) ?? { value: '8px' };
-  const shadow = getShadowEntry(state.shadow) ?? { value: 'none' };
-  const spacing = getSpacingEntry(state.spacing) ?? {
-    scale: { xs: '0.25rem', sm: '0.5rem', md: '1rem', lg: '1.5rem', xl: '2rem' },
-  };
-
-  return `/* ==========================================================================
-   TastyStyles Design System Tokens — ${state.name}
-   Generated automatically for production styling
-   ========================================================================== */
-
-:root {
-  /* Color Palette (Light Mode Default) */
-  --color-primary: ${state.colors.light.primary};
-  --color-secondary: ${state.colors.light.secondary};
-  --color-accent: ${state.colors.light.accent};
-  --color-background: ${state.colors.light.background};
-  --color-surface: ${state.colors.light.surface};
-  --color-text: ${state.colors.light.text};
-  --color-border: ${state.colors.light.border};
-
-  /* Typography */
-  --font-heading: '${headingFont.family}', ${headingFont.category};
-  --font-body: '${bodyFont.family}', ${bodyFont.category};
-  --font-base-size: ${state.typography.baseSize}px;
-  --font-scale-ratio: ${state.typography.scale};
-
-  /* Elevation & Geometry */
-  --radius-brand: ${radius.value};
-  --shadow-brand: ${shadow.value};
-
-  /* Spacing Scale */
-  --spacing-xs: ${spacing.scale.xs};
-  --spacing-sm: ${spacing.scale.sm};
-  --spacing-md: ${spacing.scale.md};
-  --spacing-lg: ${spacing.scale.lg};
-  --spacing-xl: ${spacing.scale.xl};
-}
-
-/* Dark Mode Tokens */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: ${state.colors.dark.primary};
-    --color-secondary: ${state.colors.dark.secondary};
-    --color-accent: ${state.colors.dark.accent};
-    --color-background: ${state.colors.dark.background};
-    --color-surface: ${state.colors.dark.surface};
-    --color-text: ${state.colors.dark.text};
-    --color-border: ${state.colors.dark.border};
-  }
-}
-
-[data-theme='dark'],
-.dark {
-  --color-primary: ${state.colors.dark.primary};
-  --color-secondary: ${state.colors.dark.secondary};
-  --color-accent: ${state.colors.dark.accent};
-  --color-background: ${state.colors.dark.background};
-  --color-surface: ${state.colors.dark.surface};
-  --color-text: ${state.colors.dark.text};
-  --color-border: ${state.colors.dark.border};
-}
-`;
+  return generateUnifiedCssTokens(state);
 }
 
 /**
  * Generate Tailwind CSS Config (tailwind.config.ts)
  */
 export function generateTailwindConfig(state: DesignState): string {
-  const headingFont = getFontEntry(state.typography.headingFont) ?? { family: state.typography.headingFont, category: 'sans-serif' };
-  const bodyFont = getFontEntry(state.typography.bodyFont) ?? { family: state.typography.bodyFont, category: 'sans-serif' };
-  const radius = getRadiusEntry(state.radius) ?? { value: '8px' };
-  const shadow = getShadowEntry(state.shadow) ?? { value: 'none' };
+  const tokens = resolveTokens(state);
 
   return `import type { Config } from 'tailwindcss';
 
 // TastyStyles Tailwind Theme Configuration for: ${state.name}
 const config: Config = {
   darkMode: ['class', '[data-theme="dark"]'],
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}', './index.html'],
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary, ${state.colors.light.primary})',
-        secondary: 'var(--color-secondary, ${state.colors.light.secondary})',
-        accent: 'var(--color-accent, ${state.colors.light.accent})',
-        background: 'var(--color-background, ${state.colors.light.background})',
-        surface: 'var(--color-surface, ${state.colors.light.surface})',
-        text: 'var(--color-text, ${state.colors.light.text})',
-        border: 'var(--color-border, ${state.colors.light.border})',
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        accent: 'var(--color-accent)',
+        background: 'var(--color-background)',
+        surface: 'var(--color-surface)',
+        text: 'var(--color-text)',
+        border: 'var(--color-border)',
+        success: 'var(--color-success)',
+        warning: 'var(--color-warning)',
+        danger: 'var(--color-danger)',
+        info: 'var(--color-info)',
+        'on-primary': 'var(--color-on-primary)',
+        'on-secondary': 'var(--color-on-secondary)',
+        'on-accent': 'var(--color-on-accent)',
+        muted: 'var(--color-muted)',
+        ring: 'var(--color-ring)',
       },
       fontFamily: {
-        heading: ['"${headingFont.family}"', '${headingFont.category}'],
-        body: ['"${bodyFont.family}"', '${bodyFont.category}'],
+        heading: ['var(--font-heading)', '${tokens.typography.headingCategory}'],
+        body: ['var(--font-body)', '${tokens.typography.bodyCategory}'],
       },
       borderRadius: {
-        brand: '${radius.value}',
+        brand: 'var(--radius-base)',
       },
       boxShadow: {
-        brand: '${shadow.value}',
+        brand: 'var(--shadow-base)',
       },
       spacing: {
-        'ts-xs': 'var(--spacing-xs, 0.25rem)',
-        'ts-sm': 'var(--spacing-sm, 0.5rem)',
-        'ts-md': 'var(--spacing-md, 1rem)',
-        'ts-lg': 'var(--spacing-lg, 1.5rem)',
-        'ts-xl': 'var(--spacing-xl, 2rem)',
+        'ts-xs': 'var(--spacing-xs)',
+        'ts-sm': 'var(--spacing-sm)',
+        'ts-md': 'var(--spacing-md)',
+        'ts-lg': 'var(--spacing-lg)',
+        'ts-xl': 'var(--spacing-xl)',
       },
     },
   },
@@ -251,7 +196,6 @@ export function generateDtcgTokens(state: DesignState): string {
   const headingFont = getFontEntry(state.typography.headingFont) ?? { family: state.typography.headingFont, category: 'sans-serif' };
   const bodyFont = getFontEntry(state.typography.bodyFont) ?? { family: state.typography.bodyFont, category: 'sans-serif' };
   const radius = getRadiusEntry(state.radius) ?? { value: '8px' };
-  const shadow = getShadowEntry(state.shadow) ?? { value: 'none' };
   const spacing = getSpacingEntry(state.spacing) ?? {
     scale: { xs: '0.25rem', sm: '0.5rem', md: '1rem', lg: '1.5rem', xl: '2rem' },
   };
@@ -298,19 +242,12 @@ export function generateDtcgTokens(state: DesignState): string {
         brand: { $value: radius.value, $type: 'dimension' },
       },
     },
-    shadow: {
-      brand: { $value: shadow.value, $type: 'shadow' },
-    },
     spacing: {
       xs: { $value: spacing.scale.xs, $type: 'dimension' },
       sm: { $value: spacing.scale.sm, $type: 'dimension' },
       md: { $value: spacing.scale.md, $type: 'dimension' },
       lg: { $value: spacing.scale.lg, $type: 'dimension' },
       xl: { $value: spacing.scale.xl, $type: 'dimension' },
-    },
-    layout: {
-      archetype: { $value: state.layout, $type: 'string' },
-      pageLayouts: { $value: state.pageLayouts, $type: 'object' },
     },
   };
 
@@ -435,18 +372,49 @@ export function createZipBlob(files: { name: string; content: string }[]): Blob 
 }
 
 /**
+ * Generate AGENTS.md instructions for autonomous coding agents (Claude, Gemini, Cursor, Copilot)
+ */
+export function generateAgentRulesSnippet(state: DesignState): string {
+  return `# AI Coding Agent Contract & Design Rules: ${state.name}
+
+> This file provides authoritative constraints for autonomous AI coding agents (Claude, Gemini, Copilot, Cursor).
+
+## P0 Prime Directive
+1. Read \`DESIGN.md\` and \`tokens.css\` before writing any frontend markup or components.
+2. NEVER hardcode raw color hex values, font sizes in raw px, or arbitrary border radiuses.
+3. Every style property MUST bind strictly to CSS variables defined in \`tokens.css\` or Tailwind classes mapped to them.
+
+## Critical Tokens
+- Primary Brand: \`var(--color-primary)\`
+- Text on Primary: \`var(--color-on-primary)\`
+- Surface Background: \`var(--color-surface)\`
+- Viewport Background: \`var(--color-background)\`
+- Heading Font: \`var(--font-heading)\` (${state.typography.headingFont})
+- Body Font: \`var(--font-body)\` (${state.typography.bodyFont})
+- Base Border Radius: \`var(--radius-base)\`
+- Elevation Shadow: \`var(--shadow-base)\`
+
+## Component Compliance
+- All interactive controls must expose visible focus states using \`var(--color-ring)\`.
+- Follow the component dimensions and state matrices detailed in \`DESIGN.md\` Section 6.
+- All layouts must pass 375px mobile responsiveness without horizontal scrolling.
+`;
+}
+
+/**
  * Download Complete Token Bundle as a .zip Package
  */
 export function downloadZipBundle(state: DesignState, compiledMarkdown: string): void {
   const slug = state.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   const files = [
+    { name: 'DESIGN.md', content: compiledMarkdown },
     { name: `${slug}-spec.md`, content: compiledMarkdown },
     { name: 'tokens.css', content: generateCssTokens(state) },
     { name: 'tailwind.config.ts', content: generateTailwindConfig(state) },
     { name: 'tokens.ts', content: generateTypeScriptTokens(state) },
     { name: 'tokens.dtcg.json', content: generateDtcgTokens(state) },
     { name: 'tastystyles-state.json', content: JSON.stringify(state, null, 2) },
-    { name: 'agy-apply.sh', content: generateAgyCliCommand(state) },
+    { name: 'AGENTS.md', content: generateAgentRulesSnippet(state) },
   ];
 
   const zipBlob = createZipBlob(files);

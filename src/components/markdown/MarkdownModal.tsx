@@ -8,7 +8,7 @@ import {
   generateTailwindConfig,
   generateTypeScriptTokens,
   generateDtcgTokens,
-  generateAgyCliCommand,
+  generateAgentRulesSnippet,
 } from '../../lib/exportUtils';
 import { Copy, Download, FileCode, X, Terminal, Code2, Palette, FileText, Package, Braces } from 'lucide-react';
 
@@ -18,7 +18,7 @@ interface MarkdownModalProps {
   onNotify?: (title: string, desc?: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-type ExportTab = 'markdown' | 'css' | 'tailwind' | 'typescript' | 'dtcg' | 'cli';
+type ExportTab = 'markdown' | 'css' | 'tailwind' | 'typescript' | 'dtcg' | 'agents';
 
 export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, onNotify }) => {
   const { compiledMarkdown, state } = useDesign();
@@ -39,12 +39,11 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
 
   // Resolve active content and filename
   const getExportData = () => {
-    const slug = state.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     switch (activeTab) {
       case 'css':
         return {
           content: generateCssTokens(state),
-          filename: `${slug}-tokens.css`,
+          filename: 'tokens.css',
           mime: 'text/css',
           label: 'CSS Custom Properties',
         };
@@ -69,20 +68,20 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
           mime: 'application/json',
           label: 'W3C DTCG Token JSON',
         };
-      case 'cli':
+      case 'agents':
         return {
-          content: generateAgyCliCommand(state),
-          filename: 'agy-apply.sh',
-          mime: 'text/x-shellscript',
-          label: 'Antigravity CLI Command',
+          content: generateAgentRulesSnippet(state),
+          filename: 'AGENTS.md',
+          mime: 'text/markdown',
+          label: 'Agent Rules (AGENTS.md)',
         };
       case 'markdown':
       default:
         return {
           content: compiledMarkdown,
-          filename: `${slug}-spec.md`,
+          filename: 'DESIGN.md',
           mime: 'text/markdown',
-          label: 'Markdown Specification',
+          label: 'Markdown Specification (DESIGN.md)',
         };
     }
   };
@@ -191,7 +190,7 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
             { id: 'tailwind', label: 'Tailwind Config (.ts)', icon: <Code2 className="w-3.5 h-3.5" /> },
             { id: 'typescript', label: 'TypeScript (.ts)', icon: <Code2 className="w-3.5 h-3.5" /> },
             { id: 'dtcg', label: 'Figma DTCG (.json)', icon: <Braces className="w-3.5 h-3.5" /> },
-            { id: 'cli', label: 'AGY CLI Command', icon: <Terminal className="w-3.5 h-3.5" /> },
+            { id: 'agents', label: 'Agent Rules (AGENTS.md)', icon: <Terminal className="w-3.5 h-3.5" /> },
           ].map((tab) => {
             const isActive = activeTab === tab.id;
             return (

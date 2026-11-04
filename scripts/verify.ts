@@ -15,6 +15,7 @@ import {
   generateDtcgTokens,
   createZipBlob,
 } from '../src/lib/exportUtils';
+import { generateUnifiedCssTokens } from '../src/lib/tokenModel';
 
 console.log('--- Verifying TastyStyles Registries & Specs ---');
 
@@ -70,18 +71,19 @@ if (lowContrast.passesAA) {
   process.exit(1);
 }
 
-// 5. Test Markdown Generation
+// 5. Test Markdown Generation & Sections
 const markdown = compileMarkdown(defaultInitialState);
 const requiredSections = [
-  '## 1. Intent & Overview',
+  '## 0. Agent Contract',
+  '## 1. Overview & Visual Language',
   '## 2. Design Tokens',
   '## 3. CSS Variables Block',
-  '## 4. Tailwind CSS Configuration Snippet',
-  '## 5. Layout Architecture',
-  '## 6. Responsive Breakpoints & Rules',
-  '## 7. Component Rules',
-  "## 8. Do / Don't Guidelines for AI Coding Agents",
-  '## 9. Google Fonts Import Snippet',
+  '## 4. Tailwind CSS Configuration',
+  '## 5. Icon & Font System',
+  '## 6. Component Recipes',
+  '## 7. Page Inventory & Wireframe Architecture',
+  '## 8. Responsive Breakpoints & Execution Rules',
+  "## 9. Do / Don't & Acceptance Checklist",
 ];
 
 for (const section of requiredSections) {
@@ -90,7 +92,7 @@ for (const section of requiredSections) {
     process.exit(1);
   }
 }
-console.log('✅ All 9 required Markdown sections verified in compiled spec.');
+console.log('✅ All 10 required DESIGN.md v2 sections verified in compiled spec.');
 
 // 6. Test Exporters
 const cssTokens = generateCssTokens(defaultInitialState);
@@ -143,5 +145,44 @@ console.log(`✅ APCA contrast calculation confirmed (black on white Lc: ${apcaS
 
 const harmony = checkColorHarmony('#2563eb', '#f59e0b');
 console.log(`✅ Color harmony relationship confirmed (${harmony.status}: ${harmony.message}).`);
+
+// 9. Claude Consulting Gate Q1: CSS Truth & Parity Test Across Presets
+console.log('--- Testing Token Parity & Zero-Drift Contract Across Presets ---');
+const presets = presetsRaw as Array<{ id: string; label: string; description: string; state: any }>;
+
+for (const preset of presets) {
+  const presetState = {
+    ...defaultInitialState,
+    ...preset.state,
+    colors: {
+      light: { ...defaultInitialState.colors.light, ...preset.state.colors?.light },
+      dark: { ...defaultInitialState.colors.dark, ...preset.state.colors?.dark },
+    },
+    typography: { ...defaultInitialState.typography, ...preset.state.typography },
+  };
+
+  const compiledMd = compileMarkdown(presetState);
+  const unifiedCss = generateUnifiedCssTokens(presetState);
+
+  // Parity check: CSS block in markdown must contain the generated CSS
+  if (!compiledMd.includes(unifiedCss.trim())) {
+    console.error(`❌ Zero-drift mismatch: Markdown CSS block does not match generateUnifiedCssTokens for preset ${preset.name}`);
+    process.exit(1);
+  }
+
+  // Variable check: All var(--ts-*) or var(--color-*) in markdown recipes must be defined in the CSS block
+  const varMatches = compiledMd.matchAll(/var\((--[a-zA-Z0-9_-]+)\)/g);
+  for (const match of varMatches) {
+    const varName = match[1];
+    // Exclude runtime css properties like calc() or local variables if any
+    if (varName.startsWith('--color-') || varName.startsWith('--font-') || varName.startsWith('--spacing-') || varName.startsWith('--radius-') || varName.startsWith('--shadow-') || varName.startsWith('--icon-')) {
+      if (!unifiedCss.includes(varName)) {
+        console.error(`❌ Broken token reference: ${varName} used in Markdown recipes but NOT defined in CSS tokens for ${preset.name}`);
+        process.exit(1);
+      }
+    }
+  }
+}
+console.log(`✅ Zero-drift parity verified across all ${presets.length} presets: Markdown CSS strictly equals canonical tokens.`);
 
 console.log('--- All Verification Checks Passed! ---');

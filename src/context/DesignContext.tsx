@@ -48,6 +48,11 @@ function getInitialState(): DesignState {
           data.pageLayouts = defaultInitialState.pageLayouts;
         }
         return data;
+      } else {
+        console.warn('Failed to parse saved state, saving backup:', result.error);
+        try {
+          localStorage.setItem('tastystyles_design_state_backup', saved);
+        } catch {}
       }
     }
   } catch (e) {
