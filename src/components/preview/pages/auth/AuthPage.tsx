@@ -36,14 +36,14 @@ export const AuthPage: React.FC = () => {
         return {
           backgroundColor: 'var(--ts-color-surface)',
           border: '2px solid var(--ts-color-primary)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           boxShadow: 'none',
         };
       case 'flat':
         return {
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           boxShadow: 'none',
         };
       case 'glass':
@@ -52,7 +52,7 @@ export const AuthPage: React.FC = () => {
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
           border: `1px solid ${activeColors.border}cc`,
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           boxShadow: '0 20px 40px -15px rgba(0,0,0,0.25)',
         };
       case 'elevated':
@@ -60,7 +60,7 @@ export const AuthPage: React.FC = () => {
         return {
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           boxShadow: 'var(--ts-shadow)',
         };
     }
@@ -915,7 +915,7 @@ export const AuthPage: React.FC = () => {
             width: '100%',
             maxWidth: '440px',
             padding: 'var(--ts-space-xl)',
-            borderRadius: 'calc(var(--ts-radius) * 1.25)',
+            borderRadius: 'calc(var(--ts-radius-surface, 16px) * 1.25)',
             backgroundColor: `${activeColors.surface}cc`,
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
@@ -994,7 +994,7 @@ export const AuthPage: React.FC = () => {
             width: '100%',
             maxWidth: '440px',
             padding: 'var(--ts-space-xl)',
-            borderRadius: 'calc(var(--ts-radius) * 1.25)',
+            borderRadius: 'calc(var(--ts-radius-surface, 16px) * 1.25)',
             backgroundColor: `${activeColors.surface}dd`,
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',
@@ -1353,7 +1353,7 @@ export const AuthPage: React.FC = () => {
             width: '100%',
             maxWidth: '430px',
             padding: 'var(--ts-space-xl)',
-            borderRadius: 'calc(var(--ts-radius) * 1.2)',
+            borderRadius: 'calc(var(--ts-radius-surface, 16px) * 1.2)',
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',

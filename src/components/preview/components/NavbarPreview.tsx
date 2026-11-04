@@ -31,7 +31,7 @@ export const NavbarPreview: React.FC = () => {
   // =========================================================================
   if (layout === 'saas-header') {
     return (
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
+      <div style={{ width: '100%', height: '100%', minHeight: '100%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <header
           style={{
             backgroundColor: 'var(--ts-color-surface)',
@@ -44,6 +44,7 @@ export const NavbarPreview: React.FC = () => {
             justifyContent: 'space-between',
             gap: 'var(--ts-space-md)',
             boxSizing: 'border-box',
+            flexShrink: 0,
           }}
         >
           {/* Left: Brand + Monogram + Breadcrumb */}
@@ -164,32 +165,22 @@ export const NavbarPreview: React.FC = () => {
               />
             </button>
 
-            <button
-              type="button"
+            <div
               style={{
-                backgroundColor: 'var(--ts-color-primary)',
-                color: primaryTextColor,
-                border: 'none',
-                borderRadius: 'var(--ts-radius)',
-                padding: '6px 14px',
-                fontSize: 'calc(var(--ts-base-size) * 0.82)',
-                fontWeight: 600,
-                display: 'inline-flex',
+                display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
+                gap: '8px',
+                padding: '4px 8px',
+                borderRadius: 'var(--ts-radius)',
+                backgroundColor: 'var(--ts-color-background)',
+                border: '1px solid var(--ts-color-border)',
                 cursor: 'pointer',
-                boxShadow: 'var(--ts-shadow)',
               }}
             >
-              <Plus style={{ width: '14px', height: '14px' }} strokeWidth={strokeWidth} />
-              <span className="hidden sm:inline">Add Token</span>
-            </button>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingLeft: '4px', cursor: 'pointer' }}>
               <div
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '26px',
+                  height: '26px',
                   borderRadius: '50%',
                   backgroundColor: 'var(--ts-color-primary)',
                   color: primaryTextColor,
@@ -207,18 +198,20 @@ export const NavbarPreview: React.FC = () => {
           </div>
         </header>
 
-        {/* Showcase Context Card */}
-        <div style={{ padding: 'var(--ts-space-md)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <Sparkles style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
-            <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700, margin: 0 }}>
-              Layout: Modern SaaS Header
-            </h3>
+        {/* Showcase Context Body */}
+        <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
+          <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
+              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
+                Layout: Modern SaaS Header
+              </h3>
+            </div>
+            <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75, lineHeight: 1.5 }}>
+              Industry-standard SaaS top navigation bar featuring global ⌘K search, contextual breadcrumbs, notification badges, and user profile drawer.
+            </p>
           </div>
-          <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.82)', opacity: 0.75 }}>
-            Industry-standard SaaS top navigation bar featuring global ⌘K search, contextual breadcrumbs, notification badges, and user profile drawer.
-          </p>
-        </div>
+        </main>
       </div>
     );
   }
@@ -228,7 +221,7 @@ export const NavbarPreview: React.FC = () => {
   // =========================================================================
   if (layout === 'minimal-center') {
     return (
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
+      <div style={{ width: '100%', height: '100%', minHeight: '100%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <header
           style={{
             backgroundColor: 'var(--ts-color-surface)',
@@ -240,6 +233,7 @@ export const NavbarPreview: React.FC = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             boxSizing: 'border-box',
+            flexShrink: 0,
           }}
         >
           {/* Left: Brand Monogram */}
@@ -322,17 +316,19 @@ export const NavbarPreview: React.FC = () => {
           </div>
         </header>
 
-        <div style={{ padding: 'var(--ts-space-md)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <Sparkles style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
-            <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700, margin: 0 }}>
-              Layout: Minimalist Centered Nav
-            </h3>
+        <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
+          <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
+              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
+                Layout: Minimalist Centered Nav
+              </h3>
+            </div>
+            <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75, lineHeight: 1.5 }}>
+              Clean, distraction-free marketing navigation with brand logo on left, centered navigation anchors, and direct conversion triggers.
+            </p>
           </div>
-          <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.82)', opacity: 0.75 }}>
-            Editorial and marketing-oriented centered link cluster flanked by prominent brand identity and high-converting primary CTAs.
-          </p>
-        </div>
+        </main>
       </div>
     );
   }
@@ -342,119 +338,110 @@ export const NavbarPreview: React.FC = () => {
   // =========================================================================
   if (layout === 'floating-pill') {
     return (
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)', position: 'relative' }}>
-        {/* Mock background pattern */}
-        <div
+      <div style={{ width: '100%', height: '100%', minHeight: '100%', flex: 1, display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
+        {/* The Floating Pill Header floating on top */}
+        <header
           style={{
-            height: '200px',
-            borderRadius: 'var(--ts-radius)',
-            border: '1px solid var(--ts-color-border)',
-            backgroundColor: 'var(--ts-color-surface)',
-            position: 'relative',
-            overflow: 'hidden',
-            padding: 'var(--ts-space-xl)',
+            position: 'absolute',
+            top: '16px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 'calc(100% - 32px)',
+            maxWidth: '680px',
+            backgroundColor: `${activeColors.surface}ee`,
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: `1px solid ${activeColors.border}`,
+            borderRadius: '9999px',
+            padding: '6px 14px',
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
             alignItems: 'center',
-            textAlign: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 20px 40px -10px rgba(0,0,0,0.25)',
+            zIndex: 10,
+            boxSizing: 'border-box',
           }}
         >
-          {/* The Floating Pill Header floating on top */}
-          <header
-            style={{
-              position: 'absolute',
-              top: '16px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: 'calc(100% - 32px)',
-              maxWidth: '680px',
-              backgroundColor: `${activeColors.surface}ee`,
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: `1px solid ${activeColors.border}`,
-              borderRadius: '9999px',
-              padding: '6px 14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              boxShadow: '0 20px 40px -10px rgba(0,0,0,0.25)',
-              zIndex: 10,
-              boxSizing: 'border-box',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div
-                style={{
-                  width: '26px',
-                  height: '26px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--ts-color-primary)',
-                  color: primaryTextColor,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 800,
-                  fontSize: '11px',
-                }}
-              >
-                TS
-              </div>
-              <span style={{ fontWeight: 800, fontSize: '13px' }}>{state.name}</span>
-            </div>
-
-            <nav className="hidden sm:flex items-center gap-1" style={{ fontSize: '12px', fontWeight: 600 }}>
-              {['Home', 'Components', 'Tokens', 'Docs'].map((item, idx) => (
-                <span
-                  key={item}
-                  style={{
-                    padding: '4px 10px',
-                    borderRadius: '9999px',
-                    backgroundColor: idx === 0 ? 'var(--ts-color-background)' : 'transparent',
-                    color: idx === 0 ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {item}
-                </span>
-              ))}
-            </nav>
-
-            <button
-              type="button"
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div
               style={{
+                width: '26px',
+                height: '26px',
+                borderRadius: '50%',
                 backgroundColor: 'var(--ts-color-primary)',
                 color: primaryTextColor,
-                border: 'none',
-                borderRadius: '9999px',
-                padding: '5px 12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 800,
                 fontSize: '11px',
-                fontWeight: 700,
-                cursor: 'pointer',
-                boxShadow: 'var(--ts-shadow)',
               }}
             >
-              Launch App
-            </button>
-          </header>
+              TS
+            </div>
+            <span style={{ fontWeight: 800, fontSize: '13px' }}>{state.name}</span>
+          </div>
 
-          <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * var(--ts-scale))', fontWeight: 800, margin: '24px 0 6px 0' }}>
-            Elevate Your Canvas Navigation
-          </h2>
-          <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.7 }}>
-            Floating frosted pill header optimized for landing pages, modern portfolios, and spatial app shells.
-          </p>
-        </div>
+          <div className="hidden sm:flex items-center gap-1">
+            {['Spec', 'Tokens', 'Components'].map((pill, idx) => (
+              <span
+                key={pill}
+                style={{
+                  fontSize: '12px',
+                  fontWeight: idx === 0 ? 700 : 500,
+                  padding: '3px 10px',
+                  borderRadius: '9999px',
+                  backgroundColor: idx === 0 ? 'var(--ts-color-primary)' : 'transparent',
+                  color: idx === 0 ? primaryTextColor : 'var(--ts-color-text)',
+                  cursor: 'pointer',
+                }}
+              >
+                {pill}
+              </span>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            style={{
+              backgroundColor: 'var(--ts-color-primary)',
+              color: primaryTextColor,
+              border: 'none',
+              borderRadius: '9999px',
+              padding: '4px 12px',
+              fontSize: '11px',
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
+          >
+            Deploy
+          </button>
+        </header>
+
+        {/* Page canvas underneath */}
+        <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
+          <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)', marginTop: '40px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
+              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
+                Layout: Floating Island Pill Header
+              </h3>
+            </div>
+            <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75, lineHeight: 1.5 }}>
+              Contemporary frosted glass pill header elevated above page content with smooth blur backdrop and quick actions.
+            </p>
+          </div>
+        </main>
       </div>
     );
   }
 
   // =========================================================================
-  // 4. TABBED SUBNAV HEADER
+  // 4. TABBED OPERATIONAL SUBNAV
   // =========================================================================
   if (layout === 'tabbed-nav') {
     return (
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
+      <div style={{ width: '100%', height: '100%', minHeight: '100%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <header
           style={{
             backgroundColor: 'var(--ts-color-surface)',
@@ -462,6 +449,7 @@ export const NavbarPreview: React.FC = () => {
             boxShadow: 'var(--ts-shadow)',
             display: 'flex',
             flexDirection: 'column',
+            flexShrink: 0,
           }}
         >
           {/* Row 1: Brand & Utilities */}
@@ -566,17 +554,19 @@ export const NavbarPreview: React.FC = () => {
           </div>
         </header>
 
-        <div style={{ padding: 'var(--ts-space-md)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <Sparkles style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
-            <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700, margin: 0 }}>
-              Layout: Tabbed Subnavigation Header
-            </h3>
+        <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
+          <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
+              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
+                Layout: Tabbed Subnavigation Header
+              </h3>
+            </div>
+            <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75, lineHeight: 1.5 }}>
+              Two-tier operational header featuring top utility tools and integrated sliding bottom subnav tabs with persistent active indicator.
+            </p>
           </div>
-          <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.82)', opacity: 0.75 }}>
-            Two-tier operational header featuring top utility tools and integrated sliding bottom subnav tabs with persistent active indicator.
-          </p>
-        </div>
+        </main>
       </div>
     );
   }
@@ -585,7 +575,7 @@ export const NavbarPreview: React.FC = () => {
   // 5. E-COMMERCE / COMMAND ACTION HEADER
   // =========================================================================
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
+    <div style={{ width: '100%', height: '100%', minHeight: '100%', flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <header
         style={{
           backgroundColor: 'var(--ts-color-surface)',
@@ -598,6 +588,7 @@ export const NavbarPreview: React.FC = () => {
           justifyContent: 'space-between',
           gap: 'var(--ts-space-md)',
           boxSizing: 'border-box',
+          flexShrink: 0,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -682,17 +673,19 @@ export const NavbarPreview: React.FC = () => {
         </div>
       </header>
 
-      <div style={{ padding: 'var(--ts-space-md)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-          <Sparkles style={{ width: '14px', height: '14px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
-          <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700, margin: 0 }}>
-            Layout: E-Commerce / Command Action Header
-          </h3>
+      <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
+        <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
+            <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+            <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
+              Layout: E-Commerce / Command Action Header
+            </h3>
+          </div>
+          <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.85)', opacity: 0.75, lineHeight: 1.5 }}>
+            Integrated multi-parameter search bar with inline category picker, primary catalog creation trigger, and fast entity access.
+          </p>
         </div>
-        <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.82)', opacity: 0.75 }}>
-          Integrated multi-parameter search bar with inline category picker, primary catalog creation trigger, and fast entity access.
-        </p>
-      </div>
+      </main>
     </div>
   );
 };

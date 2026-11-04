@@ -109,6 +109,7 @@ const config: Config = {
       },
       borderRadius: {
         brand: 'var(--radius-base)',
+        surface: 'var(--radius-surface)',
       },
       boxShadow: {
         brand: 'var(--shadow-base)',

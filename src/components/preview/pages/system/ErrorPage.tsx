@@ -277,7 +277,7 @@ export const ErrorPage: React.FC = () => {
         <div
           style={{
             backgroundColor: '#0a0f1d',
-            borderRadius: 'calc(var(--ts-radius) * 1.25)',
+            borderRadius: 'calc(var(--ts-radius-surface, 16px) * 1.25)',
             border: '1px solid #1e293b',
             boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5)',
             overflow: 'hidden',
@@ -374,7 +374,7 @@ export const ErrorPage: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'calc(var(--ts-radius) * 1.25)',
+            borderRadius: 'calc(var(--ts-radius-surface, 16px) * 1.25)',
             boxShadow: 'var(--ts-shadow)',
             maxWidth: '480px',
             width: '100%',
@@ -614,7 +614,7 @@ export const ErrorPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'calc(var(--ts-radius) * 1.5)',
+          borderRadius: 'calc(var(--ts-radius-surface, 16px) * 1.25)',
           boxShadow: 'var(--ts-shadow)',
           padding: 'var(--ts-space-xl) var(--ts-space-lg)',
           maxWidth: '520px',

@@ -337,6 +337,7 @@ ${tokens.typography.steps
 
   /* Shape & Elevation */
   --radius-base: ${tokens.radius};
+  --radius-surface: ${tokens.radius === '9999px' ? '20px' : tokens.radius};
   --shadow-base: ${tokens.shadow};
 
   /* Icon System (${tokens.icons.library} • ${tokens.icons.mode} • ${tokens.icons.weight}) */
@@ -412,6 +413,7 @@ export function getPreviewCssVariables(state: DesignState): Record<string, strin
     '--ts-text-caption': tokens.typography.steps.find((s) => s.step === -1)?.fontSizeRem ?? '0.8rem',
 
     '--ts-radius': tokens.radius,
+    '--ts-radius-surface': tokens.radius === '9999px' ? '20px' : tokens.radius,
     '--ts-shadow': tokens.shadow,
 
     '--ts-space-xs': tokens.spacing.xs,

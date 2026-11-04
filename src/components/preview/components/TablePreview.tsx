@@ -21,7 +21,7 @@ export const TablePreview: React.FC = () => {
         backgroundColor: 'var(--ts-color-surface)',
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         border: '1px solid var(--ts-color-border)',
         boxShadow: 'var(--ts-shadow)',
         padding: 'var(--ts-space-lg)',
@@ -56,7 +56,7 @@ export const TablePreview: React.FC = () => {
             backgroundColor: 'var(--ts-color-primary)',
             color: primaryTextColor,
             border: 'none',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             padding: 'var(--ts-space-xs) var(--ts-space-md)',
             fontSize: 'calc(var(--ts-base-size) * 0.85)',
             fontWeight: 600,
@@ -71,7 +71,7 @@ export const TablePreview: React.FC = () => {
       <div
         style={{
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           overflowX: 'auto',
           backgroundColor: 'var(--ts-color-background)',
         }}

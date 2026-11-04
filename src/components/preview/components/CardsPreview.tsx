@@ -48,7 +48,7 @@ export const CardsPreview: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-lg)',
             display: 'flex',
@@ -117,7 +117,7 @@ export const CardsPreview: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-lg)',
             display: 'flex',
@@ -219,7 +219,7 @@ export const CardsPreview: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '2px solid var(--ts-color-accent)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-lg)',
             display: 'flex',

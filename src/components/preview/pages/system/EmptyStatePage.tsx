@@ -228,7 +228,7 @@ export const EmptyStatePage: React.FC = () => {
           width: '100%',
           backgroundColor: 'var(--ts-color-surface)',
           border: '2px dashed var(--ts-color-border)',
-          borderRadius: 'calc(var(--ts-radius) * 1.5)',
+          borderRadius: 'calc(var(--ts-radius-surface, 16px) * 1.25)',
           padding: 'var(--ts-space-xl) var(--ts-space-lg)',
           display: 'flex',
           flexDirection: 'column',

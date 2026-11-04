@@ -134,24 +134,34 @@ export const PreviewPane: React.FC = () => {
       ? '768px'
       : '100%';
 
-  const isPageArchetype = [
+  const isFullBleed = [
+    // Navigation & Application Shells
+    'sidebar',
+    'navbar',
+    // Public Pages
     'landing',
     'pricing',
     'blog',
     'contact',
+    // Auth & Onboarding
     'auth',
     'onboarding',
+    // Core Application
     'dashboard',
     'detail',
     'kanban',
     'chat',
+    // Account & Workspace
     'settings',
     'billing',
     'team',
+    // System States
     'error',
     'empty-state',
     'success',
   ].includes(activePreview);
+
+  const isPageArchetype = isFullBleed;
 
   const renderActivePreview = () => {
     switch (activePreview) {
@@ -342,7 +352,7 @@ export const PreviewPane: React.FC = () => {
                 flexDirection: 'column',
                 boxSizing: 'border-box',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'calc(var(--ts-radius) + 4px)',
+                borderRadius: '12px',
                 boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)',
                 overflow: 'hidden',
                 containerType: 'inline-size',
@@ -358,7 +368,7 @@ export const PreviewPane: React.FC = () => {
                 height: '100%',
                 overflowY: 'auto',
                 overflowX: 'hidden',
-                padding: isPageArchetype ? '0' : 'var(--ts-space-lg)',
+                padding: isFullBleed ? '0' : 'var(--ts-space-lg)',
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
@@ -367,6 +377,7 @@ export const PreviewPane: React.FC = () => {
               <div
                 style={{
                   minHeight: '100%',
+                  height: '100%',
                   flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
