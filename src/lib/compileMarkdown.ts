@@ -238,7 +238,7 @@ module.exports = {
 - **Responsive Architecture**: ${layout.responsiveRules}
 
 ### 5.1 Page Layout Archetypes
-- **Authentication (Login / Signup)**: \`${state.pageLayouts?.auth ?? 'split'}\`
+- **Authentication (Login / Signup)**: \`${state.pageLayouts?.auth ?? 'centered-card'}\`
   - Container Style: \`${state.pageLayouts?.authCardStyle ?? 'elevated'}\`
   - Social SSO Integration: ${state.pageLayouts?.authSocialButtons !== false ? 'Enabled' : 'Disabled'}
 - **Error & System State Pages**: \`${state.pageLayouts?.error ?? 'giant-hero'}\`

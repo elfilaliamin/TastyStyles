@@ -106,6 +106,69 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
         </div>
       );
 
+    // 4b. Social-Login-First
+    case 'social-first':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-100 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-8/12 h-full rounded-md border ${border} bg-white dark:bg-slate-900 shadow-2xs flex flex-col justify-between p-1`}>
+            <div className="flex gap-1 justify-center pt-0.5">
+              <div className={`w-3.5 h-1.5 rounded-xs ${accent}`} />
+              <div className={`w-3.5 h-1.5 rounded-xs ${accent}`} />
+              <div className={`w-3.5 h-1.5 rounded-xs ${accent}`} />
+            </div>
+            <div className="w-full h-px bg-slate-300 dark:bg-slate-700 my-0.5" />
+            <div className={`w-full h-1 rounded-xs ${fill}`} />
+            <div className={`w-full h-1.5 rounded-xs ${accent}`} />
+          </div>
+        </div>
+      );
+
+    // 4c. Full-Page Background with Floating Form
+    case 'full-background':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-gradient-to-tr from-sky-400/25 via-indigo-500/20 to-purple-400/25 dark:from-sky-900/40 dark:to-purple-900/40 transition-colors relative overflow-hidden`}>
+          <div className={`w-7/12 h-5/6 rounded-md border border-white/50 dark:border-white/20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xs shadow-2xs flex flex-col items-center justify-center gap-1 p-1`}>
+            <div className={`w-4 h-1.5 rounded-xs ${accent}`} />
+            <div className={`w-full h-1 rounded-xs ${fill}`} />
+            <div className={`w-2/3 h-1.5 rounded-xs ${accent}`} />
+          </div>
+        </div>
+      );
+
+    // 4d. Minimal Single-Field / Multi-Step
+    case 'single-field':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className={`w-7/12 h-5/6 rounded-md border ${border} bg-white dark:bg-slate-900 shadow-2xs flex flex-col items-center justify-center gap-1 p-1`}>
+            <div className="flex gap-1 items-center">
+              <div className={`w-1.5 h-1.5 rounded-full ${accent}`} />
+              <div className={`w-1.5 h-1.5 rounded-full ${fill}`} />
+            </div>
+            <div className={`w-full h-2 rounded-xs ${fill} border ${border}`} />
+            <div className={`w-full h-2 rounded-xs ${accent}`} />
+          </div>
+        </div>
+      );
+
+    // 4e. Modal or Slide-Over Overlay
+    case 'modal-overlay':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-900/40 dark:bg-black/60 backdrop-blur-xs transition-colors relative`}>
+          <div className="absolute inset-1 grid grid-cols-3 gap-0.5 opacity-20 pointer-events-none">
+            <div className="h-2 rounded-xs bg-slate-400" />
+            <div className="h-2 rounded-xs bg-slate-400" />
+            <div className="h-2 rounded-xs bg-slate-400" />
+          </div>
+          <div className={`w-7/12 h-5/6 rounded-md border ${border} bg-white dark:bg-slate-900 shadow-lg flex flex-col items-center justify-center gap-1 p-1 z-10`}>
+            <div className="w-full flex justify-end">
+              <div className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
+            </div>
+            <div className={`w-4/5 h-1 rounded-xs ${fill}`} />
+            <div className={`w-full h-1.5 rounded-xs ${accent}`} />
+          </div>
+        </div>
+      );
+
     // 5. Hero Centered
     case 'hero-centered':
     case 'giant-hero':
@@ -239,12 +302,44 @@ export const LayoutSection: React.FC = () => {
       case 'auth':
         return {
           options: [
-            { id: 'split', title: 'Split Showcase', description: 'Hero brand banner alongside auth form', variant: 'split' },
-            { id: 'centered-card', title: 'Centered Card', description: 'Floating modal card centered on canvas', variant: 'centered-card' },
-            { id: 'minimal', title: 'Minimalist', description: 'Clean borderless column layout', variant: 'minimal' },
-            { id: 'glassmorphism', title: 'Glassmorphism', description: 'Frosted glass container with soft background glow', variant: 'centered-card' },
+            {
+              id: 'centered-card',
+              title: 'Centered Card (Default)',
+              description: 'Single centered card, mobile-first and collapses seamlessly',
+              variant: 'centered-card',
+            },
+            {
+              id: 'split',
+              title: 'Split Screen',
+              description: 'Brand marketing showcase on one half, form on the other',
+              variant: 'split',
+            },
+            {
+              id: 'social-first',
+              title: 'Social-Login-First',
+              description: 'Prominent Google/Apple/GitHub buttons on top with email divider',
+              variant: 'social-first',
+            },
+            {
+              id: 'full-background',
+              title: 'Full-Page Floating',
+              description: 'Vibrant full-bleed background with floating frosted-glass card',
+              variant: 'full-background',
+            },
+            {
+              id: 'single-field',
+              title: 'Minimal Multi-Step',
+              description: 'Progressive single-field flow (Google/Notion style) with steps',
+              variant: 'single-field',
+            },
+            {
+              id: 'modal-overlay',
+              title: 'Modal Overlay',
+              description: 'In-app dialog overlay with blurred backdrop and close button',
+              variant: 'modal-overlay',
+            },
           ],
-          selectedId: pageLayouts.auth ?? 'split',
+          selectedId: pageLayouts.auth ?? 'centered-card',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { auth: id as PageLayouts['auth'] } }),
         };
 

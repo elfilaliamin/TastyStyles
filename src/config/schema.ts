@@ -20,7 +20,16 @@ export const TypographyStateSchema = z.object({
 });
 
 export const PageLayoutsSchema = z.object({
-  auth: z.enum(['split', 'centered-card', 'minimal', 'glassmorphism']).default('split'),
+  auth: z.enum([
+    'centered-card',
+    'split',
+    'social-first',
+    'full-background',
+    'single-field',
+    'modal-overlay',
+    'minimal',
+    'glassmorphism',
+  ]).default('centered-card'),
   authSocialButtons: z.boolean().default(true),
   authCardStyle: z.enum(['elevated', 'bordered', 'flat', 'glass']).default('elevated'),
   error: z.enum(['giant-hero', 'split-terminal', 'dialog-card', 'minimal']).default('giant-hero'),

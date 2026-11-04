@@ -51,7 +51,7 @@ export const defaultInitialState: DesignState = {
   shadow: 'soft',
   spacing: 'comfortable',
   pageLayouts: {
-    auth: 'split',
+    auth: 'centered-card',
     authSocialButtons: true,
     authCardStyle: 'elevated',
     error: 'giant-hero',
