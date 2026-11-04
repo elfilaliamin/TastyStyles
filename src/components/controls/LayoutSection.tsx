@@ -680,7 +680,7 @@ export const LayoutSection: React.FC = () => {
       </div>
 
       {/* Grid of Layout Cards matching screenshot style */}
-      <div className={`grid ${options.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} gap-2.5`}>
+      <div className="grid grid-cols-2 gap-2.5">
         {options.map((layout) => {
           const isSelected = selectedId === layout.id;
 
