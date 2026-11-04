@@ -323,12 +323,12 @@ export const ItemDetailPage: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: 'var(--ts-space-md)',
             alignItems: 'start',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)', gridColumn: 'span 2' }}>
+          <div className="col-span-1 lg:col-span-2" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
             {renderHardwareSpecs()}
             {renderTimeline()}
           </div>
