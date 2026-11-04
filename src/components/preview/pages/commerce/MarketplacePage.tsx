@@ -3,7 +3,7 @@ import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { FilterToolbarBlock } from '../../../blocks/FilterToolbarBlock';
-import { AppIcon } from '../../../common/AppIcon';
+import { MEDIA_CATALOG } from '../../../../config/mediaCatalog';
 
 export const MarketplacePage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -14,10 +14,10 @@ export const MarketplacePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('San Francisco, CA');
 
   const listings = [
-    { id: 1, title: 'Modern Industrial Loft in Mission', host: 'Marcus Vance', rating: 4.94, reviews: 86, price: 220, guests: 4, badge: 'Superhost' },
-    { id: 2, title: 'Designer Studio with Skyline Terrace', host: 'Elena Rostova', rating: 4.88, reviews: 142, price: 175, guests: 2, badge: 'Rare Find' },
-    { id: 3, title: 'Architectural Victorian Penthouse', host: 'David Chen', rating: 4.97, reviews: 64, price: 340, guests: 6, badge: 'Superhost' },
-    { id: 4, title: 'Waterfront Minimalist Retreat', host: 'Sarah Jenkins', rating: 4.82, reviews: 39, price: 195, guests: 3 },
+    { id: 1, title: 'Glass Architectural Forest Villa & Private Sauna', host: 'Marcus Vance', location: 'Trondheim, Norway', rating: 4.96, reviews: 142, price: 285, guests: 4, badge: 'Superhost', imageUrl: MEDIA_CATALOG.marketplace[0].imageUrl },
+    { id: 2, title: 'Minimalist Concrete Loft with Skyline Views', host: 'Elena Rostova', location: 'Copenhagen, Denmark', rating: 4.88, reviews: 89, price: 210, guests: 2, badge: 'Rare Find', imageUrl: MEDIA_CATALOG.marketplace[1].imageUrl },
+    { id: 3, title: 'Secluded Clifftop Studio overlooking Pacific Ocean', host: 'David Chen', location: 'Big Sur, California', rating: 4.98, reviews: 204, price: 450, guests: 6, badge: 'Superhost', imageUrl: MEDIA_CATALOG.marketplace[2].imageUrl },
+    { id: 4, title: 'Waterfront Minimalist Cabin Retreat', host: 'Sarah Jenkins', location: 'Lofoten, Norway', rating: 4.84, reviews: 62, price: 195, guests: 3, imageUrl: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80' },
   ];
 
   return (
@@ -73,13 +73,16 @@ export const MarketplacePage: React.FC = () => {
                     height: '180px',
                     backgroundColor: 'var(--ts-color-background)',
                     borderBottom: '1px solid var(--ts-color-border)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    overflow: 'hidden',
                     position: 'relative',
                   }}
                 >
-                  <AppIcon name="palette" size={48} style={{ color: 'var(--ts-color-primary)', opacity: 0.8 }} />
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                   <span
                     style={{
                       position: 'absolute',
@@ -87,12 +90,13 @@ export const MarketplacePage: React.FC = () => {
                       right: '12px',
                       padding: '4px 10px',
                       borderRadius: '9999px',
-                      backgroundColor: 'var(--ts-color-surface)',
-                      border: '1px solid var(--ts-color-border)',
+                      backgroundColor: 'rgba(0,0,0,0.75)',
+                      border: '1px solid rgba(255,255,255,0.2)',
                       fontSize: '11px',
                       fontWeight: 800,
-                      color: 'var(--ts-color-primary)',
-                      boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                      color: '#ffffff',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.25)',
+                      backdropFilter: 'blur(4px)',
                     }}
                   >
                     ${item.price} / night
@@ -157,13 +161,16 @@ export const MarketplacePage: React.FC = () => {
                     borderRadius: 'var(--ts-radius)',
                     backgroundColor: 'var(--ts-color-background)',
                     border: '1px solid var(--ts-color-border)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    overflow: 'hidden',
                     flexShrink: 0,
                   }}
                 >
-                  <AppIcon name="palette" size={28} style={{ color: 'var(--ts-color-primary)', opacity: 0.7 }} />
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 </div>
 
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>

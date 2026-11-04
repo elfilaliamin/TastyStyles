@@ -4,6 +4,7 @@ import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { FilterToolbarBlock } from '../../../blocks/FilterToolbarBlock';
 import { AppIcon } from '../../../common/AppIcon';
+import { MEDIA_CATALOG } from '../../../../config/mediaCatalog';
 
 export const ProductCatalogPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -15,12 +16,12 @@ export const ProductCatalogPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const products = [
-    { id: 1, name: 'Apex Studio Monitor 27"', category: 'Hardware', price: 349, rating: 4.9, reviews: 184, badge: 'Best Seller', colors: ['#0f172a', '#e2e8f0'] },
-    { id: 2, name: 'ErgoWave Wireless Keypad', category: 'Accessories', price: 89, rating: 4.8, reviews: 92, badge: 'New', colors: ['#0284c7', '#334155'] },
-    { id: 3, name: 'DTCG Design Token Engine v2', category: 'Software', price: 149, rating: 5.0, reviews: 312, badge: 'Featured', colors: ['#059669', '#10b981'] },
-    { id: 4, name: 'Precision Desk Mat XL', category: 'Accessories', price: 38, rating: 4.7, reviews: 64, colors: ['#475569', '#0f172a'] },
-    { id: 5, name: 'AeroPulse Leather Armrest', category: 'Hardware', price: 74, rating: 4.6, reviews: 48, colors: ['#92400e', '#1e293b'] },
-    { id: 6, name: 'Autonomous Agent CLI Key', category: 'Software', price: 199, rating: 4.9, reviews: 420, badge: 'Popular', colors: ['#7c3aed', '#38bdf8'] },
+    { id: 1, name: 'Acoustic Zero Spatial Headphones', category: 'Audio', price: 349, rating: 4.9, reviews: 382, badge: 'Best Seller', colors: ['#0f172a', '#e2e8f0'], imageUrl: MEDIA_CATALOG.products[0].imageUrl },
+    { id: 2, name: 'Apex Mechanical Lumina Keyboard', category: 'Workstation', price: 189, rating: 4.8, reviews: 214, badge: 'Staff Pick', colors: ['#0284c7', '#334155'], imageUrl: MEDIA_CATALOG.products[1].imageUrl },
+    { id: 3, name: 'Titan Horizon Chronograph Watch', category: 'Timepiece', price: 495, rating: 5.0, reviews: 96, badge: 'Featured', colors: ['#059669', '#10b981'], imageUrl: MEDIA_CATALOG.products[2].imageUrl },
+    { id: 4, name: 'Aerolux Ergonomic Task Chair', category: 'Furniture', price: 680, rating: 4.7, reviews: 158, badge: 'Backordered', colors: ['#475569', '#0f172a'], imageUrl: MEDIA_CATALOG.products[3].imageUrl },
+    { id: 5, name: 'Precision Desk Mat XL', category: 'Accessories', price: 38, rating: 4.7, reviews: 64, colors: ['#475569', '#0f172a'], imageUrl: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80' },
+    { id: 6, name: 'Autonomous Agent Studio Console', category: 'Hardware', price: 799, rating: 4.9, reviews: 420, badge: 'Popular', colors: ['#7c3aed', '#38bdf8'], imageUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80' },
   ];
 
   return (
@@ -95,13 +96,16 @@ export const ProductCatalogPage: React.FC = () => {
                       borderRadius: 'var(--ts-radius)',
                       backgroundColor: 'var(--ts-color-background)',
                       border: '1px solid var(--ts-color-border)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      overflow: 'hidden',
                       flexShrink: 0,
                     }}
                   >
-                    <AppIcon name="shoppingBag" size={24} style={{ color: 'var(--ts-color-primary)' }} />
+                    <img
+                      src={p.imageUrl}
+                      alt={p.name}
+                      loading="lazy"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: '11px', opacity: 0.6 }}>Local Inventory · In Store Today</div>
@@ -244,7 +248,7 @@ export const ProductCatalogPage: React.FC = () => {
                     </span>
                   )}
 
-                  {/* Product Thumbnail Mock */}
+                  {/* Product Thumbnail with Real Photography */}
                   <div
                     style={{
                       width: '100%',
@@ -252,12 +256,16 @@ export const ProductCatalogPage: React.FC = () => {
                       borderRadius: 'var(--ts-radius)',
                       backgroundColor: 'var(--ts-color-background)',
                       border: '1px solid var(--ts-color-border)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      position: 'relative',
                     }}
                   >
-                    <AppIcon name="shoppingBag" size={36} style={{ color: 'var(--ts-color-primary)', opacity: 0.8 }} />
+                    <img
+                      src={p.imageUrl}
+                      alt={p.name}
+                      loading="lazy"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </div>
 
                   <div>

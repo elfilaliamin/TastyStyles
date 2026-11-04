@@ -5,6 +5,7 @@ import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { MediaHeroBlock } from '../../../blocks/MediaHeroBlock';
 import { DiscussionReviewBlock } from '../../../blocks/DiscussionReviewBlock';
 import { AppIcon } from '../../../common/AppIcon';
+import { MEDIA_CATALOG } from '../../../../config/mediaCatalog';
 
 export const StreamingPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -14,10 +15,10 @@ export const StreamingPage: React.FC = () => {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   const episodes = [
-    { id: 'ep1', title: 'Ep. 01: Multi-Agent Choreography in Modern IDEs', duration: '48:12', date: 'Yesterday', views: '12.4k' },
-    { id: 'ep2', title: 'Ep. 02: Zero-Runtime CSS Token Compilation', duration: '52:40', date: '3 days ago', views: '9.8k' },
-    { id: 'ep3', title: 'Ep. 03: APCA vs WCAG 2.1 Contrast Deep Dive', duration: '41:15', date: 'Last week', views: '15.2k' },
-    { id: 'ep4', title: 'Ep. 04: Designing for 375px Mobile Viewports', duration: '36:50', date: '2 weeks ago', views: '8.1k' },
+    { id: 'ep1', title: 'Ep. 01: Multi-Agent Choreography in Modern IDEs', duration: '48:12', date: 'Yesterday', views: '12.4k', posterUrl: MEDIA_CATALOG.streaming[0].posterUrl },
+    { id: 'ep2', title: 'Ep. 02: Zero-Runtime CSS Token Compilation', duration: '52:40', date: '3 days ago', views: '9.8k', posterUrl: MEDIA_CATALOG.streaming[1].posterUrl },
+    { id: 'ep3', title: 'Ep. 03: APCA vs WCAG 2.1 Contrast Deep Dive', duration: '41:15', date: 'Last week', views: '15.2k', posterUrl: MEDIA_CATALOG.streaming[2].posterUrl },
+    { id: 'ep4', title: 'Ep. 04: Designing for 375px Mobile Viewports', duration: '36:50', date: '2 weeks ago', views: '8.1k', posterUrl: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80' },
   ];
 
   return (
@@ -163,20 +164,41 @@ export const StreamingPage: React.FC = () => {
                       style={{
                         height: '130px',
                         backgroundColor: '#090d16',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#94a3b8',
                         position: 'relative',
+                        overflow: 'hidden',
                       }}
                     >
-                      <AppIcon name="play-circle" size={36} />
+                      <img
+                        src={ep.posterUrl}
+                        alt={ep.title}
+                        loading="lazy"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+                      />
+                      <div
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(0,0,0,0.6)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#fff',
+                          backdropFilter: 'blur(4px)',
+                        }}
+                      >
+                        <AppIcon name="play" size={18} />
+                      </div>
                       <span
                         style={{
                           position: 'absolute',
                           bottom: '8px',
                           right: '8px',
-                          backgroundColor: 'rgba(0,0,0,0.8)',
+                          backgroundColor: 'rgba(0,0,0,0.85)',
                           color: '#fff',
                           fontSize: '10px',
                           fontWeight: 700,

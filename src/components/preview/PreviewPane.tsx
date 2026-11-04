@@ -18,6 +18,7 @@ import {
   getNextPreview,
   getPrevPreview,
   getPreviewsForGoal,
+  getGoalPreviewGroups,
   GOAL_DEFINITIONS,
 } from '../../config/previews';
 
@@ -108,6 +109,11 @@ export const PreviewPane: React.FC = () => {
   const [isGoalFocus, setIsGoalFocus] = useState<boolean>(true);
   const currentGoal = state.projectGoal ?? 'saas';
   const activeGoalDef = GOAL_DEFINITIONS[currentGoal] ?? GOAL_DEFINITIONS.saas;
+
+  const goalGroups = useMemo(
+    () => getGoalPreviewGroups(currentGoal),
+    [currentGoal]
+  );
 
   const scopedPreviews = useMemo(
     () => (isGoalFocus ? getPreviewsForGoal(currentGoal) : PREVIEW_REGISTRY),
@@ -351,13 +357,22 @@ export const PreviewPane: React.FC = () => {
               className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[145px] sm:max-w-[210px] md:max-w-xs truncate"
             >
               {isGoalFocus ? (
-                <optgroup label={`${activeGoalDef.emoji} ${activeGoalDef.label} Views`}>
-                  {scopedPreviews.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.label}
-                    </option>
-                  ))}
-                </optgroup>
+                <>
+                  <optgroup label={`${activeGoalDef.emoji} ${activeGoalDef.label} — Pages`}>
+                    {goalGroups.pages.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label={`🧩 ${activeGoalDef.label} — Primitives`}>
+                    {goalGroups.primitives.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                </>
               ) : (
                 (['Primitives', 'Commerce', 'Community', 'Public', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
                   const items = PREVIEW_REGISTRY.filter((p) => p.category === cat);

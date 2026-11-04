@@ -4,6 +4,7 @@ import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { DiscussionReviewBlock } from '../../../blocks/DiscussionReviewBlock';
 import { AppIcon } from '../../../common/AppIcon';
+import { MEDIA_CATALOG } from '../../../../config/mediaCatalog';
 
 export const ProductDetailPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -130,7 +131,7 @@ export const ProductDetailPage: React.FC = () => {
             <div style={{ display: 'flex', gap: '12px' }}>
               {/* Thumbnail Rail */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {[0, 1, 2, 3].map((idx) => (
+                {MEDIA_CATALOG.products[0].gallery.map((imgUrl, idx) => (
                   <button
                     key={idx}
                     type="button"
@@ -142,12 +143,16 @@ export const ProductDetailPage: React.FC = () => {
                       border: activeThumb === idx ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
                       backgroundColor: 'var(--ts-color-surface)',
                       cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      padding: 0,
                     }}
                   >
-                    <AppIcon name="shoppingBag" size={20} style={{ opacity: 0.6 }} />
+                    <img
+                      src={imgUrl}
+                      alt={`Thumbnail ${idx + 1}`}
+                      loading="lazy"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </button>
                 ))}
               </div>
@@ -161,16 +166,31 @@ export const ProductDetailPage: React.FC = () => {
                   borderRadius: 'var(--ts-radius-surface, 16px)',
                   backgroundColor: 'var(--ts-color-surface)',
                   border: '1px solid var(--ts-color-border)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  overflow: 'hidden',
                   position: 'relative',
                   boxShadow: 'var(--ts-shadow)',
                 }}
               >
-                <AppIcon name="shoppingBag" size={72} style={{ color: 'var(--ts-color-primary)' }} />
-                <div style={{ position: 'absolute', bottom: '16px', right: '16px', fontSize: '11px', opacity: 0.6 }}>
+                <img
+                  src={MEDIA_CATALOG.products[0].gallery[activeThumb] || MEDIA_CATALOG.products[0].imageUrl}
+                  alt={MEDIA_CATALOG.products[0].name}
+                  loading="lazy"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '12px',
+                    right: '12px',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    backgroundColor: 'rgba(0,0,0,0.7)',
+                    color: '#fff',
+                    padding: '3px 8px',
+                    borderRadius: '4px',
+                    backdropFilter: 'blur(4px)',
+                  }}
+                >
                   Hover to Zoom · 4K Assets
                 </div>
               </div>
