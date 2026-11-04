@@ -197,3 +197,4 @@ export const GoalSelector: React.FC<GoalSelectorProps> = ({ currentGoal, onSelec
     </div>
   );
 };
+

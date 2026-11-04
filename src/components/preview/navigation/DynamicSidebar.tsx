@@ -54,6 +54,7 @@ export const DynamicSidebar: React.FC<DynamicSidebarProps> = ({
         className={className}
         style={{
           width: '260px',
+          maxWidth: '100%',
           height: '100%',
           backgroundColor: 'var(--ts-color-surface)',
           borderRight: '1px solid var(--ts-color-border)',
@@ -501,6 +502,7 @@ export const DynamicSidebar: React.FC<DynamicSidebarProps> = ({
         className={className}
         style={{
           width: '240px',
+          maxWidth: 'calc(100% - 24px)',
           height: 'calc(100% - 24px)',
           margin: '12px',
           backgroundColor: 'var(--ts-color-surface)',
@@ -587,6 +589,7 @@ export const DynamicSidebar: React.FC<DynamicSidebarProps> = ({
       className={className}
       style={{
         width: '260px',
+        maxWidth: '100%',
         height: '100%',
         backgroundColor: 'var(--ts-color-surface)',
         borderRight: '1px solid var(--ts-color-border)',

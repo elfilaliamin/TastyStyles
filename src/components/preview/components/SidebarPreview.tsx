@@ -45,10 +45,11 @@ export const SidebarPreview: React.FC = () => {
         backgroundColor: 'var(--ts-color-background)',
       }}
     >
-      <DynamicSidebar activeItem={activeItem} onSelectItem={setActiveItem} />
+      <DynamicSidebar activeItem={activeItem} onSelectItem={setActiveItem} className="w-full md:w-auto flex-1 md:flex-initial" />
 
-      {/* Simulated Right Content */}
+      {/* Simulated Right Content - hidden on 375px mobile to give sidebar full canvas, visible on tablet & desktop */}
       <main
+        className="hidden md:flex"
         style={{
           flex: 1,
           height: '100%',

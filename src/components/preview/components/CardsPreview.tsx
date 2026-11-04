@@ -18,6 +18,7 @@ export const CardsPreview: React.FC = () => {
         gap: 'var(--ts-space-lg)',
         fontFamily: 'var(--ts-font-body)',
         color: 'var(--ts-color-text)',
+        boxSizing: 'border-box',
       }}
     >
       <div>
@@ -39,8 +40,9 @@ export const CardsPreview: React.FC = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))',
           gap: 'var(--ts-space-md)',
+          boxSizing: 'border-box',
         }}
       >
         {/* Card 1: Metric KPI Card */}

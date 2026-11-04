@@ -25,6 +25,7 @@ export const PopupsPreview: React.FC = () => {
         fontFamily: 'var(--ts-font-body)',
         color: 'var(--ts-color-text)',
         position: 'relative',
+        boxSizing: 'border-box',
       }}
     >
       {/* Header */}
@@ -230,7 +231,7 @@ export const PopupsPreview: React.FC = () => {
             flexWrap: 'wrap',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: '240px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 'min(240px, 100%)' }}>
             <AppIcon name="sparkles" size={18} />
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>
@@ -847,7 +848,7 @@ export const PopupsPreview: React.FC = () => {
             flexWrap: 'wrap',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: '280px', flex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 'min(280px, 100%)', flex: 1 }}>
             <div
               style={{
                 width: '36px',

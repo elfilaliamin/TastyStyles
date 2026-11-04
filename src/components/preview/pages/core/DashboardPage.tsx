@@ -265,7 +265,7 @@ export const DashboardPage: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      <DynamicSidebar />
+      <DynamicSidebar className="hidden lg:flex" />
       <main
         style={{
           flex: 1,

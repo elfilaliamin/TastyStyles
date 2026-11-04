@@ -22,6 +22,7 @@ export const FormsPreview: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 'var(--ts-space-lg)',
+        boxSizing: 'border-box',
       }}
     >
       {/* Title */}
@@ -42,7 +43,7 @@ export const FormsPreview: React.FC = () => {
       </div>
 
       {/* Grid of Inputs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--ts-space-md)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--ts-space-md)' }}>
         {/* Standard Text Input */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-xs)' }}>
           <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 600 }}>
@@ -131,7 +132,7 @@ export const FormsPreview: React.FC = () => {
 
         {/* Input with Validation Error */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-xs)' }}>
-          <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 600, color: '#ef4444' }}>
+          <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 600, color: 'var(--color-danger, #ef4444)' }}>
             Work Email Address
           </label>
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -142,12 +143,13 @@ export const FormsPreview: React.FC = () => {
                 width: '100%',
                 backgroundColor: 'var(--ts-color-background)',
                 color: 'var(--ts-color-text)',
-                border: '1px solid #ef4444',
+                border: '1px solid var(--color-danger, #ef4444)',
                 borderRadius: 'var(--ts-radius)',
-                padding: 'var(--ts-space-sm) var(--ts-space-md) var(--ts-space-sm) var(--ts-space-md)',
+                padding: 'var(--ts-space-sm) 36px var(--ts-space-sm) var(--ts-space-md)',
                 fontSize: 'calc(var(--ts-base-size) * 0.9)',
                 outline: 'none',
                 fontFamily: 'var(--ts-font-body)',
+                boxSizing: 'border-box',
               }}
             />
             <AppIcon
@@ -156,11 +158,11 @@ export const FormsPreview: React.FC = () => {
               style={{
                 position: 'absolute',
                 right: '12px',
-                color: '#ef4444',
+                color: 'var(--color-danger, #ef4444)',
               }}
             />
           </div>
-          <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', color: '#ef4444' }}>
+          <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.75)', color: 'var(--color-danger, #ef4444)' }}>
             Please enter a valid RFC-compliant email address.
           </span>
         </div>

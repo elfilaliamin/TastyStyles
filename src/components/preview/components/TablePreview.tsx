@@ -31,10 +31,11 @@ export const TablePreview: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 'var(--ts-space-md)',
+        boxSizing: 'border-box',
       }}
     >
       {/* Title */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
         <div>
           <h2
             style={{

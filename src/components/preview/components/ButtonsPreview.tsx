@@ -24,6 +24,7 @@ export const ButtonsPreview: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 'var(--ts-space-lg)',
+        boxSizing: 'border-box',
       }}
     >
       {/* Header */}
@@ -147,7 +148,7 @@ export const ButtonsPreview: React.FC = () => {
           <button
             type="button"
             style={{
-              backgroundColor: '#ef4444',
+              backgroundColor: 'var(--color-danger, #ef4444)',
               color: '#ffffff',
               borderRadius: 'var(--ts-radius)',
               border: 'none',
@@ -254,7 +255,7 @@ export const ButtonsPreview: React.FC = () => {
           <button
             type="button"
             style={{
-              backgroundColor: '#10b981',
+              backgroundColor: 'var(--color-success, #10b981)',
               color: '#ffffff',
               borderRadius: 'var(--ts-radius)',
               padding: 'var(--ts-space-sm) var(--ts-space-md)',
@@ -351,8 +352,10 @@ export const ButtonsPreview: React.FC = () => {
               key={item.name}
               type="button"
               style={{
-                width: '40px',
-                height: '40px',
+                width: '44px',
+                height: '44px',
+                minWidth: '44px',
+                minHeight: '44px',
                 borderRadius: 'var(--ts-radius)',
                 border: '1px solid var(--ts-color-border)',
                 backgroundColor: 'var(--ts-color-background)',
@@ -362,6 +365,7 @@ export const ButtonsPreview: React.FC = () => {
                 justifyContent: 'center',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
+                boxSizing: 'border-box',
               }}
               title={item.title}
             >

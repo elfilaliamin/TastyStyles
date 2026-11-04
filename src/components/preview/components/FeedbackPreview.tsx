@@ -23,6 +23,7 @@ export const FeedbackPreview: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         gap: 'var(--ts-space-lg)',
+        boxSizing: 'border-box',
       }}
     >
       <div>
@@ -81,9 +82,9 @@ export const FeedbackPreview: React.FC = () => {
             gap: '12px',
           }}
         >
-          <AppIcon name="checkCircle" size={18} style={{ color: '#10b981', flexShrink: 0, marginTop: '2px' }} />
+          <AppIcon name="checkCircle" size={18} style={{ color: 'var(--color-success, #10b981)', flexShrink: 0, marginTop: '2px' }} />
           <div>
-            <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.9)', color: '#10b981' }}>
+            <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.9)', color: 'var(--color-success, #10b981)' }}>
               WCAG 2.1 AA Compliance Verified
             </div>
             <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', opacity: 0.8, marginTop: '2px' }}>
@@ -104,9 +105,9 @@ export const FeedbackPreview: React.FC = () => {
             gap: '12px',
           }}
         >
-          <AppIcon name="alert" size={18} style={{ color: '#f59e0b', flexShrink: 0, marginTop: '2px' }} />
+          <AppIcon name="alert" size={18} style={{ color: 'var(--color-warning, #f59e0b)', flexShrink: 0, marginTop: '2px' }} />
           <div>
-            <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.9)', color: '#f59e0b' }}>
+            <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.9)', color: 'var(--color-warning, #f59e0b)' }}>
               Unsaved Local Token Overrides
             </div>
             <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', opacity: 0.8, marginTop: '2px' }}>
@@ -165,7 +166,7 @@ export const FeedbackPreview: React.FC = () => {
           <span
             style={{
               backgroundColor: 'rgba(239, 68, 68, 0.15)',
-              color: '#ef4444',
+              color: 'var(--color-danger, #ef4444)',
               padding: 'var(--ts-space-xs) var(--ts-space-sm)',
               borderRadius: '9999px',
               fontSize: 'calc(var(--ts-base-size) * 0.75)',
