@@ -51,6 +51,36 @@ export const PageLayoutsSchema = z.object({
   sidebar: z.enum(['classic-grouped', 'compact-rail', 'dual-pane', 'floating-card', 'workspace-shell']).default('classic-grouped'),
 });
 
+export const IconLibrarySchema = z.enum([
+  'lucide',
+  'tabler',
+  'phosphor',
+  'heroicons',
+  'remix',
+]).default('lucide');
+
+export const IconModeSchema = z.enum(['outline', 'solid']).default('outline');
+
+export const IconWeightSchema = z.enum([
+  'thin',
+  'light',
+  'regular',
+  'medium',
+  'bold',
+]).default('regular');
+
+export const IconConfigSchema = z.object({
+  library: IconLibrarySchema,
+  mode: IconModeSchema,
+  duotone: z.boolean().default(false),
+  weight: IconWeightSchema,
+}).default(() => ({
+  library: 'lucide' as const,
+  mode: 'outline' as const,
+  duotone: false,
+  weight: 'regular' as const,
+}));
+
 export const DesignStateSchema = z.object({
   version: z.literal(1),
   name: z.string().default('My Design System'),
@@ -65,6 +95,7 @@ export const DesignStateSchema = z.object({
   shadow: z.string().min(1),
   spacing: z.string().min(1),
   iconStyle: z.enum(['clean-outline', 'bold-stroke', 'minimal-thin', 'duotone', 'solid-badge']).default('clean-outline'),
+  icons: IconConfigSchema.optional().default(() => IconConfigSchema.parse({})),
   pageLayouts: PageLayoutsSchema.optional().default(() => PageLayoutsSchema.parse({})),
 });
 
@@ -72,6 +103,10 @@ export type HexColor = z.infer<typeof HexColorSchema>;
 export type ColorPalette = z.infer<typeof ColorPaletteSchema>;
 export type TypographyState = z.infer<typeof TypographyStateSchema>;
 export type PageLayouts = z.infer<typeof PageLayoutsSchema>;
+export type IconLibrary = z.infer<typeof IconLibrarySchema>;
+export type IconMode = z.infer<typeof IconModeSchema>;
+export type IconWeight = z.infer<typeof IconWeightSchema>;
+export type IconConfig = z.infer<typeof IconConfigSchema>;
 export type DesignState = z.infer<typeof DesignStateSchema>;
 
 // Registry schemas

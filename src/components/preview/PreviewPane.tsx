@@ -2,7 +2,6 @@ import React, { useState, Suspense, lazy } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ViewportSwitcher } from './ViewportSwitcher';
 import { MockCard } from './MockCard';
-import { LayoutWireframe } from './LayoutWireframe';
 import { ButtonsPreview } from './components/ButtonsPreview';
 import { FormsPreview } from './components/FormsPreview';
 import { CardsPreview } from './components/CardsPreview';
@@ -110,12 +109,19 @@ export const PreviewPane: React.FC = () => {
     '--ts-space-xl': spacingEntry.scale.xl,
 
     '--ts-icon-stroke':
-      state.iconStyle === 'bold-stroke'
-        ? '2.5px'
-        : state.iconStyle === 'minimal-thin'
+      state.icons?.weight === 'thin'
         ? '1.25px'
+        : state.icons?.weight === 'light'
+        ? '1.5px'
+        : state.icons?.weight === 'medium'
+        ? '2.25px'
+        : state.icons?.weight === 'bold'
+        ? '2.75px'
         : '1.75px',
-    '--ts-icon-fill-opacity': state.iconStyle === 'duotone' ? '0.2' : '0',
+    '--ts-icon-fill-opacity':
+      state.icons?.mode === 'solid' ? '1' : state.icons?.duotone ? '0.22' : '0',
+    '--ts-icon-library': state.icons?.library ?? 'lucide',
+    '--ts-icon-mode': state.icons?.mode ?? 'outline',
   };
 
   const currentIndex = getPreviewIndex(activePreview);
@@ -162,7 +168,6 @@ export const PreviewPane: React.FC = () => {
       : '100%';
 
   const isPageArchetype = [
-    'layout',
     'landing',
     'pricing',
     'blog',
@@ -198,8 +203,6 @@ export const PreviewPane: React.FC = () => {
         return <NavbarPreview />;
       case 'sidebar':
         return <SidebarPreview />;
-      case 'layout':
-        return <LayoutWireframe />;
 
       // Public Pages
       case 'landing':
@@ -305,7 +308,6 @@ export const PreviewPane: React.FC = () => {
                 <option value="table">Data Tables & Lists</option>
                 <option value="navbar">Navbar & Navigation Header</option>
                 <option value="sidebar">Sidebar Navigation & Rails</option>
-                <option value="layout">Home Page Wireframe</option>
               </optgroup>
 
               <optgroup label="Public Pages">
@@ -371,7 +373,10 @@ export const PreviewPane: React.FC = () => {
           {/* Isolated sandbox frame fixed to container height with internal scrolling */}
           <div
             data-viewport={viewportMode}
-            data-icon-style={state.iconStyle}
+            data-icon-library={state.icons?.library ?? 'lucide'}
+            data-icon-mode={state.icons?.mode ?? 'outline'}
+            data-icon-weight={state.icons?.weight ?? 'regular'}
+            data-icon-duotone={state.icons?.duotone ? 'true' : 'false'}
             className="ts-preview-frame"
             style={
               {

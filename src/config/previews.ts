@@ -19,7 +19,6 @@ export const PREVIEW_REGISTRY: PreviewDefinition[] = [
   { id: 'table', label: 'Data Tables & Lists', shortLabel: 'Tables', category: 'Primitives', description: 'Tabular data display, search filters, and pagination', hasCustomLayouts: false },
   { id: 'navbar', label: 'Navbar & Navigation Header', shortLabel: 'Navbar', category: 'Primitives', description: 'Application headers, top navigation bars, actions and breadcrumbs', hasCustomLayouts: true },
   { id: 'sidebar', label: 'Sidebar Navigation & Rails', shortLabel: 'Sidebar', category: 'Primitives', description: 'Left sidebar navigation, icon rails, dual pane and tree menus', hasCustomLayouts: true },
-  { id: 'layout', label: 'Home Page Wireframe', shortLabel: 'Wireframe', category: 'Primitives', description: 'Structural wireframe matching selected layout archetype', hasCustomLayouts: false },
 
   // Public Pages
   { id: 'landing', label: 'Landing / Homepage', shortLabel: 'Landing', category: 'Public', description: 'Hero section, feature matrix, customer testimonial, and CTA', hasCustomLayouts: true },

@@ -13,8 +13,6 @@ export type PreviewComponentType =
   | 'table'
   | 'navbar'
   | 'sidebar'
-  // Layout Wireframe
-  | 'layout'
   // Public Pages
   | 'landing'
   | 'pricing'

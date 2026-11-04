@@ -59,8 +59,8 @@ export const ControlsPanel: React.FC = () => {
         </Accordion>
 
         <Accordion
-          title="Icon Sets & Style"
-          subtitle="Stroke weight, duotone depth, and geometry"
+          title="Icons & Libraries"
+          subtitle="Icon libraries, outline/solid, duotone & weights"
           icon={<Shapes className="w-4 h-4 text-sky-500" />}
           defaultOpen={false}
         >

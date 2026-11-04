@@ -175,9 +175,20 @@ Paste this block into your global stylesheet (e.g. \`:root\` in \`index.css\`):
   --radius-base: ${radius.value};
   --shadow-base: ${shadow.value};
 
-  /* Icon System (${state.iconStyle}) */
-  --icon-stroke: ${state.iconStyle === 'bold-stroke' ? '2.5px' : state.iconStyle === 'minimal-thin' ? '1.25px' : '1.75px'};
-  --icon-fill-opacity: ${state.iconStyle === 'duotone' ? '0.2' : '0'};
+  /* Icon System (${state.icons?.library ?? 'lucide'} • ${state.icons?.mode ?? 'outline'} • ${state.icons?.weight ?? 'regular'}) */
+  --icon-library: '${state.icons?.library ?? 'lucide'}';
+  --icon-stroke: ${
+    state.icons?.weight === 'thin'
+      ? '1.25px'
+      : state.icons?.weight === 'light'
+      ? '1.5px'
+      : state.icons?.weight === 'medium'
+      ? '2.25px'
+      : state.icons?.weight === 'bold'
+      ? '2.75px'
+      : '1.75px'
+  };
+  --icon-fill-opacity: ${state.icons?.mode === 'solid' ? '1' : state.icons?.duotone ? '0.22' : '0'};
 }
 
 /* Dark Mode Overrides */

@@ -17,12 +17,14 @@ export const NavbarPreview: React.FC = () => {
   const layout = state.pageLayouts?.navbar ?? 'saas-header';
   const [activeTab, setActiveTab] = useState('overview');
 
-  const strokeWidth =
-    state.iconStyle === 'bold-stroke'
-      ? 2.5
-      : state.iconStyle === 'minimal-thin'
-      ? 1.25
-      : 1.75;
+  const weightMap: Record<string, number> = {
+    thin: 1.25,
+    light: 1.5,
+    regular: 1.75,
+    medium: 2.25,
+    bold: 2.75,
+  };
+  const strokeWidth = state.icons?.weight ? weightMap[state.icons.weight] ?? 1.75 : 1.75;
 
   // =========================================================================
   // 1. MODERN SAAS APP HEADER (Default)

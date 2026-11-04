@@ -1,4 +1,13 @@
-import type { DesignState, ColorPalette, TypographyState, PageLayouts } from '../config/schema';
+import type {
+  DesignState,
+  ColorPalette,
+  TypographyState,
+  PageLayouts,
+  IconConfig,
+  IconLibrary,
+  IconMode,
+  IconWeight,
+} from '../config/schema';
 import { getPresetEntry, registries } from '../lib/registry';
 
 export type DesignAction =
@@ -11,6 +20,11 @@ export type DesignAction =
   | { type: 'SET_SHADOW'; id: string }
   | { type: 'SET_SPACING'; id: string }
   | { type: 'SET_ICON_STYLE'; style: DesignState['iconStyle'] }
+  | { type: 'SET_ICON_CONFIG'; updates: Partial<IconConfig> }
+  | { type: 'SET_ICON_LIBRARY'; library: IconLibrary }
+  | { type: 'SET_ICON_MODE'; mode: IconMode }
+  | { type: 'SET_ICON_DUOTONE'; duotone: boolean }
+  | { type: 'SET_ICON_WEIGHT'; weight: IconWeight }
   | { type: 'SET_NAME'; name: string }
   | { type: 'LOAD_PRESET'; id: string }
   | { type: 'RANDOMIZE_PALETTE' }
@@ -52,6 +66,12 @@ export const defaultInitialState: DesignState = {
   shadow: 'soft',
   spacing: 'comfortable',
   iconStyle: 'clean-outline',
+  icons: {
+    library: 'lucide',
+    mode: 'outline',
+    duotone: false,
+    weight: 'regular',
+  },
   pageLayouts: {
     auth: 'centered-card',
     authSocialButtons: true,
@@ -184,6 +204,51 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         iconStyle: action.style,
       };
     }
+    case 'SET_ICON_CONFIG': {
+      return {
+        ...state,
+        icons: {
+          ...(state.icons ?? defaultInitialState.icons!),
+          ...action.updates,
+        },
+      };
+    }
+    case 'SET_ICON_LIBRARY': {
+      return {
+        ...state,
+        icons: {
+          ...(state.icons ?? defaultInitialState.icons!),
+          library: action.library,
+        },
+      };
+    }
+    case 'SET_ICON_MODE': {
+      return {
+        ...state,
+        icons: {
+          ...(state.icons ?? defaultInitialState.icons!),
+          mode: action.mode,
+        },
+      };
+    }
+    case 'SET_ICON_DUOTONE': {
+      return {
+        ...state,
+        icons: {
+          ...(state.icons ?? defaultInitialState.icons!),
+          duotone: action.duotone,
+        },
+      };
+    }
+    case 'SET_ICON_WEIGHT': {
+      return {
+        ...state,
+        icons: {
+          ...(state.icons ?? defaultInitialState.icons!),
+          weight: action.weight,
+        },
+      };
+    }
     case 'SET_NAME': {
       return {
         ...state,
@@ -204,6 +269,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         shadow: preset.state.shadow,
         spacing: preset.state.spacing,
         iconStyle: preset.state.iconStyle ?? state.iconStyle ?? 'clean-outline',
+        icons: preset.state.icons ?? state.icons ?? defaultInitialState.icons,
         pageLayouts: state.pageLayouts ?? defaultInitialState.pageLayouts,
       };
     }
@@ -228,6 +294,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
           shadow: firstPreset.state.shadow,
           spacing: firstPreset.state.spacing,
           iconStyle: firstPreset.state.iconStyle ?? 'clean-outline',
+          icons: firstPreset.state.icons ?? defaultInitialState.icons,
           pageLayouts: defaultInitialState.pageLayouts,
         };
       }
