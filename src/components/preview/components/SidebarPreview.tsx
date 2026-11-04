@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
 import {
-  LayoutDashboard,
-  Layers,
-  Palette,
-  Type,
-  Sliders,
-  ShieldCheck,
-  Settings,
-  Users,
-  FileCode,
-  Folder,
-  ChevronDown,
   LogOut,
-  Plus,
   GitBranch,
   Terminal,
 } from 'lucide-react';
+import { AppIcon, type IconName } from '../../common/AppIcon';
+
+
+const sidebarIconMap: Record<string, IconName> = {
+  dashboard: 'layers',
+  tokens: 'palette',
+  typography: 'sparkles',
+  components: 'folder',
+  wcag: 'shield',
+  tokens_export: 'download',
+  team: 'user',
+  settings: 'settings',
+  governance: 'shield',
+};
 
 export const SidebarPreview: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -89,14 +91,13 @@ export const SidebarPreview: React.FC = () => {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                 {[
-                  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-                  { id: 'tokens', label: 'Design Tokens', icon: Palette, badge: 'Live' },
-                  { id: 'typography', label: 'Typography', icon: Type },
-                  { id: 'components', label: 'Components', icon: Layers, badge: '24' },
+                  { id: 'dashboard', label: 'Dashboard' },
+                  { id: 'tokens', label: 'Design Tokens', badge: 'Live' },
+                  { id: 'typography', label: 'Typography' },
+                  { id: 'components', label: 'Components', badge: '24' },
                 ].map((item) => {
                   const isSelected = activeItem === item.id;
-                  const Icon = item.icon;
-                  return (
+                                    return (
                     <button
                       key={item.id}
                       type="button"
@@ -119,7 +120,7 @@ export const SidebarPreview: React.FC = () => {
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Icon style={{ width: '16px', height: '16px' }} strokeWidth={strokeWidth} />
+                        <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={16} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge && (
@@ -150,14 +151,13 @@ export const SidebarPreview: React.FC = () => {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                 {[
-                  { id: 'wcag', label: 'WCAG AAA Guard', icon: ShieldCheck },
-                  { id: 'tokens_export', label: 'Token Exporter', icon: FileCode },
-                  { id: 'team', label: 'Team & Roles', icon: Users },
-                  { id: 'settings', label: 'Preferences', icon: Settings },
+                  { id: 'wcag', label: 'WCAG AAA Guard' },
+                  { id: 'tokens_export', label: 'Token Exporter' },
+                  { id: 'team', label: 'Team & Roles' },
+                  { id: 'settings', label: 'Preferences' },
                 ].map((item) => {
                   const isSelected = activeItem === item.id;
-                  const Icon = item.icon;
-                  return (
+                                    return (
                     <button
                       key={item.id}
                       type="button"
@@ -180,7 +180,7 @@ export const SidebarPreview: React.FC = () => {
                       }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Icon style={{ width: '16px', height: '16px' }} strokeWidth={strokeWidth} />
+                        <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={16} />
                         <span>{item.label}</span>
                       </div>
                     </button>
@@ -247,7 +247,7 @@ export const SidebarPreview: React.FC = () => {
             overflowY: 'auto',
           }}
         >
-          <Layers style={{ width: '32px', height: '32px', color: 'var(--ts-color-primary)', marginBottom: '12px' }} strokeWidth={strokeWidth} />
+          <AppIcon name="layers" size={32} style={{ color: "var(--ts-color-primary)", marginBottom: "12px" }} />
           <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, margin: '0 0 6px 0' }}>
             Selected Surface: {activeItem.toUpperCase()}
           </h3>
@@ -305,16 +305,15 @@ export const SidebarPreview: React.FC = () => {
             {/* Vertical Icon Stack */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%', alignItems: 'center' }}>
               {[
-                { id: 'dashboard', icon: LayoutDashboard, title: 'Dashboard' },
-                { id: 'tokens', icon: Palette, title: 'Tokens' },
-                { id: 'typography', icon: Type, title: 'Typography' },
-                { id: 'components', icon: Layers, title: 'Components' },
-                { id: 'governance', icon: ShieldCheck, title: 'Security' },
-                { id: 'settings', icon: Settings, title: 'Settings' },
+                { id: 'dashboard', title: 'Dashboard' },
+                { id: 'tokens', title: 'Tokens' },
+                { id: 'typography', title: 'Typography' },
+                { id: 'components', title: 'Components' },
+                { id: 'governance', title: 'Security' },
+                { id: 'settings', title: 'Settings' },
               ].map((item) => {
                 const isSelected = activeItem === item.id;
-                const Icon = item.icon;
-                return (
+                                return (
                   <button
                     key={item.id}
                     type="button"
@@ -334,7 +333,7 @@ export const SidebarPreview: React.FC = () => {
                       transition: 'all 0.15s ease',
                     }}
                   >
-                    <Icon style={{ width: '18px', height: '18px' }} strokeWidth={strokeWidth} />
+                    <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={18} />
                   </button>
                 );
               })}
@@ -376,7 +375,7 @@ export const SidebarPreview: React.FC = () => {
             overflowY: 'auto',
           }}
         >
-          <Sliders style={{ width: '32px', height: '32px', color: 'var(--ts-color-primary)', marginBottom: '12px' }} strokeWidth={strokeWidth} />
+          <AppIcon name="settings" size={32} style={{ color: "var(--ts-color-primary)", marginBottom: "12px" }} />
           <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, margin: '0 0 6px 0' }}>
             Compact Icon Rail Navigation
           </h3>
@@ -415,13 +414,12 @@ export const SidebarPreview: React.FC = () => {
           </div>
           <div style={{ width: '100%', height: '1px', backgroundColor: 'var(--ts-color-border)' }} />
           {[
-            { id: 'code', icon: FileCode },
-            { id: 'layers', icon: Layers },
-            { id: 'database', icon: Folder },
-            { id: 'settings', icon: Settings },
+            { id: 'code' },
+            { id: 'layers' },
+            { id: 'database' },
+            { id: 'settings' },
           ].map((item, idx) => {
-            const Icon = item.icon;
-            return (
+                        return (
               <button
                 key={item.id}
                 type="button"
@@ -438,7 +436,7 @@ export const SidebarPreview: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                <Icon style={{ width: '16px', height: '16px' }} strokeWidth={strokeWidth} />
+                <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={16} />
               </button>
             );
           })}
@@ -478,7 +476,7 @@ export const SidebarPreview: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                <FileCode style={{ width: '12px', height: '12px' }} strokeWidth={strokeWidth} />
+                <AppIcon name="folder" size={12} />
                 <span style={{ fontFamily: 'monospace', fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file}</span>
               </div>
             ))}
@@ -612,7 +610,7 @@ export const SidebarPreview: React.FC = () => {
               </div>
               <span style={{ fontWeight: 700, fontSize: '12px' }}>Acme Corp Prod</span>
             </div>
-            <ChevronDown style={{ width: '12px', height: '12px', opacity: 0.5 }} strokeWidth={strokeWidth} />
+            <AppIcon name="chevronDown" size={12} style={{ opacity: 0.5 }} />
           </div>
 
           {/* Quick Action */}
@@ -636,7 +634,7 @@ export const SidebarPreview: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Plus style={{ width: '14px', height: '14px' }} strokeWidth={strokeWidth} />
+            <AppIcon name="plus" size={14} />
             <span>Create Design Spec</span>
           </button>
 

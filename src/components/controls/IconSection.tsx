@@ -5,19 +5,12 @@ import type {
   IconWeight,
 } from '../../config/schema';
 import {
-  Sparkles,
-  Shield,
-  Palette,
-  Layers,
-  Settings,
-  Search,
-  Bell,
-  Folder,
   Check,
   Copy,
   Sliders,
   Feather,
 } from 'lucide-react';
+import { AppIcon, type IconName } from '../common/AppIcon';
 
 interface LibraryOption {
   id: IconLibrary;
@@ -339,20 +332,20 @@ export const IconSection: React.FC = () => {
           </button>
         </div>
 
-        {/* 8 Live Icons Matrix */}
+        {/* 8 Live Icons Matrix rendered with active library */}
         <div className="grid grid-cols-4 gap-2 py-1">
-          {[
-            { icon: Sparkles, name: 'Sparkles' },
-            { icon: Shield, name: 'Shield' },
-            { icon: Palette, name: 'Palette' },
-            { icon: Layers, name: 'Layers' },
-            { icon: Settings, name: 'Settings' },
-            { icon: Search, name: 'Search' },
-            { icon: Bell, name: 'Bell' },
-            { icon: Folder, name: 'Folder' },
-          ].map(({ icon: Icon, name }, i) => (
+          {([
+            { id: 'sparkles' as IconName, name: 'Sparkles' },
+            { id: 'shield' as IconName, name: 'Shield' },
+            { id: 'palette' as IconName, name: 'Palette' },
+            { id: 'layers' as IconName, name: 'Layers' },
+            { id: 'settings' as IconName, name: 'Settings' },
+            { id: 'search' as IconName, name: 'Search' },
+            { id: 'bell' as IconName, name: 'Bell' },
+            { id: 'folder' as IconName, name: 'Folder' },
+          ]).map(({ id, name }) => (
             <div
-              key={i}
+              key={id}
               className="flex flex-col items-center justify-center p-2 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 gap-1.5 transition-all group hover:border-sky-300 dark:hover:border-sky-800"
             >
               <div
@@ -362,27 +355,7 @@ export const IconSection: React.FC = () => {
                     : 'text-slate-800 dark:text-slate-200'
                 }`}
               >
-                <Icon
-                  style={{
-                    width: '20px',
-                    height: '20px',
-                    fill:
-                      currentMode === 'solid'
-                        ? 'currentColor'
-                        : isDuotone
-                        ? 'currentColor'
-                        : 'none',
-                    fillOpacity:
-                      currentMode === 'solid'
-                        ? 1
-                        : isDuotone
-                        ? 0.22
-                        : 0,
-                  }}
-                  strokeWidth={
-                    currentMode === 'solid' ? 0 : currentWeightDef.num
-                  }
-                />
+                <AppIcon name={id} size={20} />
               </div>
               <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 group-hover:text-sky-500 transition-colors">
                 {name}

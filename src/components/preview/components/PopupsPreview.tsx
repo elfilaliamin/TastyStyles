@@ -1,20 +1,8 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import {
-  Bell,
-  CheckCircle2,
-  AlertTriangle,
-  AlertCircle,
-  Info,
-  X,
-  ShieldCheck,
-  Trash2,
-  Sparkles,
-  RotateCcw,
-  Check,
-  Download,
-} from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
+import { AppIcon } from '../../common/AppIcon';
 
 export const PopupsPreview: React.FC = () => {
   const { activeColors } = useDesign();
@@ -58,7 +46,7 @@ export const PopupsPreview: React.FC = () => {
               letterSpacing: '0.05em',
             }}
           >
-            <Bell style={{ width: '12px', height: '12px' }} />
+            <AppIcon name="bell" size={12} />
             Component Primitives
           </span>
         </div>
@@ -142,7 +130,7 @@ export const PopupsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <CheckCircle2 style={{ width: '14px', height: '14px', color: '#10b981' }} />
+            <AppIcon name="check" size={14} style={{ color: '#10b981' }} />
             Trigger Success Toast
           </button>
 
@@ -163,7 +151,7 @@ export const PopupsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <AlertTriangle style={{ width: '14px', height: '14px', color: '#f59e0b' }} />
+            <AppIcon name="alert" size={14} style={{ color: '#f59e0b' }} />
             Trigger Warning Toast
           </button>
 
@@ -187,7 +175,7 @@ export const PopupsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Trash2 style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="trash" size={14} />
             Open Destructive Modal
           </button>
 
@@ -211,7 +199,7 @@ export const PopupsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <ShieldCheck style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="shield" size={14} />
             Open Authorize Dialog
           </button>
         </div>
@@ -244,7 +232,7 @@ export const PopupsPreview: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: '240px' }}>
-            <Sparkles style={{ width: '18px', height: '18px', flexShrink: 0 }} />
+            <AppIcon name="sparkles" size={18} />
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>
                 Deterministic Token Engine Active
@@ -286,7 +274,7 @@ export const PopupsPreview: React.FC = () => {
             gap: '12px',
           }}
         >
-          <Info style={{ width: '18px', height: '18px', color: 'var(--ts-color-primary)', flexShrink: 0, marginTop: '2px' }} />
+          <AppIcon name="info" size={18} style={{ color: 'var(--ts-color-primary)' }} />
           <div style={{ flex: 1 }}>
             <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>
               Design Token Handoff Available
@@ -312,7 +300,7 @@ export const PopupsPreview: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-            <CheckCircle2 style={{ width: '18px', height: '18px', color: '#10b981', flexShrink: 0, marginTop: '2px' }} />
+            <AppIcon name="check" size={18} style={{ color: '#10b981' }} />
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.88)', color: '#10b981' }}>
                 WCAG 2.1 Contrast Verified (21.0:1 AAA)
@@ -353,7 +341,7 @@ export const PopupsPreview: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <AlertTriangle style={{ width: '18px', height: '18px', color: '#f59e0b', flexShrink: 0 }} />
+              <AppIcon name="alert" size={18} style={{ color: '#f59e0b' }} />
               <div>
                 <span style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.85)', color: '#d97706' }}>
                   Uncommitted Spec Modifications:
@@ -395,7 +383,7 @@ export const PopupsPreview: React.FC = () => {
                 }}
                 title="Dismiss alert"
               >
-                <X style={{ width: '16px', height: '16px' }} />
+                <AppIcon name="close" size={16} />
               </button>
             </div>
           </div>
@@ -416,7 +404,7 @@ export const PopupsPreview: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-            <AlertCircle style={{ width: '18px', height: '18px', color: '#ef4444', flexShrink: 0, marginTop: '2px' }} />
+            <AppIcon name="alert" size={18} style={{ color: '#ef4444' }} />
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.88)', color: '#ef4444' }}>
                 Token Build Failed on Line 42
@@ -496,7 +484,7 @@ export const PopupsPreview: React.FC = () => {
                     color: '#10b981',
                   }}
                 >
-                  <Check style={{ width: '15px', height: '15px' }} />
+                  <AppIcon name="check" size={15} />
                 </div>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
@@ -507,7 +495,7 @@ export const PopupsPreview: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <X style={{ width: '14px', height: '14px', opacity: 0.5, cursor: 'pointer' }} />
+              <AppIcon name="close" size={14} style={{ opacity: 0.5, cursor: 'pointer' }} />
             </div>
             <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.78)', opacity: 0.8, lineHeight: 1.4 }}>
               Zero-drift tokens zip package with Tailwind CSS v4 and typography scale compiled.
@@ -529,7 +517,7 @@ export const PopupsPreview: React.FC = () => {
                   cursor: 'pointer',
                 }}
               >
-                <Download style={{ width: '12px', height: '12px' }} />
+                <AppIcon name="download" size={12} />
                 Download Spec (.zip)
               </button>
             </div>
@@ -587,7 +575,7 @@ export const PopupsPreview: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <X style={{ width: '14px', height: '14px', opacity: 0.5, cursor: 'pointer' }} />
+              <AppIcon name="close" size={14} style={{ opacity: 0.5, cursor: 'pointer' }} />
             </div>
             <p style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.78)', opacity: 0.8, lineHeight: 1.4 }}>
               &ldquo;Please ensure the primary button uses 9999px pill radius for mobile CTA consistency.&rdquo;
@@ -668,7 +656,7 @@ export const PopupsPreview: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                <Trash2 style={{ width: '20px', height: '20px' }} />
+                <AppIcon name="trash" size={20} />
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 800, fontSize: 'calc(var(--ts-base-size) * 1.05)', fontFamily: 'var(--ts-font-heading)' }}>
@@ -697,7 +685,7 @@ export const PopupsPreview: React.FC = () => {
                 gap: '6px',
               }}
             >
-              <AlertTriangle style={{ width: '13px', height: '13px', flexShrink: 0 }} />
+              <AppIcon name="alert" size={13} />
               <span>This operation cannot be reversed once confirmed.</span>
             </div>
 
@@ -734,7 +722,7 @@ export const PopupsPreview: React.FC = () => {
                   boxShadow: '0 2px 4px rgba(239, 68, 68, 0.3)',
                 }}
               >
-                <Trash2 style={{ width: '14px', height: '14px' }} />
+                <AppIcon name="trash" size={14} />
                 Delete Palette
               </button>
             </div>
@@ -768,7 +756,7 @@ export const PopupsPreview: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                <ShieldCheck style={{ width: '20px', height: '20px' }} />
+                <AppIcon name="shield" size={20} />
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 800, fontSize: 'calc(var(--ts-base-size) * 1.05)', fontFamily: 'var(--ts-font-heading)' }}>
@@ -797,11 +785,11 @@ export const PopupsPreview: React.FC = () => {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Check style={{ width: '12px', height: '12px', color: '#10b981' }} />
+                <AppIcon name="check" size={12} style={{ color: '#10b981' }} />
                 <span>Read active color palette & font pairings</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Check style={{ width: '12px', height: '12px', color: '#10b981' }} />
+                <AppIcon name="check" size={12} style={{ color: '#10b981' }} />
                 <span>Write tailwind.config.ts token mappings</span>
               </div>
             </div>
@@ -875,7 +863,7 @@ export const PopupsPreview: React.FC = () => {
                 flexShrink: 0,
               }}
             >
-              <Info style={{ width: '18px', height: '18px' }} />
+              <AppIcon name="info" size={18} />
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.88)' }}>
@@ -971,9 +959,9 @@ export const PopupsPreview: React.FC = () => {
                   }}
                 >
                   {modalType === 'destructive' ? (
-                    <AlertTriangle style={{ width: '18px', height: '18px' }} />
+                    <AppIcon name="alert" size={18} />
                   ) : (
-                    <ShieldCheck style={{ width: '18px', height: '18px' }} />
+                    <AppIcon name="shield" size={18} />
                   )}
                 </div>
                 <div style={{ fontWeight: 800, fontSize: 'calc(var(--ts-base-size) * 1.1)', fontFamily: 'var(--ts-font-heading)' }}>
@@ -992,7 +980,7 @@ export const PopupsPreview: React.FC = () => {
                   padding: '4px',
                 }}
               >
-                <X style={{ width: '18px', height: '18px' }} />
+                <AppIcon name="close" size={18} />
               </button>
             </div>
 
@@ -1064,9 +1052,9 @@ export const PopupsPreview: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            {activeToast === 'success' && <CheckCircle2 style={{ width: '18px', height: '18px', color: '#10b981', flexShrink: 0 }} />}
-            {activeToast === 'warning' && <AlertTriangle style={{ width: '18px', height: '18px', color: '#f59e0b', flexShrink: 0 }} />}
-            {activeToast === 'error' && <AlertCircle style={{ width: '18px', height: '18px', color: '#ef4444', flexShrink: 0 }} />}
+            {activeToast === 'success' && <AppIcon name="check" size={18} style={{ color: '#10b981' }} />}
+            {activeToast === 'warning' && <AppIcon name="alert" size={18} style={{ color: '#f59e0b' }} />}
+            {activeToast === 'error' && <AppIcon name="alert" size={18} style={{ color: '#ef4444' }} />}
             <div>
               <div style={{ fontWeight: 700, fontSize: 'calc(var(--ts-base-size) * 0.82)' }}>
                 {activeToast === 'success' && 'Live Toast: Action Successful'}
@@ -1090,7 +1078,7 @@ export const PopupsPreview: React.FC = () => {
               padding: '2px',
             }}
           >
-            <X style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="close" size={14} />
           </button>
         </div>
       )}

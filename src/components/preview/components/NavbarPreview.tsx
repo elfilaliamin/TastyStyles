@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
 import {
-  Search,
-  Bell,
   Command,
   ChevronDown,
-  Sparkles,
-  Plus,
   Activity,
 } from 'lucide-react';
+import { AppIcon } from '../../common/AppIcon';
 
 export const NavbarPreview: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -96,7 +93,7 @@ export const NavbarPreview: React.FC = () => {
                 fontSize: 'calc(var(--ts-base-size) * 0.82)',
               }}
             >
-              <Search style={{ width: '14px', height: '14px', opacity: 0.5 }} strokeWidth={strokeWidth} />
+              <AppIcon name="search" size={14} style={{ opacity: 0.5 }} />
               <input
                 type="text"
                 readOnly
@@ -151,7 +148,7 @@ export const NavbarPreview: React.FC = () => {
               title="Notifications"
               aria-label="Notifications"
             >
-              <Bell style={{ width: '15px', height: '15px' }} strokeWidth={strokeWidth} />
+              <AppIcon name="bell" size={15} />
               <span
                 style={{
                   position: 'absolute',
@@ -202,7 +199,7 @@ export const NavbarPreview: React.FC = () => {
         <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
           <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <AppIcon name="sparkles" size={16} style={{ color: 'var(--ts-color-primary)' }} />
               <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
                 Layout: Modern SaaS Header
               </h3>
@@ -319,7 +316,7 @@ export const NavbarPreview: React.FC = () => {
         <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
           <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <AppIcon name="sparkles" size={16} style={{ color: 'var(--ts-color-primary)' }} />
               <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
                 Layout: Minimalist Centered Nav
               </h3>
@@ -422,7 +419,7 @@ export const NavbarPreview: React.FC = () => {
         <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
           <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)', marginTop: '40px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <AppIcon name="sparkles" size={16} style={{ color: 'var(--ts-color-primary)' }} />
               <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
                 Layout: Floating Island Pill Header
               </h3>
@@ -557,7 +554,7 @@ export const NavbarPreview: React.FC = () => {
         <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
           <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+              <AppIcon name="sparkles" size={16} style={{ color: 'var(--ts-color-primary)' }} />
               <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
                 Layout: Tabbed Subnavigation Header
               </h3>
@@ -645,7 +642,7 @@ export const NavbarPreview: React.FC = () => {
               fontSize: '12px',
             }}
           />
-          <Search style={{ width: '15px', height: '15px', opacity: 0.5 }} strokeWidth={strokeWidth} />
+          <AppIcon name="search" size={15} style={{ opacity: 0.5 }} />
         </div>
 
         {/* Action Controls */}
@@ -667,7 +664,7 @@ export const NavbarPreview: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Plus style={{ width: '13px', height: '13px' }} strokeWidth={strokeWidth} />
+            <AppIcon name="plus" size={13} />
             <span>Create Entity</span>
           </button>
         </div>
@@ -676,7 +673,7 @@ export const NavbarPreview: React.FC = () => {
       <main style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'var(--ts-color-background)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'var(--ts-space-xl)', boxSizing: 'border-box', overflowY: 'auto' }}>
         <div style={{ maxWidth: '560px', width: '100%', padding: 'var(--ts-space-lg)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', boxShadow: 'var(--ts-shadow)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px' }}>
-            <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-primary)' }} strokeWidth={strokeWidth} />
+            <AppIcon name="sparkles" size={16} style={{ color: 'var(--ts-color-primary)' }} />
             <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * 1.05)', fontWeight: 700, margin: 0 }}>
               Layout: E-Commerce / Command Action Header
             </h3>

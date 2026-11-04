@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
-import { ArrowRight, Download, Trash2, Send, CheckCircle2, Loader2, Sparkles } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { AppIcon } from '../../common/AppIcon';
 
 export const ButtonsPreview: React.FC = () => {
   const { activeColors } = useDesign();
@@ -29,7 +30,7 @@ export const ButtonsPreview: React.FC = () => {
       {/* Header */}
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-          <Sparkles style={{ width: '16px', height: '16px', color: 'var(--ts-color-accent)' }} />
+          <AppIcon name="sparkles" size={16} style={{ color: 'var(--ts-color-accent)' }} />
           <h2
             style={{
               fontFamily: 'var(--ts-font-heading)',
@@ -80,7 +81,7 @@ export const ButtonsPreview: React.FC = () => {
             }}
           >
             <span>Primary Brand</span>
-            <ArrowRight style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="chevronRight" size={14} />
           </button>
 
           {/* Accent */}
@@ -101,7 +102,7 @@ export const ButtonsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Sparkles style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="sparkles" size={14} />
             <span>Accent Action</span>
           </button>
 
@@ -122,7 +123,7 @@ export const ButtonsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Download style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="download" size={14} />
             <span>Secondary Outline</span>
           </button>
 
@@ -160,7 +161,7 @@ export const ButtonsPreview: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            <Trash2 style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="trash" size={14} />
             <span>Destructive</span>
           </button>
         </div>
@@ -266,7 +267,7 @@ export const ButtonsPreview: React.FC = () => {
               gap: '6px',
             }}
           >
-            <CheckCircle2 style={{ width: '15px', height: '15px' }} />
+            <AppIcon name="check" size={15} />
             <span>Success State</span>
           </button>
 
@@ -311,26 +312,63 @@ export const ButtonsPreview: React.FC = () => {
           >
             Disabled State
           </button>
+        </div>
+      </div>
 
-          {/* Icon Button */}
-          <button
-            type="button"
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: 'var(--ts-radius)',
-              border: '1px solid var(--ts-color-border)',
-              backgroundColor: 'var(--ts-color-background)',
-              color: 'var(--ts-color-text)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-            }}
-            title="Send Message"
-          >
-            <Send style={{ width: '16px', height: '16px' }} />
-          </button>
+      {/* Icon Action Buttons Showcase (Rendered with Active Library) */}
+      <div>
+        <div
+          style={{
+            fontSize: 'calc(var(--ts-base-size) * 0.8)',
+            fontWeight: 600,
+            marginBottom: 'var(--ts-space-sm)',
+            opacity: 0.7,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <span>Icon Only Buttons</span>
+          <span style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', textTransform: 'none', opacity: 0.8 }}>
+            Native vector glyphs from active icon library
+          </span>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--ts-space-sm)', alignItems: 'center' }}>
+          {(
+            [
+              { name: 'search' as const, title: 'Search' },
+              { name: 'bell' as const, title: 'Notifications' },
+              { name: 'settings' as const, title: 'Settings' },
+              { name: 'plus' as const, title: 'Add New' },
+              { name: 'trash' as const, title: 'Delete' },
+              { name: 'download' as const, title: 'Download' },
+              { name: 'folder' as const, title: 'Browse Files' },
+              { name: 'shield' as const, title: 'Security' },
+            ]
+          ).map((item) => (
+            <button
+              key={item.name}
+              type="button"
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: 'var(--ts-radius)',
+                border: '1px solid var(--ts-color-border)',
+                backgroundColor: 'var(--ts-color-background)',
+                color: 'var(--ts-color-text)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
+              title={item.title}
+            >
+              <AppIcon name={item.name} size={18} />
+            </button>
+          ))}
         </div>
       </div>
     </div>
