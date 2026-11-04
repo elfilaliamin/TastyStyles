@@ -48,12 +48,12 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'split-pane':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex gap-1.5 bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-1/4 h-full rounded-xs ${accent}`} />
+          <div className={`w-1/4 h-full rounded-[2px] ${accent}`} />
           <div className="flex-1 flex flex-col gap-1.5">
-            <div className={`w-full h-2.5 rounded-xs ${fill}`} />
+            <div className={`w-full h-2.5 rounded-[2px] ${fill}`} />
             <div className="flex-1 flex gap-1">
-              <div className={`flex-1 rounded-xs ${fill}`} />
-              <div className={`flex-1 rounded-xs ${fill}`} />
+              <div className={`flex-1 rounded-[2px] ${fill}`} />
+              <div className={`flex-1 rounded-[2px] ${fill}`} />
             </div>
           </div>
         </div>
@@ -66,10 +66,10 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'compact-grid':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 grid grid-cols-3 gap-1 bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`col-span-2 h-5 rounded-xs ${accent}`} />
-          <div className={`col-span-1 h-5 rounded-xs ${fill}`} />
-          <div className={`col-span-1 h-4 rounded-xs ${fill}`} />
-          <div className={`col-span-2 h-4 rounded-xs ${fill}`} />
+          <div className={`col-span-2 h-5 rounded-[2px] ${accent}`} />
+          <div className={`col-span-1 h-5 rounded-[2px] ${fill}`} />
+          <div className={`col-span-1 h-4 rounded-[2px] ${fill}`} />
+          <div className={`col-span-2 h-4 rounded-[2px] ${fill}`} />
         </div>
       );
 
@@ -80,13 +80,13 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex gap-1.5 bg-slate-50 dark:bg-slate-950 transition-colors`}>
           <div className="w-1/2 flex flex-col justify-center gap-1">
-            <div className={`w-3/4 h-2.5 rounded-xs ${accent}`} />
-            <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-            <div className={`w-1/2 h-2 rounded-xs ${accent}`} />
+            <div className={`w-3/4 h-2.5 rounded-[2px] ${accent}`} />
+            <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+            <div className={`w-1/2 h-2 rounded-[2px] ${accent}`} />
           </div>
-          <div className={`w-1/2 h-full rounded-xs ${fill} border ${border} p-1 flex flex-col justify-center gap-1`}>
-            <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-            <div className={`w-3/4 h-1.5 rounded-xs ${fill}`} />
+          <div className={`w-1/2 h-full rounded-[2px] ${fill} border ${border} p-1 flex flex-col justify-center gap-1`}>
+            <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+            <div className={`w-3/4 h-1.5 rounded-[2px] ${fill}`} />
           </div>
         </div>
       );
@@ -98,10 +98,10 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'minimal-modal':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-100 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-7/12 h-5/6 rounded-md border ${border} bg-white dark:bg-slate-900 shadow-2xs flex flex-col items-center justify-center gap-1 p-1`}>
-            <div className={`w-4 h-1.5 rounded-xs ${accent}`} />
-            <div className={`w-full h-1 rounded-xs ${fill}`} />
-            <div className={`w-2/3 h-1 rounded-xs ${fill}`} />
+          <div className={`w-7/12 h-5/6 rounded-md border ${border} bg-white dark:bg-slate-900 shadow-sm flex flex-col items-center justify-center gap-1 p-1`}>
+            <div className={`w-4 h-1.5 rounded-[2px] ${accent}`} />
+            <div className={`w-full h-1 rounded-[2px] ${fill}`} />
+            <div className={`w-2/3 h-1 rounded-[2px] ${fill}`} />
           </div>
         </div>
       );
@@ -110,15 +110,15 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'social-first':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-100 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-8/12 h-full rounded-md border ${border} bg-white dark:bg-slate-900 shadow-2xs flex flex-col justify-between p-1`}>
+          <div className={`w-8/12 h-full rounded-md border ${border} bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between p-1`}>
             <div className="flex gap-1 justify-center pt-0.5">
-              <div className={`w-3.5 h-1.5 rounded-xs ${accent}`} />
-              <div className={`w-3.5 h-1.5 rounded-xs ${accent}`} />
-              <div className={`w-3.5 h-1.5 rounded-xs ${accent}`} />
+              <div className={`w-3.5 h-1.5 rounded-[2px] ${accent}`} />
+              <div className={`w-3.5 h-1.5 rounded-[2px] ${accent}`} />
+              <div className={`w-3.5 h-1.5 rounded-[2px] ${accent}`} />
             </div>
             <div className="w-full h-px bg-slate-300 dark:bg-slate-700 my-0.5" />
-            <div className={`w-full h-1 rounded-xs ${fill}`} />
-            <div className={`w-full h-1.5 rounded-xs ${accent}`} />
+            <div className={`w-full h-1 rounded-[2px] ${fill}`} />
+            <div className={`w-full h-1.5 rounded-[2px] ${accent}`} />
           </div>
         </div>
       );
@@ -127,10 +127,10 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'full-background':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-gradient-to-tr from-sky-400/25 via-indigo-500/20 to-purple-400/25 dark:from-sky-900/40 dark:to-purple-900/40 transition-colors relative overflow-hidden`}>
-          <div className={`w-7/12 h-5/6 rounded-md border border-white/50 dark:border-white/20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xs shadow-2xs flex flex-col items-center justify-center gap-1 p-1`}>
-            <div className={`w-4 h-1.5 rounded-xs ${accent}`} />
-            <div className={`w-full h-1 rounded-xs ${fill}`} />
-            <div className={`w-2/3 h-1.5 rounded-xs ${accent}`} />
+          <div className={`w-7/12 h-5/6 rounded-md border border-white/50 dark:border-white/20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm shadow-sm flex flex-col items-center justify-center gap-1 p-1`}>
+            <div className={`w-4 h-1.5 rounded-[2px] ${accent}`} />
+            <div className={`w-full h-1 rounded-[2px] ${fill}`} />
+            <div className={`w-2/3 h-1.5 rounded-[2px] ${accent}`} />
           </div>
         </div>
       );
@@ -139,13 +139,13 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'single-field':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-7/12 h-5/6 rounded-md border ${border} bg-white dark:bg-slate-900 shadow-2xs flex flex-col items-center justify-center gap-1 p-1`}>
+          <div className={`w-7/12 h-5/6 rounded-md border ${border} bg-white dark:bg-slate-900 shadow-sm flex flex-col items-center justify-center gap-1 p-1`}>
             <div className="flex gap-1 items-center">
               <div className={`w-1.5 h-1.5 rounded-full ${accent}`} />
               <div className={`w-1.5 h-1.5 rounded-full ${fill}`} />
             </div>
-            <div className={`w-full h-2 rounded-xs ${fill} border ${border}`} />
-            <div className={`w-full h-2 rounded-xs ${accent}`} />
+            <div className={`w-full h-2 rounded-[2px] ${fill} border ${border}`} />
+            <div className={`w-full h-2 rounded-[2px] ${accent}`} />
           </div>
         </div>
       );
@@ -153,18 +153,18 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     // 4e. Modal or Slide-Over Overlay
     case 'modal-overlay':
       return (
-        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-900/40 dark:bg-black/60 backdrop-blur-xs transition-colors relative`}>
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex items-center justify-center bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm transition-colors relative`}>
           <div className="absolute inset-1 grid grid-cols-3 gap-0.5 opacity-20 pointer-events-none">
-            <div className="h-2 rounded-xs bg-slate-400" />
-            <div className="h-2 rounded-xs bg-slate-400" />
-            <div className="h-2 rounded-xs bg-slate-400" />
+            <div className="h-2 rounded-[2px] bg-slate-400" />
+            <div className="h-2 rounded-[2px] bg-slate-400" />
+            <div className="h-2 rounded-[2px] bg-slate-400" />
           </div>
           <div className={`w-7/12 h-5/6 rounded-md border ${border} bg-white dark:bg-slate-900 shadow-lg flex flex-col items-center justify-center gap-1 p-1 z-10`}>
             <div className="w-full flex justify-end">
               <div className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-500" />
             </div>
-            <div className={`w-4/5 h-1 rounded-xs ${fill}`} />
-            <div className={`w-full h-1.5 rounded-xs ${accent}`} />
+            <div className={`w-4/5 h-1 rounded-[2px] ${fill}`} />
+            <div className={`w-full h-1.5 rounded-[2px] ${accent}`} />
           </div>
         </div>
       );
@@ -175,11 +175,11 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'centered-action':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex flex-col items-center justify-center gap-1 bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-1/2 h-2.5 rounded-xs ${accent}`} />
-          <div className={`w-4/5 h-1.5 rounded-xs ${fill}`} />
+          <div className={`w-1/2 h-2.5 rounded-[2px] ${accent}`} />
+          <div className={`w-4/5 h-1.5 rounded-[2px] ${fill}`} />
           <div className="flex gap-1 mt-0.5">
-            <div className={`w-6 h-2 rounded-xs ${accent}`} />
-            <div className={`w-6 h-2 rounded-xs ${fill}`} />
+            <div className={`w-6 h-2 rounded-[2px] ${accent}`} />
+            <div className={`w-6 h-2 rounded-[2px] ${fill}`} />
           </div>
         </div>
       );
@@ -189,17 +189,17 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'board-columns':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex gap-1 bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`flex-1 rounded-xs ${fill} flex flex-col gap-0.5 p-0.5`}>
-            <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-            <div className={`w-full h-3 rounded-xs ${fill}`} />
+          <div className={`flex-1 rounded-[2px] ${fill} flex flex-col gap-0.5 p-0.5`}>
+            <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+            <div className={`w-full h-3 rounded-[2px] ${fill}`} />
           </div>
-          <div className={`flex-1 rounded-xs ${accent} flex flex-col gap-0.5 p-0.5`}>
-            <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-            <div className={`w-full h-3 rounded-xs ${fill}`} />
+          <div className={`flex-1 rounded-[2px] ${accent} flex flex-col gap-0.5 p-0.5`}>
+            <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+            <div className={`w-full h-3 rounded-[2px] ${fill}`} />
           </div>
-          <div className={`flex-1 rounded-xs ${fill} flex flex-col gap-0.5 p-0.5`}>
-            <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-            <div className={`w-full h-3 rounded-xs ${fill}`} />
+          <div className={`flex-1 rounded-[2px] ${fill} flex flex-col gap-0.5 p-0.5`}>
+            <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+            <div className={`w-full h-3 rounded-[2px] ${fill}`} />
           </div>
         </div>
       );
@@ -211,10 +211,10 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'stacked-cards':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex flex-col justify-between bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-full h-2 rounded-xs ${accent}`} />
-          <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-          <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-          <div className={`w-full h-1.5 rounded-xs ${fill}`} />
+          <div className={`w-full h-2 rounded-[2px] ${accent}`} />
+          <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+          <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+          <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
         </div>
       );
 
@@ -224,11 +224,11 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     case 'compact-feed':
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex flex-col gap-1.5 bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-full h-2.5 rounded-xs ${accent}`} />
+          <div className={`w-full h-2.5 rounded-[2px] ${accent}`} />
           <div className="flex-1 flex gap-1">
-            <div className={`flex-1 rounded-xs ${fill}`} />
-            <div className={`flex-1 rounded-xs ${fill}`} />
-            <div className={`flex-1 rounded-xs ${fill}`} />
+            <div className={`flex-1 rounded-[2px] ${fill}`} />
+            <div className={`flex-1 rounded-[2px] ${fill}`} />
+            <div className={`flex-1 rounded-[2px] ${fill}`} />
           </div>
         </div>
       );
@@ -241,9 +241,9 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     default:
       return (
         <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex flex-col justify-center gap-1.5 bg-slate-50 dark:bg-slate-950 transition-colors`}>
-          <div className={`w-1/3 h-2 rounded-xs ${accent}`} />
-          <div className={`w-full h-1.5 rounded-xs ${fill}`} />
-          <div className={`w-2/3 h-1.5 rounded-xs ${fill}`} />
+          <div className={`w-1/3 h-2 rounded-[2px] ${accent}`} />
+          <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
+          <div className={`w-2/3 h-1.5 rounded-[2px] ${fill}`} />
         </div>
       );
   }
@@ -265,7 +265,7 @@ export const LayoutSection: React.FC = () => {
 
   const previewDef = getPreviewDefinition(activePreview);
   const currentIndex = getPreviewIndex(activePreview);
-  const pageLayouts = state.pageLayouts ?? {};
+  const pageLayouts: Partial<PageLayouts> = state.pageLayouts ?? {};
 
   const handlePrev = () => {
     setActivePreview(getPrevPreview(activePreview));
@@ -496,7 +496,7 @@ export const LayoutSection: React.FC = () => {
               <span className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
                 {previewDef.shortLabel}
               </span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 font-semibold border border-sky-200 dark:border-sky-800">
+              <span className="text-[10px] px-1.5 py-[1px] rounded bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 font-semibold border border-sky-200 dark:border-sky-800">
                 {previewDef.category}
               </span>
             </div>
@@ -541,7 +541,7 @@ export const LayoutSection: React.FC = () => {
               onClick={() => onSelect(layout.id)}
               className={`p-3 rounded-xl border text-left transition-all min-h-[114px] flex flex-col justify-between focus-ring group cursor-pointer relative overflow-hidden ${
                 isSelected
-                  ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/70 dark:bg-sky-950/30 shadow-xs'
+                  ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/70 dark:bg-sky-950/30 shadow-sm'
                   : 'border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100/80 dark:hover:bg-slate-900'
               }`}
             >
