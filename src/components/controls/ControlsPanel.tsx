@@ -7,18 +7,35 @@ import { LayoutSection } from './LayoutSection';
 import { ComponentSection } from './ComponentSection';
 import { IconSection } from './IconSection';
 import { PresetSection } from './PresetSection';
-import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes } from 'lucide-react';
+import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes, PanelLeftClose } from 'lucide-react';
 
-export const ControlsPanel: React.FC = () => {
+interface ControlsPanelProps {
+  onClose?: () => void;
+}
+
+export const ControlsPanel: React.FC<ControlsPanelProps> = ({ onClose }) => {
   const { state, dispatch } = useDesign();
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950/80 transition-colors">
       {/* Spec name header input */}
       <div className="p-4 border-b border-slate-200 dark:border-slate-800 transition-colors">
-        <label htmlFor="design-system-name" className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
-          System Name
-        </label>
+        <div className="flex items-center justify-between mb-1">
+          <label htmlFor="design-system-name" className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+            System Name
+          </label>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors focus-ring"
+              title="Collapse Editor Sidebar (Ctrl+B)"
+              aria-label="Collapse Editor Sidebar"
+            >
+              <PanelLeftClose className="w-4 h-4" />
+            </button>
+          )}
+        </div>
         <input
           id="design-system-name"
           type="text"
@@ -44,7 +61,7 @@ export const ControlsPanel: React.FC = () => {
           title="Colors & WCAG Contrast"
           subtitle="Light/dark palette and contrast"
           icon={<Palette className="w-4 h-4" />}
-          defaultOpen={true}
+          defaultOpen={false}
         >
           <ColorSection />
         </Accordion>
@@ -53,7 +70,7 @@ export const ControlsPanel: React.FC = () => {
           title="Typography"
           subtitle="Google Fonts, scale, and base size"
           icon={<Type className="w-4 h-4" />}
-          defaultOpen={true}
+          defaultOpen={false}
         >
           <TypographySection />
         </Accordion>
@@ -71,7 +88,7 @@ export const ControlsPanel: React.FC = () => {
           title="Layout"
           subtitle="Responsive layout options for active preview"
           icon={<LayoutGrid className="w-4 h-4 text-sky-500" />}
-          defaultOpen={true}
+          defaultOpen={false}
         >
           <LayoutSection />
         </Accordion>
@@ -80,7 +97,7 @@ export const ControlsPanel: React.FC = () => {
           title="Component Styling"
           subtitle="Radius, shadows, and spacing tokens"
           icon={<Sliders className="w-4 h-4" />}
-          defaultOpen={true}
+          defaultOpen={false}
         >
           <ComponentSection />
         </Accordion>
