@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  User,
-  Bell,
-  Lock,
-  Save,
-  Shield,
-  Key,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const SettingsPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -29,9 +22,9 @@ export const SettingsPage: React.FC = () => {
   };
 
   const tabs = [
-    { id: 'general' as const, label: 'General & Profile', icon: <User style={{ width: '14px', height: '14px' }} /> },
-    { id: 'notifications' as const, label: 'Notifications & Alerts', icon: <Bell style={{ width: '14px', height: '14px' }} /> },
-    { id: 'security' as const, label: 'Security & Access', icon: <Lock style={{ width: '14px', height: '14px' }} /> },
+    { id: 'general' as const, label: 'General & Profile', icon: <AppIcon name="user" size={14} /> },
+    { id: 'notifications' as const, label: 'Notifications & Alerts', icon: <AppIcon name="bell" size={14} /> },
+    { id: 'security' as const, label: 'Security & Access', icon: <AppIcon name="lock" size={14} /> },
   ];
 
   const renderGeneralSection = () => (
@@ -157,7 +150,7 @@ export const SettingsPage: React.FC = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.85)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Shield style={{ width: '15px', height: '15px', color: 'var(--ts-color-primary)' }} />
+            <AppIcon name="shield" size={15} style={{ color: 'var(--ts-color-primary)' }} />
             <span>Two-Factor Authentication (2FA)</span>
           </div>
           <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.65 }}>Hardware key or authenticator app confirmation.</div>
@@ -193,7 +186,7 @@ export const SettingsPage: React.FC = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 'var(--ts-space-xs)', borderTop: '1px solid var(--ts-color-border)' }}>
         <div>
           <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.85)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Key style={{ width: '15px', height: '15px', opacity: 0.7 }} />
+            <AppIcon name="key" size={15} style={{ opacity: 0.7 }} />
             <span>Agent API Tokens</span>
           </div>
           <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.72)', opacity: 0.65 }}>Active token key: `ts_live_948f2...` (Full access)</div>
@@ -485,7 +478,7 @@ export const SettingsPage: React.FC = () => {
               boxShadow: 'var(--ts-shadow)',
             }}
           >
-            <Save style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="save" size={14} />
             <span>Save Preferences</span>
           </button>
         </div>

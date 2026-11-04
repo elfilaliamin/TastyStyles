@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  UserPlus,
-  Mail,
-  MoreVertical,
-  Bot,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 interface TeamMember {
   id: string;
@@ -144,7 +139,7 @@ export const TeamMembersPage: React.FC = () => {
               padding: 'var(--ts-space-xs) var(--ts-space-sm)',
             }}
           >
-            <Mail style={{ width: '14px', height: '14px', opacity: 0.5 }} />
+            <AppIcon name="mail" size={14} style={{ opacity: 0.5 }} />
             <input
               type="email"
               placeholder="colleague@company.com"
@@ -198,7 +193,7 @@ export const TeamMembersPage: React.FC = () => {
               whiteSpace: 'nowrap',
             }}
           >
-            <UserPlus style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="userPlus" size={14} />
             <span>Send Invite</span>
           </button>
         </div>
@@ -262,7 +257,7 @@ export const TeamMembersPage: React.FC = () => {
                   flexShrink: 0,
                 }}
               >
-                {member.isAi ? <Bot style={{ width: '16px', height: '16px' }} /> : member.name.charAt(0)}
+                {member.isAi ? <AppIcon name="bot" size={16} /> : member.name.charAt(0)}
               </div>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -322,7 +317,7 @@ export const TeamMembersPage: React.FC = () => {
                   padding: '4px',
                 }}
               >
-                <MoreVertical style={{ width: '16px', height: '16px' }} />
+                <AppIcon name="moreVertical" size={16} />
               </button>
             </div>
           </div>

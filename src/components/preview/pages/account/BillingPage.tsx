@@ -1,13 +1,7 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
-import {
-  CreditCard,
-  Download,
-  CheckCircle2,
-  ArrowUpRight,
-  ShieldCheck,
-} from 'lucide-react';
+import { AppIcon } from '../../../common/AppIcon';
 
 export const BillingPage: React.FC = () => {
   const { activeColors } = useDesign();
@@ -158,7 +152,7 @@ export const BillingPage: React.FC = () => {
             }}
           >
             <span>Change Plan</span>
-            <ArrowUpRight style={{ width: '14px', height: '14px' }} />
+            <AppIcon name="arrowUpRight" size={14} />
           </button>
         </div>
 
@@ -211,7 +205,7 @@ export const BillingPage: React.FC = () => {
                   justifyContent: 'center',
                 }}
               >
-                <CreditCard style={{ width: '18px', height: '18px', color: 'var(--ts-color-primary)' }} />
+                <AppIcon name="creditCard" size={18} style={{ color: 'var(--ts-color-primary)' }} />
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: 'calc(var(--ts-base-size) * 0.85)' }}>
@@ -233,7 +227,7 @@ export const BillingPage: React.FC = () => {
                 opacity: 0.75,
               }}
             >
-              <ShieldCheck style={{ width: '14px', height: '14px', color: '#10b981' }} />
+              <AppIcon name="shieldCheck" size={14} style={{ color: '#10b981' }} />
               <span>PCI-DSS Level 1 Encrypted Vault</span>
             </div>
           </div>
@@ -313,7 +307,7 @@ export const BillingPage: React.FC = () => {
                         fontWeight: 600,
                       }}
                     >
-                      <CheckCircle2 style={{ width: '10px', height: '10px' }} />
+                      <AppIcon name="checkCircle" size={10} />
                       {inv.status}
                     </span>
                   </td>
@@ -333,7 +327,7 @@ export const BillingPage: React.FC = () => {
                         fontWeight: 600,
                       }}
                     >
-                      <Download style={{ width: '13px', height: '13px' }} />
+                      <AppIcon name="download" size={13} />
                       <span>PDF</span>
                     </button>
                   </td>
