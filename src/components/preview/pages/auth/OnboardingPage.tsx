@@ -48,7 +48,7 @@ export const OnboardingPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: step.active ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 12px)',
                 padding: 'var(--ts-space-sm) var(--ts-space-md)',
                 display: 'flex',
                 alignItems: 'center',
@@ -124,7 +124,7 @@ export const OnboardingPage: React.FC = () => {
             width: '100%',
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             padding: 'var(--ts-space-xl)',
             boxShadow: 'var(--ts-shadow)',
             display: 'flex',
@@ -183,7 +183,7 @@ export const OnboardingPage: React.FC = () => {
                 padding: 'var(--ts-space-xs) var(--ts-space-md)',
                 backgroundColor: 'transparent',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 8px)',
                 color: 'var(--ts-color-text)',
                 fontSize: 'calc(var(--ts-base-size) * 0.82)',
                 cursor: 'pointer',
@@ -216,7 +216,7 @@ export const OnboardingPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 12px)',
           boxShadow: 'var(--ts-shadow)',
           padding: 'var(--ts-space-xl)',
           width: '100%',
@@ -265,7 +265,7 @@ export const OnboardingPage: React.FC = () => {
                 onClick={() => setTeamSize(sz)}
                 style={{
                   padding: 'var(--ts-space-sm)',
-                  borderRadius: 'var(--ts-radius)',
+                  borderRadius: 'var(--ts-radius-surface, 12px)',
                   border: teamSize === sz ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
                   backgroundColor: teamSize === sz ? 'var(--ts-color-background)' : 'transparent',
                   color: teamSize === sz ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',

@@ -179,7 +179,7 @@ export const PortfolioPage: React.FC = () => {
                 <div
                   style={{
                     padding: 'var(--ts-space-md)',
-                    borderRadius: 'var(--ts-radius)',
+                    borderRadius: 'var(--ts-radius-surface, 12px)',
                     backgroundColor: 'var(--ts-color-background)',
                     border: '1px solid var(--ts-color-border)',
                     display: 'flex',
@@ -410,7 +410,7 @@ export const PortfolioPage: React.FC = () => {
           <div
             style={{
               padding: 'var(--ts-space-md)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 12px)',
               backgroundColor: 'var(--ts-color-background)',
               border: '1px solid var(--ts-color-border)',
               display: 'flex',

@@ -158,7 +158,7 @@ export const MarketplacePage: React.FC = () => {
                   style={{
                     width: '120px',
                     height: '110px',
-                    borderRadius: 'var(--ts-radius)',
+                    borderRadius: 'var(--ts-radius-surface, 12px)',
                     backgroundColor: 'var(--ts-color-background)',
                     border: '1px solid var(--ts-color-border)',
                     overflow: 'hidden',
@@ -269,7 +269,7 @@ export const MarketplacePage: React.FC = () => {
               </div>
             ))}
 
-            <div style={{ zIndex: 1, textAlign: 'center', backgroundColor: 'var(--ts-color-background)', padding: '12px 20px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', boxShadow: 'var(--ts-shadow)' }}>
+            <div style={{ zIndex: 1, textAlign: 'center', backgroundColor: 'var(--ts-color-background)', padding: '12px 20px', borderRadius: 'var(--ts-radius-surface, 16px)', border: '1px solid var(--ts-color-border)', boxShadow: 'var(--ts-shadow)' }}>
               <div style={{ fontWeight: 800, fontSize: '13px' }}>San Francisco Bay Area</div>
               <div style={{ fontSize: '11px', opacity: 0.6 }}>Interactive Geographic Coordinates</div>
             </div>

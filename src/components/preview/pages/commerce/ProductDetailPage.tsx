@@ -139,7 +139,7 @@ export const ProductDetailPage: React.FC = () => {
                     style={{
                       width: '56px',
                       height: '56px',
-                      borderRadius: 'var(--ts-radius)',
+                      borderRadius: 'var(--ts-radius-surface, 8px)',
                       border: activeThumb === idx ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
                       backgroundColor: 'var(--ts-color-surface)',
                       cursor: 'pointer',
@@ -299,7 +299,7 @@ export const ProductDetailPage: React.FC = () => {
 
               {/* Quantity + Add to Cart CTAs */}
               <div style={{ display: 'flex', gap: '8px', borderTop: '1px solid var(--ts-color-border)', paddingTop: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 8px)', overflow: 'hidden' }}>
                   <button
                     type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}

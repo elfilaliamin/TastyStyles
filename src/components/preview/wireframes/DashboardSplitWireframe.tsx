@@ -7,7 +7,7 @@ export const DashboardSplitWireframe: React.FC = () => {
         backgroundColor: 'var(--ts-color-background)',
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         border: '1px solid var(--ts-color-border)',
         flex: 1,
         minHeight: '100%',
@@ -63,7 +63,7 @@ export const DashboardSplitWireframe: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-md)',
             height: '160px',
@@ -93,7 +93,7 @@ export const DashboardSplitWireframe: React.FC = () => {
               flex: 1,
               backgroundColor: 'var(--ts-color-surface)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 12px)',
               padding: 'var(--ts-space-sm)',
             }}
           >
@@ -115,7 +115,7 @@ export const DashboardSplitWireframe: React.FC = () => {
               flex: 1,
               backgroundColor: 'var(--ts-color-surface)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 12px)',
               padding: 'var(--ts-space-sm)',
             }}
           >

@@ -109,7 +109,7 @@ export const ErrorPage: React.FC = () => {
         width: '100%',
         backgroundColor: 'var(--ts-color-background)',
         border: '1px solid var(--ts-color-border)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 8px)',
         padding: 'var(--ts-space-xs) var(--ts-space-sm)',
         fontSize: 'calc(var(--ts-base-size) * 0.72)',
         fontFamily: 'monospace',
@@ -200,7 +200,7 @@ export const ErrorPage: React.FC = () => {
           <div
             style={{
               padding: 'var(--ts-space-sm)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               backgroundColor: 'var(--ts-color-surface)',
               border: '1px solid var(--ts-color-border)',
               display: 'flex',
@@ -246,7 +246,7 @@ export const ErrorPage: React.FC = () => {
                 backgroundColor: 'var(--ts-color-surface)',
                 color: 'var(--ts-color-text)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
                 padding: 'var(--ts-space-xs) var(--ts-space-md)',
                 fontSize: 'calc(var(--ts-base-size) * 0.82)',
                 fontWeight: 600,
@@ -435,7 +435,7 @@ export const ErrorPage: React.FC = () => {
               style={{
                 backgroundColor: 'transparent',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
                 padding: 'var(--ts-space-xs) var(--ts-space-sm)',
                 fontSize: 'calc(var(--ts-base-size) * 0.8)',
                 fontWeight: 600,
@@ -526,7 +526,7 @@ export const ErrorPage: React.FC = () => {
               gap: '8px',
               backgroundColor: 'var(--ts-color-surface)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               padding: 'var(--ts-space-xs) var(--ts-space-sm)',
             }}
           >
@@ -561,7 +561,7 @@ export const ErrorPage: React.FC = () => {
                 key={i}
                 style={{
                   padding: 'var(--ts-space-xs) var(--ts-space-sm)',
-                  borderRadius: 'var(--ts-radius)',
+                  borderRadius: 'var(--ts-radius-surface, 8px)',
                   backgroundColor: 'var(--ts-color-surface)',
                   border: '1px solid var(--ts-color-border)',
                   cursor: 'pointer',
@@ -653,7 +653,7 @@ export const ErrorPage: React.FC = () => {
               backgroundColor: 'var(--ts-color-background)',
               color: 'var(--ts-color-text)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               padding: 'var(--ts-space-xs) var(--ts-space-md)',
               fontSize: 'calc(var(--ts-base-size) * 0.82)',
               fontWeight: 600,

@@ -106,7 +106,7 @@ export const CheckoutInvoiceBlock: React.FC<CheckoutInvoiceBlockProps> = ({
                   }}
                   style={{
                     padding: '8px',
-                    borderRadius: 'var(--ts-radius)',
+                    borderRadius: 'var(--ts-radius-surface, 12px)',
                     border: isSelected ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
                     backgroundColor: isSelected ? 'rgba(2, 132, 199, 0.12)' : 'var(--ts-color-background)',
                     color: isSelected ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
@@ -154,7 +154,7 @@ export const CheckoutInvoiceBlock: React.FC<CheckoutInvoiceBlockProps> = ({
             style={{
               flex: 1,
               padding: '6px 10px',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 8px)',
               border: '1px solid var(--ts-color-border)',
               backgroundColor: 'var(--ts-color-background)',
               color: 'var(--ts-color-text)',

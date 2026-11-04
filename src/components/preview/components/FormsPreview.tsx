@@ -180,7 +180,7 @@ export const FormsPreview: React.FC = () => {
             backgroundColor: 'var(--ts-color-background)',
             color: 'var(--ts-color-text)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 12px)',
             padding: 'var(--ts-space-sm) var(--ts-space-md)',
             fontSize: 'calc(var(--ts-base-size) * 0.9)',
             outline: 'none',

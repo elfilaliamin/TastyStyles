@@ -115,7 +115,7 @@ export const DiscussionReviewBlock: React.FC<DiscussionReviewBlockProps> = ({
             key={item.id}
             style={{
               padding: 'var(--ts-space-md)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 12px)',
               backgroundColor: item.isAcceptedAnswer ? 'rgba(16, 185, 129, 0.06)' : 'var(--ts-color-background)',
               border: item.isAcceptedAnswer ? '1px solid #10b981' : '1px solid var(--ts-color-border)',
               display: 'flex',
@@ -202,7 +202,7 @@ export const DiscussionReviewBlock: React.FC<DiscussionReviewBlockProps> = ({
           style={{
             flex: 1,
             padding: '8px 12px',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 8px)',
             border: '1px solid var(--ts-color-border)',
             backgroundColor: 'var(--ts-color-background)',
             color: 'var(--ts-color-text)',

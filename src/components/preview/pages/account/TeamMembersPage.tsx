@@ -107,7 +107,7 @@ export const TeamMembersPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 12px)',
           boxShadow: 'var(--ts-shadow)',
           padding: 'var(--ts-space-md)',
           display: 'flex',
@@ -135,7 +135,7 @@ export const TeamMembersPage: React.FC = () => {
               gap: '6px',
               backgroundColor: 'var(--ts-color-background)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 12px)',
               padding: 'var(--ts-space-xs) var(--ts-space-sm)',
             }}
           >
@@ -162,7 +162,7 @@ export const TeamMembersPage: React.FC = () => {
             style={{
               backgroundColor: 'var(--ts-color-background)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 8px)',
               color: 'var(--ts-color-text)',
               padding: 'var(--ts-space-xs) var(--ts-space-sm)',
               fontSize: 'calc(var(--ts-base-size) * 0.82)',
@@ -204,7 +204,7 @@ export const TeamMembersPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           boxShadow: 'var(--ts-shadow)',
           padding: 'var(--ts-space-md)',
           display: 'flex',

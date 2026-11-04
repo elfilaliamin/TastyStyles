@@ -11,7 +11,7 @@ export const SidebarContentWireframe: React.FC = () => {
         backgroundColor: 'var(--ts-color-background)',
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         border: '1px solid var(--ts-color-border)',
         overflow: 'hidden',
       }}
@@ -136,7 +136,7 @@ export const SidebarContentWireframe: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 12px)',
                 boxShadow: 'var(--ts-shadow)',
                 padding: 'var(--ts-space-md)',
               }}
@@ -174,7 +174,7 @@ export const SidebarContentWireframe: React.FC = () => {
             flex: 1,
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-md)',
             display: 'flex',

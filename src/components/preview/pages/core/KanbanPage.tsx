@@ -252,7 +252,7 @@ export const KanbanPage: React.FC = () => {
       {/* Layout Variant: 2. TIMELINE LIST */}
       {layout === 'timeline-list' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
-          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
+          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--ts-space-sm)' }}>
               <div>
                 <h3 style={{ margin: 0, fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700 }}>Q4 Engineering Milestones</h3>
@@ -272,7 +272,7 @@ export const KanbanPage: React.FC = () => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: 'var(--ts-space-sm)',
-                    borderRadius: 'var(--ts-radius)',
+                    borderRadius: 'var(--ts-radius-surface, 12px)',
                     border: '1px solid var(--ts-color-border)',
                     backgroundColor: 'var(--ts-color-background)',
                     gap: 'var(--ts-space-md)',
@@ -308,7 +308,7 @@ export const KanbanPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
                 padding: 'var(--ts-space-sm)',
                 boxShadow: 'var(--ts-shadow)',
                 display: 'flex',
@@ -353,7 +353,7 @@ export const KanbanPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
                 padding: 'var(--ts-space-sm)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -431,7 +431,7 @@ export const KanbanPage: React.FC = () => {
                       style={{
                         backgroundColor: 'var(--ts-color-background)',
                         border: '1px solid var(--ts-color-border)',
-                        borderRadius: 'var(--ts-radius)',
+                        borderRadius: 'var(--ts-radius-surface, 12px)',
                         padding: 'var(--ts-space-sm)',
                         display: 'flex',
                         flexDirection: 'column',

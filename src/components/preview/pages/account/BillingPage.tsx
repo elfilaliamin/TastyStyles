@@ -54,7 +54,7 @@ export const BillingPage: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-md)',
             display: 'flex',
@@ -185,7 +185,7 @@ export const BillingPage: React.FC = () => {
               style={{
                 marginTop: 'var(--ts-space-sm)',
                 padding: 'var(--ts-space-sm)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 12px)',
                 backgroundColor: 'var(--ts-color-background)',
                 border: '1px solid var(--ts-color-border)',
                 display: 'flex',
@@ -238,7 +238,7 @@ export const BillingPage: React.FC = () => {
               backgroundColor: 'var(--ts-color-background)',
               color: 'var(--ts-color-text)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               padding: 'var(--ts-space-xs) var(--ts-space-md)',
               fontSize: 'calc(var(--ts-base-size) * 0.82)',
               fontWeight: 600,
@@ -255,7 +255,7 @@ export const BillingPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           boxShadow: 'var(--ts-shadow)',
           padding: 'var(--ts-space-md)',
           display: 'flex',

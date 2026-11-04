@@ -43,7 +43,7 @@ export const IdentityBadgeBlock: React.FC<IdentityBadgeBlockProps> = ({
         padding: 'var(--ts-space-md)',
         backgroundColor: 'var(--ts-color-surface)',
         border: '1px solid var(--ts-color-border)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         boxShadow: 'var(--ts-shadow)',
         boxSizing: 'border-box',
         ...style,

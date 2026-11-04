@@ -14,7 +14,7 @@ export const ItemDetailPage: React.FC = () => {
       style={{
         backgroundColor: 'var(--ts-color-surface)',
         border: '1px solid var(--ts-color-border)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         boxShadow: 'var(--ts-shadow)',
         padding: 'var(--ts-space-md)',
       }}
@@ -30,7 +30,7 @@ export const ItemDetailPage: React.FC = () => {
         Hardware Allocation
       </h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 'var(--ts-space-sm)' }}>
-        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
+        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius-surface, 12px)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
             <AppIcon name="cpu" size={14} />
             <span>CPU Cores</span>
@@ -39,7 +39,7 @@ export const ItemDetailPage: React.FC = () => {
           <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>28% utilized</div>
         </div>
 
-        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
+        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius-surface, 12px)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
             <AppIcon name="activity" size={14} />
             <span>Memory RAM</span>
@@ -48,7 +48,7 @@ export const ItemDetailPage: React.FC = () => {
           <div style={{ fontSize: 'calc(var(--ts-base-size) * 0.7)', opacity: 0.7 }}>54.2 GB in use</div>
         </div>
 
-        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
+        <div style={{ padding: 'var(--ts-space-sm)', borderRadius: 'var(--ts-radius-surface, 12px)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: 0.7, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
             <AppIcon name="hardDrive" size={14} />
             <span>NVMe Storage</span>
@@ -65,7 +65,7 @@ export const ItemDetailPage: React.FC = () => {
       style={{
         backgroundColor: 'var(--ts-color-surface)',
         border: '1px solid var(--ts-color-border)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         boxShadow: 'var(--ts-shadow)',
         padding: 'var(--ts-space-md)',
       }}

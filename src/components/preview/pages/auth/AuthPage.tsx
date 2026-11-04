@@ -486,7 +486,7 @@ export const AuthPage: React.FC = () => {
           <div
             style={{
               padding: 'var(--ts-space-md)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               backgroundColor: 'var(--ts-color-background)',
               border: '1px solid var(--ts-color-border)',
               fontSize: 'calc(var(--ts-base-size) * 0.8)',
@@ -653,7 +653,7 @@ export const AuthPage: React.FC = () => {
               position: 'relative',
               zIndex: 10,
               padding: 'var(--ts-space-lg)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               backgroundColor: 'rgba(15, 23, 42, 0.75)',
               backdropFilter: 'blur(12px)',
               WebkitBackdropFilter: 'blur(12px)',

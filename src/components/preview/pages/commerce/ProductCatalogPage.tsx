@@ -93,7 +93,7 @@ export const ProductCatalogPage: React.FC = () => {
                     style={{
                       width: '60px',
                       height: '60px',
-                      borderRadius: 'var(--ts-radius)',
+                      borderRadius: 'var(--ts-radius-surface, 8px)',
                       backgroundColor: 'var(--ts-color-background)',
                       border: '1px solid var(--ts-color-border)',
                       overflow: 'hidden',
@@ -178,8 +178,8 @@ export const ProductCatalogPage: React.FC = () => {
                     Price Range
                   </div>
                   <div style={{ display: 'flex', gap: '8px', fontSize: '12px' }}>
-                    <input type="text" defaultValue="$20" style={{ width: '50%', padding: '4px 6px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)' }} />
-                    <input type="text" defaultValue="$400" style={{ width: '50%', padding: '4px 6px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)' }} />
+                    <input type="text" defaultValue="$20" style={{ width: '50%', padding: '4px 6px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)' }} />
+                    <input type="text" defaultValue="$400" style={{ width: '50%', padding: '4px 6px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)' }} />
                   </div>
                 </div>
 
@@ -253,7 +253,7 @@ export const ProductCatalogPage: React.FC = () => {
                     style={{
                       width: '100%',
                       height: '140px',
-                      borderRadius: 'var(--ts-radius)',
+                      borderRadius: 'var(--ts-radius-surface, 12px)',
                       backgroundColor: 'var(--ts-color-background)',
                       border: '1px solid var(--ts-color-border)',
                       overflow: 'hidden',

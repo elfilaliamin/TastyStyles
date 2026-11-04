@@ -48,7 +48,7 @@ export const FeedbackPreview: React.FC = () => {
         <div
           style={{
             padding: 'var(--ts-space-md)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 12px)',
             backgroundColor: 'var(--ts-color-background)',
             borderLeft: '4px solid var(--ts-color-accent)',
             borderTop: '1px solid var(--ts-color-border)',
@@ -74,7 +74,7 @@ export const FeedbackPreview: React.FC = () => {
         <div
           style={{
             padding: 'var(--ts-space-md)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 12px)',
             backgroundColor: 'rgba(16, 185, 129, 0.08)',
             border: '1px solid rgba(16, 185, 129, 0.3)',
             display: 'flex',
@@ -97,7 +97,7 @@ export const FeedbackPreview: React.FC = () => {
         <div
           style={{
             padding: 'var(--ts-space-md)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 12px)',
             backgroundColor: 'rgba(245, 158, 11, 0.08)',
             border: '1px solid rgba(245, 158, 11, 0.3)',
             display: 'flex',

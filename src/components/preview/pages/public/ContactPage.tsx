@@ -51,7 +51,7 @@ export const ContactPage: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-lg)',
             display: 'flex',
@@ -69,7 +69,7 @@ export const ContactPage: React.FC = () => {
                   backgroundColor: 'var(--ts-color-background)',
                   color: 'var(--ts-color-text)',
                   border: '1px solid var(--ts-color-border)',
-                  borderRadius: 'var(--ts-radius)',
+                  borderRadius: 'var(--ts-radius-surface, 8px)',
                   padding: 'var(--ts-space-sm)',
                   fontSize: 'calc(var(--ts-base-size) * 0.85)',
                   outline: 'none',
@@ -85,7 +85,7 @@ export const ContactPage: React.FC = () => {
                   backgroundColor: 'var(--ts-color-background)',
                   color: 'var(--ts-color-text)',
                   border: '1px solid var(--ts-color-border)',
-                  borderRadius: 'var(--ts-radius)',
+                  borderRadius: 'var(--ts-radius-surface, 8px)',
                   padding: 'var(--ts-space-sm)',
                   fontSize: 'calc(var(--ts-base-size) * 0.85)',
                   outline: 'none',
@@ -103,7 +103,7 @@ export const ContactPage: React.FC = () => {
                 backgroundColor: 'var(--ts-color-background)',
                 color: 'var(--ts-color-text)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 8px)',
                 padding: 'var(--ts-space-sm)',
                 fontSize: 'calc(var(--ts-base-size) * 0.85)',
                 outline: 'none',
@@ -118,7 +118,7 @@ export const ContactPage: React.FC = () => {
                 backgroundColor: 'var(--ts-color-background)',
                 color: 'var(--ts-color-text)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 8px)',
                 padding: 'var(--ts-space-sm)',
                 fontSize: 'calc(var(--ts-base-size) * 0.85)',
                 outline: 'none',
@@ -139,7 +139,7 @@ export const ContactPage: React.FC = () => {
                 backgroundColor: 'var(--ts-color-background)',
                 color: 'var(--ts-color-text)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 10px)',
                 padding: 'var(--ts-space-sm)',
                 fontSize: 'calc(var(--ts-base-size) * 0.85)',
                 outline: 'none',
@@ -158,6 +158,7 @@ export const ContactPage: React.FC = () => {
               padding: 'var(--ts-space-sm) var(--ts-space-md)',
               fontWeight: 600,
               fontSize: 'calc(var(--ts-base-size) * 0.9)',
+              minHeight: '44px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -183,14 +184,15 @@ export const ContactPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
                 padding: 'var(--ts-space-md)',
                 display: 'flex',
                 gap: 'var(--ts-space-sm)',
                 alignItems: 'flex-start',
+                boxShadow: 'var(--ts-shadow)',
               }}
             >
-              <div style={{ padding: '8px', backgroundColor: 'var(--ts-color-background)', borderRadius: 'var(--ts-radius)' }}>
+              <div style={{ padding: '8px', backgroundColor: 'var(--ts-color-background)', borderRadius: 'var(--ts-radius-surface, 10px)' }}>
                 {card.icon}
               </div>
               <div>
@@ -205,4 +207,3 @@ export const ContactPage: React.FC = () => {
     </div>
   );
 };
-

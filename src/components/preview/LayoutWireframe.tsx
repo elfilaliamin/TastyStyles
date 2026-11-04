@@ -22,7 +22,7 @@ const GenericLayoutFallback: React.FC<{ label: string; desc: string }> = ({ labe
       backgroundColor: 'var(--ts-color-background)',
       color: 'var(--ts-color-text)',
       fontFamily: 'var(--ts-font-body)',
-      borderRadius: 'var(--ts-radius)',
+      borderRadius: 'var(--ts-radius-surface, 16px)',
       border: '1px solid var(--ts-color-border)',
       flex: 1,
       minHeight: '100%',

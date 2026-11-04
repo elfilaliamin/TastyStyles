@@ -8,7 +8,7 @@ export const BentoGridWireframe: React.FC = () => {
         backgroundColor: 'var(--ts-color-background)',
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
-        borderRadius: 'var(--ts-radius)',
+        borderRadius: 'var(--ts-radius-surface, 16px)',
         border: '1px solid var(--ts-color-border)',
         flex: 1,
         minHeight: '100%',
@@ -56,7 +56,7 @@ export const BentoGridWireframe: React.FC = () => {
             gridRow: 'span 2',
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-lg)',
             display: 'flex',
@@ -101,7 +101,7 @@ export const BentoGridWireframe: React.FC = () => {
             style={{
               height: '40px',
               backgroundColor: 'var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 8px)',
               opacity: 0.4,
             }}
           />
@@ -112,7 +112,7 @@ export const BentoGridWireframe: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-md)',
             display: 'flex',
@@ -140,7 +140,7 @@ export const BentoGridWireframe: React.FC = () => {
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             boxShadow: 'var(--ts-shadow)',
             padding: 'var(--ts-space-md)',
             display: 'flex',

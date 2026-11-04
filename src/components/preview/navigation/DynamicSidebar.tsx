@@ -565,7 +565,7 @@ export const DynamicSidebar: React.FC<DynamicSidebarProps> = ({
         <div
           style={{
             padding: '12px',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 12px)',
             backgroundColor: 'var(--ts-color-background)',
             border: '1px solid var(--ts-color-border)',
             fontSize: '11px',
@@ -727,7 +727,7 @@ export const DynamicSidebar: React.FC<DynamicSidebarProps> = ({
           alignItems: 'center',
           gap: '8px',
           padding: '8px',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 12px)',
           backgroundColor: 'var(--ts-color-background)',
           fontSize: '11px',
         }}

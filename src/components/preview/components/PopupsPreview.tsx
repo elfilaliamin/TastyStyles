@@ -677,7 +677,7 @@ export const PopupsPreview: React.FC = () => {
                 padding: 'var(--ts-space-xs) var(--ts-space-sm)',
                 backgroundColor: 'rgba(239, 68, 68, 0.06)',
                 border: '1px solid rgba(239, 68, 68, 0.2)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 12px)',
                 fontSize: 'calc(var(--ts-base-size) * 0.75)',
                 color: '#ef4444',
                 display: 'flex',
@@ -779,7 +779,7 @@ export const PopupsPreview: React.FC = () => {
                 gap: '6px',
                 padding: 'var(--ts-space-xs) var(--ts-space-sm)',
                 backgroundColor: 'var(--ts-color-background)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 12px)',
                 border: '1px solid var(--ts-color-border)',
                 fontSize: 'calc(var(--ts-base-size) * 0.78)',
               }}

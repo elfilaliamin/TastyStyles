@@ -38,7 +38,7 @@ export const DashboardPage: React.FC = () => {
             </p>
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
-            <span style={{ padding: '4px 10px', borderRadius: 'var(--ts-radius)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', fontSize: '12px', fontWeight: 600 }}>
+            <span style={{ padding: '4px 10px', borderRadius: 'var(--ts-radius-surface, 16px)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', fontSize: '12px', fontWeight: 600 }}>
               Live 1s Refresh
             </span>
             <button
@@ -47,7 +47,7 @@ export const DashboardPage: React.FC = () => {
                 backgroundColor: 'var(--ts-color-primary)',
                 color: primaryTextColor,
                 border: 'none',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 12px)',
                 padding: '4px 12px',
                 fontWeight: 600,
                 fontSize: '12px',
@@ -74,7 +74,7 @@ export const DashboardPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 12px)',
                 padding: 'var(--ts-space-sm)',
                 boxShadow: 'var(--ts-shadow)',
               }}
@@ -90,7 +90,7 @@ export const DashboardPage: React.FC = () => {
 
         {/* Dual Analytics Panels */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--ts-space-md)' }}>
-          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)' }}>
+          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)' }}>
             <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '8px' }}>Throughput Distribution</div>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px', height: '110px' }}>
               {[40, 65, 80, 50, 90, 75, 110, 85, 95, 120, 100, 130].map((h, i) => (
@@ -99,7 +99,7 @@ export const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)' }}>
+          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)' }}>
             <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '8px' }}>Node Cluster Health</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
@@ -145,7 +145,7 @@ export const DashboardPage: React.FC = () => {
               { label: 'Active Edge Nodes', val: '48 / 50', icon: <AppIcon name="server" size={16} style={{ color: 'var(--ts-color-primary)' }} /> },
               { label: 'Avg Cycle Duration', val: '42.6 s', icon: <AppIcon name="activity" size={16} style={{ color: 'var(--ts-color-accent)' }} /> },
             ].map((m, i) => (
-              <div key={i} style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div key={i} style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)', display: 'flex', alignItems: 'center', gap: '12px' }}>
                 {m.icon}
                 <div>
                   <div style={{ fontSize: '11px', opacity: 0.7 }}>{m.label}</div>
@@ -156,7 +156,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {/* Wide Telemetry Card */}
-          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-lg)' }}>
+          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-lg)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
               <div style={{ fontWeight: 700, fontSize: '14px' }}>Global Latency & Traffic Distribution</div>
               <span style={{ color: 'var(--ts-color-accent)', fontSize: '12px', fontWeight: 600 }}>All Regions Normal</span>
@@ -201,7 +201,7 @@ export const DashboardPage: React.FC = () => {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--ts-space-md)' }}>
           {/* Live Activity Stream */}
-          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <div style={{ fontWeight: 700, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <AppIcon name="terminal" size={14} style={{ color: 'var(--ts-color-primary)' }} />
               <span>Event Audit Stream</span>
@@ -228,7 +228,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {/* System Resources */}
-          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div style={{ fontWeight: 700, fontSize: '13px' }}>Cluster Capacity Allocation</div>
             {[
               { label: 'Compute Allocation', pct: 68, color: 'var(--ts-color-primary)' },
@@ -311,7 +311,7 @@ export const DashboardPage: React.FC = () => {
             backgroundColor: 'var(--ts-color-primary)',
             color: primaryTextColor,
             border: 'none',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             padding: 'var(--ts-space-xs) var(--ts-space-md)',
             fontWeight: 600,
             fontSize: 'calc(var(--ts-base-size) * 0.85)',
@@ -340,7 +340,7 @@ export const DashboardPage: React.FC = () => {
             style={{
               backgroundColor: 'var(--ts-color-surface)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               boxShadow: 'var(--ts-shadow)',
               padding: 'var(--ts-space-md)',
               display: 'flex',
@@ -368,7 +368,7 @@ export const DashboardPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           boxShadow: 'var(--ts-shadow)',
           padding: 'var(--ts-space-md)',
           display: 'flex',
@@ -424,7 +424,7 @@ export const DashboardPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           padding: 'var(--ts-space-md)',
           display: 'flex',
           flexDirection: 'column',

@@ -313,3 +313,4 @@ export const MEDIA_CATALOG = {
     { id: 'av-4', name: 'Marcus Vance', role: 'Security Ops', avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80' },
   ],
 };
+

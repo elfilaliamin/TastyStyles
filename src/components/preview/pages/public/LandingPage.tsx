@@ -76,7 +76,7 @@ export const LandingPage: React.FC = () => {
                 style={{
                   backgroundColor: 'var(--ts-color-primary)',
                   color: primaryTextColor,
-                  borderRadius: 'var(--ts-radius)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
                   padding: 'var(--ts-space-sm) var(--ts-space-lg)',
                   border: 'none',
                   fontSize: 'calc(var(--ts-base-size) * 0.9)',
@@ -99,7 +99,7 @@ export const LandingPage: React.FC = () => {
             style={{
               backgroundColor: 'var(--ts-color-surface)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 16px)',
               boxShadow: 'var(--ts-shadow)',
               padding: 'var(--ts-space-lg)',
               display: 'flex',
@@ -178,7 +178,7 @@ export const LandingPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-primary)',
                 color: primaryTextColor,
-                borderRadius: 'var(--ts-radius)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
                 padding: 'var(--ts-space-sm) var(--ts-space-lg)',
                 border: 'none',
                 fontSize: 'calc(var(--ts-base-size) * 0.9)',
@@ -220,7 +220,7 @@ export const LandingPage: React.FC = () => {
                 style={{
                   backgroundColor: 'var(--ts-color-surface)',
                   border: '1px solid var(--ts-color-border)',
-                  borderRadius: 'var(--ts-radius)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
                   boxShadow: 'var(--ts-shadow)',
                   padding: 'var(--ts-space-md)',
                   display: 'flex',

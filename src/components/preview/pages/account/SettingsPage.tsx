@@ -197,7 +197,7 @@ export const SettingsPage: React.FC = () => {
             padding: 'var(--ts-space-xs) var(--ts-space-sm)',
             backgroundColor: 'var(--ts-color-background)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 8px)',
             fontSize: 'calc(var(--ts-base-size) * 0.75)',
             fontWeight: 600,
             cursor: 'pointer',
@@ -237,7 +237,7 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         {/* Card 1: Profile */}
-        <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
+        <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
           <h2 style={{ margin: '0 0 var(--ts-space-sm) 0', fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700 }}>Profile Identity</h2>
           {renderGeneralSection()}
           <div style={{ marginTop: 'var(--ts-space-md)', display: 'flex', justifyContent: 'flex-end' }}>
@@ -248,13 +248,13 @@ export const SettingsPage: React.FC = () => {
         </div>
 
         {/* Card 2: Notifications */}
-        <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
+        <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
           <h2 style={{ margin: '0 0 var(--ts-space-sm) 0', fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700 }}>Notifications & Alerts</h2>
           {renderNotificationsSection()}
         </div>
 
         {/* Card 3: Security */}
-        <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
+        <div style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', borderRadius: 'var(--ts-radius-surface, 16px)', padding: 'var(--ts-space-md)', boxShadow: 'var(--ts-shadow)' }}>
           <h2 style={{ margin: '0 0 var(--ts-space-sm) 0', fontSize: 'calc(var(--ts-base-size) * 0.95)', fontWeight: 700 }}>Security & API Access</h2>
           {renderSecuritySection()}
         </div>
@@ -327,7 +327,7 @@ export const SettingsPage: React.FC = () => {
             minWidth: '280px',
             backgroundColor: 'var(--ts-color-surface)',
             border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
+            borderRadius: 'var(--ts-radius-surface, 16px)',
             padding: 'var(--ts-space-md)',
             boxShadow: 'var(--ts-shadow)',
           }}
@@ -424,7 +424,7 @@ export const SettingsPage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 12px)',
           boxShadow: 'var(--ts-shadow)',
           padding: 'var(--ts-space-lg)',
           display: 'flex',
@@ -452,7 +452,7 @@ export const SettingsPage: React.FC = () => {
               padding: 'var(--ts-space-xs) var(--ts-space-md)',
               backgroundColor: 'var(--ts-color-background)',
               border: '1px solid var(--ts-color-border)',
-              borderRadius: 'var(--ts-radius)',
+              borderRadius: 'var(--ts-radius-surface, 8px)',
               color: 'var(--ts-color-text)',
               fontSize: 'calc(var(--ts-base-size) * 0.85)',
               fontWeight: 600,

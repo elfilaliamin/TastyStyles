@@ -136,7 +136,7 @@ export const BlogArticlePage: React.FC = () => {
           padding: 'var(--ts-space-sm) var(--ts-space-md)',
           borderLeft: '4px solid var(--ts-color-accent)',
           backgroundColor: 'var(--ts-color-surface)',
-          borderRadius: '0 var(--ts-radius) var(--ts-radius) 0',
+          borderRadius: '0 var(--ts-radius-surface, 12px) var(--ts-radius-surface, 12px) 0',
           fontStyle: 'italic',
           opacity: 0.9,
         }}
@@ -149,7 +149,7 @@ export const BlogArticlePage: React.FC = () => {
         style={{
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 12px)',
           padding: 'var(--ts-space-md)',
           fontFamily: 'monospace',
           fontSize: 'calc(var(--ts-base-size) * 0.85)',
@@ -170,7 +170,7 @@ export const BlogArticlePage: React.FC = () => {
         style={{
           marginTop: 'var(--ts-space-lg)',
           padding: 'var(--ts-space-md)',
-          borderRadius: 'var(--ts-radius)',
+          borderRadius: 'var(--ts-radius-surface, 16px)',
           backgroundColor: 'var(--ts-color-surface)',
           border: '1px solid var(--ts-color-border)',
           display: 'flex',
