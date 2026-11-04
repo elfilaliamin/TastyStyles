@@ -140,6 +140,38 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       mobile: 'Converts from floating dialog to bottom sliding drawer sheet with handle bar.',
       tablet: 'Centered dialog modal with backdrop blur and escape/click-outside dismiss actions.',
     },
+    {
+      page: 'auth',
+      id: 'minimal',
+      title: 'Minimal Clean',
+      description: 'Stripped-back editorial auth layout with pure typography and minimal distraction.',
+      variant: 'minimal',
+      ascii: `+-----------------------------------+
+| [Brand Logo]                      |
+| Sign In                           |
+| [Email Input]                     |
+| [Password Input]                  |
+| [Sign In Button]                  |
++-----------------------------------+`,
+      mobile: 'Full-width text inputs with flush horizontal padding and clear contrast labels.',
+      tablet: 'Constrained 380px single-column editorial layout.',
+    },
+    {
+      page: 'auth',
+      id: 'glassmorphism',
+      title: 'Glassmorphism Card',
+      description: 'Translucent frosted glass card with saturated backdrop filter and specular border highlights.',
+      variant: 'glassmorphism',
+      ascii: `+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
+|  * Ambient Light Spheres *        |
+|       +-------------------+       |
+|       |  Frosted Glass    |       |
+|       |  [Credentials]    |       |
+|       +-------------------+       |
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+`,
+      mobile: 'Glass blur drops to 12px for smooth 60fps mobile GPU rendering.',
+      tablet: 'Centered frosted glass container with 24px backdrop blur and luminous border.',
+    },
   ],
 
   navbar: [
@@ -849,3 +881,4 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 export function getLayoutsForPage(page: string): LayoutCatalogItem[] {
   return LAYOUT_CATALOG[page] ?? [];
 }
+

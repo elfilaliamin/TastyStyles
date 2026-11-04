@@ -426,3 +426,4 @@ export function getPreviewCssVariables(state: DesignState): Record<string, strin
     '--ts-icon-mode': tokens.icons.mode,
   };
 }
+

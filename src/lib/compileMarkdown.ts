@@ -2,6 +2,7 @@ import type { DesignState, PageLayouts } from '../config/schema';
 import { resolveTokens, generateUnifiedCssTokens } from './tokenModel';
 import { LAYOUT_CATALOG, type LayoutCatalogItem } from '../config/layoutCatalog';
 import { COMPONENT_RECIPES } from '../config/recipes';
+import { generateTailwindConfig } from './exportUtils';
 
 /**
  * Compiles a live DesignState into an exact, comprehensive Design System Specification (DESIGN.md v2)
@@ -127,52 +128,11 @@ ${generateUnifiedCssTokens(state)}
 
 ---
 
-## 4. Tailwind CSS Configuration Snippet
-Add this configuration inside \`tailwind.config.js\` under \`theme.extend\`:
+## 4. Tailwind CSS Configuration
+Add this configuration inside \`tailwind.config.ts\`:
 
-\`\`\`javascript
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
-        accent: 'var(--color-accent)',
-        background: 'var(--color-background)',
-        surface: 'var(--color-surface)',
-        text: 'var(--color-text)',
-        border: 'var(--color-border)',
-        success: 'var(--color-success)',
-        warning: 'var(--color-warning)',
-        danger: 'var(--color-danger)',
-        info: 'var(--color-info)',
-        'on-primary': 'var(--color-on-primary)',
-        'on-secondary': 'var(--color-on-secondary)',
-        'on-accent': 'var(--color-on-accent)',
-        muted: 'var(--color-muted)',
-        ring: 'var(--color-ring)',
-      },
-      fontFamily: {
-        heading: ['var(--font-heading)', '${tokens.typography.headingCategory}'],
-        body: ['var(--font-body)', '${tokens.typography.bodyCategory}'],
-      },
-      borderRadius: {
-        brand: 'var(--radius-base)',
-      },
-      boxShadow: {
-        brand: 'var(--shadow-base)',
-      },
-      spacing: {
-        'ts-xs': 'var(--spacing-xs)',
-        'ts-sm': 'var(--spacing-sm)',
-        'ts-md': 'var(--spacing-md)',
-        'ts-lg': 'var(--spacing-lg)',
-        'ts-xl': 'var(--spacing-xl)',
-      },
-    },
-  },
-};
+\`\`\`typescript
+${generateTailwindConfig(state).trim()}
 \`\`\`
 
 ---

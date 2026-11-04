@@ -168,3 +168,4 @@ export const COMPONENT_RECIPES: ComponentRecipe[] = [
     },
   },
 ];
+
