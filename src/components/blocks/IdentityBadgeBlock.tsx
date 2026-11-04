@@ -131,3 +131,4 @@ export const IdentityBadgeBlock: React.FC<IdentityBadgeBlockProps> = ({
     </div>
   );
 };
+

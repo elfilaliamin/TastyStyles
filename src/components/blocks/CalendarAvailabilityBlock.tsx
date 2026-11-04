@@ -202,3 +202,4 @@ export const CalendarAvailabilityBlock: React.FC<CalendarAvailabilityBlockProps>
     </div>
   );
 };
+

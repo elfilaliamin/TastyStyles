@@ -10,6 +10,7 @@ import type {
   IconWeight,
 } from '../config/schema';
 import { getPresetEntry, registries } from '../lib/registry';
+import { GOAL_DEFINITIONS } from '../config/previews';
 
 export type DesignAction =
   | { type: 'SET_COLOR'; mode: 'light' | 'dark'; token: keyof ColorPalette; value: string }
@@ -187,9 +188,16 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
       };
     }
     case 'SET_PROJECT_GOAL': {
+      const def = GOAL_DEFINITIONS[action.goal];
       return {
         ...state,
         projectGoal: action.goal,
+        pageLayouts: {
+          ...defaultInitialState.pageLayouts,
+          ...state.pageLayouts,
+          ...(def?.defaultNavbar ? { navbar: def.defaultNavbar } : {}),
+          ...(def?.defaultSidebar ? { sidebar: def.defaultSidebar } : {}),
+        },
       };
     }
 

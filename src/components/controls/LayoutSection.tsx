@@ -4,11 +4,11 @@ import { registries } from '../../lib/registry';
 import type { PageLayouts } from '../../config/schema';
 import { getLayoutsForPage } from '../../config/layoutCatalog';
 import {
-  PREVIEW_REGISTRY,
   getPreviewDefinition,
   getPreviewIndex,
   getNextPreview,
   getPrevPreview,
+  getPreviewsForGoal,
 } from '../../config/previews';
 import {
   ChevronLeft,
@@ -455,16 +455,18 @@ interface LayoutOption {
 export const LayoutSection: React.FC = () => {
   const { state, dispatch, activePreview, setActivePreview } = useDesign();
 
+  const currentGoal = state.projectGoal ?? 'saas';
+  const scopedPreviews = getPreviewsForGoal(currentGoal);
   const previewDef = getPreviewDefinition(activePreview);
-  const currentIndex = getPreviewIndex(activePreview);
+  const currentIndex = getPreviewIndex(activePreview, scopedPreviews);
   const pageLayouts: Partial<PageLayouts> = state.pageLayouts ?? {};
 
   const handlePrev = () => {
-    setActivePreview(getPrevPreview(activePreview));
+    setActivePreview(getPrevPreview(activePreview, scopedPreviews));
   };
 
   const handleNext = () => {
-    setActivePreview(getNextPreview(activePreview));
+    setActivePreview(getNextPreview(activePreview, scopedPreviews));
   };
 
   const getPreviewIcon = () => {
@@ -735,7 +737,7 @@ export const LayoutSection: React.FC = () => {
             <ChevronLeft className="w-3.5 h-3.5" />
           </button>
           <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 px-1">
-            {currentIndex + 1}/{PREVIEW_REGISTRY.length}
+            {currentIndex >= 0 ? currentIndex + 1 : 1}/{scopedPreviews.length}
           </span>
           <button
             type="button"

@@ -7,14 +7,14 @@ import { LayoutSection } from './LayoutSection';
 import { ComponentSection } from './ComponentSection';
 import { IconSection } from './IconSection';
 import { PresetSection } from './PresetSection';
-import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes, Target } from 'lucide-react';
+import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes } from 'lucide-react';
 import { GOAL_DEFINITIONS } from '../../config/previews';
 import type { ProjectGoal } from '../../config/schema';
+import { GoalSelector } from './GoalSelector';
 
 export const ControlsPanel: React.FC = () => {
   const { state, dispatch, setActivePreview } = useDesign();
   const currentGoal: ProjectGoal = state.projectGoal ?? 'saas';
-  const currentGoalDef = GOAL_DEFINITIONS[currentGoal] ?? GOAL_DEFINITIONS.saas;
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950/80 transition-colors">
@@ -35,38 +35,16 @@ export const ControlsPanel: React.FC = () => {
 
       {/* Target Goal / Sector Selector */}
       <div className="p-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 transition-colors">
-        <div className="flex items-center justify-between mb-1.5">
-          <label htmlFor="project-goal-selector" className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Target className="w-3.5 h-3.5 text-sky-500" />
-            <span>Target Goal / Sector</span>
-          </label>
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 font-semibold border border-sky-200 dark:border-sky-800">
-            {currentGoalDef.emoji} Active
-          </span>
-        </div>
-
-        <select
-          id="project-goal-selector"
-          value={currentGoal}
-          onChange={(e) => {
-            const nextGoal = e.target.value as ProjectGoal;
+        <GoalSelector
+          currentGoal={currentGoal}
+          onSelectGoal={(nextGoal) => {
             dispatch({ type: 'SET_PROJECT_GOAL', goal: nextGoal });
             const def = GOAL_DEFINITIONS[nextGoal];
             if (def?.recommendedPreviews?.[0]) {
               setActivePreview(def.recommendedPreviews[0]);
             }
           }}
-          className="w-full px-2.5 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus-ring cursor-pointer"
-        >
-          {Object.values(GOAL_DEFINITIONS).map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.emoji} {g.label}
-            </option>
-          ))}
-        </select>
-        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 line-clamp-2 leading-tight">
-          {currentGoalDef.tagline}
-        </p>
+        />
       </div>
 
       {/* Accordion groups - scrollable list (all menus inside collapsed by default) */}

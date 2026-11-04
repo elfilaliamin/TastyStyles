@@ -183,24 +183,45 @@ export const GOAL_DEFINITIONS: Record<ProjectGoal, GoalDefinition> = {
   },
 };
 
-export function getPreviewIndex(id: PreviewComponentType): number {
-  return PREVIEW_REGISTRY.findIndex((p) => p.id === id);
+export function getPreviewsForGoal(goal?: ProjectGoal): PreviewDefinition[] {
+  if (!goal || !GOAL_DEFINITIONS[goal]) return PREVIEW_REGISTRY;
+  const recommendedIds = GOAL_DEFINITIONS[goal].recommendedPreviews;
+  const filtered = recommendedIds
+    .map((id) => PREVIEW_REGISTRY.find((p) => p.id === id))
+    .filter((p): p is PreviewDefinition => Boolean(p));
+  return filtered.length > 0 ? filtered : PREVIEW_REGISTRY;
 }
 
-export function getNextPreview(id: PreviewComponentType): PreviewComponentType {
-  const index = getPreviewIndex(id);
-  if (index === -1 || index >= PREVIEW_REGISTRY.length - 1) {
-    return PREVIEW_REGISTRY[0].id;
+export function getPreviewIndex(
+  id: PreviewComponentType,
+  scopedList?: PreviewDefinition[]
+): number {
+  const list = scopedList && scopedList.length > 0 ? scopedList : PREVIEW_REGISTRY;
+  return list.findIndex((p) => p.id === id);
+}
+
+export function getNextPreview(
+  id: PreviewComponentType,
+  scopedList?: PreviewDefinition[]
+): PreviewComponentType {
+  const list = scopedList && scopedList.length > 0 ? scopedList : PREVIEW_REGISTRY;
+  const index = list.findIndex((p) => p.id === id);
+  if (index === -1 || index >= list.length - 1) {
+    return list[0].id;
   }
-  return PREVIEW_REGISTRY[index + 1].id;
+  return list[index + 1].id;
 }
 
-export function getPrevPreview(id: PreviewComponentType): PreviewComponentType {
-  const index = getPreviewIndex(id);
+export function getPrevPreview(
+  id: PreviewComponentType,
+  scopedList?: PreviewDefinition[]
+): PreviewComponentType {
+  const list = scopedList && scopedList.length > 0 ? scopedList : PREVIEW_REGISTRY;
+  const index = list.findIndex((p) => p.id === id);
   if (index <= 0) {
-    return PREVIEW_REGISTRY[PREVIEW_REGISTRY.length - 1].id;
+    return list[list.length - 1].id;
   }
-  return PREVIEW_REGISTRY[index - 1].id;
+  return list[index - 1].id;
 }
 
 export function getPreviewDefinition(id: PreviewComponentType): PreviewDefinition {

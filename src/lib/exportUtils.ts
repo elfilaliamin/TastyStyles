@@ -1,5 +1,6 @@
 import { DesignStateSchema, type DesignState } from '../config/schema';
 import { getFontEntry, getRadiusEntry, getSpacingEntry } from './registry';
+import { GOAL_DEFINITIONS } from '../config/previews';
 
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
@@ -141,6 +142,7 @@ export function generateTypeScriptTokens(state: DesignState): string {
 
 export const designTokens = {
   name: ${JSON.stringify(state.name)},
+  projectGoal: ${JSON.stringify(state.projectGoal ?? 'saas')},
   activeMode: ${JSON.stringify(state.activeMode)},
   colors: {
     light: ${JSON.stringify(state.colors.light, null, 6).replace(/\n/g, '\n  ')},
@@ -205,6 +207,10 @@ export function generateDtcgTokens(state: DesignState): string {
     $name: state.name,
     $version: '1.0.0',
     $description: `W3C Design Token Community Group (DTCG) specification for ${state.name}`,
+    $metadata: {
+      goal: state.projectGoal ?? 'saas',
+      pageLayouts: state.pageLayouts,
+    },
     color: {
       light: {
         primary: { $value: state.colors.light.primary, $type: 'color', $description: 'Primary brand accent for light mode' },
@@ -376,6 +382,15 @@ export function createZipBlob(files: { name: string; content: string }[]): Blob 
  * Generate AGENTS.md instructions for autonomous coding agents (Claude, Gemini, Cursor, Copilot)
  */
 export function generateAgentRulesSnippet(state: DesignState): string {
+  const goal = state.projectGoal ?? 'saas';
+  const goalDef = GOAL_DEFINITIONS[goal] ?? GOAL_DEFINITIONS.saas;
+  const pageLayouts = state.pageLayouts ?? {};
+
+  const layoutEntries = Object.entries(pageLayouts)
+    .filter(([, val]) => Boolean(val))
+    .map(([page, layout]) => `- **${page}**: \`${layout}\``)
+    .join('\n');
+
   return `# AI Coding Agent Contract & Design Rules: ${state.name}
 
 > This file provides authoritative constraints for autonomous AI coding agents (Claude, Gemini, Copilot, Cursor).
@@ -384,6 +399,16 @@ export function generateAgentRulesSnippet(state: DesignState): string {
 1. Read \`DESIGN.md\` and \`tokens.css\` before writing any frontend markup or components.
 2. NEVER hardcode raw color hex values, font sizes in raw px, or arbitrary border radiuses.
 3. Every style property MUST bind strictly to CSS variables defined in \`tokens.css\` or Tailwind classes mapped to them.
+
+## Target Domain Architecture: ${goalDef.emoji} ${goalDef.label}
+- **Sector Purpose**: ${goalDef.tagline}
+- **Default Application Header**: \`${pageLayouts.navbar ?? goalDef.defaultNavbar ?? 'saas-header'}\`
+- **Default Application Sidebar**: \`${pageLayouts.sidebar ?? goalDef.defaultSidebar ?? 'classic-grouped'}\`
+- **Recommended Page Suite**: ${goalDef.recommendedPreviews.join(', ')}
+
+## Mandatory Page Layout Specifications
+When generating or extending frontend pages for this application, the AI agent MUST use the configured archetypes below as the mandatory foundation:
+${layoutEntries || '- (Using defaults specified in DESIGN.md Section 7)'}
 
 ## Critical Tokens
 - Primary Brand: \`var(--color-primary)\`

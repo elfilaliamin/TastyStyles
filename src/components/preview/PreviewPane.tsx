@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, useMemo, Suspense, lazy } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ViewportSwitcher } from './ViewportSwitcher';
 import { ButtonsPreview } from './components/ButtonsPreview';
@@ -11,8 +11,15 @@ import { NavbarPreview } from './components/NavbarPreview';
 import { SidebarPreview } from './components/SidebarPreview';
 import { getPreviewCssVariables } from '../../lib/tokenModel';
 import type { ViewportMode, PreviewComponentType } from '../../types';
-import { ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
-import { PREVIEW_REGISTRY, getPreviewIndex, getNextPreview, getPrevPreview } from '../../config/previews';
+import { ChevronLeft, ChevronRight, ChevronDown, AlertTriangle } from 'lucide-react';
+import {
+  PREVIEW_REGISTRY,
+  getPreviewIndex,
+  getNextPreview,
+  getPrevPreview,
+  getPreviewsForGoal,
+  GOAL_DEFINITIONS,
+} from '../../config/previews';
 
 const CATEGORY_LABELS: Record<string, string> = {
   Primitives: 'Component Primitives',
@@ -98,19 +105,35 @@ export const PreviewPane: React.FC = () => {
   // Scoped CSS Custom Properties derived canonically from tokenModel
   const cssVariables = getPreviewCssVariables(state);
 
-  const currentIndex = getPreviewIndex(activePreview);
+  const [isGoalFocus, setIsGoalFocus] = useState<boolean>(true);
+  const currentGoal = state.projectGoal ?? 'saas';
+  const activeGoalDef = GOAL_DEFINITIONS[currentGoal] ?? GOAL_DEFINITIONS.saas;
+
+  const scopedPreviews = useMemo(
+    () => (isGoalFocus ? getPreviewsForGoal(currentGoal) : PREVIEW_REGISTRY),
+    [isGoalFocus, currentGoal]
+  );
+
+  const currentIndex = getPreviewIndex(activePreview, scopedPreviews);
+
+  // If in goal focus mode and active preview is outside current goal scope, switch to the first preview of the goal
+  useEffect(() => {
+    if (isGoalFocus && scopedPreviews.length > 0 && !scopedPreviews.some((p) => p.id === activePreview)) {
+      setActivePreview(scopedPreviews[0].id);
+    }
+  }, [isGoalFocus, scopedPreviews, activePreview, setActivePreview]);
 
   const handlePrev = React.useCallback(() => {
-    const prev = getPrevPreview(activePreview);
+    const prev = getPrevPreview(activePreview, scopedPreviews);
     preloadComponent(prev);
     setActivePreview(prev);
-  }, [activePreview, setActivePreview]);
+  }, [activePreview, setActivePreview, scopedPreviews]);
 
   const handleNext = React.useCallback(() => {
-    const next = getNextPreview(activePreview);
+    const next = getNextPreview(activePreview, scopedPreviews);
     preloadComponent(next);
     setActivePreview(next);
-  }, [activePreview, setActivePreview]);
+  }, [activePreview, setActivePreview, scopedPreviews]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -320,28 +343,57 @@ export const PreviewPane: React.FC = () => {
           </button>
 
           {/* Quick Selection Dropdown */}
-          <div className="relative min-w-0">
+          <div className="relative min-w-0 flex items-center">
             <select
               value={activePreview}
               onChange={(e) => setActivePreview(e.target.value as PreviewComponentType)}
               aria-label="Select preview archetype"
               className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[145px] sm:max-w-[210px] md:max-w-xs truncate"
             >
-              {(['Primitives', 'Public', 'Commerce', 'Community', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
-                const items = PREVIEW_REGISTRY.filter((p) => p.category === cat);
-                if (items.length === 0) return null;
-                return (
-                  <optgroup key={cat} label={CATEGORY_LABELS[cat]}>
-                    {items.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.label}
-                      </option>
-                    ))}
-                  </optgroup>
-                );
-              })}
+              {isGoalFocus ? (
+                <optgroup label={`${activeGoalDef.emoji} ${activeGoalDef.label} Views`}>
+                  {scopedPreviews.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ) : (
+                (['Primitives', 'Commerce', 'Community', 'Public', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
+                  const items = PREVIEW_REGISTRY.filter((p) => p.category === cat);
+                  if (items.length === 0) return null;
+                  return (
+                    <optgroup key={cat} label={CATEGORY_LABELS[cat]}>
+                      {items.map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.label}
+                        </option>
+                      ))}
+                    </optgroup>
+                  );
+                })
+              )}
             </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
+
+          {/* Goal Focus Filter Pill Toggle */}
+          <button
+            type="button"
+            onClick={() => setIsGoalFocus((prev) => !prev)}
+            className={`px-2 py-1 text-[11px] font-bold rounded-lg border flex items-center gap-1 transition-colors cursor-pointer shrink-0 ${
+              isGoalFocus
+                ? 'bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-800'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700'
+            }`}
+            title={
+              isGoalFocus
+                ? `Showing ${scopedPreviews.length} views for ${activeGoalDef.label}. Click to view all 26 previews.`
+                : 'Showing all 26 views. Click to focus on goal views.'
+            }
+          >
+            <span>{isGoalFocus ? `${activeGoalDef.emoji} Goal Focus` : '🌐 All Views'}</span>
+          </button>
 
           {/* Navigation Next Button */}
           <button
@@ -356,7 +408,7 @@ export const PreviewPane: React.FC = () => {
 
           {/* Step indicator */}
           <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 hidden md:inline ml-0.5">
-            {currentIndex + 1}/{PREVIEW_REGISTRY.length}
+            {currentIndex >= 0 ? currentIndex + 1 : 1}/{scopedPreviews.length}
           </span>
 
           {/* Active icon spec pill */}
