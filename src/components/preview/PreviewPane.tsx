@@ -383,11 +383,14 @@ export const PreviewPane: React.FC = () => {
                 overflowX: 'hidden',
                 padding: isPageArchetype ? '0' : 'var(--ts-space-lg)',
                 boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
               <div
                 style={{
                   minHeight: '100%',
+                  flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: activePreview === 'overview' ? 'center' : 'stretch',
