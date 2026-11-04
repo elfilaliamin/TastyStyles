@@ -2,21 +2,14 @@ import React, { useRef } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { useEditorTheme } from '../../context/EditorThemeContext';
 import { exportJsonState, parseImportedJson } from '../../lib/exportUtils';
-import { Download, Upload, RotateCcw, Sun, Moon, FileCode, Undo2, Redo2, PanelLeft } from 'lucide-react';
+import { Download, Upload, RotateCcw, Sun, Moon, FileCode, Undo2, Redo2 } from 'lucide-react';
 
 interface HeaderProps {
   onNotify: (title: string, desc?: string, type?: 'success' | 'error' | 'info') => void;
   onOpenExportModal: () => void;
-  isSidebarOpen?: boolean;
-  onToggleSidebar?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  onNotify,
-  onOpenExportModal,
-  isSidebarOpen = false,
-  onToggleSidebar,
-}) => {
+export const Header: React.FC<HeaderProps> = ({ onNotify, onOpenExportModal }) => {
   const { state, dispatch, canUndo, canRedo, undo, redo } = useDesign();
   const { editorTheme, setEditorTheme } = useEditorTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -82,24 +75,6 @@ export const Header: React.FC<HeaderProps> = ({
             Deterministic Design System Token Compiler
           </p>
         </div>
-
-        {/* Toggle Editor Sidebar Button */}
-        {onToggleSidebar && (
-          <button
-            type="button"
-            onClick={onToggleSidebar}
-            className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all focus-ring cursor-pointer ml-3 ${
-              isSidebarOpen
-                ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30 hover:bg-sky-500/20 shadow-sm'
-                : 'bg-slate-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 shadow-sm'
-            }`}
-            title={`${isSidebarOpen ? 'Collapse' : 'Expand'} Editor Sidebar (Ctrl+B)`}
-            aria-label={`${isSidebarOpen ? 'Collapse' : 'Expand'} Editor Sidebar`}
-          >
-            <PanelLeft className="w-4 h-4 text-sky-500" />
-            <span>{isSidebarOpen ? 'Collapse Sidebar' : 'Editor Sidebar'}</span>
-          </button>
-        )}
       </div>
 
       {/* Global Actions */}

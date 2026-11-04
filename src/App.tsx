@@ -14,8 +14,7 @@ import { Sliders, Eye } from 'lucide-react';
 function MainLayout() {
   const { state } = useDesign();
   const { editorTheme, setEditorTheme } = useEditorTheme();
-  const [mobileTab, setMobileTab] = useState<'controls' | 'preview'>('preview');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [mobileTab, setMobileTab] = useState<'controls' | 'preview'>('controls');
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
@@ -25,25 +24,6 @@ function MainLayout() {
       setEditorTheme(state.activeMode);
     }
   }, [state.activeMode, editorTheme, setEditorTheme]);
-
-  // Keyboard shortcut Ctrl+B / Cmd+B to toggle sidebar
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
-        if (
-          document.activeElement?.tagName === 'INPUT' ||
-          document.activeElement?.tagName === 'TEXTAREA' ||
-          document.activeElement?.tagName === 'SELECT'
-        ) {
-          return;
-        }
-        e.preventDefault();
-        setIsSidebarOpen((prev) => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   const showToast = (title: string, description?: string, type: 'success' | 'error' | 'info' = 'success') => {
     setToast({
@@ -60,8 +40,6 @@ function MainLayout() {
       <Header
         onNotify={showToast}
         onOpenExportModal={() => setIsExportModalOpen(true)}
-        isSidebarOpen={isSidebarOpen}
-        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
       />
 
       {/* Mobile Top Navigation Tabs (<640px) */}
@@ -117,20 +95,14 @@ function MainLayout() {
             2. TABLET & DESKTOP VIEWPORT (>=640px)
             Left scrollable controls sidebar + Right expanded & fixed preview canvas
         ========================================================================= */}
-        <div className="hidden sm:flex flex-1 overflow-hidden w-full h-full relative">
-          {/* Left Controls Sidebar (scrollable & collapsible, always starts collapsed) */}
-          <aside
-            className={`${
-              isSidebarOpen ? 'w-80 lg:w-[360px] opacity-100' : 'w-0 opacity-0 border-r-0 pointer-events-none'
-            } flex-shrink-0 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full overflow-hidden bg-white dark:bg-slate-950/80 transition-all duration-300 ease-in-out`}
-          >
-            <div className="w-80 lg:w-[360px] h-full flex flex-col">
-              <ControlsPanel onClose={() => setIsSidebarOpen(false)} />
-            </div>
+        <div className="hidden sm:flex flex-1 overflow-hidden w-full h-full">
+          {/* Left Controls Sidebar (scrollable) */}
+          <aside className="w-80 lg:w-[360px] flex-shrink-0 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full overflow-hidden bg-white dark:bg-slate-950/80 transition-colors">
+            <ControlsPanel />
           </aside>
 
           {/* Expanded & Fixed Right Preview Canvas */}
-          <section className="flex-1 h-full overflow-hidden flex flex-col bg-slate-100/60 dark:bg-slate-950 transition-colors relative min-w-0">
+          <section className="flex-1 h-full overflow-hidden flex flex-col bg-slate-100/60 dark:bg-slate-950 transition-colors">
             <PreviewPane />
           </section>
         </div>

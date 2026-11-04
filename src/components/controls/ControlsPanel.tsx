@@ -7,35 +7,18 @@ import { LayoutSection } from './LayoutSection';
 import { ComponentSection } from './ComponentSection';
 import { IconSection } from './IconSection';
 import { PresetSection } from './PresetSection';
-import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes, PanelLeftClose } from 'lucide-react';
+import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes } from 'lucide-react';
 
-interface ControlsPanelProps {
-  onClose?: () => void;
-}
-
-export const ControlsPanel: React.FC<ControlsPanelProps> = ({ onClose }) => {
+export const ControlsPanel: React.FC = () => {
   const { state, dispatch } = useDesign();
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950/80 transition-colors">
       {/* Spec name header input */}
       <div className="p-4 border-b border-slate-200 dark:border-slate-800 transition-colors">
-        <div className="flex items-center justify-between mb-1">
-          <label htmlFor="design-system-name" className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
-            System Name
-          </label>
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors focus-ring"
-              title="Collapse Editor Sidebar (Ctrl+B)"
-              aria-label="Collapse Editor Sidebar"
-            >
-              <PanelLeftClose className="w-4 h-4" />
-            </button>
-          )}
-        </div>
+        <label htmlFor="design-system-name" className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">
+          System Name
+        </label>
         <input
           id="design-system-name"
           type="text"
@@ -46,7 +29,7 @@ export const ControlsPanel: React.FC<ControlsPanelProps> = ({ onClose }) => {
         />
       </div>
 
-      {/* Accordion groups - scrollable list */}
+      {/* Accordion groups - scrollable list (all menus inside collapsed by default) */}
       <div className="flex-1 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-800/60 pb-16 lg:pb-6">
         <Accordion
           title="Presets"

@@ -14,7 +14,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   title,
   subtitle,
   icon,
-  defaultOpen = true,
+  defaultOpen = false,
   children,
   badge,
 }) => {
