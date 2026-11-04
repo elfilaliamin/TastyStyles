@@ -729,3 +729,4 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
     </header>
   );
 };
+

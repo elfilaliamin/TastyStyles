@@ -735,3 +735,4 @@ export const DynamicSidebar: React.FC<DynamicSidebarProps> = ({
     </aside>
   );
 };
+
