@@ -139,12 +139,12 @@ export const CheckoutPage: React.FC = () => {
                   </h3>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
-                  <input type="text" placeholder="First Name" defaultValue="Alex" style={{ padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
-                  <input type="text" placeholder="Last Name" defaultValue="Rivers" style={{ padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
-                  <input type="text" placeholder="Street Address" defaultValue="548 Market St, Suite 102" style={{ gridColumn: 'span 2', padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
-                  <input type="text" placeholder="City" defaultValue="San Francisco" style={{ padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
-                  <input type="text" placeholder="Postal Code" defaultValue="94104" style={{ padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '10px' }}>
+                  <input type="text" placeholder="First Name" defaultValue="Alex" style={{ width: '100%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Last Name" defaultValue="Rivers" style={{ width: '100%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Street Address" defaultValue="548 Market St, Suite 102" style={{ gridColumn: 'span 2', width: '100%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                  <input type="text" placeholder="City" defaultValue="San Francisco" style={{ width: '100%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Postal Code" defaultValue="94104" style={{ width: '100%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
                 </div>
               </div>
 
@@ -189,10 +189,10 @@ export const CheckoutPage: React.FC = () => {
                       Apple Pay / GPay
                     </button>
                   </div>
-                  <input type="text" placeholder="Card Number" defaultValue="•••• •••• •••• 4242" style={{ padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                  <input type="text" placeholder="Card Number" defaultValue="•••• •••• •••• 4242" style={{ width: '100%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <input type="text" placeholder="MM / YY" defaultValue="12/28" style={{ width: '50%', padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
-                    <input type="text" placeholder="CVC" defaultValue="884" style={{ width: '50%', padding: '8px 10px', borderRadius: 'var(--ts-radius)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                    <input type="text" placeholder="MM / YY" defaultValue="12/28" style={{ width: '50%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
+                    <input type="text" placeholder="CVC" defaultValue="884" style={{ width: '50%', boxSizing: 'border-box', padding: '8px 10px', borderRadius: 'var(--ts-radius-surface, 8px)', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', fontSize: '12px' }} />
                   </div>
                 </div>
               </div>

@@ -59,13 +59,15 @@ export const ContactPage: React.FC = () => {
             gap: 'var(--ts-space-md)',
           }}
         >
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--ts-space-sm)' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 'var(--ts-space-sm)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
               <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>First Name</label>
               <input
                 type="text"
                 placeholder="Jane"
                 style={{
+                  width: '100%',
+                  boxSizing: 'border-box',
                   backgroundColor: 'var(--ts-color-background)',
                   color: 'var(--ts-color-text)',
                   border: '1px solid var(--ts-color-border)',
@@ -73,15 +75,18 @@ export const ContactPage: React.FC = () => {
                   padding: 'var(--ts-space-sm)',
                   fontSize: 'calc(var(--ts-base-size) * 0.85)',
                   outline: 'none',
+                  fontFamily: 'var(--ts-font-body)',
                 }}
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
               <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>Last Name</label>
               <input
                 type="text"
                 placeholder="Doe"
                 style={{
+                  width: '100%',
+                  boxSizing: 'border-box',
                   backgroundColor: 'var(--ts-color-background)',
                   color: 'var(--ts-color-text)',
                   border: '1px solid var(--ts-color-border)',
@@ -89,17 +94,20 @@ export const ContactPage: React.FC = () => {
                   padding: 'var(--ts-space-sm)',
                   fontSize: 'calc(var(--ts-base-size) * 0.85)',
                   outline: 'none',
+                  fontFamily: 'var(--ts-font-body)',
                 }}
               />
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
             <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>Email Address</label>
             <input
               type="email"
               placeholder="jane.doe@company.com"
               style={{
+                width: '100%',
+                boxSizing: 'border-box',
                 backgroundColor: 'var(--ts-color-background)',
                 color: 'var(--ts-color-text)',
                 border: '1px solid var(--ts-color-border)',
@@ -107,14 +115,17 @@ export const ContactPage: React.FC = () => {
                 padding: 'var(--ts-space-sm)',
                 fontSize: 'calc(var(--ts-base-size) * 0.85)',
                 outline: 'none',
+                fontFamily: 'var(--ts-font-body)',
               }}
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
             <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>Inquiry Type</label>
             <select
               style={{
+                width: '100%',
+                boxSizing: 'border-box',
                 backgroundColor: 'var(--ts-color-background)',
                 color: 'var(--ts-color-text)',
                 border: '1px solid var(--ts-color-border)',
@@ -122,6 +133,7 @@ export const ContactPage: React.FC = () => {
                 padding: 'var(--ts-space-sm)',
                 fontSize: 'calc(var(--ts-base-size) * 0.85)',
                 outline: 'none',
+                fontFamily: 'var(--ts-font-body)',
               }}
             >
               <option>Technical Question</option>
@@ -130,12 +142,14 @@ export const ContactPage: React.FC = () => {
             </select>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
             <label style={{ fontSize: 'calc(var(--ts-base-size) * 0.8)', fontWeight: 600 }}>Message</label>
             <textarea
               rows={4}
               placeholder="How can we help your team?"
               style={{
+                width: '100%',
+                boxSizing: 'border-box',
                 backgroundColor: 'var(--ts-color-background)',
                 color: 'var(--ts-color-text)',
                 border: '1px solid var(--ts-color-border)',
@@ -143,6 +157,7 @@ export const ContactPage: React.FC = () => {
                 padding: 'var(--ts-space-sm)',
                 fontSize: 'calc(var(--ts-base-size) * 0.85)',
                 outline: 'none',
+                fontFamily: 'var(--ts-font-body)',
                 resize: 'vertical',
               }}
             />
