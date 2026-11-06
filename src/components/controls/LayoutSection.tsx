@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { registries } from '../../lib/registry';
 import type { PageLayouts } from '../../config/schema';
 import { getLayoutsForPage } from '../../config/layoutCatalog';
 import {
+  PREVIEW_REGISTRY,
+  type PreviewDefinition,
   getPreviewDefinition,
   getPreviewIndex,
   getNextPreview,
   getPrevPreview,
-  getPreviewsForGoal,
 } from '../../config/previews';
+import { getPurposeDefinition } from '../../config/purposes';
 import {
   ChevronLeft,
   ChevronRight,
-  Bell,
   Lock,
   AlertTriangle,
   LayoutDashboard,
@@ -26,8 +27,6 @@ import {
   CheckCircle,
   HelpCircle,
   Layers,
-  PanelTop,
-  PanelLeft,
 } from 'lucide-react';
 
 /* ==========================================================================
@@ -455,8 +454,21 @@ interface LayoutOption {
 export const LayoutSection: React.FC = () => {
   const { state, dispatch, activePreview, setActivePreview } = useDesign();
 
-  const currentGoal = state.projectGoal ?? 'saas';
-  const scopedPreviews = getPreviewsForGoal(currentGoal);
+  const currentPurposeDef = state.project?.purpose ? getPurposeDefinition(state.project.purpose) : null;
+  const scopedPreviews = useMemo(() => {
+    if (!currentPurposeDef) return PREVIEW_REGISTRY;
+    const projectPages = state.project?.pages ?? [];
+    if (projectPages.length > 0) {
+      return projectPages
+        .filter((p) => p.enabled)
+        .map((p) => PREVIEW_REGISTRY.find((pr) => pr.id === p.pageType))
+        .filter((p): p is PreviewDefinition => Boolean(p));
+    }
+    return currentPurposeDef.pages
+      .map((p) => PREVIEW_REGISTRY.find((pr) => pr.id === p.pageType))
+      .filter((p): p is PreviewDefinition => Boolean(p));
+  }, [currentPurposeDef, state.project?.pages]);
+
   const previewDef = getPreviewDefinition(activePreview);
   const currentIndex = getPreviewIndex(activePreview, scopedPreviews);
   const pageLayouts: Partial<PageLayouts> = state.pageLayouts ?? {};
@@ -482,9 +494,6 @@ export const LayoutSection: React.FC = () => {
       case 'onboarding': return <Sparkles className="w-3.5 h-3.5 text-violet-500" />;
       case 'success': return <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />;
       case 'empty-state': return <HelpCircle className="w-3.5 h-3.5 text-amber-500" />;
-      case 'navbar': return <PanelTop className="w-3.5 h-3.5 text-indigo-500" />;
-      case 'sidebar': return <PanelLeft className="w-3.5 h-3.5 text-sky-500" />;
-      case 'popups': return <Bell className="w-3.5 h-3.5 text-amber-500" />;
       default: return <Layers className="w-3.5 h-3.5 text-sky-500" />;
     }
   };
@@ -580,20 +589,6 @@ export const LayoutSection: React.FC = () => {
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { detail: id as PageLayouts['detail'] } }),
         };
 
-      case 'navbar':
-        return {
-          options: getLayoutsForPage('navbar'),
-          selectedId: pageLayouts.navbar ?? 'saas-header',
-          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { navbar: id as PageLayouts['navbar'] } }),
-        };
-
-      case 'sidebar':
-        return {
-          options: getLayoutsForPage('sidebar'),
-          selectedId: pageLayouts.sidebar ?? 'classic-grouped',
-          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { sidebar: id as PageLayouts['sidebar'] } }),
-        };
-
       case 'ecommerce-catalog':
         return {
           options: getLayoutsForPage('ecommerce-catalog'),
@@ -664,13 +659,7 @@ export const LayoutSection: React.FC = () => {
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolio: id as PageLayouts['portfolio'] } }),
         };
 
-      // Component Primitives & Single-Layout Views: Always keep a single layout named 'Default'
-      case 'buttons':
-      case 'forms':
-      case 'cards':
-      case 'feedback':
-      case 'popups':
-      case 'table':
+      // Single-Layout Views: Always keep a single layout named 'Default'
       case 'blog':
       case 'contact':
       case 'billing':

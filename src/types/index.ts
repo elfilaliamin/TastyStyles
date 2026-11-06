@@ -4,15 +4,6 @@ export type ViewportMode = 'mobile' | 'tablet' | 'desktop';
 export type MobileTab = 'controls' | 'preview';
 
 export type PreviewComponentType =
-  // Component Primitives
-  | 'buttons'
-  | 'forms'
-  | 'cards'
-  | 'feedback'
-  | 'popups'
-  | 'table'
-  | 'navbar'
-  | 'sidebar'
   // Public Pages
   | 'landing'
   | 'pricing'

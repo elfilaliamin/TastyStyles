@@ -1,35 +1,17 @@
 import React, { useState, useEffect, useRef, useMemo, Suspense, lazy } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ViewportSwitcher } from './ViewportSwitcher';
-import { ButtonsPreview } from './components/ButtonsPreview';
-import { FormsPreview } from './components/FormsPreview';
-import { CardsPreview } from './components/CardsPreview';
-import { FeedbackPreview } from './components/FeedbackPreview';
-import { PopupsPreview } from './components/PopupsPreview';
-import { TablePreview } from './components/TablePreview';
-import { NavbarPreview } from './components/NavbarPreview';
-import { SidebarPreview } from './components/SidebarPreview';
 import { getPreviewCssVariables } from '../../lib/tokenModel';
 import type { ViewportMode, PreviewComponentType } from '../../types';
 import { ChevronLeft, ChevronRight, ChevronDown, AlertTriangle, Compass } from 'lucide-react';
 import {
   PREVIEW_REGISTRY,
+  type PreviewDefinition,
   getPreviewIndex,
   getNextPreview,
   getPrevPreview,
 } from '../../config/previews';
 import { getPurposeDefinition } from '../../config/purposes';
-
-const CATEGORY_LABELS: Record<string, string> = {
-  Primitives: 'Component Primitives',
-  Public: 'Public Pages',
-  Commerce: 'Commerce & Transactions',
-  Community: 'Community & Social',
-  Auth: 'Auth & Onboarding',
-  Core: 'Core Application',
-  Account: 'Account & Workspace',
-  System: 'System States',
-};
 
 // Page Archetypes (Lazy Loaded for Optimal Bundle Splitting)
 const LandingPage = lazy(() => import('./pages/public/LandingPage').then(m => ({ default: m.LandingPage })));
@@ -107,30 +89,42 @@ export const PreviewPane: React.FC = () => {
   const hasPurpose = Boolean(state.project?.purpose);
   const currentPurposeDef = state.project?.purpose ? getPurposeDefinition(state.project.purpose) : null;
 
-  const { purposePreviews, scopedPreviews } = useMemo(() => {
-    if (!currentPurposeDef) {
-      return { purposePreviews: [], scopedPreviews: PREVIEW_REGISTRY };
+  const purposePages = useMemo(() => {
+    if (!currentPurposeDef) return [];
+    const projectPages = state.project?.pages ?? [];
+    if (projectPages.length > 0) {
+      return projectPages
+        .filter((p) => p.enabled)
+        .map((p) => PREVIEW_REGISTRY.find((pr) => pr.id === p.pageType))
+        .filter((p): p is PreviewDefinition => Boolean(p));
     }
-    const purposePageIds = new Set(currentPurposeDef.pages.map((p) => p.pageType));
-    const matched = PREVIEW_REGISTRY.filter((p) => purposePageIds.has(p.id));
-    const others = PREVIEW_REGISTRY.filter((p) => !purposePageIds.has(p.id));
-    return {
-      purposePreviews: matched,
-      scopedPreviews: [...matched, ...others],
-    };
-  }, [currentPurposeDef]);
+    return currentPurposeDef.pages
+      .map((p) => PREVIEW_REGISTRY.find((pr) => pr.id === p.pageType))
+      .filter((p): p is PreviewDefinition => Boolean(p));
+  }, [currentPurposeDef, state.project?.pages]);
 
+  const scopedPreviews = purposePages;
   const currentIndex = getPreviewIndex(activePreview, scopedPreviews);
 
+  // Auto-snap activePreview to the first purpose page if current preview is not in purpose
+  useEffect(() => {
+    if (hasPurpose && purposePages.length > 0) {
+      const exists = purposePages.some((p) => p.id === activePreview);
+      if (!exists) {
+        setActivePreview(purposePages[0].id);
+      }
+    }
+  }, [hasPurpose, purposePages, activePreview, setActivePreview]);
+
   const handlePrev = React.useCallback(() => {
-    if (!hasPurpose) return;
+    if (!hasPurpose || scopedPreviews.length === 0) return;
     const prev = getPrevPreview(activePreview, scopedPreviews);
     preloadComponent(prev);
     setActivePreview(prev);
   }, [hasPurpose, activePreview, setActivePreview, scopedPreviews]);
 
   const handleNext = React.useCallback(() => {
-    if (!hasPurpose) return;
+    if (!hasPurpose || scopedPreviews.length === 0) return;
     const next = getNextPreview(activePreview, scopedPreviews);
     preloadComponent(next);
     setActivePreview(next);
@@ -168,7 +162,6 @@ export const PreviewPane: React.FC = () => {
       setHasOverflow(overflowing);
     };
 
-    // Run after DOM render
     const frame = requestAnimationFrame(checkOverflow);
 
     const ro = new ResizeObserver(() => {
@@ -194,67 +187,8 @@ export const PreviewPane: React.FC = () => {
       ? '768px'
       : '100%';
 
-  const isFullBleed = [
-    // Navigation & Application Shells
-    'sidebar',
-    'navbar',
-    // Commerce & Transactional
-    'ecommerce-catalog',
-    'product-detail',
-    'checkout',
-    'marketplace',
-    'booking',
-    // Community & Content
-    'editorial',
-    'portfolio',
-    'charity',
-    'forum',
-    'streaming',
-    // Public Pages
-    'landing',
-    'pricing',
-    'blog',
-    'contact',
-    // Auth & Onboarding
-    'auth',
-    'onboarding',
-    // Core Application
-    'dashboard',
-    'detail',
-    'kanban',
-    'chat',
-    // Account & Workspace
-    'settings',
-    'billing',
-    'team',
-    // System States
-    'error',
-    'empty-state',
-    'success',
-  ].includes(activePreview);
-
-  const isPageArchetype = isFullBleed;
-
   const renderActivePreview = () => {
     switch (activePreview) {
-      // Component Primitives
-      case 'buttons':
-        return <ButtonsPreview />;
-      case 'forms':
-        return <FormsPreview />;
-      case 'cards':
-        return <CardsPreview />;
-      case 'feedback':
-        return <FeedbackPreview />;
-      case 'popups':
-        return <PopupsPreview />;
-      case 'table':
-        return <TablePreview />;
-      case 'navbar':
-        return <NavbarPreview />;
-      case 'sidebar':
-        return <SidebarPreview />;
-
       // Commerce & Transactional
       case 'ecommerce-catalog':
         return <ProductCatalogPage />;
@@ -322,7 +256,7 @@ export const PreviewPane: React.FC = () => {
         return <SuccessConfirmPage />;
 
       default:
-        return <ButtonsPreview />;
+        return <LandingPage />;
     }
   };
 
@@ -336,7 +270,7 @@ export const PreviewPane: React.FC = () => {
           <button
             type="button"
             onClick={handlePrev}
-            disabled={!hasPurpose}
+            disabled={!hasPurpose || scopedPreviews.length <= 1}
             className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             title="Previous preview (Shift+[)"
             aria-label="Previous preview"
@@ -350,38 +284,17 @@ export const PreviewPane: React.FC = () => {
               value={activePreview}
               onChange={(e) => setActivePreview(e.target.value as PreviewComponentType)}
               disabled={!hasPurpose}
-              aria-label="Select preview archetype"
+              aria-label="Select preview page"
               className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[170px] sm:max-w-[240px] md:max-w-xs truncate disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {!hasPurpose ? (
                 <option value="">Choose Purpose First</option>
               ) : (
-                <>
-                  {purposePreviews.length > 0 && (
-                    <optgroup label={`${currentPurposeDef?.emoji ?? '🎯'} ${currentPurposeDef?.label ?? 'Purpose'} — Pages`}>
-                      {purposePreviews.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.label}
-                        </option>
-                      ))}
-                    </optgroup>
-                  )}
-                  {(['Primitives', 'Commerce', 'Community', 'Public', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
-                    const items = PREVIEW_REGISTRY.filter(
-                      (p) => p.category === cat && (!currentPurposeDef || !currentPurposeDef.pages.some((pg) => pg.pageType === p.id))
-                    );
-                    if (items.length === 0) return null;
-                    return (
-                      <optgroup key={cat} label={CATEGORY_LABELS[cat]}>
-                        {items.map((p) => (
-                          <option key={p.id} value={p.id}>
-                            {p.label}
-                          </option>
-                        ))}
-                      </optgroup>
-                    );
-                  })}
-                </>
+                purposePages.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.label}
+                  </option>
+                ))
               )}
             </select>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
@@ -391,7 +304,7 @@ export const PreviewPane: React.FC = () => {
           <button
             type="button"
             onClick={handleNext}
-            disabled={!hasPurpose}
+            disabled={!hasPurpose || scopedPreviews.length <= 1}
             className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             title="Next preview (Shift+])"
             aria-label="Next preview"
@@ -422,7 +335,7 @@ export const PreviewPane: React.FC = () => {
         <ViewportSwitcher currentMode={viewportMode} onChange={setViewportMode} />
       </div>
 
-      {/* Preview Canvas Area - Fixed height to end of screen view height */}
+      {/* Preview Canvas Area */}
       <div className="flex-1 overflow-hidden p-2.5 sm:p-3.5 lg:p-4 flex flex-col items-center justify-center bg-slate-200/60 dark:bg-slate-950/90 transition-colors min-h-0">
         <div
           className="transition-all duration-300 w-full h-full flex flex-col items-center justify-center min-h-0"
@@ -441,7 +354,6 @@ export const PreviewPane: React.FC = () => {
               </p>
             </div>
           ) : (
-            /* Isolated sandbox frame fixed to container height with internal scrolling */
             <div
               data-viewport={viewportMode}
               data-icon-library={state.icons?.library ?? 'lucide'}
@@ -466,7 +378,6 @@ export const PreviewPane: React.FC = () => {
                 } as React.CSSProperties
               }
             >
-              {/* Scrollable Viewport inside the preview frame */}
               <div
                 ref={scrollContainerRef}
                 style={{
@@ -475,7 +386,7 @@ export const PreviewPane: React.FC = () => {
                   height: '100%',
                   overflowY: 'auto',
                   overflowX: 'hidden',
-                  padding: isFullBleed ? '0' : 'var(--ts-space-lg)',
+                  padding: 0,
                   boxSizing: 'border-box',
                   display: 'flex',
                   flexDirection: 'column',
@@ -493,29 +404,25 @@ export const PreviewPane: React.FC = () => {
                     width: '100%',
                   }}
                 >
-                  {isPageArchetype ? (
-                    <Suspense
-                      fallback={
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: '240px',
-                            color: 'var(--ts-color-text)',
-                            opacity: 0.6,
-                            fontSize: 'calc(var(--ts-base-size) * 0.85)',
-                          }}
-                        >
-                          Loading archetype simulation...
-                        </div>
-                      }
-                    >
-                      {renderActivePreview()}
-                    </Suspense>
-                  ) : (
-                    renderActivePreview()
-                  )}
+                  <Suspense
+                    fallback={
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: '240px',
+                          color: 'var(--ts-color-text)',
+                          opacity: 0.6,
+                          fontSize: 'calc(var(--ts-base-size) * 0.85)',
+                        }}
+                      >
+                        Loading archetype simulation...
+                      </div>
+                    }
+                  >
+                    {renderActivePreview()}
+                  </Suspense>
                 </div>
               </div>
             </div>

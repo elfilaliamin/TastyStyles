@@ -8,14 +8,10 @@ import { ComponentSection } from './ComponentSection';
 import { IconSection } from './IconSection';
 import { PresetSection } from './PresetSection';
 import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes, RotateCcw } from 'lucide-react';
-import { GOAL_DEFINITIONS } from '../../config/previews';
-import type { ProjectGoal } from '../../config/schema';
-import { GoalSelector } from './GoalSelector';
 import { getPurposeDefinition } from '../../config/purposes';
 
 export const ControlsPanel: React.FC = () => {
-  const { state, dispatch, setActivePreview } = useDesign();
-  const currentGoal: ProjectGoal = state.projectGoal ?? 'saas';
+  const { state, dispatch } = useDesign();
   const activePurposeDef = state.project?.purpose ? getPurposeDefinition(state.project.purpose) : null;
 
   return (
@@ -62,20 +58,6 @@ export const ControlsPanel: React.FC = () => {
           </button>
         </div>
       )}
-
-      {/* Target Goal / Sector Selector */}
-      <div className="p-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 transition-colors">
-        <GoalSelector
-          currentGoal={currentGoal}
-          onSelectGoal={(nextGoal) => {
-            dispatch({ type: 'SET_PROJECT_GOAL', goal: nextGoal });
-            const def = GOAL_DEFINITIONS[nextGoal];
-            if (def?.recommendedPreviews?.[0]) {
-              setActivePreview(def.recommendedPreviews[0]);
-            }
-          }}
-        />
-      </div>
 
       {/* Accordion groups - scrollable list (all menus inside collapsed by default) */}
       <div className="flex-1 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-800/60 pb-16 lg:pb-6">
