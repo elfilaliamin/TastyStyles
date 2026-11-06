@@ -5,6 +5,7 @@ import {
   DesignStateSchema,
   LayoutManifestSchema,
   SectionManifestSchema,
+  type DesignState,
 } from '../src/config/schema';
 import fontsRaw from '../src/config/fonts.json';
 import layoutsRaw from '../src/config/layouts.json';
@@ -176,7 +177,7 @@ for (const preset of presets) {
 
   // Parity check: CSS block in markdown must contain the generated CSS
   if (!compiledMd.includes(unifiedCss.trim())) {
-    console.error(`❌ Zero-drift mismatch: Markdown CSS block does not match generateUnifiedCssTokens for preset ${preset.name}`);
+    console.error(`❌ Zero-drift mismatch: Markdown CSS block does not match generateUnifiedCssTokens for preset ${preset.label}`);
     process.exit(1);
   }
 
@@ -187,7 +188,7 @@ for (const preset of presets) {
     // Exclude runtime css properties like calc() or local variables if any
     if (varName.startsWith('--color-') || varName.startsWith('--font-') || varName.startsWith('--spacing-') || varName.startsWith('--radius-') || varName.startsWith('--shadow-') || varName.startsWith('--icon-')) {
       if (!unifiedCss.includes(varName)) {
-        console.error(`❌ Broken token reference: ${varName} used in Markdown recipes but NOT defined in CSS tokens for ${preset.name}`);
+        console.error(`❌ Broken token reference: ${varName} used in Markdown recipes but NOT defined in CSS tokens for ${preset.label}`);
         process.exit(1);
       }
     }
@@ -233,7 +234,7 @@ if (parsedPopulated.project.purpose !== 'saas-dashboard' || parsedPopulated.proj
 console.log('✅ Populated project state parsed and preserved.');
 
 // 3. Reducer tests: SET_PURPOSE, SET_PAGES, TOGGLE_PAGE, REORDER_PAGES, SET_PAGE_LAYOUT
-let testState = defaultInitialState;
+let testState: DesignState = defaultInitialState;
 testState = designReducer(testState, { type: 'SET_PURPOSE', purpose: 'ecommerce-store' });
 if (testState.project.purpose !== 'ecommerce-store') {
   console.error('❌ Reducer SET_PURPOSE failed');
@@ -295,7 +296,7 @@ try {
 }
 
 // Check purpose auto-population on SET_PURPOSE
-const ecommerceState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'ecommerce' });
+const ecommerceState: DesignState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'ecommerce' });
 if (ecommerceState.project.purpose !== 'ecommerce' || ecommerceState.project.pages.length !== 7) {
   console.error('❌ SET_PURPOSE for ecommerce failed to populate 7 default pages');
   process.exit(1);
@@ -305,7 +306,7 @@ console.log('✅ SET_PURPOSE automatically populates recommended pages with layo
 console.log('--- Testing Phase 3: Layout & Section Registries ---');
 // 1. Verify all sections
 const sectionsDir = path.resolve('src/sections');
-const sectionEntries = fs.readdirSync(sectionsDir, { withFileTypes: true }).filter((d) => d.isDirectory());
+const sectionEntries = fs.readdirSync(sectionsDir, { withFileTypes: true }).filter((d: fs.Dirent) => d.isDirectory());
 let verifiedSections = 0;
 for (const entry of sectionEntries) {
   const manifestPath = path.join(sectionsDir, entry.name, 'manifest.ts');
@@ -325,13 +326,13 @@ console.log(`✅ Verified ${verifiedSections} section components and manifests w
 
 // 2. Verify all layouts
 const layoutsDir = path.resolve('src/layouts');
-const pageTypeDirs = fs.readdirSync(layoutsDir, { withFileTypes: true }).filter((d) => d.isDirectory());
+const pageTypeDirs = fs.readdirSync(layoutsDir, { withFileTypes: true }).filter((d: fs.Dirent) => d.isDirectory());
 let verifiedLayouts = 0;
 const layoutIdKeys = new Set<string>();
 
 for (const pDir of pageTypeDirs) {
   const pDirPath = path.join(layoutsDir, pDir.name);
-  const layoutDirs = fs.readdirSync(pDirPath, { withFileTypes: true }).filter((d) => d.isDirectory());
+  const layoutDirs = fs.readdirSync(pDirPath, { withFileTypes: true }).filter((d: fs.Dirent) => d.isDirectory());
   for (const lDir of layoutDirs) {
     const manifestPath = path.join(pDirPath, lDir.name, 'manifest.ts');
     const layoutPath = path.join(pDirPath, lDir.name, 'Layout.tsx');

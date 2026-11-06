@@ -83,3 +83,4 @@ npm test
 npm run build
 ```
 All four checks must pass with zero TypeScript errors, zero linter warnings, and zero schema drift.
+

@@ -103,3 +103,4 @@ console.log(`   Directory: src/layouts/${pageType}/${layoutId}/`);
 console.log(`   - manifest.ts`);
 console.log(`   - Layout.tsx`);
 console.log(`   - thumb.txt`);
+

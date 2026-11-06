@@ -1,13 +1,14 @@
 import { DesignStateSchema, type DesignState } from '../config/schema';
 import { getFontEntry, getRadiusEntry, getSpacingEntry } from './registry';
 import { GOAL_DEFINITIONS } from '../config/previews';
+import { generateUnifiedCssTokens, resolveTokens } from './tokenModel';
 
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
-    if (navigator.clipboard && window.isSecureContext) {
+    if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
       return true;
-    } else {
+    } else if (typeof document !== 'undefined') {
       // Fallback for non-secure contexts
       const textArea = document.createElement('textarea');
       textArea.value = text;
@@ -21,6 +22,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
       textArea.remove();
       return success;
     }
+    return false;
   } catch (err) {
     console.error('Failed to copy to clipboard:', err);
     return false;
@@ -33,6 +35,7 @@ export function downloadFile(content: string, filename: string, mimeType: string
 }
 
 export function downloadBlob(blob: Blob, filename: string): void {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
@@ -61,8 +64,6 @@ export function parseImportedJson(jsonString: string): { success: true; state: D
     return { success: false, error: err instanceof Error ? err.message : 'Invalid JSON file.' };
   }
 }
-
-import { generateUnifiedCssTokens, resolveTokens } from './tokenModel';
 
 /**
  * Generate pure CSS Custom Properties block
