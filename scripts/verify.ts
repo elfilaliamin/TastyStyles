@@ -378,4 +378,17 @@ for (const page of ecommerceState.project.pages.filter((p) => p.enabled)) {
 }
 console.log('✅ PROJECT-BRIEF.md verified: Contains Part A sitemap, per-page layout specs, and Part B tokens.');
 
+console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
+const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');
+if (!fs.existsSync(workflowDoc)) {
+  console.error('❌ Missing .agent/workflows/add-layout-from-image.md');
+  process.exit(1);
+}
+const scaffoldScript = path.resolve('scripts/new-layout.ts');
+if (!fs.existsSync(scaffoldScript)) {
+  console.error('❌ Missing scripts/new-layout.ts');
+  process.exit(1);
+}
+console.log('✅ Image-to-layout workflow documentation and scaffolding script verified.');
+
 console.log('--- All Verification Checks Passed! ---');

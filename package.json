@@ -9,7 +9,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "verify": "tsx scripts/verify.ts",
-    "test": "npm run verify"
+    "test": "npm run verify",
+    "new:layout": "tsx scripts/new-layout.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
