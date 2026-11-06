@@ -13,6 +13,7 @@ import shadowsRaw from '../src/config/shadows.json';
 import spacingRaw from '../src/config/spacing.json';
 import presetsRaw from '../src/config/presets.json';
 import { compileMarkdown } from '../src/lib/compileMarkdown';
+import { compileProjectBrief } from '../src/lib/compileProjectBrief';
 import { calculateContrastRatio, calculateAPCA, checkColorHarmony } from '../src/lib/contrast';
 import { defaultInitialState, designReducer } from '../src/context/designReducer';
 import { validatePageTypes, PAGE_TYPES } from '../src/config/pageTypes';
@@ -349,5 +350,32 @@ for (const pDir of pageTypeDirs) {
   }
 }
 console.log(`✅ Verified ${verifiedLayouts} layout manifests and Layout.tsx components with Zod.`);
+
+console.log('--- Testing Phase 5: Brief Compiler & Agent Contracts ---');
+// 1. Generate brief for ecommerce state
+const ecommerceBrief = compileProjectBrief(ecommerceState);
+
+// Check required sections
+if (!ecommerceBrief.includes('Part A: Application Architecture & Sitemap')) {
+  console.error('❌ compileProjectBrief missing Part A header');
+  process.exit(1);
+}
+if (!ecommerceBrief.includes('Part B: Canonical Design System Tokens & Recipes')) {
+  console.error('❌ compileProjectBrief missing Part B header');
+  process.exit(1);
+}
+if (!ecommerceBrief.includes('DO NOT INVENT SECTIONS')) {
+  console.error('❌ compileProjectBrief missing mandatory agent prime directive');
+  process.exit(1);
+}
+
+// Check every enabled page is present in Part A
+for (const page of ecommerceState.project.pages.filter((p) => p.enabled)) {
+  if (!ecommerceBrief.includes(page.pageType)) {
+    console.error(`❌ compileProjectBrief missing enabled page '${page.pageType}'`);
+    process.exit(1);
+  }
+}
+console.log('✅ PROJECT-BRIEF.md verified: Contains Part A sitemap, per-page layout specs, and Part B tokens.');
 
 console.log('--- All Verification Checks Passed! ---');

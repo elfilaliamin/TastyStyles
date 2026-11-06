@@ -433,6 +433,7 @@ ${layoutEntries || '- (Using defaults specified in DESIGN.md Section 7)'}
 export function downloadZipBundle(state: DesignState, compiledMarkdown: string): void {
   const slug = state.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   const files = [
+    { name: 'PROJECT-BRIEF.md', content: compiledMarkdown },
     { name: 'DESIGN.md', content: compiledMarkdown },
     { name: `${slug}-spec.md`, content: compiledMarkdown },
     { name: 'tokens.css', content: generateCssTokens(state) },

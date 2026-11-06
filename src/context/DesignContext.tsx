@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useReducer, useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { DesignStateSchema, type DesignState, type ColorPalette } from '../config/schema';
 import { designReducer, defaultInitialState, type DesignAction } from './designReducer';
-import { compileMarkdown } from '../lib/compileMarkdown';
+import { compileProjectBrief } from '../lib/compileProjectBrief';
 import { updateDynamicFonts, loadAllPreviewFonts } from '../lib/fonts';
 import { getFontEntry, registries } from '../lib/registry';
 import type { PreviewComponentType } from '../types';
@@ -267,7 +267,7 @@ export const DesignProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   );
 
   const compiledMarkdown = useMemo(
-    () => compileMarkdown(state),
+    () => compileProjectBrief(state),
     [state]
   );
 
