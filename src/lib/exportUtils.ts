@@ -2,6 +2,7 @@ import { DesignStateSchema, type DesignState } from '../config/schema';
 import { getFontEntry, getRadiusEntry, getSpacingEntry } from './registry';
 import { GOAL_DEFINITIONS } from '../config/previews';
 import { generateUnifiedCssTokens, resolveTokens } from './tokenModel';
+import { compileMarkdown } from './compileMarkdown';
 
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
@@ -13,8 +14,8 @@ export async function copyToClipboard(text: string): Promise<boolean> {
       const textArea = document.createElement('textarea');
       textArea.value = text;
       textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
+      textArea.style.opacity = '0';
+      textArea.style.pointerEvents = 'none';
       document.body.appendChild(textArea);
       textArea.focus();
       textArea.select();
@@ -433,10 +434,11 @@ ${layoutEntries || '- (Using defaults specified in DESIGN.md Section 7)'}
  */
 export function downloadZipBundle(state: DesignState, compiledMarkdown: string): void {
   const slug = state.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const designSpec = compileMarkdown(state);
   const files = [
     { name: 'PROJECT-BRIEF.md', content: compiledMarkdown },
-    { name: 'DESIGN.md', content: compiledMarkdown },
-    { name: `${slug}-spec.md`, content: compiledMarkdown },
+    { name: 'DESIGN.md', content: designSpec },
+    { name: `${slug}-spec.md`, content: designSpec },
     { name: 'tokens.css', content: generateCssTokens(state) },
     { name: 'tailwind.config.ts', content: generateTailwindConfig(state) },
     { name: 'tokens.ts', content: generateTypeScriptTokens(state) },
