@@ -143,6 +143,25 @@ export const PurposeDefinitionSchema = z.object({
   pages: z.array(PurposePageRefSchema).min(1),
 });
 
+export const SectionManifestSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  category: z.string(),
+  description: z.string(),
+  tags: z.array(z.string()).default([]),
+});
+
+export const LayoutManifestSchema = z.object({
+  id: z.string().min(1),
+  pageType: z.string().min(1),
+  label: z.string().min(1),
+  purposes: z.array(z.string()).default([]),
+  sections: z.array(z.string()).default([]),
+  description: z.string(),
+  tags: z.array(z.string()).default([]),
+  source: z.string().optional(),
+});
+
 export const DesignStateSchema = z.object({
   version: z.literal(1),
   name: z.string().default('My Design System'),
@@ -176,6 +195,8 @@ export type ProjectState = z.infer<typeof ProjectStateSchema>;
 export type PageTypeDefinition = z.infer<typeof PageTypeDefinitionSchema>;
 export type PurposePageRef = z.infer<typeof PurposePageRefSchema>;
 export type PurposeDefinition = z.infer<typeof PurposeDefinitionSchema>;
+export type SectionManifest = z.infer<typeof SectionManifestSchema>;
+export type LayoutManifest = z.infer<typeof LayoutManifestSchema>;
 export type DesignState = z.infer<typeof DesignStateSchema>;
 
 // Registry schemas

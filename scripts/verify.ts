@@ -1,4 +1,11 @@
-import { RegistriesSchema, DesignStateSchema } from '../src/config/schema';
+import fs from 'fs';
+import path from 'path';
+import {
+  RegistriesSchema,
+  DesignStateSchema,
+  LayoutManifestSchema,
+  SectionManifestSchema,
+} from '../src/config/schema';
 import fontsRaw from '../src/config/fonts.json';
 import layoutsRaw from '../src/config/layouts.json';
 import radiusRaw from '../src/config/radius.json';
@@ -293,5 +300,54 @@ if (ecommerceState.project.purpose !== 'ecommerce' || ecommerceState.project.pag
   process.exit(1);
 }
 console.log('✅ SET_PURPOSE automatically populates recommended pages with layout defaults.');
+
+console.log('--- Testing Phase 3: Layout & Section Registries ---');
+// 1. Verify all sections
+const sectionsDir = path.resolve('src/sections');
+const sectionEntries = fs.readdirSync(sectionsDir, { withFileTypes: true }).filter((d) => d.isDirectory());
+let verifiedSections = 0;
+for (const entry of sectionEntries) {
+  const manifestPath = path.join(sectionsDir, entry.name, 'manifest.ts');
+  const sectionPath = path.join(sectionsDir, entry.name, 'Section.tsx');
+  if (!fs.existsSync(manifestPath) || !fs.existsSync(sectionPath)) {
+    continue;
+  }
+  const mod = await import(`../src/sections/${entry.name}/manifest.ts`);
+  const parsed = SectionManifestSchema.parse(mod.manifest);
+  if (!parsed.id || !parsed.name) {
+    console.error(`❌ Section manifest in ${entry.name} invalid`);
+    process.exit(1);
+  }
+  verifiedSections++;
+}
+console.log(`✅ Verified ${verifiedSections} section components and manifests with Zod.`);
+
+// 2. Verify all layouts
+const layoutsDir = path.resolve('src/layouts');
+const pageTypeDirs = fs.readdirSync(layoutsDir, { withFileTypes: true }).filter((d) => d.isDirectory());
+let verifiedLayouts = 0;
+const layoutIdKeys = new Set<string>();
+
+for (const pDir of pageTypeDirs) {
+  const pDirPath = path.join(layoutsDir, pDir.name);
+  const layoutDirs = fs.readdirSync(pDirPath, { withFileTypes: true }).filter((d) => d.isDirectory());
+  for (const lDir of layoutDirs) {
+    const manifestPath = path.join(pDirPath, lDir.name, 'manifest.ts');
+    const layoutPath = path.join(pDirPath, lDir.name, 'Layout.tsx');
+    if (!fs.existsSync(manifestPath) || !fs.existsSync(layoutPath)) {
+      continue;
+    }
+    const mod = await import(`../src/layouts/${pDir.name}/${lDir.name}/manifest.ts`);
+    const parsed = LayoutManifestSchema.parse(mod.manifest);
+    const key = `${parsed.pageType}:${parsed.id}`;
+    if (layoutIdKeys.has(key)) {
+      console.error(`❌ Duplicate layout key found: ${key}`);
+      process.exit(1);
+    }
+    layoutIdKeys.add(key);
+    verifiedLayouts++;
+  }
+}
+console.log(`✅ Verified ${verifiedLayouts} layout manifests and Layout.tsx components with Zod.`);
 
 console.log('--- All Verification Checks Passed! ---');
