@@ -1,4 +1,4 @@
-import { DesignStateSchema, type DesignState } from '../config/schema';
+import { DesignStateSchema, type DesignState, type PageLayouts } from '../config/schema';
 import { getFontEntry, getRadiusEntry, getSpacingEntry } from './registry';
 import { GOAL_DEFINITIONS } from '../config/previews';
 import { generateUnifiedCssTokens, resolveTokens } from './tokenModel';
@@ -386,7 +386,7 @@ export function createZipBlob(files: { name: string; content: string }[]): Blob 
 export function generateAgentRulesSnippet(state: DesignState): string {
   const goal = state.projectGoal ?? 'saas';
   const goalDef = GOAL_DEFINITIONS[goal] ?? GOAL_DEFINITIONS.saas;
-  const pageLayouts = state.pageLayouts ?? {};
+  const pageLayouts: Partial<PageLayouts> = state.pageLayouts ?? {};
 
   const layoutEntries = Object.entries(pageLayouts)
     .filter(([, val]) => Boolean(val))
