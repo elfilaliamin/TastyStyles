@@ -6,3 +6,4 @@
 - Images only from `src/config/mediaCatalog.ts`.
 - Finish every task by running: npx tsc -b && npm run lint && npm test && npm run build.
 - Update `understand/project.md` when structure changes.
+
