@@ -41,6 +41,8 @@ const BookingPage = lazy(() => import('./pages/commerce/BookingPage').then(m => 
 // Content & Community Archetypes (Lazy Loaded)
 const EditorialPage = lazy(() => import('./pages/content/EditorialPage').then(m => ({ default: m.EditorialPage })));
 const PortfolioPage = lazy(() => import('./pages/content/PortfolioPage').then(m => ({ default: m.PortfolioPage })));
+const PortfolioProjectPage = lazy(() => import('./pages/content/PortfolioProjectPage').then(m => ({ default: m.PortfolioProjectPage })));
+const PortfolioDashboardPage = lazy(() => import('./pages/content/PortfolioDashboardPage').then(m => ({ default: m.PortfolioDashboardPage })));
 const CharityPage = lazy(() => import('./pages/content/CharityPage').then(m => ({ default: m.CharityPage })));
 const CommunityForumPage = lazy(() => import('./pages/content/CommunityForumPage').then(m => ({ default: m.CommunityForumPage })));
 const StreamingPage = lazy(() => import('./pages/content/StreamingPage').then(m => ({ default: m.StreamingPage })));
@@ -71,6 +73,8 @@ const preloadComponent = (type: string) => {
     case 'booking': void import('./pages/commerce/BookingPage'); break;
     case 'editorial': void import('./pages/content/EditorialPage'); break;
     case 'portfolio': void import('./pages/content/PortfolioPage'); break;
+    case 'portfolio-project': void import('./pages/content/PortfolioProjectPage'); break;
+    case 'portfolio-dashboard': void import('./pages/content/PortfolioDashboardPage'); break;
     case 'charity': void import('./pages/content/CharityPage'); break;
     case 'forum': void import('./pages/content/CommunityForumPage'); break;
     case 'streaming': void import('./pages/content/StreamingPage'); break;
@@ -206,6 +210,10 @@ export const PreviewPane: React.FC = () => {
         return <EditorialPage />;
       case 'portfolio':
         return <PortfolioPage />;
+      case 'portfolio-project':
+        return <PortfolioProjectPage />;
+      case 'portfolio-dashboard':
+        return <PortfolioDashboardPage />;
       case 'charity':
         return <CharityPage />;
       case 'forum':

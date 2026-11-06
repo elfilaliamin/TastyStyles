@@ -301,6 +301,11 @@ if (ecommerceState.project.purpose !== 'ecommerce' || ecommerceState.project.pag
   console.error('❌ SET_PURPOSE for ecommerce failed to populate 7 default pages');
   process.exit(1);
 }
+const portfolioState: DesignState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'portfolio' });
+if (portfolioState.project.purpose !== 'portfolio' || portfolioState.project.pages.length !== 5) {
+  console.error('❌ SET_PURPOSE for portfolio failed to populate 5 default pages');
+  process.exit(1);
+}
 console.log('✅ SET_PURPOSE automatically populates recommended pages with layout defaults.');
 
 console.log('--- Testing Phase 3: Layout & Section Registries ---');

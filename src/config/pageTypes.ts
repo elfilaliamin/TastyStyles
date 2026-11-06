@@ -122,10 +122,24 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
   // Creative & Community Archetypes
   {
     id: 'portfolio',
-    label: 'Portfolio & Creative Studio',
-    description: 'Case study showcases, client roster, testimonial quotes, and engagement calculator.',
+    label: 'Personal Portfolio & Resume',
+    description: 'Developer/designer profile, career experiences, education, projects, skills, languages, and contact.',
     category: 'community',
-    defaultLayout: 'case-study-hero',
+    defaultLayout: 'bento-developer',
+  },
+  {
+    id: 'portfolio-project',
+    label: 'Project Case Study & Blog',
+    description: 'Project story deep dive, architecture breakdown, challenge/solution narrative, and live preview.',
+    category: 'community',
+    defaultLayout: 'case-study-narrative',
+  },
+  {
+    id: 'portfolio-dashboard',
+    label: 'Portfolio Owner CMS & Analytics',
+    description: 'Owner traffic analytics, landing section visibility toggles, and project publishing manager.',
+    category: 'account',
+    defaultLayout: 'analytics-cms-split',
   },
   {
     id: 'case-study',

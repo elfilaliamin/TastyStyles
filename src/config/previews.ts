@@ -20,7 +20,9 @@ export const PREVIEW_REGISTRY: PreviewDefinition[] = [
 
   // 2. Content & Community Archetypes
   { id: 'editorial', label: 'Media, News & Editorial', shortLabel: 'Editorial', category: 'Community', description: 'Masonry frontpage, focused prose with sticky TOC rail, and paywall meter overlay', hasCustomLayouts: true },
-  { id: 'portfolio', label: 'Portfolio & Creative Studio', shortLabel: 'Portfolio', category: 'Community', description: 'Case study hero metrics, minimalist editorial timeline, and interactive grid gallery', hasCustomLayouts: true },
+  { id: 'portfolio', label: 'Personal Portfolio & Resume', shortLabel: 'Portfolio', category: 'Community', description: 'Developer bento, chronological narrative, split card, and interactive console', hasCustomLayouts: true },
+  { id: 'portfolio-project', label: 'Project Case Study & Blog', shortLabel: 'Project Case Study', category: 'Community', description: 'Deep architectural writeup, challenges, solutions, and benchmark metrics', hasCustomLayouts: true },
+  { id: 'portfolio-dashboard', label: 'Portfolio Owner CMS & Analytics', shortLabel: 'Owner CMS', category: 'Account', description: 'Visitor analytics metrics, section visibility toggles, and project publishing controls', hasCustomLayouts: true },
   { id: 'charity', label: 'Non-Profit & Campaign Fundraising', shortLabel: 'Charity', category: 'Community', description: 'Goal thermometer hero, split cause impact calculator, and transparent donor wall', hasCustomLayouts: true },
   { id: 'forum', label: 'Community Forum & Q&A', shortLabel: 'Forum', category: 'Community', description: 'Three-column Reddit feed, Q&A solved code inspector, and compact thread table', hasCustomLayouts: true },
   { id: 'streaming', label: 'Entertainment & Live Streaming', shortLabel: 'Streaming', category: 'Community', description: 'Cinema theater video canvas, live stream with docked chat, and hi-res audio queue', hasCustomLayouts: true },

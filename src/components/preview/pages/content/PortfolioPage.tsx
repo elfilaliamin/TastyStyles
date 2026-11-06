@@ -2,37 +2,22 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
-import { IdentityBadgeBlock } from '../../../blocks/IdentityBadgeBlock';
 import { AppIcon } from '../../../common/AppIcon';
 import { MEDIA_CATALOG, type PortfolioProjectItem } from '../../../../config/mediaCatalog';
 
 export const PortfolioPage: React.FC = () => {
   const { state, activeColors } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
-  const layout = state.pageLayouts?.portfolio ?? 'case-study-hero';
+  const layout = state.pageLayouts?.portfolio ?? 'bento-developer';
 
   const projects: PortfolioProjectItem[] = MEDIA_CATALOG.portfolio;
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0].id);
   const activeProject = projects.find((p) => p.id === selectedProjectId) || projects[0];
 
-  const [selectedTier, setSelectedTier] = useState<'audit' | 'sprint' | 'retainer'>('sprint');
+  const [contactSubmitted, setContactSubmitted] = useState(false);
 
-  const testimonials = [
-    {
-      id: 't1',
-      client: 'Sarah Lin',
-      role: 'VP of Engineering, Solstice Labs',
-      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=160&q=80',
-      quote: 'Alex delivered our design token compiler 3 weeks ahead of schedule. Zero CSS drift across 14 repositories on launch day.',
-    },
-    {
-      id: 't2',
-      client: 'Marcus Vance',
-      role: 'Head of Product, Helios Energy',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&q=80',
-      quote: 'The telemetry visualization performance was stunning. Even on mobile devices, 120,000 live inverter nodes render flawlessly at 60fps.',
-    },
-  ];
+  // Interactive Terminal state
+  const [terminalCommand, setTerminalCommand] = useState('cat resume.json');
 
   return (
     <div
@@ -51,7 +36,7 @@ export const PortfolioPage: React.FC = () => {
       <main
         style={{
           padding: 'var(--ts-space-xl) var(--ts-space-lg)',
-          maxWidth: '1080px',
+          maxWidth: layout === 'split-showcase' ? '1200px' : '1040px',
           width: '100%',
           margin: '0 auto',
           boxSizing: 'border-box',
@@ -60,257 +45,483 @@ export const PortfolioPage: React.FC = () => {
           gap: 'var(--ts-space-xl)',
         }}
       >
-        {/* Intro Statement Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 'var(--ts-space-md)' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '680px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }} />
-              <span style={{ fontSize: '12px', fontWeight: 700, color: '#10b981' }}>Available for Select Q1 Enterprise Projects</span>
-            </div>
-            <h1 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * var(--ts-scale) * 1.5)', fontWeight: 900, margin: 0, lineHeight: 1.15 }}>
-              Alex Rivers — Staff Product Designer & Token Architect.
-            </h1>
-            <p style={{ margin: 0, fontSize: '15px', opacity: 0.8, lineHeight: 1.6 }}>
-              Specializing in high-density enterprise SaaS shells, deterministic design token compilers, and autonomous AI coding ground truth.
-            </p>
-          </div>
-
-          <IdentityBadgeBlock
-            name="Alex Rivers"
-            title="@alexrivers.design"
-            verified={true}
-            statusText="Accepting Q1 Inquiries"
-          />
-        </div>
-
-        {/* 1. CASE STUDY HERO LAYOUT */}
-        {layout === 'case-study-hero' && (
+        {/* ==============================================================
+            1. BENTO DEVELOPER LAYOUT (DEFAULT)
+            ============================================================== */}
+        {(layout === 'bento-developer' || layout === 'case-study-hero') && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
-            {/* Project Picker Chips */}
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', opacity: 0.6, marginRight: '4px' }}>
-                Featured Projects:
-              </span>
-              {projects.map((p) => {
-                const isSelected = p.id === activeProject.id;
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => setSelectedProjectId(p.id)}
+            {/* Top Bento Row: Profile Hero + Status & Skills Quick Matrix */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: 'var(--ts-space-md)' }}>
+              {/* Profile Card */}
+              <div
+                style={{
+                  backgroundColor: 'var(--ts-color-surface)',
+                  border: '1px solid var(--ts-color-border)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
+                  padding: 'var(--ts-space-xl)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--ts-space-md)',
+                  boxShadow: 'var(--ts-shadow)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <img
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=180&q=80"
+                    alt="Alex Rivers"
                     style={{
-                      padding: '6px 14px',
-                      borderRadius: '9999px',
-                      border: isSelected ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
-                      backgroundColor: isSelected ? 'var(--ts-color-primary)' : 'var(--ts-color-surface)',
-                      color: isSelected ? primaryTextColor : 'var(--ts-color-text)',
+                      width: '72px',
+                      height: '72px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      border: '3px solid var(--ts-color-primary)',
+                      flexShrink: 0,
+                    }}
+                  />
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <h1 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '20px', fontWeight: 900, margin: 0 }}>
+                        Alex Rivers
+                      </h1>
+                      <span style={{ color: 'var(--ts-color-primary)', fontSize: '14px' }}>★</span>
+                    </div>
+                    <p style={{ margin: '2px 0 0 0', fontSize: '13px', fontWeight: 600, opacity: 0.85 }}>
+                      Staff Design Technologist & Systems Architect
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '6px' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                      <span style={{ fontSize: '11px', fontWeight: 700, color: '#10b981' }}>Available for Select Q1 Work</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p style={{ margin: 0, fontSize: '13px', lineHeight: 1.6, opacity: 0.85 }}>
+                  Specializing in declarative design tokens, deterministic UI compilers, high-density enterprise application shells, and AI coding agent ground truth.
+                </p>
+
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <a
+                    href="#contact"
+                    style={{
+                      backgroundColor: 'var(--ts-color-primary)',
+                      color: primaryTextColor,
+                      padding: '8px 16px',
+                      borderRadius: 'var(--ts-radius-surface, 10px)',
                       fontWeight: 700,
                       fontSize: '12px',
-                      cursor: 'pointer',
-                      minHeight: '36px',
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
                     }}
                   >
-                    {p.title.split(':')[0]}
+                    <span>Get in Touch</span>
+                    <AppIcon name="arrowRight" size={13} />
+                  </a>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundColor: 'var(--ts-color-background)',
+                      color: 'var(--ts-color-text)',
+                      border: '1px solid var(--ts-color-border)',
+                      padding: '8px 14px',
+                      borderRadius: 'var(--ts-radius-surface, 10px)',
+                      fontWeight: 600,
+                      fontSize: '12px',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                    }}
+                  >
+                    <AppIcon name="download" size={13} />
+                    <span>Resume PDF</span>
                   </button>
-                );
-              })}
-            </div>
-
-            {/* Main Featured Case Study Card */}
-            <div
-              style={{
-                backgroundColor: 'var(--ts-color-surface)',
-                border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius-surface, 16px)',
-                overflow: 'hidden',
-                boxShadow: 'var(--ts-shadow)',
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
-              }}
-            >
-              {/* Left Column: Visual Media with Device Shimmer */}
-              <div style={{ position: 'relative', minHeight: '300px', backgroundColor: '#090d16', overflow: 'hidden' }}>
-                <img
-                  src={activeProject.coverImage}
-                  alt={activeProject.title}
-                  loading="lazy"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                  }}
-                />
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '12px',
-                    left: '12px',
-                    backgroundColor: 'rgba(0,0,0,0.75)',
-                    color: '#fff',
-                    padding: '4px 10px',
-                    borderRadius: '9999px',
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    backdropFilter: 'blur(8px)',
-                  }}
-                >
-                  {activeProject.clientLogoText} · {activeProject.year}
                 </div>
               </div>
 
-              {/* Right Column: Case Narrative & Quantified Outcome */}
-              <div style={{ padding: 'var(--ts-space-lg)', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)', justifyContent: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--ts-color-primary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                    {activeProject.category}
-                  </span>
+              {/* Skills & Spoken Languages Card */}
+              <div
+                style={{
+                  backgroundColor: 'var(--ts-color-surface)',
+                  border: '1px solid var(--ts-color-border)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
+                  padding: 'var(--ts-space-xl)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--ts-space-md)',
+                  boxShadow: 'var(--ts-shadow)',
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '11px', textTransform: 'uppercase', fontWeight: 800, color: 'var(--ts-color-accent)', marginBottom: '4px' }}>
+                    Core Technical Stack
+                  </div>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                    {['TypeScript', 'React 19', 'Design Tokens', 'Tailwind CSS', 'Vite', 'Node.js', 'Go', 'Zod', 'WCAG AAA', 'AST Compilers'].map((sk) => (
+                      <span
+                        key={sk}
+                        style={{
+                          padding: '3px 9px',
+                          borderRadius: '6px',
+                          backgroundColor: 'var(--ts-color-background)',
+                          border: '1px solid var(--ts-color-border)',
+                          fontSize: '11px',
+                          fontWeight: 600,
+                        }}
+                      >
+                        {sk}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '20px', fontWeight: 800, margin: 0 }}>
-                  {activeProject.title}
+                <div style={{ borderTop: '1px solid var(--ts-color-border)', paddingTop: 'var(--ts-space-sm)' }}>
+                  <div style={{ fontSize: '11px', textTransform: 'uppercase', fontWeight: 800, color: 'var(--ts-color-primary)', marginBottom: '4px' }}>
+                    Spoken & Programming Languages
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px', fontSize: '12px' }}>
+                    <div>• English <span style={{ opacity: 0.6 }}>(Native)</span></div>
+                    <div>• TypeScript <span style={{ opacity: 0.6 }}>(Expert)</span></div>
+                    <div>• Spanish <span style={{ opacity: 0.6 }}>(Fluent)</span></div>
+                    <div>• Go & Python <span style={{ opacity: 0.6 }}>(Proficient)</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Featured Projects Showcase Section */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-sm)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '18px', fontWeight: 800, margin: 0 }}>
+                  Featured Engineering Projects
                 </h2>
+                <span style={{ fontSize: '12px', opacity: 0.7 }}>Click to inspect case study</span>
+              </div>
 
-                <p style={{ margin: 0, fontSize: '13px', lineHeight: 1.6, opacity: 0.85 }}>
-                  {activeProject.summary}
-                </p>
-
-                {/* Quantified Business Metric Card */}
-                <div
-                  style={{
-                    padding: 'var(--ts-space-md)',
-                    borderRadius: 'var(--ts-radius-surface, 12px)',
-                    backgroundColor: 'var(--ts-color-background)',
-                    border: '1px solid var(--ts-color-border)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '16px',
-                  }}
-                >
-                  <div style={{ fontSize: '28px', fontWeight: 900, color: 'var(--ts-color-primary)', fontFamily: 'var(--ts-font-heading)' }}>
-                    {activeProject.metric}
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontWeight: 800, fontSize: '13px' }}>{activeProject.metricLabel}</span>
-                    <span style={{ fontSize: '11px', opacity: 0.7 }}>Verified production telemetry audit</span>
-                  </div>
-                </div>
-
-                {/* Tech Stack Pills */}
-                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                  {activeProject.tags.map((tag) => (
-                    <span
-                      key={tag}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 'var(--ts-space-md)' }}>
+                {projects.map((proj) => {
+                  const isSelected = proj.id === activeProject.id;
+                  return (
+                    <div
+                      key={proj.id}
+                      onClick={() => setSelectedProjectId(proj.id)}
                       style={{
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        backgroundColor: 'var(--ts-color-background)',
-                        border: '1px solid var(--ts-color-border)',
-                        fontSize: '11px',
-                        fontWeight: 600,
-                        opacity: 0.8,
+                        backgroundColor: 'var(--ts-color-surface)',
+                        border: `1px solid ${isSelected ? 'var(--ts-color-primary)' : 'var(--ts-color-border)'}`,
+                        borderRadius: 'var(--ts-radius-surface, 16px)',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        boxShadow: isSelected ? '0 10px 25px -5px rgba(0,0,0,0.1)' : 'var(--ts-shadow)',
+                        display: 'flex',
+                        flexDirection: 'column',
                       }}
                     >
-                      {tag}
-                    </span>
+                      <div style={{ height: '160px', overflow: 'hidden', position: 'relative' }}>
+                        <img
+                          src={proj.coverImage}
+                          alt={proj.title}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                        <span
+                          style={{
+                            position: 'absolute',
+                            top: '10px',
+                            right: '10px',
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            color: '#ffffff',
+                            padding: '3px 8px',
+                            borderRadius: '6px',
+                            fontSize: '10px',
+                            fontWeight: 700,
+                            backdropFilter: 'blur(4px)',
+                          }}
+                        >
+                          {proj.category}
+                        </span>
+                      </div>
+                      <div style={{ padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
+                        <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '15px', fontWeight: 800, margin: 0 }}>
+                          {proj.title}
+                        </h3>
+                        <p style={{ margin: 0, fontSize: '12px', opacity: 0.8, lineHeight: 1.5, flex: 1 }}>
+                          {proj.summary}
+                        </p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--ts-color-border)', paddingTop: '8px' }}>
+                          <span style={{ fontSize: '11px', fontWeight: 700, color: '#10b981' }}>
+                            {proj.metric}
+                          </span>
+                          <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--ts-color-primary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <span>Read Story</span>
+                            <AppIcon name="arrowRight" size={11} />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Work Experiences & Education 2-Column Split */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--ts-space-md)' }}>
+              {/* Experiences Timeline */}
+              <div
+                style={{
+                  backgroundColor: 'var(--ts-color-surface)',
+                  border: '1px solid var(--ts-color-border)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
+                  padding: 'var(--ts-space-lg)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--ts-space-md)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <AppIcon name="activity" size={16} style={{ color: 'var(--ts-color-primary)' }} />
+                  <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '16px', fontWeight: 800, margin: 0 }}>
+                    Career Experiences
+                  </h3>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {[
+                    {
+                      role: 'Staff Design Technologist',
+                      company: 'ApexDesign Labs',
+                      period: '2024 — Present',
+                      bullets: 'Architected automated token compilers eliminating CSS drift across 14 enterprise repositories.',
+                    },
+                    {
+                      role: 'Lead Frontend Systems Engineer',
+                      company: 'Solstice Networks',
+                      period: '2021 — 2024',
+                      bullets: 'Engineered realtime telemetry dashboard rendering 120,000 WebSocket nodes at 60fps.',
+                    },
+                    {
+                      role: 'Senior UI/UX Engineer',
+                      company: 'Helios Mobile',
+                      period: '2018 — 2021',
+                      bullets: 'Built multi-tenant fintech component library certified for WCAG 2.1 AAA accessibility.',
+                    },
+                  ].map((exp, i) => (
+                    <div key={i} style={{ borderLeft: '2px solid var(--ts-color-primary)', paddingLeft: '12px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                        <span style={{ fontWeight: 800, fontSize: '13px' }}>{exp.role}</span>
+                        <span style={{ fontSize: '10px', opacity: 0.6, fontFamily: 'monospace' }}>{exp.period}</span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: 'var(--ts-color-primary)', fontWeight: 600 }}>{exp.company}</div>
+                      <p style={{ margin: '4px 0 0 0', fontSize: '12px', opacity: 0.8, lineHeight: 1.5 }}>
+                        {exp.bullets}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Education & Honors */}
+              <div
+                style={{
+                  backgroundColor: 'var(--ts-color-surface)',
+                  border: '1px solid var(--ts-color-border)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
+                  padding: 'var(--ts-space-lg)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--ts-space-md)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <AppIcon name="award" size={16} style={{ color: 'var(--ts-color-accent)' }} />
+                  <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '16px', fontWeight: 800, margin: 0 }}>
+                    Education & Credentials
+                  </h3>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {[
+                    {
+                      degree: 'M.S. in Computer Science (HCI)',
+                      school: 'Stanford University',
+                      year: '2016 — 2018',
+                      detail: 'Focus on declarative UI compilation, visual perception modeling, and design systems.',
+                    },
+                    {
+                      degree: 'B.S. in Software Engineering',
+                      school: 'UC Berkeley',
+                      year: '2012 — 2016',
+                      detail: 'Magna Cum Laude • ACM Student Chapter President.',
+                    },
+                    {
+                      degree: 'Certifications & Honors',
+                      school: 'W3C & AWS',
+                      year: '2023 — 2025',
+                      detail: 'Certified Accessibility Specialist (CPACC) • AWS Solutions Architect Associate.',
+                    },
+                  ].map((edu, i) => (
+                    <div key={i} style={{ borderLeft: '2px solid var(--ts-color-accent)', paddingLeft: '12px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                        <span style={{ fontWeight: 800, fontSize: '13px' }}>{edu.degree}</span>
+                        <span style={{ fontSize: '10px', opacity: 0.6, fontFamily: 'monospace' }}>{edu.year}</span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: 'var(--ts-color-accent)', fontWeight: 600 }}>{edu.school}</div>
+                      <p style={{ margin: '4px 0 0 0', fontSize: '12px', opacity: 0.8, lineHeight: 1.5 }}>
+                        {edu.detail}
+                      </p>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* 2. MINIMALIST EDITORIAL LAYOUT */}
-        {layout === 'minimalist-editorial' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
-            <div style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.6 }}>
-              Chronological Impact & Advisory
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {[
-                { year: '2024–Present', role: 'Staff Token Architect', org: 'TastyStyles Protocol', impact: 'Built zero-drift deterministic token compiler and universal layout archetype engine servicing autonomous agent runtimes.' },
-                { year: '2022–2024', role: 'Principal Design Technologist', org: 'Solstice Labs (San Francisco)', impact: 'Led migration of 400+ micro-frontends to W3C DTCG standard with automated APCA contrast verification.' },
-                { year: '2019–2022', role: 'Lead Design Systems Engineer', org: 'Helios Energy Network', impact: 'Designed multi-brand component library servicing 1.2M daily active enterprise users at 60fps.' },
-              ].map((item, idx) => (
+            {/* Contact & Inquiries Section */}
+            <div
+              id="contact"
+              style={{
+                backgroundColor: 'var(--ts-color-surface)',
+                border: '1px solid var(--ts-color-border)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
+                padding: 'var(--ts-space-xl)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--ts-space-md)',
+              }}
+            >
+              <div style={{ maxWidth: '600px' }}>
+                <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '18px', fontWeight: 800, margin: '0 0 4px 0' }}>
+                  Let's Build Something Exceptional
+                </h3>
+                <p style={{ margin: 0, fontSize: '13px', opacity: 0.8, lineHeight: 1.6 }}>
+                  Whether you need a dedicated token architecture sprint, an enterprise design system audit, or are exploring fulltime leadership roles, send a note directly below.
+                </p>
+              </div>
+
+              {contactSubmitted ? (
                 <div
-                  key={idx}
                   style={{
-                    padding: 'var(--ts-space-md)',
-                    backgroundColor: 'var(--ts-color-surface)',
-                    border: '1px solid var(--ts-color-border)',
-                    borderRadius: 'var(--ts-radius-surface, 16px)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '4px',
-                    boxShadow: 'var(--ts-shadow)',
+                    padding: '16px',
+                    borderRadius: 'var(--ts-radius-surface, 10px)',
+                    backgroundColor: '#10b98115',
+                    border: '1px solid #10b98140',
+                    color: '#10b981',
+                    fontSize: '13px',
+                    fontWeight: 600,
                   }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontWeight: 800, fontSize: '15px' }}>{item.role} · {item.org}</span>
-                    <span style={{ fontSize: '11px', fontFamily: 'monospace', opacity: 0.6 }}>{item.year}</span>
-                  </div>
-                  <p style={{ margin: 0, fontSize: '13px', opacity: 0.75, lineHeight: 1.5 }}>{item.impact}</p>
+                  ✓ Thank you! Your inquiry has been delivered directly to Alex's inbox. Expect a response within 24 hours.
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 3. INTERACTIVE GRID GALLERY LAYOUT */}
-        {layout === 'interactive-grid-gallery' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
-            <div style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.6 }}>
-              Visual Engineering Gallery
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 'var(--ts-space-md)' }}>
-              {projects.map((cs) => (
-                <div
-                  key={cs.id}
-                  style={{
-                    backgroundColor: 'var(--ts-color-surface)',
-                    border: '1px solid var(--ts-color-border)',
-                    borderRadius: 'var(--ts-radius-surface, 16px)',
-                    overflow: 'hidden',
-                    boxShadow: 'var(--ts-shadow)',
-                    display: 'flex',
-                    flexDirection: 'column',
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setContactSubmitted(true);
                   }}
+                  style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}
                 >
-                  <div style={{ height: '180px', position: 'relative', overflow: 'hidden' }}>
-                    <img
-                      src={cs.coverImage}
-                      alt={cs.title}
-                      loading="lazy"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                    <div
+                  <input
+                    type="text"
+                    placeholder="Your Name & Company"
+                    required
+                    style={{
+                      padding: '10px 14px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--ts-color-border)',
+                      backgroundColor: 'var(--ts-color-background)',
+                      color: 'var(--ts-color-text)',
+                      fontSize: '13px',
+                    }}
+                  />
+                  <input
+                    type="email"
+                    placeholder="your.email@company.com"
+                    required
+                    style={{
+                      padding: '10px 14px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--ts-color-border)',
+                      backgroundColor: 'var(--ts-color-background)',
+                      color: 'var(--ts-color-text)',
+                      fontSize: '13px',
+                    }}
+                  />
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <textarea
+                      placeholder="Brief description of your project scope or opportunity..."
+                      rows={3}
+                      required
                       style={{
-                        position: 'absolute',
-                        top: '8px',
-                        right: '8px',
-                        backgroundColor: 'rgba(0,0,0,0.7)',
-                        color: '#fff',
-                        padding: '2px 8px',
-                        borderRadius: '9999px',
-                        fontSize: '10px',
-                        fontWeight: 700,
+                        width: '100%',
+                        padding: '10px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid var(--ts-color-border)',
+                        backgroundColor: 'var(--ts-color-background)',
+                        color: 'var(--ts-color-text)',
+                        fontSize: '13px',
+                        boxSizing: 'border-box',
                       }}
-                    >
-                      {cs.metric}
-                    </div>
+                    />
                   </div>
+                  <button
+                    type="submit"
+                    style={{
+                      backgroundColor: 'var(--ts-color-primary)',
+                      color: primaryTextColor,
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 20px',
+                      fontWeight: 700,
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      width: 'fit-content',
+                    }}
+                  >
+                    Send Direct Message
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
 
-                  <div style={{ padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', gap: '6px', flex: 1 }}>
-                    <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--ts-color-primary)' }}>{cs.category}</span>
-                    <h3 style={{ margin: 0, fontSize: '15px', fontWeight: 800 }}>{cs.title}</h3>
-                    <p style={{ margin: 0, fontSize: '12px', opacity: 0.75, lineHeight: 1.5, flex: 1 }}>{cs.summary}</p>
-                    <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', marginTop: '6px' }}>
-                      {cs.tags.slice(0, 3).map((tag) => (
-                        <span key={tag} style={{ fontSize: '10px', padding: '2px 6px', borderRadius: '4px', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)' }}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+        {/* ==============================================================
+            2. TIMELINE EDITORIAL LAYOUT
+            ============================================================== */}
+        {layout === 'timeline-editorial' && (
+          <div style={{ maxWidth: '780px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-xl)' }}>
+            <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80"
+                alt="Alex Rivers"
+                style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--ts-color-primary)' }}
+              />
+              <h1 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '28px', fontWeight: 900, margin: 0 }}>
+                Alex Rivers
+              </h1>
+              <p style={{ margin: 0, fontSize: '15px', opacity: 0.8, maxWidth: '520px' }}>
+                Staff Design Technologist specializing in declarative UI systems, mathematical token compilers, and scalable frontend engineering.
+              </p>
+            </div>
+
+            {/* Narrative Timeline */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <h3 style={{ fontSize: '14px', textTransform: 'uppercase', fontWeight: 800, color: 'var(--ts-color-primary)', borderBottom: '1px solid var(--ts-color-border)', paddingBottom: '6px' }}>
+                Chronological Career Timeline
+              </h3>
+              {[
+                { year: '2024 — Present', title: 'Staff Design Technologist', org: 'ApexDesign Labs', text: 'Architected automated token compiler eliminating CSS drift across 14 enterprise repositories.' },
+                { year: '2021 — 2024', title: 'Lead Frontend Systems Engineer', org: 'Solstice Networks', text: 'Engineered realtime telemetry dashboard rendering 120,000 WebSocket nodes at 60fps.' },
+                { year: '2018 — 2021', title: 'Senior UI/UX Engineer', org: 'Helios Mobile', text: 'Built multi-tenant fintech component library certified for WCAG 2.1 AAA accessibility.' },
+                { year: '2016 — 2018', title: 'M.S. in Computer Science', org: 'Stanford University', text: 'Human-Computer Interaction, declarative compilers, and graphic visual systems.' },
+              ].map((item, idx) => (
+                <div key={idx} style={{ display: 'flex', gap: '20px' }}>
+                  <div style={{ width: '130px', flexShrink: 0, fontFamily: 'monospace', fontSize: '12px', opacity: 0.6 }}>
+                    {item.year}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: '14px' }}>{item.title}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--ts-color-primary)', fontWeight: 600 }}>{item.org}</div>
+                    <p style={{ margin: '4px 0 0 0', fontSize: '13px', opacity: 0.8, lineHeight: 1.5 }}>{item.text}</p>
                   </div>
                 </div>
               ))}
@@ -318,142 +529,172 @@ export const PortfolioPage: React.FC = () => {
           </div>
         )}
 
-        {/* Client Testimonials Section */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)' }}>
-          <div style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.6 }}>
-            Executive Client Testimonials
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--ts-space-md)' }}>
-            {testimonials.map((t) => (
+        {/* ==============================================================
+            3. SPLIT SHOWCASE LAYOUT
+            ============================================================== */}
+        {layout === 'split-showcase' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: 'var(--ts-space-xl)' }}>
+            {/* Left Sticky Profile Rail */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-md)', alignSelf: 'start' }}>
               <div
-                key={t.id}
                 style={{
-                  padding: 'var(--ts-space-lg)',
                   backgroundColor: 'var(--ts-color-surface)',
                   border: '1px solid var(--ts-color-border)',
                   borderRadius: 'var(--ts-radius-surface, 16px)',
-                  boxShadow: 'var(--ts-shadow)',
+                  padding: 'var(--ts-space-xl)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px',
-                  justifyContent: 'space-between',
+                  gap: 'var(--ts-space-md)',
                 }}
               >
-                <p style={{ margin: 0, fontSize: '13px', lineHeight: 1.6, fontStyle: 'italic', opacity: 0.9 }}>
-                  "{t.quote}"
+                <img
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=180&q=80"
+                  alt="Alex Rivers"
+                  style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--ts-color-primary)' }}
+                />
+                <div>
+                  <h1 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '24px', fontWeight: 900, margin: 0 }}>
+                    Alex Rivers
+                  </h1>
+                  <p style={{ margin: '4px 0 0 0', fontSize: '14px', fontWeight: 600, color: 'var(--ts-color-primary)' }}>
+                    Staff Design Technologist
+                  </p>
+                </div>
+                <p style={{ margin: 0, fontSize: '13px', opacity: 0.8, lineHeight: 1.6 }}>
+                  Designing declarative systems and compilers that bridge Figma design tokens with production code.
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img
-                    src={t.avatar}
-                    alt={t.client}
-                    style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover' }}
-                  />
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: '13px' }}>{t.client}</div>
-                    <div style={{ fontSize: '11px', opacity: 0.6 }}>{t.role}</div>
-                  </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '12px', borderTop: '1px solid var(--ts-color-border)', paddingTop: '12px' }}>
+                  <div>📍 San Francisco, CA (Remote)</div>
+                  <div>💼 Available for Select Consulting</div>
+                  <div>🌐 alexrivers.design • github.com/alexrivers</div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Project Estimator & Services Tiers */}
-        <div
-          style={{
-            padding: 'var(--ts-space-lg)',
-            backgroundColor: 'var(--ts-color-surface)',
-            border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius-surface, 16px)',
-            boxShadow: 'var(--ts-shadow)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--ts-space-md)',
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <div>
-              <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '16px', fontWeight: 800, margin: 0 }}>
-                Project Engagement Calculator
-              </h3>
-              <p style={{ margin: '2px 0 0 0', fontSize: '12px', opacity: 0.7 }}>
-                Direct sprint estimation for design token architecture & enterprise component systems.
-              </p>
             </div>
-            <div style={{ display: 'flex', gap: '6px' }}>
-              {[
-                { id: 'audit' as const, label: 'Token Audit', price: '$4.5k' },
-                { id: 'sprint' as const, label: '2-Week Sprint', price: '$12k' },
-                { id: 'retainer' as const, label: 'Monthly Retainer', price: '$8k/mo' },
-              ].map((tier) => (
+
+            {/* Right Scrollable Content Column */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ts-space-lg)' }}>
+              {/* Featured Work */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <h3 style={{ fontSize: '16px', fontWeight: 800, margin: 0 }}>Selected Projects</h3>
+                {projects.map((p) => (
+                  <div
+                    key={p.id}
+                    style={{
+                      backgroundColor: 'var(--ts-color-surface)',
+                      border: '1px solid var(--ts-color-border)',
+                      borderRadius: 'var(--ts-radius-surface, 12px)',
+                      padding: '16px',
+                      display: 'flex',
+                      gap: '16px',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <img src={p.coverImage} alt={p.title} style={{ width: '90px', height: '70px', borderRadius: '8px', objectFit: 'cover' }} />
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 800, fontSize: '14px' }}>{p.title}</div>
+                      <div style={{ fontSize: '12px', opacity: 0.75, margin: '2px 0' }}>{p.summary}</div>
+                      <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 700 }}>{p.metric}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ==============================================================
+            4. COMPACT TERMINAL DEVELOPER CONSOLE LAYOUT
+            ============================================================== */}
+        {layout === 'compact-terminal' && (
+          <div
+            style={{
+              backgroundColor: '#0f172a',
+              color: '#38bdf8',
+              fontFamily: 'monospace',
+              borderRadius: 'var(--ts-radius-surface, 12px)',
+              border: '1px solid #1e293b',
+              padding: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            {/* Terminal Header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #1e293b', paddingBottom: '12px' }}>
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
+                <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
+                <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+              </div>
+              <span style={{ fontSize: '12px', opacity: 0.6 }}>alex@macbook-pro: ~/portfolio</span>
+              <span style={{ fontSize: '11px', color: '#10b981' }}>● Online</span>
+            </div>
+
+            {/* Quick Command Buttons */}
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {['cat resume.json', 'cat skills.txt', 'cat projects.md', 'contact --send'].map((cmd) => (
                 <button
-                  key={tier.id}
+                  key={cmd}
                   type="button"
-                  onClick={() => setSelectedTier(tier.id)}
+                  onClick={() => setTerminalCommand(cmd)}
                   style={{
-                    padding: '6px 12px',
-                    borderRadius: 'var(--ts-radius)',
-                    border: selectedTier === tier.id ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
-                    backgroundColor: selectedTier === tier.id ? 'var(--ts-color-primary)' : 'var(--ts-color-background)',
-                    color: selectedTier === tier.id ? primaryTextColor : 'var(--ts-color-text)',
+                    backgroundColor: terminalCommand === cmd ? '#38bdf8' : '#1e293b',
+                    color: terminalCommand === cmd ? '#0f172a' : '#94a3b8',
+                    border: 'none',
+                    borderRadius: '4px',
+                    padding: '4px 10px',
+                    fontSize: '11px',
+                    fontFamily: 'monospace',
                     fontWeight: 700,
-                    fontSize: '12px',
                     cursor: 'pointer',
                   }}
                 >
-                  {tier.label} ({tier.price})
+                  $ {cmd}
                 </button>
               ))}
             </div>
-          </div>
 
-          <div
-            style={{
-              padding: 'var(--ts-space-md)',
-              borderRadius: 'var(--ts-radius-surface, 12px)',
-              backgroundColor: 'var(--ts-color-background)',
-              border: '1px solid var(--ts-color-border)',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '12px',
-            }}
-          >
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '14px' }}>
-                {selectedTier === 'audit' && 'Comprehensive DTCG Token & Contrast Audit (5 Days)'}
-                {selectedTier === 'sprint' && 'Full App Design System & Component Library Sprint (14 Days)'}
-                {selectedTier === 'retainer' && 'Ongoing Autonomous Agent Alignment & Codebase Synchronization'}
-              </div>
-              <div style={{ fontSize: '12px', opacity: 0.7, marginTop: '2px' }}>
-                Includes CI/CD contrast regression tests, Figma token sync, and Next.js / Tailwind exporter.
-              </div>
+            {/* Terminal Command Output */}
+            <div style={{ backgroundColor: '#020617', padding: '16px', borderRadius: '8px', fontSize: '13px', lineHeight: 1.6, overflowX: 'auto' }}>
+              <div style={{ color: '#94a3b8', marginBottom: '8px' }}>$ {terminalCommand}</div>
+              {terminalCommand === 'cat resume.json' && (
+                <pre style={{ margin: 0, color: '#f8fafc' }}>
+{`{
+  "name": "Alex Rivers",
+  "role": "Staff Design Technologist",
+  "status": "Available for Select Q1 Work",
+  "experiences": [
+    { "company": "ApexDesign", "role": "Staff Technologist", "years": "2024-Present" },
+    { "company": "Solstice Labs", "role": "Lead Architect", "years": "2021-2024" }
+  ],
+  "education": "M.S. Computer Science (Stanford) • B.S. Software Engineering (UC Berkeley)",
+  "languages": ["English (Native)", "Spanish (Fluent)", "TypeScript", "Go", "Python"]
+}`}
+                </pre>
+              )}
+              {terminalCommand === 'cat skills.txt' && (
+                <pre style={{ margin: 0, color: '#10b981' }}>
+{`FRONTEND:  React 19, TypeScript, Next.js, Tailwind CSS, Vite, WebGL
+SYSTEMS:   Design Tokens (W3C DTCG), AST Compilers, State Machines
+STANDARDS: WCAG 2.1 AAA Accessibility, APCA Contrast Engine`}
+                </pre>
+              )}
+              {terminalCommand === 'cat projects.md' && (
+                <pre style={{ margin: 0, color: '#fbbf24' }}>
+{`# 1. TastyStyles Token Engine: 0 CSS drift across 14 repos
+# 2. SolarPulse Telemetry: 120k live WebSocket nodes @ 60fps
+# 3. Helios Mobile Wallet: Biometric fintech security`}
+                </pre>
+              )}
+              {terminalCommand === 'contact --send' && (
+                <div style={{ color: '#38bdf8' }}>
+                  Ready to connect? Email directly at: alex@rivers.design
+                </div>
+              )}
             </div>
-
-            <button
-              type="button"
-              style={{
-                backgroundColor: 'var(--ts-color-primary)',
-                color: primaryTextColor,
-                border: 'none',
-                borderRadius: 'var(--ts-radius)',
-                padding: '10px 20px',
-                fontWeight: 700,
-                fontSize: '13px',
-                minHeight: '44px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-              }}
-            >
-              <AppIcon name="mail" size={16} />
-              <span>Initiate Project Inquiry</span>
-            </button>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

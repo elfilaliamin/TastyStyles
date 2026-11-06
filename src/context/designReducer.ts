@@ -111,7 +111,9 @@ export const defaultInitialState: DesignState = {
     charity: 'hero-impact-thermometer',
     forum: 'three-column-reddit',
     streaming: 'cinema-theater',
-    portfolio: 'case-study-hero',
+    portfolio: 'bento-developer',
+    portfolioProject: 'case-study-narrative',
+    portfolioDashboard: 'analytics-cms-split',
   },
   project: {
     purpose: null,

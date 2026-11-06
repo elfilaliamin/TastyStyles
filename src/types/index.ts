@@ -11,6 +11,8 @@ export type PreviewComponentType =
   | 'contact'
   | 'editorial'
   | 'portfolio'
+  | 'portfolio-project'
+  | 'portfolio-dashboard'
   // Commerce & Transactional
   | 'ecommerce-catalog'
   | 'product-detail'

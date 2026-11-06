@@ -493,6 +493,9 @@ export const LayoutSection: React.FC = () => {
       case 'kanban': return <Kanban className="w-3.5 h-3.5 text-purple-500" />;
       case 'chat': return <MessageSquare className="w-3.5 h-3.5 text-cyan-500" />;
       case 'settings': return <Settings className="w-3.5 h-3.5 text-slate-500" />;
+      case 'portfolio': return <Globe className="w-3.5 h-3.5 text-sky-500" />;
+      case 'portfolio-project': return <Sparkles className="w-3.5 h-3.5 text-cyan-500" />;
+      case 'portfolio-dashboard': return <LayoutDashboard className="w-3.5 h-3.5 text-violet-500" />;
       case 'onboarding': return <Sparkles className="w-3.5 h-3.5 text-violet-500" />;
       case 'success': return <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />;
       case 'empty-state': return <HelpCircle className="w-3.5 h-3.5 text-amber-500" />;
@@ -657,8 +660,22 @@ export const LayoutSection: React.FC = () => {
       case 'portfolio':
         return {
           options: getLayoutsForPage('portfolio'),
-          selectedId: pageLayouts.portfolio ?? 'case-study-hero',
+          selectedId: pageLayouts.portfolio ?? 'bento-developer',
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolio: id as PageLayouts['portfolio'] } }),
+        };
+
+      case 'portfolio-project':
+        return {
+          options: getLayoutsForPage('portfolio-project'),
+          selectedId: pageLayouts.portfolioProject ?? 'case-study-narrative',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolioProject: id as PageLayouts['portfolioProject'] } }),
+        };
+
+      case 'portfolio-dashboard':
+        return {
+          options: getLayoutsForPage('portfolio-dashboard'),
+          selectedId: pageLayouts.portfolioDashboard ?? 'analytics-cms-split',
+          onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolioDashboard: id as PageLayouts['portfolioDashboard'] } }),
         };
 
       // Single-Layout Views: Always keep a single layout named 'Default'
@@ -701,6 +718,9 @@ export const LayoutSection: React.FC = () => {
     if (activePreview === 'dashboard') {
       return (pageLayouts.dashboard ?? 'sidebar-grid') === 'header-compact';
     }
+    if (activePreview === 'portfolio-dashboard') {
+      return (pageLayouts.portfolioDashboard ?? 'analytics-cms-split') === 'compact-overview';
+    }
     return [
       'landing',
       'pricing',
@@ -711,18 +731,22 @@ export const LayoutSection: React.FC = () => {
       'booking',
       'editorial',
       'portfolio',
+      'portfolio-project',
       'charity',
       'forum',
       'streaming',
     ].includes(activePreview);
-  }, [activePreview, pageLayouts.dashboard]);
+  }, [activePreview, pageLayouts.dashboard, pageLayouts.portfolioDashboard]);
 
   const hasSidebar = useMemo(() => {
     if (activePreview === 'dashboard') {
       return (pageLayouts.dashboard ?? 'sidebar-grid') === 'sidebar-grid';
     }
+    if (activePreview === 'portfolio-dashboard') {
+      return (pageLayouts.portfolioDashboard ?? 'analytics-cms-split') === 'analytics-cms-split';
+    }
     return false;
-  }, [activePreview, pageLayouts.dashboard]);
+  }, [activePreview, pageLayouts.dashboard, pageLayouts.portfolioDashboard]);
 
   const navbarOptions = useMemo(() => getLayoutsForPage('navbar'), []);
   const sidebarOptions = useMemo(() => getLayoutsForPage('sidebar'), []);

@@ -1127,6 +1127,64 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
   portfolio: [
     {
       page: 'portfolio',
+      id: 'bento-developer',
+      title: 'Developer Bento Grid',
+      description: 'Profile hero, technical badges, interactive project tiles, timeline experiences, education, and language proficiencies.',
+      variant: 'bento-grid',
+      ascii: `+-----------------------+-------------------------------+
+| Profile: Bio & Status | Tech Stack & Language Pills   |
++-----------------------+-------------------------------+
+| Featured Projects     | Work Experiences & Education  |
++-----------------------+-------------------------------+`,
+      mobile: 'Bento modules stack vertically into a single cohesive column.',
+      tablet: '2-column balanced grid with comfortable spacing.',
+    },
+    {
+      page: 'portfolio',
+      id: 'timeline-editorial',
+      title: 'Chronological Narrative Resume',
+      description: 'Single-column resume storytelling with career timeline, education milestones, skills matrix, and project list.',
+      variant: 'timeline-list',
+      ascii: `+-------------------------------------------------------+
+| [Avatar] Alex Rivers — Staff Design Technologist      |
+| Career Experiences: 2024-Present, 2021-2024...        |
+| Education, Degrees & Certifications                   |
+| Projects Showcase & Spoken / Code Languages           |
++-------------------------------------------------------+`,
+      mobile: 'Timeline compresses with left border trace and compact font sizes.',
+      tablet: 'Centered 740px max-width reading column.',
+    },
+    {
+      page: 'portfolio',
+      id: 'split-showcase',
+      title: 'Split Profile & Work Showcase',
+      description: 'Fixed profile card with quick contact on the left; scrollable experiences, education, projects, and skills on the right.',
+      variant: 'split',
+      ascii: `+-----------------------+-------------------------------+
+| Sticky Profile Card   | Career Timeline               |
+| [Avatar] Bio & Stack  | Education & Degrees           |
+| Languages & Socials   | Featured Projects Showcase    |
+| [Contact Me Button]   | Direct Message Form           |
++-----------------------+-------------------------------+`,
+      mobile: 'Left profile card docks to top; content scrolls below.',
+      tablet: 'Side-by-side 40/60 split with independent scrolling content column.',
+    },
+    {
+      page: 'portfolio',
+      id: 'compact-terminal',
+      title: 'Interactive Developer Console',
+      description: 'Terminal-inspired developer portfolio with command line prompt, JSON resume inspector, and live project outputs.',
+      variant: 'split-terminal',
+      ascii: `+-------------------------------------------------------+
+| > cat profile.json | grep -E "experiences|skills"     |
+| > run demo --project=tastystyles                      |
+| [Live Project Output & Metrics Dashboard]             |
++-------------------------------------------------------+`,
+      mobile: 'Full-bleed monospace console with tabbed command buttons.',
+      tablet: 'Clean dark monospace canvas with syntax highlighted resume blocks.',
+    },
+    {
+      page: 'portfolio',
       id: 'case-study-hero',
       title: 'Case Study Hero & Metrics',
       description: 'ReadCV benchmark: statement typography intro + 2-column full-bleed project cards with impact metrics.',
@@ -1154,6 +1212,97 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       ascii: '+-------------------------------------------------------+\n| [All Work]  [UI/UX Design]  [Token Compilers] [Mobile]|\n+-------+-------+-------+-------+-------+-------+-------+\n| Card 1| Card 2| Card 3| Card 4| Card 5| Card 6| Card 7|\n+-------+-------+-------+-------+-------+-------+-------+',
       mobile: 'Grid scales to 1-2 columns.',
       tablet: '3-column responsive card grid.',
+    },
+  ],
+
+  'portfolio-project': [
+    {
+      page: 'portfolio-project',
+      id: 'case-study-narrative',
+      title: 'Narrative Story & Live Preview',
+      description: 'Visual hero header with problem statement, architecture blueprint, challenge/solution, and live interactive demo.',
+      variant: 'hero-split',
+      ascii: `+-----------------------+-------------------------------+
+| Project Title & Scope | [ Live Interactive Mockup ]   |
+| Tech Stack & Timeline | [ Architecture Diagram    ]   |
++-----------------------+-------------------------------+
+| Challenge & Solution  | Measurable Quantitative Impact|
++-------------------------------------------------------+`,
+      mobile: 'Stacks vertically with hero narrative first and metrics second.',
+      tablet: 'Two-column balanced case study story layout.',
+    },
+    {
+      page: 'portfolio-project',
+      id: 'technical-breakdown',
+      title: 'System Architecture & Benchmarks',
+      description: 'Deep engineering breakdown: p99 latency benchmarks, data flow diagram, schema design, and code recipes.',
+      variant: 'analytical',
+      ascii: `+-------------------------------------------------------+
+| Project Telemetry & Architecture Specifications       |
+| [Latency Chart] [Throughput Graph] [Schema Inspector] |
+| Code Walkthrough & Implementation Key Learnings       |
++-------------------------------------------------------+`,
+      mobile: 'Charts and telemetry cards stack into single-column feed.',
+      tablet: 'Compact matrix grid with dual comparative charts.',
+    },
+    {
+      page: 'portfolio-project',
+      id: 'minimal-article',
+      title: 'Focused Technical Prose',
+      description: 'Longform developer essay explaining the technical why, design decisions, and retrospective learnings.',
+      variant: 'minimal',
+      ascii: `+-------------------------------------------------------+
+| Deep Dive: Building an Autonomous Design Token Engine |
+| By Alex Rivers • 8 min read • React, TypeScript       |
+| In-depth narrative prose with inline code snippets... |
++-------------------------------------------------------+`,
+      mobile: 'Single column with generous line-height and readable font scale.',
+      tablet: 'Centered 720px max reading width.',
+    },
+  ],
+
+  'portfolio-dashboard': [
+    {
+      page: 'portfolio-dashboard',
+      id: 'analytics-cms-split',
+      title: 'Visitor Telemetry & Section Toggles',
+      description: 'Live visit metrics at top with interactive switches to toggle landing sections (Education, Skills, Languages) and publish projects.',
+      variant: 'sidebar-grid',
+      ascii: `+-------+-----------------------------------------------+
+| Nav   | [Visits: 14.2k] [Bounce: 24%] [Inquiries: 38] |
+| Shell | Section Visibility: [Education ON] [Skills ON]|
+|       | Published Projects & Draft Case Studies Table |
++-------+-----------------------------------------------+`,
+      mobile: 'Sidebar hidden; stat cards and section visibility switches stack.',
+      tablet: 'Sidebar collapses to rail; metric tiles in 2-column grid.',
+    },
+    {
+      page: 'portfolio-dashboard',
+      id: 'kanban-content-flow',
+      title: 'Project Workflow Pipeline',
+      description: 'Kanban board managing projects and blog posts from Idea -> Draft -> In Review -> Published.',
+      variant: 'board-columns',
+      ascii: `+---------------+---------------+---------------+
+| Ideas & Drafts| In Review     | Published Live|
+| - Project Alpha| - Project Beta| - TastyStyles |
+| - Blog Post 1 | - Video Demo  | - Agent Token |
++---------------+---------------+---------------+`,
+      mobile: 'Lanes stack or horizontally swipe on mobile.',
+      tablet: '3-column Kanban board with quick drag actions.',
+    },
+    {
+      page: 'portfolio-dashboard',
+      id: 'compact-overview',
+      title: 'Quick Metric Cards & Publishing',
+      description: 'Top horizontal header with high-impact visitor summary, recent contact inquiries, and quick new project button.',
+      variant: 'header-compact',
+      ascii: `+-------------------------------------------------------+
+| [Overview] Visits: 14.2k   Inquiries: 38   [+ New Project]|
++-------------------------------------------------------+
+| Recent Inquiries Table & Visibility Quick Switches     |
++-------------------------------------------------------+`,
+      mobile: 'Compact list with floating action button to create projects.',
+      tablet: 'Grid layout with top metric bar.',
     },
   ],
 

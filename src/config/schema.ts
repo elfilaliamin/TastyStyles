@@ -58,7 +58,25 @@ export const PageLayoutsSchema = z.object({
   charity: z.enum(['hero-impact-thermometer', 'split-cause-calculator', 'donor-wall-transparency']).default('hero-impact-thermometer'),
   forum: z.enum(['three-column-reddit', 'split-qa-solved', 'compact-thread-table']).default('three-column-reddit'),
   streaming: z.enum(['cinema-theater', 'live-stream-split', 'audio-queue-rail']).default('cinema-theater'),
-  portfolio: z.enum(['case-study-hero', 'minimalist-editorial', 'interactive-grid-gallery']).default('case-study-hero'),
+  portfolio: z.enum([
+    'bento-developer',
+    'timeline-editorial',
+    'split-showcase',
+    'compact-terminal',
+    'case-study-hero',
+    'minimalist-editorial',
+    'interactive-grid-gallery',
+  ]).default('bento-developer'),
+  portfolioProject: z.enum([
+    'case-study-narrative',
+    'technical-breakdown',
+    'minimal-article',
+  ]).default('case-study-narrative'),
+  portfolioDashboard: z.enum([
+    'analytics-cms-split',
+    'kanban-content-flow',
+    'compact-overview',
+  ]).default('analytics-cms-split'),
 });
 
 
