@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 
 export const PricingPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -44,14 +45,23 @@ export const PricingPage: React.FC = () => {
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-lg)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--ts-space-xl)',
-        maxWidth: '880px',
-        margin: '0 auto',
       }}
     >
+      <DynamicNavbar />
+      <div
+        style={{
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--ts-space-xl)',
+          maxWidth: '880px',
+          margin: '0 auto',
+          width: '100%',
+          boxSizing: 'border-box',
+        }}
+      >
       {/* Header with Title & Cycle Switcher */}
       <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--ts-space-xs)' }}>
         <h1
@@ -322,6 +332,7 @@ export const PricingPage: React.FC = () => {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 };

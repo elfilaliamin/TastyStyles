@@ -27,6 +27,8 @@ import {
   CheckCircle,
   HelpCircle,
   Layers,
+  PanelTop,
+  PanelLeft,
 } from 'lucide-react';
 
 /* ==========================================================================
@@ -694,6 +696,37 @@ export const LayoutSection: React.FC = () => {
 
   const { options, selectedId, onSelect } = getLayoutsForCurrentPreview();
 
+  // Check if current preview page features a navbar or sidebar
+  const hasNavbar = useMemo(() => {
+    if (activePreview === 'dashboard') {
+      return (pageLayouts.dashboard ?? 'sidebar-grid') === 'header-compact';
+    }
+    return [
+      'landing',
+      'pricing',
+      'ecommerce-catalog',
+      'product-detail',
+      'checkout',
+      'marketplace',
+      'booking',
+      'editorial',
+      'portfolio',
+      'charity',
+      'forum',
+      'streaming',
+    ].includes(activePreview);
+  }, [activePreview, pageLayouts.dashboard]);
+
+  const hasSidebar = useMemo(() => {
+    if (activePreview === 'dashboard') {
+      return (pageLayouts.dashboard ?? 'sidebar-grid') === 'sidebar-grid';
+    }
+    return false;
+  }, [activePreview, pageLayouts.dashboard]);
+
+  const navbarOptions = useMemo(() => getLayoutsForPage('navbar'), []);
+  const sidebarOptions = useMemo(() => getLayoutsForPage('sidebar'), []);
+
   return (
     <div className="space-y-3">
       {/* Top Navigation Header: Screen Name + Prev / Next Controls */}
@@ -740,45 +773,57 @@ export const LayoutSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid of Layout Cards matching screenshot style */}
-      <div className="grid grid-cols-2 gap-2.5">
-        {options.map((layout) => {
-          const isSelected = selectedId === layout.id;
+      {/* 1. Page Layout Section */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between px-0.5">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            Page Layout
+          </span>
+          <span className="text-[10px] text-slate-400 font-mono">
+            {options.length} {options.length === 1 ? 'variant' : 'variants'}
+          </span>
+        </div>
 
-          return (
-            <button
-              key={layout.id}
-              type="button"
-              onClick={() => onSelect(layout.id)}
-              className={`p-3 rounded-xl border text-left transition-all min-h-[114px] flex flex-col justify-between focus-ring group cursor-pointer relative overflow-hidden ${
-                isSelected
-                  ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/70 dark:bg-sky-950/30 shadow-sm'
-                  : 'border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100/80 dark:hover:bg-slate-900'
-              }`}
-            >
-              {/* Mini visual wireframe thumbnail */}
-              <WireframeThumbnail variant={layout.variant} isSelected={isSelected} />
+        {/* Grid of Layout Cards */}
+        <div className="grid grid-cols-2 gap-2.5">
+          {options.map((layout) => {
+            const isSelected = selectedId === layout.id;
 
-              <div className="mt-2.5">
-                <div
-                  className={`text-xs font-bold leading-tight ${
-                    isSelected
-                      ? 'text-sky-600 dark:text-sky-400'
-                      : 'text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-sky-400'
-                  }`}
-                >
-                  {layout.title}
+            return (
+              <button
+                key={layout.id}
+                type="button"
+                onClick={() => onSelect(layout.id)}
+                className={`p-3 rounded-xl border text-left transition-all min-h-[114px] flex flex-col justify-between focus-ring group cursor-pointer relative overflow-hidden ${
+                  isSelected
+                    ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/70 dark:bg-sky-950/30 shadow-sm'
+                    : 'border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100/80 dark:hover:bg-slate-900'
+                }`}
+              >
+                {/* Mini visual wireframe thumbnail */}
+                <WireframeThumbnail variant={layout.variant} isSelected={isSelected} />
+
+                <div className="mt-2.5">
+                  <div
+                    className={`text-xs font-bold leading-tight ${
+                      isSelected
+                        ? 'text-sky-600 dark:text-sky-400'
+                        : 'text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-sky-400'
+                    }`}
+                  >
+                    {layout.title}
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
+                    {layout.description}
+                  </p>
                 </div>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
-                  {layout.description}
-                </p>
-              </div>
-            </button>
-          );
-        })}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Optional contextual sub-controls for Auth and Error screens */}
+      {/* Contextual sub-controls for Auth and Error screens */}
       {activePreview === 'auth' && (
         <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
           <span>Social Sign-On (SSO)</span>
@@ -825,6 +870,114 @@ export const LayoutSection: React.FC = () => {
                 {code}
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* 2. Separate Navbar Layout Section (if this page features a navbar) */}
+      {hasNavbar && (
+        <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+          <div className="flex items-center justify-between px-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+              <PanelTop className="w-3.5 h-3.5 text-sky-500" />
+              <span>Navbar Layout</span>
+            </div>
+            <span className="text-[10px] text-slate-400 font-mono">Header Shell</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5">
+            {navbarOptions.map((layout) => {
+              const isSelected = (pageLayouts.navbar ?? 'saas-header') === layout.id;
+
+              return (
+                <button
+                  key={layout.id}
+                  type="button"
+                  onClick={() =>
+                    dispatch({
+                      type: 'SET_PAGE_LAYOUT',
+                      updates: { navbar: layout.id as PageLayouts['navbar'] },
+                    })
+                  }
+                  className={`p-3 rounded-xl border text-left transition-all min-h-[114px] flex flex-col justify-between focus-ring group cursor-pointer relative overflow-hidden ${
+                    isSelected
+                      ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/70 dark:bg-sky-950/30 shadow-sm'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100/80 dark:hover:bg-slate-900'
+                  }`}
+                >
+                  <WireframeThumbnail variant={layout.variant} isSelected={isSelected} />
+
+                  <div className="mt-2.5">
+                    <div
+                      className={`text-xs font-bold leading-tight ${
+                        isSelected
+                          ? 'text-sky-600 dark:text-sky-400'
+                          : 'text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-sky-400'
+                      }`}
+                    >
+                      {layout.title}
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
+                      {layout.description}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* 3. Separate Sidebar Layout Section (if this page features a sidebar) */}
+      {hasSidebar && (
+        <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+          <div className="flex items-center justify-between px-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+              <PanelLeft className="w-3.5 h-3.5 text-sky-500" />
+              <span>Sidebar Layout</span>
+            </div>
+            <span className="text-[10px] text-slate-400 font-mono">Sidebar Shell</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5">
+            {sidebarOptions.map((layout) => {
+              const isSelected = (pageLayouts.sidebar ?? 'classic-grouped') === layout.id;
+
+              return (
+                <button
+                  key={layout.id}
+                  type="button"
+                  onClick={() =>
+                    dispatch({
+                      type: 'SET_PAGE_LAYOUT',
+                      updates: { sidebar: layout.id as PageLayouts['sidebar'] },
+                    })
+                  }
+                  className={`p-3 rounded-xl border text-left transition-all min-h-[114px] flex flex-col justify-between focus-ring group cursor-pointer relative overflow-hidden ${
+                    isSelected
+                      ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/70 dark:bg-sky-950/30 shadow-sm'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100/80 dark:hover:bg-slate-900'
+                  }`}
+                >
+                  <WireframeThumbnail variant={layout.variant} isSelected={isSelected} />
+
+                  <div className="mt-2.5">
+                    <div
+                      className={`text-xs font-bold leading-tight ${
+                        isSelected
+                          ? 'text-sky-600 dark:text-sky-400'
+                          : 'text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-sky-400'
+                      }`}
+                    >
+                      {layout.title}
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
+                      {layout.description}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
