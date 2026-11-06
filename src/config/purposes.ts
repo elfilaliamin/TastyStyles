@@ -3,6 +3,23 @@ import { PAGE_TYPES_BY_ID } from './pageTypes';
 
 export const PURPOSES: PurposeDefinition[] = [
   {
+    id: 'saas',
+    label: 'B2B SaaS Platform',
+    description: 'Multi-tenant cloud application with dashboard telemetry, team administration, and subscription billing.',
+    emoji: '🏢',
+    tagline: 'Enterprise-grade software with subscription billing and workflows',
+    pages: [
+      { pageType: 'landing', required: true, defaultLayout: 'hero-split' },
+      { pageType: 'pricing', required: true, defaultLayout: 'cards-3col' },
+      { pageType: 'auth', required: true, defaultLayout: 'centered-card' },
+      { pageType: 'dashboard', required: true, defaultLayout: 'sidebar-grid' },
+      { pageType: 'settings', required: false, defaultLayout: 'tabbed' },
+      { pageType: 'billing', required: false, defaultLayout: 'default' },
+      { pageType: 'team', required: false, defaultLayout: 'default' },
+      { pageType: 'contact', required: false, defaultLayout: 'default' },
+    ],
+  },
+  {
     id: 'ecommerce',
     label: 'E-Commerce Store',
     description: 'Direct-to-consumer online store with visual product catalog, SKU detail views, and seamless checkout flow.',
@@ -15,6 +32,19 @@ export const PURPOSES: PurposeDefinition[] = [
       { pageType: 'checkout', required: true, defaultLayout: 'slide-over-cart' },
       { pageType: 'success-confirm', required: false, defaultLayout: 'celebration-card' },
       { pageType: 'auth', required: false, defaultLayout: 'centered-card' },
+      { pageType: 'contact', required: false, defaultLayout: 'default' },
+    ],
+  },
+  {
+    id: 'media-editorial',
+    label: 'Media & Publication',
+    description: 'Content-driven publishing platform with front-page magazine layout, rich typography, and community discussion.',
+    emoji: '📰',
+    tagline: 'Editorial publication with longform prose and reader engagement',
+    pages: [
+      { pageType: 'editorial', required: true, defaultLayout: 'masonry-frontpage' },
+      { pageType: 'blog', required: true, defaultLayout: 'default' },
+      { pageType: 'about', required: false, defaultLayout: 'default' },
       { pageType: 'contact', required: false, defaultLayout: 'default' },
     ],
   },
@@ -34,23 +64,6 @@ export const PURPOSES: PurposeDefinition[] = [
     ],
   },
   {
-    id: 'saas',
-    label: 'B2B SaaS Platform',
-    description: 'Multi-tenant cloud application with dashboard telemetry, team administration, and subscription billing.',
-    emoji: '🏢',
-    tagline: 'Enterprise-grade software with subscription billing and workflows',
-    pages: [
-      { pageType: 'landing', required: true, defaultLayout: 'hero-split' },
-      { pageType: 'pricing', required: true, defaultLayout: 'cards-3col' },
-      { pageType: 'auth', required: true, defaultLayout: 'centered-card' },
-      { pageType: 'dashboard', required: true, defaultLayout: 'sidebar-grid' },
-      { pageType: 'settings', required: false, defaultLayout: 'tabbed' },
-      { pageType: 'billing', required: false, defaultLayout: 'default' },
-      { pageType: 'team', required: false, defaultLayout: 'default' },
-      { pageType: 'contact', required: false, defaultLayout: 'default' },
-    ],
-  },
-  {
     id: 'marketplace',
     label: 'Two-Sided Marketplace',
     description: 'Directory platform connecting service buyers and providers with reviews and booking.',
@@ -62,19 +75,6 @@ export const PURPOSES: PurposeDefinition[] = [
       { pageType: 'detail', required: true, defaultLayout: 'split-sidepanel' },
       { pageType: 'booking', required: false, defaultLayout: 'split-calendar-slots' },
       { pageType: 'auth', required: false, defaultLayout: 'centered-card' },
-      { pageType: 'contact', required: false, defaultLayout: 'default' },
-    ],
-  },
-  {
-    id: 'media-editorial',
-    label: 'Media & Publication',
-    description: 'Content-driven publishing platform with front-page magazine layout, rich typography, and community discussion.',
-    emoji: '📰',
-    tagline: 'Editorial publication with longform prose and reader engagement',
-    pages: [
-      { pageType: 'editorial', required: true, defaultLayout: 'masonry-frontpage' },
-      { pageType: 'blog', required: true, defaultLayout: 'default' },
-      { pageType: 'about', required: false, defaultLayout: 'default' },
       { pageType: 'contact', required: false, defaultLayout: 'default' },
     ],
   },
@@ -101,4 +101,3 @@ export function validatePurposes(): boolean {
   }
   return true;
 }
-

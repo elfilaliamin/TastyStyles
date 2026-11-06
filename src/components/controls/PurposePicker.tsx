@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { PURPOSES } from '../../config/purposes';
 import type { PurposeDefinition, ProjectGoal } from '../../config/schema';
@@ -11,6 +11,10 @@ interface PurposePickerProps {
 
 export const PurposePicker: React.FC<PurposePickerProps> = ({ onNotify }) => {
   const { dispatch, setActivePreview } = useDesign();
+
+  const sortedPurposes = useMemo(() => {
+    return [...PURPOSES].sort((a, b) => a.label.localeCompare(b.label));
+  }, []);
 
   const handleSelectPurpose = (purpose: PurposeDefinition) => {
     dispatch({ type: 'SET_PURPOSE', purpose: purpose.id });
@@ -56,7 +60,7 @@ export const PurposePicker: React.FC<PurposePickerProps> = ({ onNotify }) => {
 
       {/* Purpose Selection Cards */}
       <div className="p-3.5 sm:p-4 flex flex-col gap-3">
-        {PURPOSES.map((purpose) => (
+        {sortedPurposes.map((purpose) => (
           <button
             key={purpose.id}
             type="button"
