@@ -109,6 +109,17 @@ export const IconConfigSchema = z.object({
   weight: 'regular' as const,
 }));
 
+export const ProjectPageSchema = z.object({
+  pageType: z.string().min(1),
+  layoutId: z.string().min(1).default('default'),
+  enabled: z.boolean().default(true),
+});
+
+export const ProjectStateSchema = z.object({
+  purpose: z.string().nullable().default(null),
+  pages: z.array(ProjectPageSchema).default([]),
+});
+
 export const DesignStateSchema = z.object({
   version: z.literal(1),
   name: z.string().default('My Design System'),
@@ -126,6 +137,7 @@ export const DesignStateSchema = z.object({
   icons: IconConfigSchema.optional().default(() => IconConfigSchema.parse({})),
   pageLayouts: PageLayoutsSchema.optional().default(() => PageLayoutsSchema.parse({})),
   projectGoal: ProjectGoalSchema.default('saas'),
+  project: ProjectStateSchema.default(() => ProjectStateSchema.parse({})),
 });
 
 export type HexColor = z.infer<typeof HexColorSchema>;
@@ -136,6 +148,8 @@ export type IconLibrary = z.infer<typeof IconLibrarySchema>;
 export type IconMode = z.infer<typeof IconModeSchema>;
 export type IconWeight = z.infer<typeof IconWeightSchema>;
 export type IconConfig = z.infer<typeof IconConfigSchema>;
+export type ProjectPage = z.infer<typeof ProjectPageSchema>;
+export type ProjectState = z.infer<typeof ProjectStateSchema>;
 export type DesignState = z.infer<typeof DesignStateSchema>;
 
 // Registry schemas

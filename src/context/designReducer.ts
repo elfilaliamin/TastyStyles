@@ -8,6 +8,7 @@ import type {
   IconLibrary,
   IconMode,
   IconWeight,
+  ProjectPage,
 } from '../config/schema';
 import { getPresetEntry, registries } from '../lib/registry';
 import { GOAL_DEFINITIONS } from '../config/previews';
@@ -18,6 +19,11 @@ export type DesignAction =
   | { type: 'SET_TYPOGRAPHY'; updates: Partial<TypographyState> }
   | { type: 'SET_LAYOUT'; id: string }
   | { type: 'SET_PAGE_LAYOUT'; updates: Partial<PageLayouts> }
+  | { type: 'SET_PAGE_LAYOUT'; pageType: string; layoutId: string }
+  | { type: 'SET_PURPOSE'; purpose: string | null }
+  | { type: 'SET_PAGES'; pages: ProjectPage[] }
+  | { type: 'TOGGLE_PAGE'; pageType: string }
+  | { type: 'REORDER_PAGES'; pages: ProjectPage[] }
   | { type: 'SET_PROJECT_GOAL'; goal: ProjectGoal }
   | { type: 'SET_RADIUS'; id: string }
   | { type: 'SET_SHADOW'; id: string }
@@ -105,6 +111,10 @@ export const defaultInitialState: DesignState = {
     forum: 'three-column-reddit',
     streaming: 'cinema-theater',
     portfolio: 'case-study-hero',
+  },
+  project: {
+    purpose: null,
+    pages: [],
   },
 };
 
@@ -202,12 +212,77 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
     }
 
     case 'SET_PAGE_LAYOUT': {
+      if ('updates' in action) {
+        return {
+          ...state,
+          pageLayouts: {
+            ...defaultInitialState.pageLayouts,
+            ...state.pageLayouts,
+            ...action.updates,
+          },
+        };
+      }
+
+      const existingPages = state.project?.pages ?? [];
+      const pageIndex = existingPages.findIndex((p) => p.pageType === action.pageType);
+      const updatedPages =
+        pageIndex >= 0
+          ? existingPages.map((p, idx) => (idx === pageIndex ? { ...p, layoutId: action.layoutId } : p))
+          : [...existingPages, { pageType: action.pageType, layoutId: action.layoutId, enabled: true }];
+
       return {
         ...state,
+        project: {
+          ...(state.project ?? defaultInitialState.project),
+          pages: updatedPages,
+        },
         pageLayouts: {
           ...defaultInitialState.pageLayouts,
           ...state.pageLayouts,
-          ...action.updates,
+          ...(action.pageType in (state.pageLayouts ?? {}) ? { [action.pageType]: action.layoutId } : {}),
+        },
+      };
+    }
+    case 'SET_PURPOSE': {
+      return {
+        ...state,
+        project: {
+          ...(state.project ?? defaultInitialState.project),
+          purpose: action.purpose,
+        },
+      };
+    }
+    case 'SET_PAGES': {
+      return {
+        ...state,
+        project: {
+          ...(state.project ?? defaultInitialState.project),
+          pages: action.pages,
+        },
+      };
+    }
+    case 'TOGGLE_PAGE': {
+      const currentPages = state.project?.pages ?? [];
+      const matchIdx = currentPages.findIndex((p) => p.pageType === action.pageType);
+      const newPages =
+        matchIdx >= 0
+          ? currentPages.map((p, idx) => (idx === matchIdx ? { ...p, enabled: !p.enabled } : p))
+          : [...currentPages, { pageType: action.pageType, layoutId: 'default', enabled: true }];
+
+      return {
+        ...state,
+        project: {
+          ...(state.project ?? defaultInitialState.project),
+          pages: newPages,
+        },
+      };
+    }
+    case 'REORDER_PAGES': {
+      return {
+        ...state,
+        project: {
+          ...(state.project ?? defaultInitialState.project),
+          pages: action.pages,
         },
       };
     }
@@ -303,6 +378,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         icons: preset.state.icons ?? state.icons ?? defaultInitialState.icons,
         pageLayouts: state.pageLayouts ?? defaultInitialState.pageLayouts,
         projectGoal: state.projectGoal ?? 'saas',
+        project: state.project ?? defaultInitialState.project,
       };
     }
     case 'RANDOMIZE_PALETTE': {
@@ -329,6 +405,7 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
           icons: firstPreset.state.icons ?? defaultInitialState.icons,
           pageLayouts: defaultInitialState.pageLayouts,
           projectGoal: defaultInitialState.projectGoal,
+          project: defaultInitialState.project,
         };
       }
       return defaultInitialState;

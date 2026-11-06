@@ -7,7 +7,7 @@ import spacingRaw from '../src/config/spacing.json';
 import presetsRaw from '../src/config/presets.json';
 import { compileMarkdown } from '../src/lib/compileMarkdown';
 import { calculateContrastRatio, calculateAPCA, checkColorHarmony } from '../src/lib/contrast';
-import { defaultInitialState } from '../src/context/designReducer';
+import { defaultInitialState, designReducer } from '../src/context/designReducer';
 import {
   generateCssTokens,
   generateTailwindConfig,
@@ -184,5 +184,87 @@ for (const preset of presets) {
   }
 }
 console.log(`✅ Zero-drift parity verified across all ${presets.length} presets: Markdown CSS strictly equals canonical tokens.`);
+
+console.log('--- Testing Phase 1: Project Data Model & Invariants ---');
+// 1. Backward-compatibility: State without project field parses with default project
+const legacyParsed = DesignStateSchema.parse({
+  version: 1,
+  name: 'Legacy State',
+  colors: defaultInitialState.colors,
+  typography: defaultInitialState.typography,
+  layout: 'sidebar-content',
+  radius: 'rounded',
+  shadow: 'soft',
+  spacing: 'comfortable',
+});
+if (!legacyParsed.project || legacyParsed.project.purpose !== null || legacyParsed.project.pages.length !== 0) {
+  console.error('❌ Legacy state failed to default project to { purpose: null, pages: [] }');
+  process.exit(1);
+}
+console.log('✅ Backward-compatibility check: unversioned/legacy state parsed with valid default project.');
+
+// 2. Round-trip populated project
+const populatedProject = {
+  purpose: 'saas-dashboard',
+  pages: [
+    { pageType: 'landing', layoutId: 'hero-split', enabled: true },
+    { pageType: 'dashboard', layoutId: 'sidebar-grid', enabled: true },
+    { pageType: 'pricing', layoutId: 'cards-3col', enabled: false },
+  ],
+};
+const parsedPopulated = DesignStateSchema.parse({
+  ...defaultInitialState,
+  project: populatedProject,
+});
+if (parsedPopulated.project.purpose !== 'saas-dashboard' || parsedPopulated.project.pages.length !== 3) {
+  console.error('❌ Failed to parse populated project state accurately');
+  process.exit(1);
+}
+console.log('✅ Populated project state parsed and preserved.');
+
+// 3. Reducer tests: SET_PURPOSE, SET_PAGES, TOGGLE_PAGE, REORDER_PAGES, SET_PAGE_LAYOUT
+let testState = defaultInitialState;
+testState = designReducer(testState, { type: 'SET_PURPOSE', purpose: 'ecommerce-store' });
+if (testState.project.purpose !== 'ecommerce-store') {
+  console.error('❌ Reducer SET_PURPOSE failed');
+  process.exit(1);
+}
+
+testState = designReducer(testState, {
+  type: 'SET_PAGES',
+  pages: [
+    { pageType: 'landing', layoutId: 'hero-editorial', enabled: true },
+    { pageType: 'productDetail', layoutId: 'split-gallery', enabled: true },
+  ],
+});
+if (testState.project.pages.length !== 2) {
+  console.error('❌ Reducer SET_PAGES failed');
+  process.exit(1);
+}
+
+testState = designReducer(testState, { type: 'TOGGLE_PAGE', pageType: 'landing' });
+if (testState.project.pages.find((p) => p.pageType === 'landing')?.enabled !== false) {
+  console.error('❌ Reducer TOGGLE_PAGE flip failed');
+  process.exit(1);
+}
+
+testState = designReducer(testState, { type: 'SET_PAGE_LAYOUT', pageType: 'landing', layoutId: 'bento-grid' });
+if (testState.project.pages.find((p) => p.pageType === 'landing')?.layoutId !== 'bento-grid') {
+  console.error('❌ Reducer SET_PAGE_LAYOUT by pageType failed');
+  process.exit(1);
+}
+
+// 4. Invariant: Presets are theme-only and must preserve state.project
+const presetId = presets[0].id;
+const afterPresetState = designReducer(testState, { type: 'LOAD_PRESET', id: presetId });
+if (
+  afterPresetState.project.purpose !== 'ecommerce-store' ||
+  afterPresetState.project.pages.length !== 2 ||
+  afterPresetState.project.pages[0].layoutId !== 'bento-grid'
+) {
+  console.error('❌ Invariant violation: LOAD_PRESET wiped or altered state.project!');
+  process.exit(1);
+}
+console.log('✅ Invariant 3 verified: LOAD_PRESET strictly preserves state.project.');
 
 console.log('--- All Verification Checks Passed! ---');

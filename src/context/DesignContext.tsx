@@ -101,6 +101,19 @@ function migrateDesignState(raw: any): DesignState {
     ...(typeof raw.pageLayouts === 'object' && raw.pageLayouts !== null ? raw.pageLayouts : {}),
   };
 
+  const project = {
+    purpose: typeof raw.project?.purpose === 'string' ? raw.project.purpose : null,
+    pages: Array.isArray(raw.project?.pages)
+      ? raw.project.pages
+          .filter((p: any) => p && typeof p.pageType === 'string')
+          .map((p: any) => ({
+            pageType: p.pageType,
+            layoutId: typeof p.layoutId === 'string' ? p.layoutId : 'default',
+            enabled: typeof p.enabled === 'boolean' ? p.enabled : true,
+          }))
+      : (defaultInitialState.project?.pages ?? []),
+  };
+
   return {
     version: 1,
     name,
@@ -115,6 +128,7 @@ function migrateDesignState(raw: any): DesignState {
     icons,
     pageLayouts,
     projectGoal,
+    project,
   };
 }
 
