@@ -120,6 +120,29 @@ export const ProjectStateSchema = z.object({
   pages: z.array(ProjectPageSchema).default([]),
 });
 
+export const PageTypeDefinitionSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  description: z.string(),
+  category: z.enum(['public', 'commerce', 'core', 'community', 'auth', 'account', 'system']),
+  defaultLayout: z.string().default('default'),
+});
+
+export const PurposePageRefSchema = z.object({
+  pageType: z.string().min(1),
+  required: z.boolean().default(false),
+  defaultLayout: z.string().optional(),
+});
+
+export const PurposeDefinitionSchema = z.object({
+  id: z.string().min(1),
+  label: z.string().min(1),
+  description: z.string(),
+  emoji: z.string().default('✨'),
+  tagline: z.string().default(''),
+  pages: z.array(PurposePageRefSchema).min(1),
+});
+
 export const DesignStateSchema = z.object({
   version: z.literal(1),
   name: z.string().default('My Design System'),
@@ -150,6 +173,9 @@ export type IconWeight = z.infer<typeof IconWeightSchema>;
 export type IconConfig = z.infer<typeof IconConfigSchema>;
 export type ProjectPage = z.infer<typeof ProjectPageSchema>;
 export type ProjectState = z.infer<typeof ProjectStateSchema>;
+export type PageTypeDefinition = z.infer<typeof PageTypeDefinitionSchema>;
+export type PurposePageRef = z.infer<typeof PurposePageRefSchema>;
+export type PurposeDefinition = z.infer<typeof PurposeDefinitionSchema>;
 export type DesignState = z.infer<typeof DesignStateSchema>;
 
 // Registry schemas

@@ -8,6 +8,8 @@ import presetsRaw from '../src/config/presets.json';
 import { compileMarkdown } from '../src/lib/compileMarkdown';
 import { calculateContrastRatio, calculateAPCA, checkColorHarmony } from '../src/lib/contrast';
 import { defaultInitialState, designReducer } from '../src/context/designReducer';
+import { validatePageTypes, PAGE_TYPES } from '../src/config/pageTypes';
+import { validatePurposes, PURPOSES } from '../src/config/purposes';
 import {
   generateCssTokens,
   generateTailwindConfig,
@@ -266,5 +268,30 @@ if (
   process.exit(1);
 }
 console.log('✅ Invariant 3 verified: LOAD_PRESET strictly preserves state.project.');
+
+console.log('--- Testing Phase 2: Purposes & Page Types Registries ---');
+try {
+  validatePageTypes();
+  console.log(`✅ All ${PAGE_TYPES.length} page types validated against Zod schema.`);
+} catch (err) {
+  console.error('❌ Page types validation failed:', err);
+  process.exit(1);
+}
+
+try {
+  validatePurposes();
+  console.log(`✅ All ${PURPOSES.length} project purposes validated against Zod schema and page references.`);
+} catch (err) {
+  console.error('❌ Purposes validation failed:', err);
+  process.exit(1);
+}
+
+// Check purpose auto-population on SET_PURPOSE
+const ecommerceState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'ecommerce' });
+if (ecommerceState.project.purpose !== 'ecommerce' || ecommerceState.project.pages.length !== 7) {
+  console.error('❌ SET_PURPOSE for ecommerce failed to populate 7 default pages');
+  process.exit(1);
+}
+console.log('✅ SET_PURPOSE automatically populates recommended pages with layout defaults.');
 
 console.log('--- All Verification Checks Passed! ---');

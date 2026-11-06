@@ -12,6 +12,7 @@ import type {
 } from '../config/schema';
 import { getPresetEntry, registries } from '../lib/registry';
 import { GOAL_DEFINITIONS } from '../config/previews';
+import { getPurposeDefinition } from '../config/purposes';
 
 export type DesignAction =
   | { type: 'SET_COLOR'; mode: 'light' | 'dark'; token: keyof ColorPalette; value: string }
@@ -244,11 +245,21 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
       };
     }
     case 'SET_PURPOSE': {
+      const purposeDef = action.purpose ? getPurposeDefinition(action.purpose) : undefined;
+      const initialPages: ProjectPage[] = purposeDef
+        ? purposeDef.pages.map((p) => ({
+            pageType: p.pageType,
+            layoutId: p.defaultLayout ?? 'default',
+            enabled: true,
+          }))
+        : (state.project?.pages ?? []);
+
       return {
         ...state,
         project: {
           ...(state.project ?? defaultInitialState.project),
           purpose: action.purpose,
+          pages: initialPages,
         },
       };
     }
