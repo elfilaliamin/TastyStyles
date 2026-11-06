@@ -7,14 +7,16 @@ import { LayoutSection } from './LayoutSection';
 import { ComponentSection } from './ComponentSection';
 import { IconSection } from './IconSection';
 import { PresetSection } from './PresetSection';
-import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes } from 'lucide-react';
+import { Palette, Type, LayoutGrid, Sliders, Sparkles, Shapes, RotateCcw } from 'lucide-react';
 import { GOAL_DEFINITIONS } from '../../config/previews';
 import type { ProjectGoal } from '../../config/schema';
 import { GoalSelector } from './GoalSelector';
+import { getPurposeDefinition } from '../../config/purposes';
 
 export const ControlsPanel: React.FC = () => {
   const { state, dispatch, setActivePreview } = useDesign();
   const currentGoal: ProjectGoal = state.projectGoal ?? 'saas';
+  const activePurposeDef = state.project?.purpose ? getPurposeDefinition(state.project.purpose) : null;
 
   return (
     <div className="flex flex-col h-full bg-white dark:bg-slate-950/80 transition-colors">
@@ -32,6 +34,34 @@ export const ControlsPanel: React.FC = () => {
           placeholder="e.g. TastyStyles Spec"
         />
       </div>
+
+      {/* Active Project Purpose & Change Button */}
+      {state.project?.purpose && (
+        <div className="p-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 flex items-center justify-between gap-2 transition-colors">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-xl shrink-0" role="img" aria-label={activePurposeDef?.label ?? 'Purpose'}>
+              {activePurposeDef?.emoji ?? '🎯'}
+            </span>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 block">
+                Project Purpose
+              </span>
+              <h3 className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
+                {activePurposeDef?.label ?? state.project.purpose}
+              </h3>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => dispatch({ type: 'SET_PURPOSE', purpose: null })}
+            className="px-2 py-1 text-[11px] font-semibold rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors shrink-0 flex items-center gap-1 cursor-pointer"
+            title="Change project purpose"
+          >
+            <RotateCcw className="w-3 h-3" />
+            <span>Change</span>
+          </button>
+        </div>
+      )}
 
       {/* Target Goal / Sector Selector */}
       <div className="p-3.5 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 transition-colors">

@@ -38,11 +38,10 @@ TastyStyles is a purpose-first **project brief builder**, design token workbench
   - **src/**: Core application source code
     - **components/**: Modular UI components organized by domain
       - **common/**: Universal editor primitives (accordions, icon renderers, segmented controls, toasts)
-      - **controls/**: Interactive token configuration sidebar panels and goal selectors
+      - **controls/**: Interactive token configuration sidebar panels (`ControlsPanel.tsx`, `PurposePicker.tsx`)
       - **layout/**: Top-level workspace shell components (header, export bar, contrast badges)
       - **markdown/**: Compiled specification viewers and modal preview panes
       - **preview/**: Live preview rendering canvas across 30 page archetypes and primitives
-      - **wizard/**: The 5-step purpose-first wizard shell (`WizardShell.tsx`, `PurposeStep`, `PagesStep`, `LayoutsStep`, `ThemeStep`, `ReviewStep`)
     - **layouts/**: Plugin layout registry (`src/layouts/<pageType>/<layoutId>/` containing `Layout.tsx`, `manifest.ts`, `thumb.txt`)
     - **sections/**: Modular section registry (`src/sections/<SectionName>/` containing `Section.tsx`, `manifest.ts`)
     - **config/**: Registries, media catalogs, page types (`pageTypes.ts`), purposes (`purposes.ts`), presets, and Zod schemas (`schema.ts`)

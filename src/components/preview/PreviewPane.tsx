@@ -11,16 +11,14 @@ import { NavbarPreview } from './components/NavbarPreview';
 import { SidebarPreview } from './components/SidebarPreview';
 import { getPreviewCssVariables } from '../../lib/tokenModel';
 import type { ViewportMode, PreviewComponentType } from '../../types';
-import { ChevronLeft, ChevronRight, ChevronDown, AlertTriangle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown, AlertTriangle, Compass } from 'lucide-react';
 import {
   PREVIEW_REGISTRY,
   getPreviewIndex,
   getNextPreview,
   getPrevPreview,
-  getPreviewsForGoal,
-  getGoalPreviewGroups,
-  GOAL_DEFINITIONS,
 } from '../../config/previews';
+import { getPurposeDefinition } from '../../config/purposes';
 
 const CATEGORY_LABELS: Record<string, string> = {
   Primitives: 'Component Primitives',
@@ -106,40 +104,37 @@ export const PreviewPane: React.FC = () => {
   // Scoped CSS Custom Properties derived canonically from tokenModel
   const cssVariables = getPreviewCssVariables(state);
 
-  const [isGoalFocus, setIsGoalFocus] = useState<boolean>(true);
-  const currentGoal = state.projectGoal ?? 'saas';
-  const activeGoalDef = GOAL_DEFINITIONS[currentGoal] ?? GOAL_DEFINITIONS.saas;
+  const hasPurpose = Boolean(state.project?.purpose);
+  const currentPurposeDef = state.project?.purpose ? getPurposeDefinition(state.project.purpose) : null;
 
-  const goalGroups = useMemo(
-    () => getGoalPreviewGroups(currentGoal),
-    [currentGoal]
-  );
-
-  const scopedPreviews = useMemo(
-    () => (isGoalFocus ? getPreviewsForGoal(currentGoal) : PREVIEW_REGISTRY),
-    [isGoalFocus, currentGoal]
-  );
+  const { purposePreviews, scopedPreviews } = useMemo(() => {
+    if (!currentPurposeDef) {
+      return { purposePreviews: [], scopedPreviews: PREVIEW_REGISTRY };
+    }
+    const purposePageIds = new Set(currentPurposeDef.pages.map((p) => p.pageType));
+    const matched = PREVIEW_REGISTRY.filter((p) => purposePageIds.has(p.id));
+    const others = PREVIEW_REGISTRY.filter((p) => !purposePageIds.has(p.id));
+    return {
+      purposePreviews: matched,
+      scopedPreviews: [...matched, ...others],
+    };
+  }, [currentPurposeDef]);
 
   const currentIndex = getPreviewIndex(activePreview, scopedPreviews);
 
-  // If in goal focus mode and active preview is outside current goal scope, switch to the first preview of the goal
-  useEffect(() => {
-    if (isGoalFocus && scopedPreviews.length > 0 && !scopedPreviews.some((p) => p.id === activePreview)) {
-      setActivePreview(scopedPreviews[0].id);
-    }
-  }, [isGoalFocus, scopedPreviews, activePreview, setActivePreview]);
-
   const handlePrev = React.useCallback(() => {
+    if (!hasPurpose) return;
     const prev = getPrevPreview(activePreview, scopedPreviews);
     preloadComponent(prev);
     setActivePreview(prev);
-  }, [activePreview, setActivePreview, scopedPreviews]);
+  }, [hasPurpose, activePreview, setActivePreview, scopedPreviews]);
 
   const handleNext = React.useCallback(() => {
+    if (!hasPurpose) return;
     const next = getNextPreview(activePreview, scopedPreviews);
     preloadComponent(next);
     setActivePreview(next);
-  }, [activePreview, setActivePreview, scopedPreviews]);
+  }, [hasPurpose, activePreview, setActivePreview, scopedPreviews]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -341,7 +336,8 @@ export const PreviewPane: React.FC = () => {
           <button
             type="button"
             onClick={handlePrev}
-            className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer"
+            disabled={!hasPurpose}
+            className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             title="Previous preview (Shift+[)"
             aria-label="Previous preview"
           >
@@ -353,68 +349,50 @@ export const PreviewPane: React.FC = () => {
             <select
               value={activePreview}
               onChange={(e) => setActivePreview(e.target.value as PreviewComponentType)}
+              disabled={!hasPurpose}
               aria-label="Select preview archetype"
-              className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[145px] sm:max-w-[210px] md:max-w-xs truncate"
+              className="appearance-none bg-slate-100 dark:bg-slate-800/90 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm pl-2.5 sm:pl-3 pr-7 sm:pr-8 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700/80 focus-ring cursor-pointer max-w-[170px] sm:max-w-[240px] md:max-w-xs truncate disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isGoalFocus ? (
-                <>
-                  <optgroup label={`${activeGoalDef.emoji} ${activeGoalDef.label} — Pages`}>
-                    {goalGroups.pages.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.label}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label={`🧩 ${activeGoalDef.label} — Primitives`}>
-                    {goalGroups.primitives.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.label}
-                      </option>
-                    ))}
-                  </optgroup>
-                </>
+              {!hasPurpose ? (
+                <option value="">Choose Purpose First</option>
               ) : (
-                (['Primitives', 'Commerce', 'Community', 'Public', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
-                  const items = PREVIEW_REGISTRY.filter((p) => p.category === cat);
-                  if (items.length === 0) return null;
-                  return (
-                    <optgroup key={cat} label={CATEGORY_LABELS[cat]}>
-                      {items.map((p) => (
+                <>
+                  {purposePreviews.length > 0 && (
+                    <optgroup label={`${currentPurposeDef?.emoji ?? '🎯'} ${currentPurposeDef?.label ?? 'Purpose'} — Pages`}>
+                      {purposePreviews.map((p) => (
                         <option key={p.id} value={p.id}>
                           {p.label}
                         </option>
                       ))}
                     </optgroup>
-                  );
-                })
+                  )}
+                  {(['Primitives', 'Commerce', 'Community', 'Public', 'Auth', 'Core', 'Account', 'System'] as const).map((cat) => {
+                    const items = PREVIEW_REGISTRY.filter(
+                      (p) => p.category === cat && (!currentPurposeDef || !currentPurposeDef.pages.some((pg) => pg.pageType === p.id))
+                    );
+                    if (items.length === 0) return null;
+                    return (
+                      <optgroup key={cat} label={CATEGORY_LABELS[cat]}>
+                        {items.map((p) => (
+                          <option key={p.id} value={p.id}>
+                            {p.label}
+                          </option>
+                        ))}
+                      </optgroup>
+                    );
+                  })}
+                </>
               )}
             </select>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
 
-          {/* Goal Focus Filter Pill Toggle */}
-          <button
-            type="button"
-            onClick={() => setIsGoalFocus((prev) => !prev)}
-            className={`px-2 py-1 text-[11px] font-bold rounded-lg border flex items-center gap-1 transition-colors cursor-pointer shrink-0 ${
-              isGoalFocus
-                ? 'bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-800'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700'
-            }`}
-            title={
-              isGoalFocus
-                ? `Showing ${scopedPreviews.length} views for ${activeGoalDef.label}. Click to view all 26 previews.`
-                : 'Showing all 26 views. Click to focus on goal views.'
-            }
-          >
-            <span>{isGoalFocus ? `${activeGoalDef.emoji} Goal Focus` : '🌐 All Views'}</span>
-          </button>
-
           {/* Navigation Next Button */}
           <button
             type="button"
             onClick={handleNext}
-            className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer"
+            disabled={!hasPurpose}
+            className="p-1.5 sm:p-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors focus-ring cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             title="Next preview (Shift+])"
             aria-label="Next preview"
           >
@@ -422,25 +400,11 @@ export const PreviewPane: React.FC = () => {
           </button>
 
           {/* Step indicator */}
-          <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 hidden md:inline ml-0.5">
-            {currentIndex >= 0 ? currentIndex + 1 : 1}/{scopedPreviews.length}
-          </span>
-
-          {/* Active icon spec pill */}
-          <span
-            className="text-[10px] px-2 py-0.5 rounded-md font-mono bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hidden xl:inline-flex items-center gap-1 border border-slate-300 dark:border-slate-700"
-            title="Active Icon Specification in Previews"
-          >
-            <span>Icon:</span>
-            <strong className="text-slate-900 dark:text-slate-200 capitalize">
-              {state.icons?.library ?? 'lucide'}
-            </strong>
-            <span>•</span>
-            <span>{state.icons?.mode ?? 'outline'}</span>
-            {state.icons?.duotone && <span>(duotone)</span>}
-            <span>•</span>
-            <span>{state.icons?.weight ?? 'regular'}</span>
-          </span>
+          {hasPurpose && (
+            <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 hidden md:inline ml-0.5">
+              {currentIndex >= 0 ? currentIndex + 1 : 1}/{scopedPreviews.length}
+            </span>
+          )}
 
           {/* Overflow detection indicator */}
           {hasOverflow && (
@@ -464,84 +428,98 @@ export const PreviewPane: React.FC = () => {
           className="transition-all duration-300 w-full h-full flex flex-col items-center justify-center min-h-0"
           style={{ maxWidth: viewportWidth }}
         >
-          {/* Isolated sandbox frame fixed to container height with internal scrolling */}
-          <div
-            data-viewport={viewportMode}
-            data-icon-library={state.icons?.library ?? 'lucide'}
-            data-icon-mode={state.icons?.mode ?? 'outline'}
-            data-icon-weight={state.icons?.weight ?? 'regular'}
-            data-icon-duotone={state.icons?.duotone ? 'true' : 'false'}
-            className="ts-preview-frame"
-            style={
-              {
-                ...cssVariables,
-                backgroundColor: 'var(--ts-color-background)',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                boxSizing: 'border-box',
-                border: '1px solid var(--ts-color-border)',
-                borderRadius: '12px',
-                boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)',
-                overflow: 'hidden',
-                containerType: 'inline-size',
-              } as React.CSSProperties
-            }
-          >
-            {/* Scrollable Viewport inside the preview frame */}
+          {!hasPurpose ? (
+            <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center select-none bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm">
+              <div className="w-16 h-16 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 flex items-center justify-center mb-4 shadow-sm">
+                <Compass className="w-8 h-8" />
+              </div>
+              <h3 className="text-base font-bold text-slate-800 dark:text-slate-100 mb-1.5">
+                No Project Purpose Selected
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
+                Choose a project purpose from the left panel to initialize your tailored page suite and start designing.
+              </p>
+            </div>
+          ) : (
+            /* Isolated sandbox frame fixed to container height with internal scrolling */
             <div
-              ref={scrollContainerRef}
-              style={{
-                flex: 1,
-                width: '100%',
-                height: '100%',
-                overflowY: 'auto',
-                overflowX: 'hidden',
-                padding: isFullBleed ? '0' : 'var(--ts-space-lg)',
-                boxSizing: 'border-box',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <div
-                style={{
-                  minHeight: '100%',
+              data-viewport={viewportMode}
+              data-icon-library={state.icons?.library ?? 'lucide'}
+              data-icon-mode={state.icons?.mode ?? 'outline'}
+              data-icon-weight={state.icons?.weight ?? 'regular'}
+              data-icon-duotone={state.icons?.duotone ? 'true' : 'false'}
+              className="ts-preview-frame"
+              style={
+                {
+                  ...cssVariables,
+                  backgroundColor: 'var(--ts-color-background)',
+                  width: '100%',
                   height: '100%',
-                  flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'stretch',
-                  justifyContent: 'flex-start',
+                  boxSizing: 'border-box',
+                  border: '1px solid var(--ts-color-border)',
+                  borderRadius: '12px',
+                  boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)',
+                  overflow: 'hidden',
+                  containerType: 'inline-size',
+                } as React.CSSProperties
+              }
+            >
+              {/* Scrollable Viewport inside the preview frame */}
+              <div
+                ref={scrollContainerRef}
+                style={{
+                  flex: 1,
                   width: '100%',
+                  height: '100%',
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                  padding: isFullBleed ? '0' : 'var(--ts-space-lg)',
+                  boxSizing: 'border-box',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                {isPageArchetype ? (
-                  <Suspense
-                    fallback={
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          height: '240px',
-                          color: 'var(--ts-color-text)',
-                          opacity: 0.6,
-                          fontSize: 'calc(var(--ts-base-size) * 0.85)',
-                        }}
-                      >
-                        Loading archetype simulation...
-                      </div>
-                    }
-                  >
-                    {renderActivePreview()}
-                  </Suspense>
-                ) : (
-                  renderActivePreview()
-                )}
+                <div
+                  style={{
+                    minHeight: '100%',
+                    height: '100%',
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'stretch',
+                    justifyContent: 'flex-start',
+                    width: '100%',
+                  }}
+                >
+                  {isPageArchetype ? (
+                    <Suspense
+                      fallback={
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '240px',
+                            color: 'var(--ts-color-text)',
+                            opacity: 0.6,
+                            fontSize: 'calc(var(--ts-base-size) * 0.85)',
+                          }}
+                        >
+                          Loading archetype simulation...
+                        </div>
+                      }
+                    >
+                      {renderActivePreview()}
+                    </Suspense>
+                  ) : (
+                    renderActivePreview()
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -234,12 +234,8 @@ TastyStyles provides 26 full-page archetypes organized into 6 domains:
 ### 4.9 Wizard Shell, Markdown & Common Primitives
 | File Path | Purpose | Key Responsibilities |
 | :--- | :--- | :--- |
-| `src/components/wizard/WizardShell.tsx` | Main 5-step purpose-first workflow. | Houses Purpose, Pages, Layouts, Theme, and Review steps with one-click toggle to Advanced mode. |
-| `src/components/wizard/steps/PurposeStep.tsx` | Purpose selection step. | Interactive cards for E-Commerce, SaaS, Portfolio, Marketplace, and Media purposes. |
-| `src/components/wizard/steps/PagesStep.tsx` | Sitemap curation step. | Checkbox list, page reordering, page previewing, and dynamic archetype adding from 30 page types. |
-| `src/components/wizard/steps/LayoutsStep.tsx` | Section layout selection step. | Per-page layout selector connected to plugin manifests in `src/layouts/`. |
-| `src/components/wizard/steps/ThemeStep.tsx` | Token styling step. | Sub-tabs for presets, colors, typography, component radii/shadows, and multi-library icons. |
-| `src/components/wizard/steps/ReviewStep.tsx` | Project brief review step. | Sitemap review, WCAG/APCA token contrast audit, zero-drift verification, and export action. |
+| `src/components/controls/PurposePicker.tsx` | Startup purpose selection panel. | Interactive cards for E-Commerce, SaaS, Portfolio, Marketplace, and Media purposes that unlock Advanced controls on selection. |
+| `src/components/controls/ControlsPanel.tsx` | Advanced token and system controls. | Direct controls for system name, project purpose, presets, colors, typography, icon systems, layouts, and component radii/shadows. |
 | `src/lib/compileProjectBrief.ts` | Complete project brief compiler. | Generates `PROJECT-BRIEF.md` containing Part A (Site Blueprint & Sitemap) and Part B (Design Tokens). |
 | `src/lib/layoutRegistry.ts` | Plugin layout and section registry. | Auto-discovers and validates layout manifests from `src/layouts/` and sections from `src/sections/`. |
 | `src/components/layout/Header.tsx` | Top workspace navigation bar. | Shows system title, preset badge, contrast ratio pill, theme toggle, and JSON import/export triggers. |

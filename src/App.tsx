@@ -4,7 +4,8 @@ import { ErrorFallback } from './components/common/ErrorFallback';
 import { DesignProvider, useDesign } from './context/DesignContext';
 import { EditorThemeProvider, useEditorTheme } from './context/EditorThemeContext';
 import { Header } from './components/layout/Header';
-import { WizardShell } from './components/wizard/WizardShell';
+import { ControlsPanel } from './components/controls/ControlsPanel';
+import { PurposePicker } from './components/controls/PurposePicker';
 import { PreviewPane } from './components/preview/PreviewPane';
 import { MarkdownModal } from './components/markdown/MarkdownModal';
 import { ExportBar } from './components/layout/ExportBar';
@@ -82,10 +83,11 @@ function MainLayout() {
         <div className="sm:hidden flex-1 flex flex-col overflow-hidden pb-16">
           {mobileTab === 'controls' ? (
             <div className="flex-1 overflow-y-auto">
-              <WizardShell
-                onOpenExportModal={() => setIsExportModalOpen(true)}
-                onNotify={showToast}
-              />
+              {!state.project?.purpose ? (
+                <PurposePicker onNotify={showToast} />
+              ) : (
+                <ControlsPanel />
+              )}
             </div>
           ) : (
             <div className="flex-1 overflow-hidden">
@@ -101,10 +103,11 @@ function MainLayout() {
         <div className="hidden sm:flex flex-1 overflow-hidden w-full h-full">
           {/* Left Controls Sidebar (scrollable) */}
           <aside className="w-80 lg:w-[380px] flex-shrink-0 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full overflow-hidden bg-white dark:bg-slate-950/80 transition-colors">
-            <WizardShell
-              onOpenExportModal={() => setIsExportModalOpen(true)}
-              onNotify={showToast}
-            />
+            {!state.project?.purpose ? (
+              <PurposePicker onNotify={showToast} />
+            ) : (
+              <ControlsPanel />
+            )}
           </aside>
 
           {/* Expanded & Fixed Right Preview Canvas */}
