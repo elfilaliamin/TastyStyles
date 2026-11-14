@@ -18,10 +18,15 @@ export function updateDynamicFonts(families: string[]): void {
   }
 
   // Build Google Fonts CSS2 query string
-  // Format: family=Font+One:wght@400;500;600;700&family=Font+Two:wght@400;500;600;700&display=swap
   const familyQueries = uniqueFamilies.map((fam) => {
-    const formatted = fam.replace(/\s+/g, '+');
-    return `family=${formatted}:wght@400;500;600;700`;
+    const regFont = registries.fonts.find(
+      (rf) => rf.id === fam || rf.family.toLowerCase() === fam.toLowerCase()
+    );
+    const fontName = regFont ? regFont.family : fam;
+    const formatted = fontName.replace(/\s+/g, '+');
+    const availableWeights = regFont?.weights?.filter((w) => [400, 500, 600, 700].includes(w)) || [400, 500, 600, 700];
+    const weightsStr = availableWeights.length > 0 ? `:wght@${availableWeights.join(';')}` : ':wght@400';
+    return `family=${formatted}${weightsStr}`;
   });
 
   const url = `https://fonts.googleapis.com/css2?${familyQueries.join('&')}&display=swap`;
@@ -45,7 +50,9 @@ export function loadAllPreviewFonts(): void {
 
   const families = registries.fonts.map((f) => {
     const formatted = f.family.replace(/\s+/g, '+');
-    return `family=${formatted}:wght@400;600`;
+    const availableWeights = f.weights.filter((w) => [400, 600, 700].includes(w));
+    const weightsStr = availableWeights.length > 0 ? `:wght@${availableWeights.join(';')}` : ':wght@400';
+    return `family=${formatted}${weightsStr}`;
   });
 
   link.href = `https://fonts.googleapis.com/css2?${families.join('&')}&display=swap`;

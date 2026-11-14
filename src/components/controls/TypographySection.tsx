@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { registries } from '../../lib/registry';
 import { Type, Check } from 'lucide-react';
 import { ALL_TYPOGRAPHY_PRESETS } from '../../config/typographyPresets';
+import { CategoryNavRow } from './CategoryNavRow';
 
-const TYPE_CATEGORIES = ['All', 'SaaS & Modern', 'Editorial & Serif', 'Tech & Monospace', 'Display & High-Impact', 'Humanist & Soft'] as const;
+const TYPE_CATEGORIES = [
+  'All',
+  'Sans-Serif',
+  'Serif',
+  'Monospace & Code',
+  'Display & High-Impact',
+  'Serif + Sans Pairing',
+  'Sans + Serif Pairing',
+] as const;
 
 export const TypographySection: React.FC = () => {
   const { state, dispatch } = useDesign();
   const { headingFont, bodyFont, scale, baseSize } = state.typography;
   const [selectedCategory, setSelectedCategory] = useState<typeof TYPE_CATEGORIES[number]>('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Compute category count badges
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: ALL_TYPOGRAPHY_PRESETS.length };
+    for (const p of ALL_TYPOGRAPHY_PRESETS) {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    }
+    return counts;
+  }, []);
 
   const filteredPresets = ALL_TYPOGRAPHY_PRESETS.filter((p) => {
-    return selectedCategory === 'All' || p.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
+    const matchesSearch =
+      searchQuery === '' ||
+      p.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.headingFontName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.bodyFontName.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
   });
 
   return (
@@ -32,28 +58,34 @@ export const TypographySection: React.FC = () => {
           <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Type Only</span>
         </div>
 
-        {/* Category Filter Chips */}
-        <div className="flex items-center gap-1 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
-          {TYPE_CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-2 py-1 rounded-md text-[10px] font-semibold transition-colors whitespace-nowrap flex-shrink-0 cursor-pointer ${
-                selectedCategory === cat
-                  ? 'bg-sky-600 text-white shadow-xs'
-                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700/80'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Search Input */}
+        <div>
+          <input
+            type="text"
+            placeholder="Search fonts (e.g. serif, inter, cormorant, mono)..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500"
+          />
         </div>
+
+        {/* Category Filter Chips with Smooth Arrow Navigation */}
+        <CategoryNavRow
+          categories={TYPE_CATEGORIES}
+          selectedCategory={selectedCategory}
+          onSelectCategory={(cat) => setSelectedCategory(cat as typeof TYPE_CATEGORIES[number])}
+          counts={categoryCounts}
+        />
 
         {/* Visual Typography Specimen Cards */}
         <div className="grid grid-cols-2 gap-2 max-h-[290px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
           {filteredPresets.map((preset) => {
             const isActive = headingFont === preset.headingFont && bodyFont === preset.bodyFont;
+            const headingFontFallback = preset.headingCategory === 'Serif'
+              ? `'${preset.headingFontName}', serif`
+              : preset.headingCategory === 'Monospace'
+              ? `'${preset.headingFontName}', monospace`
+              : `'${preset.headingFontName}', sans-serif`;
 
             return (
               <button
@@ -93,7 +125,7 @@ export const TypographySection: React.FC = () => {
                   className="p-2 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 flex items-center justify-between gap-2 overflow-hidden"
                 >
                   <div
-                    style={{ fontFamily: `'${preset.headingFontName}', sans-serif`, fontSize: '20px', fontWeight: 800 }}
+                    style={{ fontFamily: headingFontFallback, fontSize: '20px', fontWeight: 800 }}
                     className="text-slate-800 dark:text-slate-100 leading-none select-none"
                   >
                     Aa
@@ -106,20 +138,23 @@ export const TypographySection: React.FC = () => {
 
                 {/* Sample preview text */}
                 <p
-                  style={{ fontFamily: `'${preset.headingFontName}', sans-serif` }}
+                  style={{ fontFamily: headingFontFallback }}
                   className="text-[10px] text-slate-600 dark:text-slate-400 line-clamp-1 italic m-0"
                 >
                   "{preset.previewSample}"
                 </p>
 
-                {/* Scale & Size Badges */}
-                <div className="flex items-center gap-1 text-[9px] text-slate-500 dark:text-slate-400">
-                  <span className="px-1.5 py-0.5 rounded-sm bg-slate-100 dark:bg-slate-700/70 font-mono font-medium">
-                    {preset.scale}x
-                  </span>
-                  <span className="px-1.5 py-0.5 rounded-sm bg-slate-100 dark:bg-slate-700/70 font-mono font-medium">
-                    {preset.baseSize}px
-                  </span>
+                {/* Scale & Size Badges + Category */}
+                <div className="flex items-center justify-between gap-1 text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  <div className="flex items-center gap-1">
+                    <span className="px-1.5 py-0.5 rounded-sm bg-slate-200/70 dark:bg-slate-700/70 font-mono font-medium">
+                      {preset.scale}x
+                    </span>
+                    <span className="px-1.5 py-0.5 rounded-sm bg-slate-200/70 dark:bg-slate-700/70 font-mono font-medium">
+                      {preset.baseSize}px
+                    </span>
+                  </div>
+                  <span className="truncate opacity-75">{preset.category}</span>
                 </div>
               </button>
             );

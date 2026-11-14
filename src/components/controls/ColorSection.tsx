@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ContrastBadge } from '../layout/ContrastBadge';
 import { Dices, Palette, Check } from 'lucide-react';
 import type { ColorPalette } from '../../config/schema';
 import { getBestContrastingColor, checkColorHarmony } from '../../lib/contrast';
 import { ALL_COLOR_PALETTES } from '../../config/colorPalettes';
+import { CategoryNavRow } from './CategoryNavRow';
 
 const COLOR_TOKENS: Array<{ key: keyof ColorPalette; label: string; desc: string }> = [
   { key: 'primary', label: 'Primary Brand', desc: 'Main interactive elements & buttons' },
@@ -16,14 +17,22 @@ const COLOR_TOKENS: Array<{ key: keyof ColorPalette; label: string; desc: string
   { key: 'border', label: 'Border', desc: 'Card edges, inputs & dividers' },
 ];
 
-const CATEGORIES = ['All', 'SaaS & Tech', 'Dark & Cyber', 'Warm & Nature', 'Vibrant & Creative', 'Luxury & Minimal'] as const;
+const COLOR_HARMONY_CATEGORIES = [
+  'All',
+  'Complementary',
+  'Analogous',
+  'Monochromatic',
+  'Split-Complementary',
+  'Triadic',
+  'Square',
+] as const;
 
 export const ColorSection: React.FC = () => {
   const { state, dispatch } = useDesign();
   const currentMode = state.activeMode;
   const currentPalette = state.colors[currentMode];
   const [drafts, setDrafts] = useState<Partial<Record<keyof ColorPalette, string>>>({});
-  const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[number]>('All');
+  const [selectedCategory, setSelectedCategory] = useState<typeof COLOR_HARMONY_CATEGORIES[number]>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
   const getDisplayValue = (key: keyof ColorPalette) => {
@@ -74,58 +83,61 @@ export const ColorSection: React.FC = () => {
 
   const buttonTextColor = getBestContrastingColor(currentPalette.primary);
 
+  // Compute category count badges
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: ALL_COLOR_PALETTES.length };
+    for (const pal of ALL_COLOR_PALETTES) {
+      counts[pal.category] = (counts[pal.category] || 0) + 1;
+    }
+    return counts;
+  }, []);
+
   // Filter palettes based on category and search
   const filteredPalettes = ALL_COLOR_PALETTES.filter((pal) => {
     const matchesCategory = selectedCategory === 'All' || pal.category === selectedCategory;
-    const matchesSearch = searchQuery === '' || pal.name.toLowerCase().includes(searchQuery.toLowerCase()) || pal.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      searchQuery === '' ||
+      pal.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      pal.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      pal.harmonyBadge.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   return (
     <div className="space-y-4">
-      {/* 1. VISUAL COLOR PALETTES GRID (PRESETS FOR COLORS ONLY) */}
+      {/* 1. VISUAL COLOR PALETTES GRID (GRAPHIC DESIGN COLOR HARMONIES) */}
       <div className="space-y-2.5 p-3 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Palette className="w-4 h-4 text-sky-500" />
             <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
-              Visual Color Palettes
+              Color Theory Palettes
             </span>
             <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-semibold">
               {ALL_COLOR_PALETTES.length} Palettes
             </span>
           </div>
-          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Palette Only</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Harmony Models</span>
         </div>
 
         {/* Search Input */}
         <div>
           <input
             type="text"
-            placeholder="Search palettes (e.g. cyber, modern, emerald)..."
+            placeholder="Search harmony (e.g. complementary, analogous, triad)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500"
           />
         </div>
 
-        {/* Category Filter Chips */}
-        <div className="flex items-center gap-1 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-2 py-1 rounded-md text-[10px] font-semibold transition-colors whitespace-nowrap flex-shrink-0 cursor-pointer ${
-                selectedCategory === cat
-                  ? 'bg-sky-600 text-white shadow-xs'
-                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700/80'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        {/* Category Filter Chips with Smooth Arrow Navigation */}
+        <CategoryNavRow
+          categories={COLOR_HARMONY_CATEGORIES}
+          selectedCategory={selectedCategory}
+          onSelectCategory={(cat) => setSelectedCategory(cat as typeof COLOR_HARMONY_CATEGORIES[number])}
+          counts={categoryCounts}
+        />
 
         {/* Visual Palettes Cards Grid */}
         <div className="grid grid-cols-2 gap-2 max-h-[260px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
@@ -172,10 +184,15 @@ export const ColorSection: React.FC = () => {
                   <div style={{ backgroundColor: palColors.text }} className="h-full flex-1" title={`Text: ${palColors.text}`} />
                 </div>
 
-                {/* Subtitle / Category */}
-                <span className="text-[9px] text-slate-500 dark:text-slate-400 truncate">
-                  {pal.category}
-                </span>
+                {/* Subtitle / Harmony Badge */}
+                <div className="flex items-center justify-between gap-1 mt-0.5">
+                  <span className="text-[9px] text-slate-500 dark:text-slate-400 truncate">
+                    {pal.category}
+                  </span>
+                  <span className="text-[8.5px] font-mono px-1 py-0.2 rounded bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 truncate">
+                    {pal.harmonyBadge}
+                  </span>
+                </div>
               </button>
             );
           })}

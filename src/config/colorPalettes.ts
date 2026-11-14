@@ -1,10 +1,19 @@
 import type { ColorPalette } from './schema';
 import { registries } from '../lib/registry';
 
+export type ColorHarmonyCategory =
+  | 'Complementary'
+  | 'Analogous'
+  | 'Monochromatic'
+  | 'Split-Complementary'
+  | 'Triadic'
+  | 'Square';
+
 export interface VisualColorPalette {
   id: string;
   name: string;
-  category: 'SaaS & Tech' | 'Dark & Cyber' | 'Warm & Nature' | 'Vibrant & Creative' | 'Luxury & Minimal';
+  category: ColorHarmonyCategory;
+  harmonyBadge: string;
   description: string;
   colors: {
     light: ColorPalette;
@@ -12,39 +21,116 @@ export interface VisualColorPalette {
   };
 }
 
-// 1. Initial 20 Palettes derived from registered presets
-const presetPalettes: VisualColorPalette[] = registries.presets.map((p) => {
-  let category: VisualColorPalette['category'] = 'SaaS & Tech';
-  if (['cyber-neon', 'obsidian-beam', 'tokyo-night', 'monokai-pro', 'linear-dark', 'dracula-dev'].includes(p.id)) {
-    category = 'Dark & Cyber';
-  } else if (['nordic-forest', 'sage-wellness', 'terracotta-clay', 'autumn-warmth'].includes(p.id)) {
-    category = 'Warm & Nature';
-  } else if (['sunset-editorial', 'aurora-emerald', 'crisp-amber'].includes(p.id)) {
-    category = 'Vibrant & Creative';
-  } else if (['zinc-minimal', 'rose-luxury', 'high-contrast'].includes(p.id)) {
-    category = 'Luxury & Minimal';
-  }
+// Map the 20 builtin presets into Graphic Design Color Harmonies
+const presetHarmonies: Record<string, { category: ColorHarmonyCategory; badge: string }> = {
+  'editorial-luxury': { category: 'Complementary', badge: '180° Navy & Gold' },
+  'crisp-amber': { category: 'Complementary', badge: '180° Slate & Amber' },
+  'fintech-teal': { category: 'Complementary', badge: '180° Teal & Coral' },
+  'airbnb-coral': { category: 'Complementary', badge: '180° Coral & Teal' },
+  'spotify-pulse': { category: 'Complementary', badge: '180° Neon & Black' },
+  'supabase-emerald': { category: 'Complementary', badge: '180° Emerald & Orange' },
 
+  'nordic-forest': { category: 'Analogous', badge: '30° Emerald & Mint' },
+  'sunset-amber': { category: 'Analogous', badge: '45° Amber & Rose' },
+  'sage-wellness': { category: 'Analogous', badge: '30° Sage & Eucalyptus' },
+  'terracotta-clay': { category: 'Analogous', badge: '40° Terracotta & Sand' },
+  'aurora-emerald': { category: 'Analogous', badge: '35° Emerald & Teal' },
+
+  'zinc-minimal': { category: 'Monochromatic', badge: '0° Zinc Tones' },
+  'linear-obsidian': { category: 'Monochromatic', badge: '0° Pure Obsidian' },
+  'vercel-stark': { category: 'Monochromatic', badge: '0° Stark Grayscale' },
+  'notion-ivory': { category: 'Monochromatic', badge: '0° Warm Ivory' },
+
+  'stripe-indigo': { category: 'Split-Complementary', badge: '150°/210° Indigo & Coral' },
+  'obsidian-beam': { category: 'Split-Complementary', badge: '150°/210° Violet & Cyan' },
+
+  'cyber-neon': { category: 'Triadic', badge: '120° Cyan, Magenta, Gold' },
+  'monokai-pro': { category: 'Triadic', badge: '120° Gold, Ruby, Cyan' },
+
+  'tokyo-night': { category: 'Square', badge: '90° Tetradic Cyber' },
+};
+
+const builtinPresetsAsHarmonies: VisualColorPalette[] = registries.presets.map((p) => {
+  const harmony = presetHarmonies[p.id] ?? { category: 'Complementary', badge: '180° Dual Tone' };
   return {
     id: p.id,
     name: p.label,
-    category,
+    category: harmony.category,
+    harmonyBadge: harmony.badge,
     description: p.description,
     colors: p.state.colors,
   };
 });
 
-// 2. Additional 14 Curated Visual Palettes for massive variety
-const extraPalettes: VisualColorPalette[] = [
+// Additional Curated Graphic Design Theory Palettes (Complementary, Analogous, Monochromatic, Split-Complementary, Triadic, Square)
+const curatedTheoryPalettes: VisualColorPalette[] = [
+  // 1. COMPLEMENTARY (180° opposites on color wheel)
   {
-    id: 'ocean-abyssal',
-    name: 'Ocean Abyssal',
-    category: 'SaaS & Tech',
-    description: 'Deep maritime navy with luminescent cyan and crisp azure highlights.',
+    id: 'comp-sapphire-ember',
+    name: 'Sapphire & Ember',
+    category: 'Complementary',
+    harmonyBadge: '180° Blue & Orange',
+    description: 'High-energy complementary contrast between deep ocean sapphire and radiant ember orange.',
     colors: {
       light: {
-        primary: '#0369a1',
+        primary: '#0284c7',
         secondary: '#475569',
+        accent: '#ea580c',
+        background: '#f8fafc',
+        surface: '#ffffff',
+        text: '#0f172a',
+        border: '#e2e8f0',
+      },
+      dark: {
+        primary: '#38bdf8',
+        secondary: '#94a3b8',
+        accent: '#fb923c',
+        background: '#0b1320',
+        surface: '#152238',
+        text: '#f8fafc',
+        border: '#1e3352',
+      },
+    },
+  },
+  {
+    id: 'comp-amethyst-lime',
+    name: 'Amethyst & Lime',
+    category: 'Complementary',
+    harmonyBadge: '180° Violet & Lime',
+    description: 'Electric fashion pairing of deep royal amethyst with vivid lime focal points.',
+    colors: {
+      light: {
+        primary: '#7c3aed',
+        secondary: '#64748b',
+        accent: '#65a30d',
+        background: '#faf5ff',
+        surface: '#ffffff',
+        text: '#1e1b4b',
+        border: '#e9d5ff',
+      },
+      dark: {
+        primary: '#a78bfa',
+        secondary: '#94a3b8',
+        accent: '#a3e635',
+        background: '#120b24',
+        surface: '#1e1338',
+        text: '#faf5ff',
+        border: '#2f1e56',
+      },
+    },
+  },
+
+  // 2. ANALOGOUS (30°-60° adjacent hues)
+  {
+    id: 'ana-ocean-wave',
+    name: 'Oceanic Wave',
+    category: 'Analogous',
+    harmonyBadge: '30° Azure, Sky & Cyan',
+    description: 'Cohesive, soothing progression across contiguous cool blue, sky, and cyan wavelengths.',
+    colors: {
+      light: {
+        primary: '#2563eb',
+        secondary: '#0284c7',
         accent: '#06b6d4',
         background: '#f0f9ff',
         surface: '#ffffff',
@@ -52,8 +138,8 @@ const extraPalettes: VisualColorPalette[] = [
         border: '#bae6fd',
       },
       dark: {
-        primary: '#38bdf8',
-        secondary: '#94a3b8',
+        primary: '#60a5fa',
+        secondary: '#38bdf8',
         accent: '#22d3ee',
         background: '#031726',
         surface: '#082f49',
@@ -63,346 +149,367 @@ const extraPalettes: VisualColorPalette[] = [
     },
   },
   {
-    id: 'electric-amethyst',
-    name: 'Electric Amethyst',
-    category: 'Vibrant & Creative',
-    description: 'Vibrant ultraviolet purple paired with vivid violet and magenta glow.',
+    id: 'ana-cosmic-twilight',
+    name: 'Cosmic Twilight',
+    category: 'Analogous',
+    harmonyBadge: '45° Indigo, Purple & Pink',
+    description: 'Mystic nocturnal progression connecting royal indigo, rich purple, and rose blush.',
     colors: {
       light: {
-        primary: '#7c3aed',
-        secondary: '#6b7280',
-        accent: '#d946ef',
+        primary: '#4f46e5',
+        secondary: '#7c3aed',
+        accent: '#db2777',
         background: '#faf5ff',
         surface: '#ffffff',
-        text: '#3b0764',
-        border: '#e9d5ff',
+        text: '#1e1b4b',
+        border: '#f3e8ff',
       },
       dark: {
-        primary: '#a855f7',
-        secondary: '#9ca3af',
-        accent: '#f0abfc',
-        background: '#120422',
-        surface: '#240845',
+        primary: '#818cf8',
+        secondary: '#a78bfa',
+        accent: '#f472b6',
+        background: '#0f0c20',
+        surface: '#1b1434',
         text: '#faf5ff',
-        border: '#3b0764',
+        border: '#2e1f58',
       },
     },
   },
+
+  // 3. MONOCHROMATIC (Single hue lightness & chroma variants)
   {
-    id: 'matcha-calm',
-    name: 'Matcha Calm',
-    category: 'Warm & Nature',
-    description: 'Soothing ceremonial green tea tones on warm oat ceramic backgrounds.',
+    id: 'mono-alpine-pine',
+    name: 'Alpine Pine Monolith',
+    category: 'Monochromatic',
+    harmonyBadge: '0° Evergreen Tones',
+    description: 'Singular evergreen hue graded across botanical deep shadows and crisp morning tints.',
     colors: {
       light: {
-        primary: '#4d7c0f',
-        secondary: '#57534e',
-        accent: '#84cc16',
-        background: '#f7fee7',
-        surface: '#fefce8',
-        text: '#1a2e05',
-        border: '#d9f99d',
-      },
-      dark: {
-        primary: '#a3e635',
-        secondary: '#a8a29e',
-        accent: '#bef264',
-        background: '#0d1904',
-        surface: '#1a3308',
-        text: '#f7fee7',
-        border: '#2d5a0d',
-      },
-    },
-  },
-  {
-    id: 'desert-sand',
-    name: 'Desert Dunes',
-    category: 'Warm & Nature',
-    description: 'Sun-baked terracotta, warm copper, and Sahara parchment hues.',
-    colors: {
-      light: {
-        primary: '#c2410c',
-        secondary: '#78716c',
-        accent: '#f97316',
-        background: '#fff7ed',
+        primary: '#065f46',
+        secondary: '#047857',
+        accent: '#10b981',
+        background: '#f0fdf4',
         surface: '#ffffff',
-        text: '#431407',
-        border: '#fed7aa',
+        text: '#022c22',
+        border: '#bbf7d0',
       },
       dark: {
-        primary: '#fb923c',
-        secondary: '#a8a29e',
-        accent: '#fdba74',
-        background: '#1c0e05',
-        surface: '#341a0b',
-        text: '#fff7ed',
-        border: '#57270e',
+        primary: '#34d399',
+        secondary: '#10b981',
+        accent: '#6ee7b7',
+        background: '#021810',
+        surface: '#052e1c',
+        text: '#ecfdf5',
+        border: '#094d2f',
       },
     },
   },
   {
-    id: 'glacier-frost',
-    name: 'Glacier Frost',
-    category: 'SaaS & Tech',
-    description: 'Pristine arctic ice blues with sharp slate structural borders.',
+    id: 'mono-sandstone-ochre',
+    name: 'Sandstone & Ochre',
+    category: 'Monochromatic',
+    harmonyBadge: '0° Warm Sandstone',
+    description: 'Timeless architectural warmth derived solely from earth pigment saturation gradients.',
     colors: {
       light: {
-        primary: '#0284c7',
-        secondary: '#64748b',
-        accent: '#38bdf8',
+        primary: '#78350f',
+        secondary: '#92400e',
+        accent: '#d97706',
+        background: '#fefce8',
+        surface: '#ffffff',
+        text: '#451a03',
+        border: '#fde68a',
+      },
+      dark: {
+        primary: '#f59e0b',
+        secondary: '#fbbf24',
+        accent: '#fde68a',
+        background: '#1c1305',
+        surface: '#2e1e07',
+        text: '#fffbeb',
+        border: '#4a320b',
+      },
+    },
+  },
+
+  // 4. SPLIT-COMPLEMENTARY (Base + 2 adjacent to opposite: 150° & 210°)
+  {
+    id: 'split-sapphire-warmth',
+    name: 'Sapphire, Amber & Coral',
+    category: 'Split-Complementary',
+    harmonyBadge: '150°/210° Split Dual-Warm',
+    description: 'Cool blue anchor balanced with split warm complements of honey amber and coral rose.',
+    colors: {
+      light: {
+        primary: '#1d4ed8',
+        secondary: '#e11d48',
+        accent: '#d97706',
         background: '#f8fafc',
         surface: '#ffffff',
         text: '#0f172a',
         border: '#e2e8f0',
       },
       dark: {
-        primary: '#38bdf8',
-        secondary: '#94a3b8',
-        accent: '#7dd3fc',
-        background: '#0a1120',
-        surface: '#111e38',
+        primary: '#60a5fa',
+        secondary: '#fb7185',
+        accent: '#fbbf24',
+        background: '#091120',
+        surface: '#122038',
         text: '#f8fafc',
-        border: '#1e3258',
+        border: '#1b3256',
       },
     },
   },
   {
-    id: 'retro-synthwave',
-    name: 'Retro Synthwave',
-    category: 'Dark & Cyber',
-    description: 'Neon magenta and laser cyan over deep dark grid obsidian.',
+    id: 'split-emerald-royalty',
+    name: 'Emerald, Ruby & Violet',
+    category: 'Split-Complementary',
+    harmonyBadge: '150°/210° Split Jewel Tone',
+    description: 'Prestigious split complementary palette balancing emerald base with jewel-toned ruby and violet accents.',
     colors: {
       light: {
-        primary: '#db2777',
-        secondary: '#475569',
-        accent: '#06b6d4',
-        background: '#fdf2f8',
-        surface: '#ffffff',
-        text: '#500724',
-        border: '#fbcfe8',
-      },
-      dark: {
-        primary: '#f43f5e',
-        secondary: '#94a3b8',
-        accent: '#22d3ee',
-        background: '#13041c',
-        surface: '#240735',
-        text: '#fdf2f8',
-        border: '#450d63',
-      },
-    },
-  },
-  {
-    id: 'crimson-velvet',
-    name: 'Crimson Velvet',
-    category: 'Luxury & Minimal',
-    description: 'High-luxury deep Bordeaux wine red with champagne gold accents.',
-    colors: {
-      light: {
-        primary: '#9f1239',
-        secondary: '#71717a',
+        primary: '#059669',
+        secondary: '#7c3aed',
         accent: '#e11d48',
-        background: '#fff1f2',
-        surface: '#ffffff',
-        text: '#4c0519',
-        border: '#fecdd3',
-      },
-      dark: {
-        primary: '#fb7185',
-        secondary: '#a1a1aa',
-        accent: '#fda4af',
-        background: '#1f040b',
-        surface: '#3b0817',
-        text: '#fff1f2',
-        border: '#5c0d24',
-      },
-    },
-  },
-  {
-    id: 'solar-flare',
-    name: 'Solar Flare',
-    category: 'Vibrant & Creative',
-    description: 'Energetic solar amber, radiant gold, and crisp clean canvas.',
-    colors: {
-      light: {
-        primary: '#d97706',
-        secondary: '#57534e',
-        accent: '#f59e0b',
-        background: '#fffbeb',
-        surface: '#ffffff',
-        text: '#451a03',
-        border: '#fde68a',
-      },
-      dark: {
-        primary: '#fbbf24',
-        secondary: '#a8a29e',
-        accent: '#fcd34d',
-        background: '#1c1303',
-        surface: '#362406',
-        text: '#fffbeb',
-        border: '#5c3d0b',
-      },
-    },
-  },
-  {
-    id: 'botanical-moss',
-    name: 'Botanical Moss',
-    category: 'Warm & Nature',
-    description: 'Rich evergreen moss, fern foliage, and dark soil accents.',
-    colors: {
-      light: {
-        primary: '#15803d',
-        secondary: '#525252',
-        accent: '#22c55e',
         background: '#f0fdf4',
         surface: '#ffffff',
-        text: '#052e16',
-        border: '#bbf7d0',
+        text: '#022c22',
+        border: '#dcfce7',
       },
       dark: {
-        primary: '#4ade80',
-        secondary: '#a3a3a3',
-        accent: '#86efac',
-        background: '#041c0d',
-        surface: '#09361a',
+        primary: '#34d399',
+        secondary: '#a78bfa',
+        accent: '#fb7185',
+        background: '#051810',
+        surface: '#0b2b1e',
         text: '#f0fdf4',
-        border: '#14532d',
+        border: '#134732',
       },
     },
   },
   {
-    id: 'midnight-plum',
-    name: 'Midnight Plum',
-    category: 'Luxury & Minimal',
-    description: 'Deep royal imperial purple with subtle platinum borders.',
+    id: 'split-violet-gold-lime',
+    name: 'Violet, Marigold & Lime',
+    category: 'Split-Complementary',
+    harmonyBadge: '150°/210° Split Royal Bright',
+    description: 'Regal violet base highlighted by split complements of marigold gold and lime chartreuse.',
     colors: {
       light: {
-        primary: '#581c87',
-        secondary: '#64748b',
-        accent: '#7e22ce',
+        primary: '#7c3aed',
+        secondary: '#65a30d',
+        accent: '#f59e0b',
         background: '#faf5ff',
         surface: '#ffffff',
-        text: '#2e1065',
-        border: '#f3e8ff',
+        text: '#1e1b4b',
+        border: '#ede9fe',
       },
       dark: {
-        primary: '#c084fc',
-        secondary: '#94a3b8',
-        accent: '#e9d5ff',
-        background: '#130522',
-        surface: '#250b42',
-        text: '#faf5ff',
-        border: '#3f136e',
-      },
-    },
-  },
-  {
-    id: 'cyberpunk-gold',
-    name: 'Cyberpunk Gold',
-    category: 'Dark & Cyber',
-    description: 'High-contrast industrial gold and carbon black matrix.',
-    colors: {
-      light: {
-        primary: '#b45309',
-        secondary: '#3f3f46',
-        accent: '#f59e0b',
-        background: '#fffdf5',
-        surface: '#ffffff',
-        text: '#18181b',
-        border: '#fef08a',
-      },
-      dark: {
-        primary: '#facc15',
-        secondary: '#a1a1aa',
-        accent: '#fde047',
-        background: '#09090b',
-        surface: '#18181b',
-        text: '#fafafa',
-        border: '#27272a',
-      },
-    },
-  },
-  {
-    id: 'vintage-parchment',
-    name: 'Vintage Parchment',
-    category: 'Warm & Nature',
-    description: 'Warm antique sepia tones, bookbinder ink, and soft aged paper.',
-    colors: {
-      light: {
-        primary: '#78350f',
-        secondary: '#57534e',
-        accent: '#b45309',
-        background: '#fefce8',
-        surface: '#fffbeb',
-        text: '#291807',
-        border: '#e7e5e4',
-      },
-      dark: {
-        primary: '#f59e0b',
-        secondary: '#a8a29e',
+        primary: '#a78bfa',
+        secondary: '#a3e635',
         accent: '#fbbf24',
-        background: '#140c04',
-        surface: '#261809',
-        text: '#fefce8',
-        border: '#3d260f',
+        background: '#120826',
+        surface: '#1e103c',
+        text: '#faf5ff',
+        border: '#321c60',
       },
     },
   },
+
+  // 5. TRIADIC (Three equidistant hues 120° apart)
   {
-    id: 'cherry-blossom',
-    name: 'Cherry Blossom',
-    category: 'Vibrant & Creative',
-    description: 'Delicate Sakura petals with subtle slate ink structure.',
+    id: 'triad-neo-classic',
+    name: 'Classic Primary Triad',
+    category: 'Triadic',
+    harmonyBadge: '120° Blue, Red & Gold',
+    description: 'Modernized primary triad balancing cobalt blue, crimson red, and bright gold.',
     colors: {
       light: {
-        primary: '#be185d',
-        secondary: '#64748b',
-        accent: '#ec4899',
-        background: '#fdf2f8',
-        surface: '#ffffff',
-        text: '#500724',
-        border: '#fce7f3',
-      },
-      dark: {
-        primary: '#f472b6',
-        secondary: '#94a3b8',
-        accent: '#fbcfe8',
-        background: '#1c0512',
-        surface: '#330b22',
-        text: '#fdf2f8',
-        border: '#531338',
-      },
-    },
-  },
-  {
-    id: 'slate-minimal',
-    name: 'Slate Precision',
-    category: 'Luxury & Minimal',
-    description: 'Ultra-pure neutral grayscale with deliberate geometric contrast.',
-    colors: {
-      light: {
-        primary: '#0f172a',
-        secondary: '#475569',
-        accent: '#334155',
+        primary: '#2563eb',
+        secondary: '#dc2626',
+        accent: '#ca8a04',
         background: '#f8fafc',
         surface: '#ffffff',
-        text: '#020617',
-        border: '#cbd5e1',
+        text: '#0f172a',
+        border: '#e2e8f0',
       },
       dark: {
-        primary: '#f8fafc',
-        secondary: '#94a3b8',
-        accent: '#e2e8f0',
-        background: '#020617',
-        surface: '#0f172a',
+        primary: '#60a5fa',
+        secondary: '#f87171',
+        accent: '#facc15',
+        background: '#0b1322',
+        surface: '#16233d',
         text: '#f8fafc',
-        border: '#1e293b',
+        border: '#1f355c',
+      },
+    },
+  },
+  {
+    id: 'triad-fintech-balance',
+    name: 'FinTech Sovereign Triad',
+    category: 'Triadic',
+    harmonyBadge: '120° Indigo, Jade & Amber',
+    description: 'Equidistant 120° balance communicating institutional stability (indigo), growth (jade), and urgency (amber).',
+    colors: {
+      light: {
+        primary: '#4338ca',
+        secondary: '#059669',
+        accent: '#d97706',
+        background: '#f8fafc',
+        surface: '#ffffff',
+        text: '#1e1b4b',
+        border: '#e0e7ff',
+      },
+      dark: {
+        primary: '#818cf8',
+        secondary: '#34d399',
+        accent: '#fbbf24',
+        background: '#0c0e22',
+        surface: '#161a3d',
+        text: '#f8fafc',
+        border: '#252b60',
+      },
+    },
+  },
+  {
+    id: 'triad-studio-creative',
+    name: 'Creative Studio Triad',
+    category: 'Triadic',
+    harmonyBadge: '120° Violet, Tangerine, Teal',
+    description: 'Dynamic equilateral triad combining amethyst violet, fiery tangerine, and coastal teal.',
+    colors: {
+      light: {
+        primary: '#7c3aed',
+        secondary: '#ea580c',
+        accent: '#0d9488',
+        background: '#faf5ff',
+        surface: '#ffffff',
+        text: '#1e1b4b',
+        border: '#ede9fe',
+      },
+      dark: {
+        primary: '#a78bfa',
+        secondary: '#fb923c',
+        accent: '#2dd4bf',
+        background: '#120b24',
+        surface: '#1f133d',
+        text: '#faf5ff',
+        border: '#332062',
+      },
+    },
+  },
+
+  // 6. SQUARE / TETRADIC (Four hues spaced 90° apart)
+  {
+    id: 'sq-prism-quad',
+    name: 'Prism Square Quad',
+    category: 'Square',
+    harmonyBadge: '90° Blue, Jade, Amber, Purple',
+    description: 'Harmonious 90° four-corner tetradic palette offering rich multi-accent hierarchy for complex platforms.',
+    colors: {
+      light: {
+        primary: '#2563eb',
+        secondary: '#059669',
+        accent: '#f59e0b',
+        background: '#f8fafc',
+        surface: '#ffffff',
+        text: '#0f172a',
+        border: '#e2e8f0',
+      },
+      dark: {
+        primary: '#60a5fa',
+        secondary: '#34d399',
+        accent: '#fbbf24',
+        background: '#0a1222',
+        surface: '#14223d',
+        text: '#f8fafc',
+        border: '#1e3358',
+      },
+    },
+  },
+  {
+    id: 'sq-electric-quad',
+    name: 'Electric Neon Quad',
+    category: 'Square',
+    harmonyBadge: '90° Cyan, Purple, Orange, Lime',
+    description: 'High-contrast cyberpunk four-axis color geometry designed for gaming, Web3, and creative tools.',
+    colors: {
+      light: {
+        primary: '#0891b2',
+        secondary: '#9333ea',
+        accent: '#ea580c',
+        background: '#f0fdfa',
+        surface: '#ffffff',
+        text: '#164e63',
+        border: '#ccfbf1',
+      },
+      dark: {
+        primary: '#22d3ee',
+        secondary: '#c084fc',
+        accent: '#fb923c',
+        background: '#04171d',
+        surface: '#082b35',
+        text: '#f0fdfa',
+        border: '#0d4251',
+      },
+    },
+  },
+  {
+    id: 'sq-cosmic-tetrad',
+    name: 'Cosmic Tetradic',
+    category: 'Square',
+    harmonyBadge: '90° Indigo, Rose, Gold, Teal',
+    description: 'Four-point cosmic quadrant combining deep indigo, rose blossom, honey gold, and maritime teal.',
+    colors: {
+      light: {
+        primary: '#4f46e5',
+        secondary: '#e11d48',
+        accent: '#d97706',
+        background: '#faf5ff',
+        surface: '#ffffff',
+        text: '#1e1b4b',
+        border: '#ede9fe',
+      },
+      dark: {
+        primary: '#818cf8',
+        secondary: '#fb7185',
+        accent: '#fbbf24',
+        background: '#0e0b24',
+        surface: '#1a143e',
+        text: '#faf5ff',
+        border: '#2c2262',
+      },
+    },
+  },
+  {
+    id: 'sq-horizon-artisan',
+    name: 'Horizon Artisan Quad',
+    category: 'Square',
+    harmonyBadge: '90° Navy, Coral, Olive, Plum',
+    description: 'Subdued artisanal four-axis balance crafted for luxury, lifestyle, and editorial platforms.',
+    colors: {
+      light: {
+        primary: '#1e3a8a',
+        secondary: '#e11d48',
+        accent: '#4d7c0f',
+        background: '#f8fafc',
+        surface: '#ffffff',
+        text: '#0f172a',
+        border: '#e2e8f0',
+      },
+      dark: {
+        primary: '#93c5fd',
+        secondary: '#fb7185',
+        accent: '#a3e635',
+        background: '#081122',
+        surface: '#10203e',
+        text: '#f8fafc',
+        border: '#1a305a',
       },
     },
   },
 ];
 
 export const ALL_COLOR_PALETTES: VisualColorPalette[] = [
-  ...presetPalettes,
-  ...extraPalettes,
+  ...builtinPresetsAsHarmonies,
+  ...curatedTheoryPalettes,
 ];
