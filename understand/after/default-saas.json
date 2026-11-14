@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "name": "My Project",
+  "activeMode": "light",
+  "colors": {
+    "light": {
+      "primary": "#0284c7",
+      "secondary": "#475569",
+      "accent": "#06b6d4",
+      "background": "#ffffff",
+      "surface": "#f8fafc",
+      "text": "#0f172a",
+      "border": "#e2e8f0"
+    },
+    "dark": {
+      "primary": "#38bdf8",
+      "secondary": "#94a3b8",
+      "accent": "#22d3ee",
+      "background": "#090d16",
+      "surface": "#0f172a",
+      "text": "#f8fafc",
+      "border": "#1e293b"
+    }
+  },
+  "typography": {
+    "headingFont": "inter",
+    "bodyFont": "inter",
+    "scale": 1.125,
+    "baseSize": 16
+  },
+  "layout": "sidebar-content",
+  "radius": "rounded",
+  "shadow": "soft",
+  "spacing": "comfortable",
+  "iconStyle": "clean-outline",
+  "icons": {
+    "library": "lucide",
+    "mode": "outline",
+    "duotone": false,
+    "weight": "regular"
+  },
+  "projectGoal": "saas",
+  "pageLayouts": {
+    "auth": "centered-card",
+    "authSocialButtons": true,
+    "authCardStyle": "elevated",
+    "error": "giant-hero",
+    "errorCode": "404",
+    "errorShowTrace": true,
+    "dashboard": "sidebar-grid",
+    "landing": "hero-split",
+    "pricing": "cards-3col",
+    "kanban": "board-columns",
+    "chat": "split-pane",
+    "settings": "tabbed",
+    "detail": "split-sidepanel",
+    "onboarding": "wizard-stepper",
+    "emptyState": "centered-action",
+    "success": "celebration-card",
+    "navbar": "saas-header",
+    "sidebar": "classic-grouped",
+    "footer": "columns-mega",
+    "ecommerceCatalog": "faceted-sidebar",
+    "productDetail": "split-sticky-buy",
+    "checkout": "slide-over-cart",
+    "marketplace": "split-map-list",
+    "booking": "split-calendar-slots",
+    "editorial": "masonry-frontpage",
+    "charity": "hero-impact-thermometer",
+    "forum": "three-column-reddit",
+    "streaming": "cinema-theater",
+    "portfolio": "bento-developer",
+    "portfolioProject": "case-study-narrative",
+    "portfolioDashboard": "analytics-cms-split"
+  },
+  "project": {
+    "purpose": null,
+    "pages": []
+  }
+}
