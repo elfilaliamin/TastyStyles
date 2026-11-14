@@ -8,6 +8,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'High-conversion hero, feature grids, social proof, and value proposition cards.',
     category: 'public',
     defaultLayout: 'hero-split',
+    scope: 'feature',
   },
   {
     id: 'pricing',
@@ -15,6 +16,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Tier cards, billing toggles, feature matrix, and enterprise contact callout.',
     category: 'public',
     defaultLayout: 'cards-3col',
+    scope: 'feature',
   },
   {
     id: 'blog',
@@ -22,6 +24,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Longform reading typography, author bylines, pull quotes, and related posts.',
     category: 'public',
     defaultLayout: 'default',
+    scope: 'feature',
   },
   {
     id: 'contact',
@@ -29,6 +32,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Multi-field conversion form with office details, map preview, and live support banner.',
     category: 'public',
     defaultLayout: 'default',
+    scope: 'feature',
   },
   {
     id: 'about',
@@ -36,6 +40,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Mission statement, leadership executive team, company milestones, and culture values.',
     category: 'public',
     defaultLayout: 'default',
+    scope: 'feature',
   },
   {
     id: 'services',
@@ -43,6 +48,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Service packages, deliverables matrix, client engagement workflow, and SLAs.',
     category: 'public',
     defaultLayout: 'default',
+    scope: 'feature',
   },
 
   // E-Commerce & Commerce Archetypes
@@ -52,6 +58,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Faceted search sidebar, product cards grid, sorting controls, and quick filters.',
     category: 'commerce',
     defaultLayout: 'faceted-sidebar',
+    scope: 'feature',
   },
   {
     id: 'product-detail',
@@ -59,6 +66,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Split sticky buy box, image gallery carousel, specification tabs, and stock badge.',
     category: 'commerce',
     defaultLayout: 'split-sticky-buy',
+    scope: 'feature',
   },
   {
     id: 'cart',
@@ -66,6 +74,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Slide-over cart drawer, item counters, promotional code input, and checkout summary.',
     category: 'commerce',
     defaultLayout: 'default',
+    scope: 'feature',
   },
   {
     id: 'checkout',
@@ -73,6 +82,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Multi-step shipping, billing address, payment tokenization, and order overview.',
     category: 'commerce',
     defaultLayout: 'slide-over-cart',
+    scope: 'feature',
   },
   {
     id: 'marketplace',
@@ -80,6 +90,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Map and list dual split view, vendor cards, filter pills, and verified badges.',
     category: 'commerce',
     defaultLayout: 'split-map-list',
+    scope: 'feature',
   },
   {
     id: 'booking',
@@ -87,6 +98,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Calendar date selection, available slot pickers, provider details, and confirmation.',
     category: 'commerce',
     defaultLayout: 'split-calendar-slots',
+    scope: 'feature',
   },
 
   // Core Application Archetypes
@@ -96,6 +108,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'KPI metric stat cards, real-time telemetry charts, quick actions, and audit logs.',
     category: 'core',
     defaultLayout: 'sidebar-grid',
+    scope: 'feature',
   },
   {
     id: 'detail',
@@ -103,6 +116,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Inspector split sidepanel, metadata summary, action toolbar, and telemetry tabs.',
     category: 'core',
     defaultLayout: 'split-sidepanel',
+    scope: 'feature',
   },
   {
     id: 'kanban',
@@ -110,6 +124,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Multi-column drag-and-drop workflow lanes, task priority cards, and progress bars.',
     category: 'core',
     defaultLayout: 'board-columns',
+    scope: 'feature',
   },
   {
     id: 'chat',
@@ -117,6 +132,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Split-pane channel list, real-time message feed, attachment preview, and typing prompt.',
     category: 'core',
     defaultLayout: 'split-pane',
+    scope: 'feature',
   },
 
   // Creative & Community Archetypes
@@ -126,6 +142,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Developer/designer profile, career experiences, education, projects, skills, languages, and contact.',
     category: 'community',
     defaultLayout: 'bento-developer',
+    scope: 'feature',
   },
   {
     id: 'portfolio-project',
@@ -133,6 +150,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Project story deep dive, architecture breakdown, challenge/solution narrative, and live preview.',
     category: 'community',
     defaultLayout: 'case-study-narrative',
+    scope: 'feature',
   },
   {
     id: 'portfolio-dashboard',
@@ -140,6 +158,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Owner traffic analytics, landing section visibility toggles, and project publishing manager.',
     category: 'account',
     defaultLayout: 'analytics-cms-split',
+    scope: 'feature',
   },
   {
     id: 'case-study',
@@ -147,6 +166,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Deep architectural dive with problem/solution narrative, client quotes, and before/after metrics.',
     category: 'community',
     defaultLayout: 'default',
+    scope: 'feature',
   },
   {
     id: 'editorial',
@@ -154,6 +174,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Masonry editorial grid, featured headline banner, category index, and subscription banner.',
     category: 'community',
     defaultLayout: 'masonry-frontpage',
+    scope: 'feature',
   },
   {
     id: 'charity',
@@ -161,6 +182,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Goal thermometer hero, donation tier selectors, impact breakdown, and donor leaderboard.',
     category: 'community',
     defaultLayout: 'hero-impact-thermometer',
+    scope: 'feature',
   },
   {
     id: 'forum',
@@ -168,6 +190,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Thread list with vote counts, badge highlights, solved answer markers, and tags.',
     category: 'community',
     defaultLayout: 'three-column-reddit',
+    scope: 'feature',
   },
   {
     id: 'streaming',
@@ -175,6 +198,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Cinema theater canvas, live stream dock with chat overlay, and media queues.',
     category: 'community',
     defaultLayout: 'cinema-theater',
+    scope: 'feature',
   },
 
   // Authentication & Onboarding
@@ -184,6 +208,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Single-sign-on providers, email/password form, MFA challenge, and recovery flows.',
     category: 'auth',
     defaultLayout: 'centered-card',
+    scope: 'system',
   },
   {
     id: 'onboarding',
@@ -191,6 +216,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Role selection, profile completion, organization setup, and initial invite stepper.',
     category: 'auth',
     defaultLayout: 'wizard-stepper',
+    scope: 'feature',
   },
 
   // Account & Administration
@@ -200,6 +226,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Tabbed organization preferences, API credentials, webhooks, and security settings.',
     category: 'account',
     defaultLayout: 'tabbed',
+    scope: 'feature',
   },
   {
     id: 'billing',
@@ -207,6 +234,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Subscription usage meters, payment card details, and downloadable PDF invoices.',
     category: 'account',
     defaultLayout: 'default',
+    scope: 'feature',
   },
   {
     id: 'team',
@@ -214,6 +242,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Role-based access matrix, member invite dialog, and user status badges.',
     category: 'account',
     defaultLayout: 'default',
+    scope: 'feature',
   },
 
   // System States & Feedback
@@ -223,6 +252,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Polymorphic 404/500 recovery screens with diagnostics, retry button, and help links.',
     category: 'system',
     defaultLayout: 'giant-hero',
+    scope: 'system',
   },
   {
     id: 'empty-state',
@@ -230,6 +260,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Zero-data placeholder with explanatory illustration, helpful tips, and CTA button.',
     category: 'system',
     defaultLayout: 'centered-action',
+    scope: 'feature',
   },
   {
     id: 'success-confirm',
@@ -237,6 +268,7 @@ export const PAGE_TYPES: PageTypeDefinition[] = [
     description: 'Transaction confirmation, order reference number, receipt view, and next steps.',
     category: 'system',
     defaultLayout: 'celebration-card',
+    scope: 'feature',
   },
 ];
 

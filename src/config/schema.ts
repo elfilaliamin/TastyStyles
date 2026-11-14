@@ -154,6 +154,7 @@ export const PageTypeDefinitionSchema = z.object({
   description: z.string(),
   category: z.enum(['public', 'commerce', 'core', 'community', 'auth', 'account', 'system']),
   defaultLayout: z.string().default('default'),
+  scope: z.enum(['system', 'feature']).default('feature'),
 });
 
 export const PurposePageRefSchema = z.object({

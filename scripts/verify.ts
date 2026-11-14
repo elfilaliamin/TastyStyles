@@ -455,6 +455,26 @@ if (ecomBrief.includes('Sidebar Application Rail:')) {
 }
 console.log('✅ Batch 2 verified: Foreign wireframes isolated and global rails scoped.');
 
+console.log('--- Testing Batch 3: Page Scope Rules & Restyle Directives ---');
+if (!saasBrief.includes('- **Scope**: restyle if exists; do not create if missing')) {
+  console.error("❌ Batch 3 check failed: SaaS export missing feature page scope directive");
+  process.exit(1);
+}
+if (!saasBrief.includes('- **Scope**: restyle if exists; may create if missing, visual only')) {
+  console.error("❌ Batch 3 check failed: SaaS export missing system page scope directive");
+  process.exit(1);
+}
+if (!saasBrief.includes('Page Scope & Restyling Contract')) {
+  console.error("❌ Batch 3 check failed: SaaS export missing 'Page Scope & Restyling Contract' directive");
+  process.exit(1);
+}
+const saasMarkdown = compileMarkdown(saasState);
+if (!saasMarkdown.includes('Every page declared in the sitemap that exists in the project is restyled; missing feature pages were NOT created; missing system pages were added as visual shells and reported.')) {
+  console.error("❌ Batch 3 check failed: compileMarkdown missing updated Section 9.2 checklist text");
+  process.exit(1);
+}
+console.log('✅ Batch 3 verified: Page scope rules, restyle directives, and checklist sign-off verified.');
+
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');
 if (!fs.existsSync(workflowDoc)) {

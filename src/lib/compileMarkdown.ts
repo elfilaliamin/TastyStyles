@@ -100,8 +100,8 @@ export function compileMarkdown(state: DesignState): string {
 ## 0. Agent Contract
 - **Single Source of Truth**: This document is the definitive specification for all frontend UI development in this repository. Read it completely before generating code.
 - **Directing AI Implementation & UI Redesigns**:
-  - **Existing & Defined Pages**: When building page archetypes defined in §7, follow the declared architectural layouts, responsive patterns, and component recipes.
-  - **Synthesizing New Pages**: If your project requires an additional page type or feature not explicitly defined here, you are empowered to design and create it following the active theme's colors, typography scales, contrast, and component styling rules.
+  - **Scope & Restyling Contract**: A page listed in this specification is NOT an instruction to create it. If the page already exists in the target project, restyle it (UI/UX only, no logic changes). If a feature page does NOT exist in the project, DO NOT create it unprompted. System/utility pages (auth, 404/500 error screens) may be created if missing, as visual presentation shells only. For existing pages, follow the declared architectural layouts, responsive patterns, and component recipes.
+  - **Extensibility & User-Requested Views**: Do NOT invent new feature pages unprompted. You may only synthesize specialized views or sub-routes that the user has explicitly requested, or essential system/utility pages. Ensure all views follow the active theme's tokens, typography scales, contrast, and component styling rules.
   - **Aesthetic Quality Standard**: Direct all implementation toward high-end, responsive UI with harmonious hierarchy, intentional whitespace, WCAG AAA contrast, and fluid adaptability from mobile (375px) to desktop (1440px).
 - **Strict Token Adherence**: Create \`src/styles/tokens.css\` matching **Section 3** verbatim. Never write raw hex codes, arbitrary margins, or ad-hoc pixel font-sizes outside this token file.
 - **Reference Variables**: In styles or components, exclusively use \`var(--color-*)\`, \`var(--font-*)\`, and \`var(--spacing-*)\` (or their configured Tailwind counterparts).
@@ -406,7 +406,7 @@ ${item.ascii}
 ### 9.2 Acceptance Sign-Off Checklist
 Before marking frontend implementation complete, verify that:
 - [ ] \`tokens.css\` is created and imported at the root of the project.
-- [ ] All pages specified in Section 7 (Page Inventory) are fully constructed and routable.
+- [ ] Every page declared in the sitemap that exists in the project is restyled; missing feature pages were NOT created; missing system pages were added as visual shells and reported.
 - [ ] Every component adheres to its defined states in Section 6 (hover, active, focus, disabled).
 - [ ] Viewport simulation at 375px (Mobile) exhibits zero horizontal overflow.
 - [ ] Automated linting and TypeScript builds compile with zero errors.
