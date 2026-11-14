@@ -29,6 +29,19 @@ export function compileProjectBrief(state: DesignState): string {
           enabled: true,
         }));
 
+  // Determine if any enabled page uses a sidebar
+  const SIDEBAR_PAGE_TYPES = new Set([
+    'dashboard',
+    'settings',
+    'billing',
+    'team',
+    'kanban',
+    'chat',
+    'portfolio-dashboard',
+    'detail',
+  ]);
+  const usesSidebar = effectivePages.some((p) => SIDEBAR_PAGE_TYPES.has(p.pageType));
+
   // Build Part A: Project & Site Specification
   const partA = `# ${state.name} — Project Brief & Site Architecture Specification
 
@@ -87,8 +100,7 @@ ${sections.map((s, sIdx) => `  ${sIdx + 1}. \`${s}\``).join('\n')}
 
 ### 4. Global Navigation & Layout Shell Rules
 - **Header Navigation Pattern**: \`${state.pageLayouts?.navbar ?? 'saas-header'}\`
-- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`
-- **Dual-Radius Isolation**:
+${usesSidebar ? `- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`\n` : ''}- **Dual-Radius Isolation**:
   - Interactive controls (buttons, badges, pills, avatar circles): use \`var(--radius-base)\`.
   - Surface containers (cards, modals, drawers, form panels): strictly use \`var(--radius-surface, 16px)\` (never exceed 20px).
 - **Form Overflow Safeguard**: Two-column form grids must use \`gridTemplateColumns: repeat(2, minmax(0, 1fr))\` with \`boxSizing: border-box\` and \`minWidth: 0\` on all inputs.

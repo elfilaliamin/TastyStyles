@@ -1,7 +1,12 @@
-import type { DesignState, PageLayouts } from '../config/schema';
+import type { DesignState } from '../config/schema';
 import { resolveTokens, generateUnifiedCssTokens } from './tokenModel';
 import { LAYOUT_CATALOG, type LayoutCatalogItem } from '../config/layoutCatalog';
 import { GOAL_DEFINITIONS } from '../config/previews';
+import { getPurposeDefinition } from '../config/purposes';
+import {
+  PAGE_LAYOUTS_KEY_TO_PAGE_TYPE,
+  PAGE_TYPE_TO_PAGE_LAYOUTS_KEY,
+} from '../config/pageTypes';
 import { COMPONENT_RECIPES } from '../config/recipes';
 import { generateTailwindConfig } from './exportUtils';
 import { resolveLayout } from './layoutRegistry';
@@ -12,48 +17,83 @@ import { resolveLayout } from './layoutRegistry';
  */
 export function compileMarkdown(state: DesignState): string {
   const tokens = resolveTokens(state);
-  const pageLayouts: Partial<PageLayouts> = state.pageLayouts ?? {};
+  const pageLayouts = state.pageLayouts ?? {};
+  const purposeId = state.project?.purpose ?? state.projectGoal ?? 'saas';
+  const purposeDef = getPurposeDefinition(purposeId);
+  const enabledProjectPages = (state.project?.pages ?? []).filter((p) => p.enabled);
 
-  // Collect configured layouts for all page archetypes
-  const pageKeys: Array<keyof PageLayouts> = [
-    'auth',
-    'navbar',
-    'sidebar',
+  // Fall back to purpose recommended pages if unconfigured
+  const effectivePages =
+    enabledProjectPages.length > 0
+      ? enabledProjectPages
+      : (purposeDef?.pages ?? [
+          { pageType: 'landing', defaultLayout: 'hero-split' },
+          { pageType: 'pricing', defaultLayout: 'cards-3col' },
+          { pageType: 'auth', defaultLayout: 'centered-card' },
+          { pageType: 'dashboard', defaultLayout: 'sidebar-grid' },
+        ]).map((p) => ({
+          pageType: p.pageType,
+          layoutId: p.defaultLayout ?? 'default',
+          enabled: true,
+        }));
+
+  // Determine if a sidebar is used by any enabled page
+  const SIDEBAR_PAGE_TYPES = new Set([
     'dashboard',
-    'landing',
-    'pricing',
-    'ecommerceCatalog',
-    'productDetail',
-    'checkout',
-    'marketplace',
-    'booking',
-    'editorial',
-    'charity',
-    'forum',
-    'streaming',
-    'portfolio',
+    'settings',
+    'billing',
+    'team',
     'kanban',
     'chat',
-    'settings',
+    'portfolio-dashboard',
     'detail',
-    'onboarding',
-    'emptyState',
-    'success',
-    'error',
-  ];
+  ]);
+  const usesSidebar = effectivePages.some((p) => SIDEBAR_PAGE_TYPES.has(p.pageType));
 
+  // Collect configured layouts for active pages only
   const activePageEntries: LayoutCatalogItem[] = [];
-  pageKeys.forEach((key) => {
-    const chosenVariantId = resolveLayout(state, key as string);
-    const catalogKey = key === 'ecommerceCatalog' ? 'ecommerce-catalog' : key === 'productDetail' ? 'product-detail' : key;
-    const catalogForPage = LAYOUT_CATALOG[catalogKey] ?? LAYOUT_CATALOG[key] ?? [];
+
+  // 1. Global Navbar Layout (always present)
+  const navbarLayoutId = state.pageLayouts?.navbar ?? 'saas-header';
+  const navbarItem =
+    LAYOUT_CATALOG.navbar?.find((l) => l.id === navbarLayoutId) ??
+    LAYOUT_CATALOG.navbar?.[0];
+  if (navbarItem) activePageEntries.push(navbarItem);
+
+  // 2. Global Sidebar Layout (only when an enabled page uses a sidebar)
+  if (usesSidebar) {
+    const sidebarLayoutId = state.pageLayouts?.sidebar ?? 'classic-grouped';
+    const sidebarItem =
+      LAYOUT_CATALOG.sidebar?.find((l) => l.id === sidebarLayoutId) ??
+      LAYOUT_CATALOG.sidebar?.[0];
+    if (sidebarItem) activePageEntries.push(sidebarItem);
+  }
+
+  // 3. Global Footer Layout
+  const footerLayoutId = state.pageLayouts?.footer ?? 'columns-mega';
+  const footerItem =
+    LAYOUT_CATALOG.footer?.find((l) => l.id === footerLayoutId) ??
+    LAYOUT_CATALOG.footer?.[0];
+  if (footerItem) activePageEntries.push(footerItem);
+
+  // 4. Enabled Pages in the user's project
+  for (const page of effectivePages) {
+    const canonicalPageType = PAGE_LAYOUTS_KEY_TO_PAGE_TYPE[page.pageType] ?? page.pageType;
+    const resolvedLayoutId = resolveLayout(state, canonicalPageType);
+    const catalogList =
+      LAYOUT_CATALOG[canonicalPageType] ??
+      LAYOUT_CATALOG[PAGE_TYPE_TO_PAGE_LAYOUTS_KEY[canonicalPageType]] ??
+      LAYOUT_CATALOG[page.pageType] ??
+      [];
+
     const item =
-      catalogForPage.find((l) => l.id === chosenVariantId) ??
-      catalogForPage[0];
-    if (item) {
+      catalogList.find((l) => l.id === resolvedLayoutId) ??
+      catalogList[0];
+
+    if (item && !activePageEntries.some((e) => e.page === item.page && e.id === item.id)) {
       activePageEntries.push(item);
     }
-  });
+  }
 
   return `# ${tokens.name} — Design System Specification
 

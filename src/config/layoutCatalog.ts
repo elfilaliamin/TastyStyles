@@ -1517,6 +1517,156 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       tablet: 'Tab bar and code blocks fit standard tablet dimensions.',
     },
   ],
+
+  contact: [
+    {
+      page: 'contact',
+      id: 'default',
+      title: 'Contact & Sales Inquiry',
+      description: 'Multi-field conversion form with office details, map preview, and live support banner.',
+      variant: 'split',
+      ascii: `+-------------------------------+-----------------------+
+| Inquire & Get in Touch        | Office & Global Hubs  |
+| Full Name: [John Doe        ] | 100 Innovation Way    |
+| Work Email: [user@example.com]| San Francisco, CA     |
+| [Send Message ->]             | Support: 24/7 Live    |
++-------------------------------+-----------------------+`,
+      mobile: 'Office details collapse beneath the inquiry form in a single column.',
+      tablet: '50/50 balanced split between inquiry form and contact info cards.',
+    },
+  ],
+
+  billing: [
+    {
+      page: 'billing',
+      id: 'default',
+      title: 'Billing & Invoices',
+      description: 'Subscription usage meters, payment card details, and downloadable PDF invoices.',
+      variant: 'sidebar-content',
+      ascii: `+-------------------------------------------------------+
+| Plan: Pro Tier ($49/mo)              [Upgrade Plan]   |
+| Usage: 8,420 / 10,000 API calls      [████████░░] 84% |
++-------------------------------------------------------+
+| Invoice ID     Date         Amount     Status  Action |
+| INV-2026-001   Nov 01, 2026 $49.00     Paid    [PDF]  |
+| INV-2026-002   Oct 01, 2026 $49.00     Paid    [PDF]  |
++-------------------------------------------------------+`,
+      mobile: 'Invoice table wraps inside horizontal scroll box; plan cards stack.',
+      tablet: 'Two-tier summary with plan card above responsive invoice table.',
+    },
+  ],
+
+  team: [
+    {
+      page: 'team',
+      id: 'default',
+      title: 'Team Members & Permissions',
+      description: 'Team member directory table with role badges, invite modal trigger, and permission toggles.',
+      variant: 'sidebar-content',
+      ascii: `+-------------------------------------------------------+
+| Team Directory (12 Members)           [+ Invite Member]|
+| Filter: [All Roles ▼]                 [Search members]|
++-------------------------------------------------------+
+| Member Name       Role       Access Level     Status  |
+| Jane Doe          Admin      Full Control     Active  |
+| Alex Smith        Editor     Write & Publish  Active  |
++-------------------------------------------------------+`,
+      mobile: 'Member cards stack vertically with role badges and action ellipsis menu.',
+      tablet: 'Compact table with role badges and inline action triggers.',
+    },
+  ],
+
+  about: [
+    {
+      page: 'about',
+      id: 'default',
+      title: 'About & Company Narrative',
+      description: 'Mission statement, leadership executive team, company milestones, and culture values.',
+      variant: 'minimal',
+      ascii: `+-------------------------------------------------------+
+| Our Mission: Empowering autonomous product teams      |
+| We build deterministic, accessible design tooling.    |
++-------------------------------------------------------+
+| Executive Leadership:                                 |
+| [Leader 1: Engineering]     [Leader 2: Design Systems]|
++-------------------------------------------------------+`,
+      mobile: 'Executive cards stack in single column.',
+      tablet: '2-column leadership grid with comfortable spacing.',
+    },
+  ],
+
+  services: [
+    {
+      page: 'services',
+      id: 'default',
+      title: 'Services & Capabilities',
+      description: 'Service packages, deliverables matrix, client engagement workflow, and SLAs.',
+      variant: 'cards-3col',
+      ascii: `+-------------------------------------------------------+
+| Specialized Capabilities & Client Engagements         |
++-------------------+-------------------+---------------+
+| 1. Design Systems | 2. Cloud Infra    | 3. AI Workflows|
+| Scalable tokens   | Zero-downtime Ops | Agent briefs  |
++-------------------+-------------------+---------------+`,
+      mobile: 'Service cards stack vertically in order of priority.',
+      tablet: '3-column balanced cards with icon badges.',
+    },
+  ],
+
+  blog: [
+    {
+      page: 'blog',
+      id: 'default',
+      title: 'Blog Article & Editorial',
+      description: 'Longform reading typography, author bylines, pull quotes, and related posts.',
+      variant: 'minimal',
+      ascii: `+-------------------------------------------------------+
+| Article Title: Building Accessible Design Tokens      |
+| By Editorial Team • 6 min read • Published Nov 2026   |
+| [ Hero Featured Cover Photo ]                         |
+| Body typography formatted for optimal readability...  |
++-------------------------------------------------------+`,
+      mobile: 'Prose margins expand to full width with 16px lateral padding.',
+      tablet: 'Single constrained reading column (680px max-width) with comfortable margins.',
+    },
+  ],
+
+  cart: [
+    {
+      page: 'cart',
+      id: 'default',
+      title: 'Shopping Cart & Summary',
+      description: 'Slide-over cart drawer, item counters, promotional code input, and checkout summary.',
+      variant: 'split',
+      ascii: `+-------------------------------+-----------------------+
+| Items in Your Cart (2)        | Order Summary         |
+| - Mechanical Keyboard ($180)  | Subtotal: $260.00     |
+| - Custom Keycaps ($80)        | Shipping: Free        |
+| Promo: [PROMO2026] [Apply]    | [Proceed to Checkout] |
++-------------------------------+-----------------------+`,
+      mobile: 'Cart items stack above order summary card; checkout button fixed to bottom.',
+      tablet: 'Two-column layout with cart line items on left and sticky summary rail on right.',
+    },
+  ],
+
+  'case-study': [
+    {
+      page: 'case-study',
+      id: 'default',
+      title: 'Case Study Narrative',
+      description: 'In-depth project breakdown with problem statement, design solutions, metrics impact, and client review.',
+      variant: 'minimal',
+      ascii: `+-------------------------------------------------------+
+| Client Case Study: Modernizing Global Payment Flows   |
+| Metrics: +340% Conversion Velocity • -65% Latency     |
++-------------------------------------------------------+
+| Problem Discovery | Design Architecture | Impact Results |
+| Legacy checkout   | Unified tokens      | $12M recovered |
++-------------------------------------------------------+`,
+      mobile: 'Key metric cards stack vertically; sections flow linearly.',
+      tablet: 'Metric badges in 2-column grid; rich narrative callout blocks.',
+    },
+  ],
 };
 
 /**

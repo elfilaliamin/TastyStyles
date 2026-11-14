@@ -417,6 +417,44 @@ for (const preset of presets) {
 }
 console.log('✅ Layout parity verified: Part A layout ID strictly equals Part B layout ID for all purposes and presets.');
 
+console.log('--- Testing Batch 2: Export Scoping & Foreign Wireframe Isolation ---');
+const saasState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'saas' });
+const saasBrief = compileProjectBrief(saasState);
+const foreignToSaas = [
+  'cinema-theater',
+  'hero-impact-thermometer',
+  'three-column-reddit',
+  'split-calendar-slots',
+  'split-map-list',
+  'faceted-sidebar',
+];
+for (const foreignId of foreignToSaas) {
+  if (saasBrief.includes(foreignId)) {
+    console.error(`❌ Batch 2 check failed: SaaS export leaked foreign archetype '${foreignId}'`);
+    process.exit(1);
+  }
+}
+
+const ecomState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'ecommerce' });
+const ecomBrief = compileProjectBrief(ecomState);
+const foreignToEcom = [
+  'sidebar-grid',
+  'cinema-theater',
+  'hero-impact-thermometer',
+  'three-column-reddit',
+];
+for (const foreignId of foreignToEcom) {
+  if (ecomBrief.includes(foreignId)) {
+    console.error(`❌ Batch 2 check failed: E-Commerce export leaked foreign archetype '${foreignId}'`);
+    process.exit(1);
+  }
+}
+if (ecomBrief.includes('Sidebar Application Rail:')) {
+  console.error("❌ Batch 2 check failed: E-Commerce export unexpectedly emitted 'Sidebar Application Rail:'");
+  process.exit(1);
+}
+console.log('✅ Batch 2 verified: Foreign wireframes isolated and global rails scoped.');
+
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');
 if (!fs.existsSync(workflowDoc)) {
