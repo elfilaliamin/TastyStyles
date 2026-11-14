@@ -382,7 +382,7 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
   isPublic = false,
 }) => {
   return (
-    <div className="flex h-screen w-full bg-[var(--color-background)] text-[var(--color-text)] font-[var(--font-body)] overflow-hidden">
+    <div className="flex h-screen w-full bg-[var(--color-background)] text-[color:var(--color-text)] font-[family-name:var(--font-body)] overflow-hidden">
       {/* 1. Global Navigation Sidebar: ${pageLayouts.sidebar ?? 'classic-grouped'} */}
       <aside className="hidden lg:flex w-64 xl:w-72 flex-col flex-shrink-0 border-r border-[var(--color-border)] bg-[var(--color-surface)]">
         {/* Render ${pageLayouts.sidebar ?? 'classic-grouped'} navigation */}
@@ -406,7 +406,7 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
               <div className="text-[length:var(--font-size-step-sub1)] font-semibold text-[color:var(--color-muted)] uppercase tracking-wider mb-1">
                 {category}
               </div>
-              <h1 className="text-[length:var(--font-size-step-4)] font-bold font-[var(--font-heading)] text-[color:var(--color-text)]">
+              <h1 className="text-[length:var(--font-size-step-4)] font-bold font-[family-name:var(--font-heading)] text-[color:var(--color-text)]">
                 {title}
               </h1>
             </div>
