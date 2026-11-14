@@ -1,11 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ContrastBadge } from '../layout/ContrastBadge';
-import { Dices, Palette, Check } from 'lucide-react';
+import { Dices, Palette, Check, Search, X } from 'lucide-react';
 import type { ColorPalette } from '../../config/schema';
 import { getBestContrastingColor, checkColorHarmony } from '../../lib/contrast';
-import { ALL_COLOR_PALETTES } from '../../config/colorPalettes';
-import { CategoryNavRow } from './CategoryNavRow';
+import { ALL_COLOR_PALETTES, type ColorHarmonyCategory } from '../../config/colorPalettes';
 
 const COLOR_TOKENS: Array<{ key: keyof ColorPalette; label: string; desc: string }> = [
   { key: 'primary', label: 'Primary Brand', desc: 'Main interactive elements & buttons' },
@@ -17,22 +16,57 @@ const COLOR_TOKENS: Array<{ key: keyof ColorPalette; label: string; desc: string
   { key: 'border', label: 'Border', desc: 'Card edges, inputs & dividers' },
 ];
 
-const COLOR_HARMONY_CATEGORIES = [
-  'All',
-  'Complementary',
-  'Analogous',
-  'Monochromatic',
-  'Split-Complementary',
-  'Triadic',
-  'Square',
-] as const;
+interface HarmonyGroupMeta {
+  category: ColorHarmonyCategory;
+  label: string;
+  badge: string;
+  desc: string;
+}
+
+const HARMONY_GROUPS: HarmonyGroupMeta[] = [
+  {
+    category: 'Complementary',
+    label: 'Complementary',
+    badge: '180° Direct Opposites',
+    desc: 'High-contrast focal pairing of opposing wheel hues for prominent call-to-actions',
+  },
+  {
+    category: 'Analogous',
+    label: 'Analogous',
+    badge: '30°–60° Adjacent Hues',
+    desc: 'Adjacent color wheel hues creating natural harmony, serenity, and optical cohesion',
+  },
+  {
+    category: 'Monochromatic',
+    label: 'Monochromatic',
+    badge: '0° Single Hue Variations',
+    desc: 'Luminance and saturation variations of one hue for clean, unified enterprise UX',
+  },
+  {
+    category: 'Split-Complementary',
+    label: 'Split-Complementary',
+    badge: '150° & 210° Nuanced Contrast',
+    desc: 'Base hue paired with the two hues adjacent to its direct complement',
+  },
+  {
+    category: 'Triadic',
+    label: 'Triadic',
+    badge: '120° Equidistant Triad',
+    desc: 'Three evenly spaced hues across the color wheel for dynamic visual vitality',
+  },
+  {
+    category: 'Square',
+    label: 'Square (Tetradic)',
+    badge: '90° Four-Axis Balance',
+    desc: 'Four equidistant hues around the wheel creating rich, multi-accent design systems',
+  },
+];
 
 export const ColorSection: React.FC = () => {
   const { state, dispatch } = useDesign();
   const currentMode = state.activeMode;
   const currentPalette = state.colors[currentMode];
   const [drafts, setDrafts] = useState<Partial<Record<keyof ColorPalette, string>>>({});
-  const [selectedCategory, setSelectedCategory] = useState<typeof COLOR_HARMONY_CATEGORIES[number]>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
   const getDisplayValue = (key: keyof ColorPalette) => {
@@ -83,120 +117,167 @@ export const ColorSection: React.FC = () => {
 
   const buttonTextColor = getBestContrastingColor(currentPalette.primary);
 
-  // Compute category count badges
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = { All: ALL_COLOR_PALETTES.length };
-    for (const pal of ALL_COLOR_PALETTES) {
-      counts[pal.category] = (counts[pal.category] || 0) + 1;
-    }
-    return counts;
-  }, []);
-
-  // Filter palettes based on category and search
-  const filteredPalettes = ALL_COLOR_PALETTES.filter((pal) => {
-    const matchesCategory = selectedCategory === 'All' || pal.category === selectedCategory;
-    const matchesSearch =
-      searchQuery === '' ||
-      pal.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pal.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pal.harmonyBadge.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Filter palettes based on search query
+  const filteredPalettes = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return ALL_COLOR_PALETTES;
+    return ALL_COLOR_PALETTES.filter((pal) => {
+      return (
+        pal.name.toLowerCase().includes(q) ||
+        pal.description.toLowerCase().includes(q) ||
+        pal.category.toLowerCase().includes(q) ||
+        pal.harmonyBadge.toLowerCase().includes(q)
+      );
+    });
+  }, [searchQuery]);
 
   return (
-    <div className="space-y-4">
-      {/* 1. VISUAL COLOR PALETTES GRID (GRAPHIC DESIGN COLOR HARMONIES) */}
-      <div className="space-y-2.5 p-3 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800">
-        <div className="flex items-center justify-between">
+    <div className="space-y-5">
+      {/* 1. VISUAL COLOR PALETTES - GROUNDED FULL SIDEBAR SCROLL */}
+      <div className="space-y-4">
+        {/* Header with palette count */}
+        <div className="flex items-center justify-between pb-1 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-1.5">
             <Palette className="w-4 h-4 text-sky-500" />
             <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
               Color Theory Palettes
             </span>
             <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-semibold">
-              {ALL_COLOR_PALETTES.length} Palettes
+              {ALL_COLOR_PALETTES.length} Presets
             </span>
           </div>
-          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Harmony Models</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">6 Harmonies</span>
         </div>
 
-        {/* Search Input */}
-        <div>
+        {/* Live Filter Search Input */}
+        <div className="relative">
+          <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
           <input
             type="text"
-            placeholder="Search harmony (e.g. complementary, analogous, triad)..."
+            placeholder="Search harmony, hue, or palette name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500"
+            className="w-full pl-8 pr-7 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-colors"
           />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
-        {/* Category Filter Chips with Smooth Arrow Navigation */}
-        <CategoryNavRow
-          categories={COLOR_HARMONY_CATEGORIES}
-          selectedCategory={selectedCategory}
-          onSelectCategory={(cat) => setSelectedCategory(cat as typeof COLOR_HARMONY_CATEGORIES[number])}
-          counts={categoryCounts}
-        />
+        {/* Harmony Groups Displayed Directly in DOM Flow (No Inner Scroll) */}
+        {HARMONY_GROUPS.map((group) => {
+          const groupPalettes = filteredPalettes.filter((pal) => pal.category === group.category);
+          if (groupPalettes.length === 0) return null;
 
-        {/* Visual Palettes Cards Grid */}
-        <div className="grid grid-cols-2 gap-2 max-h-[260px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
-          {filteredPalettes.map((pal) => {
-            const palColors = pal.colors[currentMode];
-            const isActive = currentPalette.primary.toLowerCase() === palColors.primary.toLowerCase() &&
-              currentPalette.background.toLowerCase() === palColors.background.toLowerCase();
-
-            return (
-              <button
-                key={pal.id}
-                type="button"
-                onClick={() =>
-                  dispatch({
-                    type: 'SET_COLOR_PRESET',
-                    colors: pal.colors,
-                    name: pal.name,
-                  })
-                }
-                className={`p-2 rounded-xl text-left transition-all flex flex-col gap-1.5 cursor-pointer relative ${
-                  isActive
-                    ? 'bg-white dark:bg-slate-800 border-2 border-sky-500 dark:border-sky-400 shadow-md ring-2 ring-sky-500/20'
-                    : 'bg-white/80 dark:bg-slate-800/60 hover:bg-white dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600'
-                }`}
-              >
-                {/* Header: Title + Active Check */}
-                <div className="flex items-center justify-between gap-1">
-                  <span className="text-[11px] font-bold text-slate-900 dark:text-slate-100 truncate">
-                    {pal.name}
+          return (
+            <div key={group.category} className="space-y-2">
+              {/* Group Header */}
+              <div className="flex items-center justify-between pt-1">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                    {group.label}
                   </span>
-                  {isActive && (
-                    <div className="w-3.5 h-3.5 rounded-full bg-sky-500 text-white flex items-center justify-center flex-shrink-0">
-                      <Check className="w-2.5 h-2.5" />
-                    </div>
-                  )}
-                </div>
-
-                {/* Multi-Color Swatch Preview Bar */}
-                <div className="flex items-center h-4 w-full rounded-md overflow-hidden border border-slate-300/60 dark:border-slate-700 shadow-2xs">
-                  <div style={{ backgroundColor: palColors.primary }} className="h-full flex-2" title={`Primary: ${palColors.primary}`} />
-                  <div style={{ backgroundColor: palColors.accent }} className="h-full flex-1" title={`Accent: ${palColors.accent}`} />
-                  <div style={{ backgroundColor: palColors.surface }} className="h-full flex-1" title={`Surface: ${palColors.surface}`} />
-                  <div style={{ backgroundColor: palColors.background }} className="h-full flex-1" title={`Background: ${palColors.background}`} />
-                  <div style={{ backgroundColor: palColors.text }} className="h-full flex-1" title={`Text: ${palColors.text}`} />
-                </div>
-
-                {/* Subtitle / Harmony Badge */}
-                <div className="flex items-center justify-between gap-1 mt-0.5">
-                  <span className="text-[9px] text-slate-500 dark:text-slate-400 truncate">
-                    {pal.category}
-                  </span>
-                  <span className="text-[8.5px] font-mono px-1 py-0.2 rounded bg-slate-200/60 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 truncate">
-                    {pal.harmonyBadge}
+                  <span className="text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded-full bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                    {groupPalettes.length}
                   </span>
                 </div>
-              </button>
-            );
-          })}
-        </div>
+                <span className="text-[9.5px] font-mono px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-600 dark:text-sky-400 font-medium">
+                  {group.badge}
+                </span>
+              </div>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight m-0">
+                {group.desc}
+              </p>
+
+              {/* 2-Column Grid of Palettes */}
+              <div className="grid grid-cols-2 gap-2">
+                {groupPalettes.map((pal) => {
+                  const palColors = pal.colors[currentMode];
+                  const isActive =
+                    currentPalette.primary.toLowerCase() === palColors.primary.toLowerCase() &&
+                    currentPalette.background.toLowerCase() === palColors.background.toLowerCase();
+
+                  return (
+                    <button
+                      key={pal.id}
+                      type="button"
+                      onClick={() =>
+                        dispatch({
+                          type: 'SET_COLOR_PRESET',
+                          colors: pal.colors,
+                          name: pal.name,
+                        })
+                      }
+                      className={`p-2 rounded-xl text-left transition-all flex flex-col gap-1.5 cursor-pointer relative ${
+                        isActive
+                          ? 'bg-white dark:bg-slate-800 border-2 border-sky-500 dark:border-sky-400 shadow-md ring-2 ring-sky-500/20'
+                          : 'bg-white/90 dark:bg-slate-800/60 hover:bg-white dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600'
+                      }`}
+                    >
+                      {/* Header: Title + Active Check */}
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[11px] font-bold text-slate-900 dark:text-slate-100 truncate">
+                          {pal.name}
+                        </span>
+                        {isActive && (
+                          <div className="w-3.5 h-3.5 rounded-full bg-sky-500 text-white flex items-center justify-center flex-shrink-0">
+                            <Check className="w-2.5 h-2.5" />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Multi-Color Swatch Preview Bar */}
+                      <div className="flex items-center h-4 w-full rounded-md overflow-hidden border border-slate-300/60 dark:border-slate-700 shadow-2xs">
+                        <div
+                          style={{ backgroundColor: palColors.primary }}
+                          className="h-full flex-2"
+                          title={`Primary: ${palColors.primary}`}
+                        />
+                        <div
+                          style={{ backgroundColor: palColors.accent }}
+                          className="h-full flex-1"
+                          title={`Accent: ${palColors.accent}`}
+                        />
+                        <div
+                          style={{ backgroundColor: palColors.surface }}
+                          className="h-full flex-1"
+                          title={`Surface: ${palColors.surface}`}
+                        />
+                        <div
+                          style={{ backgroundColor: palColors.background }}
+                          className="h-full flex-1"
+                          title={`Background: ${palColors.background}`}
+                        />
+                        <div
+                          style={{ backgroundColor: palColors.text }}
+                          className="h-full flex-1"
+                          title={`Text: ${palColors.text}`}
+                        />
+                      </div>
+
+                      {/* Harmony Wheel Badge */}
+                      <div className="flex items-center justify-between gap-1 text-[9px] text-slate-500 dark:text-slate-400 mt-0.5">
+                        <span className="font-mono truncate">{pal.harmonyBadge}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+
+        {filteredPalettes.length === 0 && (
+          <div className="p-4 text-center text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
+            No color palettes found matching &ldquo;{searchQuery}&rdquo;.
+          </div>
+        )}
       </div>
 
       {/* 2. PALETTE INFO & RANDOMIZE BUTTON */}
@@ -224,6 +305,9 @@ export const ColorSection: React.FC = () => {
 
       {/* 3. INDIVIDUAL COLOR TOKEN PICKERS */}
       <div className="space-y-2.5">
+        <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
+          Fine-Tune Tokens
+        </div>
         {COLOR_TOKENS.map(({ key, label, desc }) => {
           const hex = currentPalette[key];
           return (
