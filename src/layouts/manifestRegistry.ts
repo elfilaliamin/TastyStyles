@@ -46,46 +46,47 @@ import { manifest as layout_43 } from './empty-state/illustration-card/manifest'
 import { manifest as layout_44 } from './error/dialog-card/manifest';
 import { manifest as layout_45 } from './error/giant-hero/manifest';
 import { manifest as layout_46 } from './error/minimal/manifest';
-import { manifest as layout_47 } from './error/split-terminal/manifest';
-import { manifest as layout_48 } from './forum/compact-thread-table/manifest';
-import { manifest as layout_49 } from './forum/split-qa-solved/manifest';
-import { manifest as layout_50 } from './forum/three-column-reddit/manifest';
-import { manifest as layout_51 } from './kanban/board-columns/manifest';
-import { manifest as layout_52 } from './kanban/compact-grid/manifest';
-import { manifest as layout_53 } from './kanban/timeline-list/manifest';
-import { manifest as layout_54 } from './landing/cyber-spotlight/manifest';
-import { manifest as layout_55 } from './landing/feature-grid/manifest';
-import { manifest as layout_56 } from './landing/fintech-flow/manifest';
-import { manifest as layout_57 } from './landing/hero-centered/manifest';
-import { manifest as layout_58 } from './landing/hero-split/manifest';
-import { manifest as layout_59 } from './landing/organic-wellness/manifest';
-import { manifest as layout_60 } from './landing/warm-editorial/manifest';
-import { manifest as layout_61 } from './marketplace/hero-directory-categories/manifest';
-import { manifest as layout_62 } from './marketplace/split-map-list/manifest';
-import { manifest as layout_63 } from './marketplace/supplier-operator-dashboard/manifest';
-import { manifest as layout_64 } from './onboarding/card-stack/manifest';
-import { manifest as layout_65 } from './onboarding/minimal-modal/manifest';
-import { manifest as layout_66 } from './onboarding/wizard-stepper/manifest';
-import { manifest as layout_67 } from './portfolio/case-study-hero/manifest';
-import { manifest as layout_68 } from './portfolio/interactive-grid-gallery/manifest';
-import { manifest as layout_69 } from './portfolio/minimalist-editorial/manifest';
-import { manifest as layout_70 } from './pricing/cards-3col/manifest';
-import { manifest as layout_71 } from './pricing/compact-toggle/manifest';
-import { manifest as layout_72 } from './pricing/table-matrix/manifest';
-import { manifest as layout_73 } from './product-detail/split-sticky-buy/manifest';
-import { manifest as layout_74 } from './product-detail/two-column-tabs/manifest';
-import { manifest as layout_75 } from './product-detail/vertical-scroll-story/manifest';
-import { manifest as layout_76 } from './services/default/manifest';
-import { manifest as layout_77 } from './settings/sidebar-nav/manifest';
-import { manifest as layout_78 } from './settings/stacked-cards/manifest';
-import { manifest as layout_79 } from './settings/tabbed/manifest';
-import { manifest as layout_80 } from './streaming/audio-queue-rail/manifest';
-import { manifest as layout_81 } from './streaming/cinema-theater/manifest';
-import { manifest as layout_82 } from './streaming/live-stream-split/manifest';
-import { manifest as layout_83 } from './success-confirm/celebration-card/manifest';
-import { manifest as layout_84 } from './success-confirm/minimal-banner/manifest';
-import { manifest as layout_85 } from './success-confirm/receipt-summary/manifest';
-import { manifest as layout_86 } from './team/default/manifest';
+import { manifest as layout_47 } from './error/simple-card/manifest';
+import { manifest as layout_48 } from './error/split-terminal/manifest';
+import { manifest as layout_49 } from './forum/compact-thread-table/manifest';
+import { manifest as layout_50 } from './forum/split-qa-solved/manifest';
+import { manifest as layout_51 } from './forum/three-column-reddit/manifest';
+import { manifest as layout_52 } from './kanban/board-columns/manifest';
+import { manifest as layout_53 } from './kanban/compact-grid/manifest';
+import { manifest as layout_54 } from './kanban/timeline-list/manifest';
+import { manifest as layout_55 } from './landing/cyber-spotlight/manifest';
+import { manifest as layout_56 } from './landing/feature-grid/manifest';
+import { manifest as layout_57 } from './landing/fintech-flow/manifest';
+import { manifest as layout_58 } from './landing/hero-centered/manifest';
+import { manifest as layout_59 } from './landing/hero-split/manifest';
+import { manifest as layout_60 } from './landing/organic-wellness/manifest';
+import { manifest as layout_61 } from './landing/warm-editorial/manifest';
+import { manifest as layout_62 } from './marketplace/hero-directory-categories/manifest';
+import { manifest as layout_63 } from './marketplace/split-map-list/manifest';
+import { manifest as layout_64 } from './marketplace/supplier-operator-dashboard/manifest';
+import { manifest as layout_65 } from './onboarding/card-stack/manifest';
+import { manifest as layout_66 } from './onboarding/minimal-modal/manifest';
+import { manifest as layout_67 } from './onboarding/wizard-stepper/manifest';
+import { manifest as layout_68 } from './portfolio/case-study-hero/manifest';
+import { manifest as layout_69 } from './portfolio/interactive-grid-gallery/manifest';
+import { manifest as layout_70 } from './portfolio/minimalist-editorial/manifest';
+import { manifest as layout_71 } from './pricing/cards-3col/manifest';
+import { manifest as layout_72 } from './pricing/compact-toggle/manifest';
+import { manifest as layout_73 } from './pricing/table-matrix/manifest';
+import { manifest as layout_74 } from './product-detail/split-sticky-buy/manifest';
+import { manifest as layout_75 } from './product-detail/two-column-tabs/manifest';
+import { manifest as layout_76 } from './product-detail/vertical-scroll-story/manifest';
+import { manifest as layout_77 } from './services/default/manifest';
+import { manifest as layout_78 } from './settings/sidebar-nav/manifest';
+import { manifest as layout_79 } from './settings/stacked-cards/manifest';
+import { manifest as layout_80 } from './settings/tabbed/manifest';
+import { manifest as layout_81 } from './streaming/audio-queue-rail/manifest';
+import { manifest as layout_82 } from './streaming/cinema-theater/manifest';
+import { manifest as layout_83 } from './streaming/live-stream-split/manifest';
+import { manifest as layout_84 } from './success-confirm/celebration-card/manifest';
+import { manifest as layout_85 } from './success-confirm/minimal-banner/manifest';
+import { manifest as layout_86 } from './success-confirm/receipt-summary/manifest';
+import { manifest as layout_87 } from './team/default/manifest';
 
 export const ALL_LAYOUT_MANIFESTS: LayoutManifest[] = [
   layout_0,
@@ -175,4 +176,5 @@ export const ALL_LAYOUT_MANIFESTS: LayoutManifest[] = [
   layout_84,
   layout_85,
   layout_86,
+  layout_87,
 ];

@@ -5,7 +5,7 @@ export const manifest: LayoutManifest = {
   pageType: "billing",
   label: "Billing, Plans & Invoices",
   purposes: ['saas', 'ecommerce', 'portfolio', 'marketplace'],
-  sections: ['navbar', 'sidebar', 'billing'],
+  sections: ['sidebar', 'billing'],
   description: "Subscription usage meters, payment card details, and downloadable PDF invoices.",
   tags: ["billing", "default"],
 };

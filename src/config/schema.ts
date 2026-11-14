@@ -34,7 +34,7 @@ export const PageLayoutsSchema = z.object({
   ]).default('centered-card'),
   authSocialButtons: z.boolean().default(true),
   authCardStyle: z.enum(['elevated', 'bordered', 'flat', 'glass']).default('elevated'),
-  error: z.enum(['giant-hero', 'split-terminal', 'dialog-card', 'minimal']).default('giant-hero'),
+  error: z.enum(['giant-hero', 'split-terminal', 'dialog-card', 'minimal', 'simple-card']).default('giant-hero'),
   errorCode: z.enum(['404', '403', '500']).default('404'),
   errorShowTrace: z.boolean().default(true),
   dashboard: z.enum(['sidebar-grid', 'header-compact', 'analytical', 'feed-focus']).default('sidebar-grid'),

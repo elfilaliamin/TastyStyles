@@ -579,7 +579,162 @@ export const ErrorPage: React.FC = () => {
     );
   }
 
-  // 4. Default Giant Typographic Hero Layout
+  // 4. Simple Centered Card Layout (Clean modal card with status gradient and recovery buttons)
+  if (errorLayout === 'simple-card') {
+    return (
+      <div
+        style={{
+          background:
+            'radial-gradient(circle at 18% 45%, rgba(16, 185, 129, 0.08) 0%, transparent 45%), radial-gradient(circle at 82% 55%, rgba(245, 158, 11, 0.07) 0%, transparent 45%), var(--ts-color-background)',
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          minHeight: '100%',
+          padding: 'var(--ts-space-lg)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxSizing: 'border-box',
+          position: 'relative',
+        }}
+      >
+        <div style={{ marginBottom: 'var(--ts-space-md)' }}>{renderCodeSelector()}</div>
+
+        {/* Centered Floating Card */}
+        <div
+          style={{
+            backgroundColor: 'var(--ts-color-surface)',
+            border: '1px solid var(--ts-color-border)',
+            borderRadius: 'var(--ts-radius-surface, 24px)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.12), 0 0 1px 1px rgba(0, 0, 0, 0.04)',
+            maxWidth: '430px',
+            width: '100%',
+            padding: '36px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            boxSizing: 'border-box',
+            position: 'relative',
+          }}
+        >
+          {/* Top Icon Badge (without brand) */}
+          <div
+            style={{
+              width: '46px',
+              height: '46px',
+              borderRadius: '14px',
+              backgroundColor: 'var(--ts-color-primary)',
+              color: primaryTextColor,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 18px -4px var(--ts-color-primary)',
+              flexShrink: 0,
+            }}
+          >
+            <AppIcon name="sparkles" size={22} />
+          </div>
+
+          {/* Large Gradient 404 Status Code */}
+          <div
+            style={{
+              fontFamily: 'var(--ts-font-heading)',
+              fontSize: 'calc(var(--ts-base-size) * 4.2)',
+              fontWeight: 900,
+              lineHeight: 1,
+              letterSpacing: '-0.04em',
+              margin: '18px 0 8px 0',
+              background: 'linear-gradient(135deg, var(--ts-color-primary) 0%, var(--ts-color-accent, #10b981) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            {configuredCode}
+          </div>
+
+          {/* Title */}
+          <h1
+            style={{
+              fontFamily: 'var(--ts-font-heading)',
+              fontSize: 'calc(var(--ts-base-size) * 1.3)',
+              fontWeight: 800,
+              margin: '0 0 8px 0',
+              color: 'var(--ts-color-text)',
+            }}
+          >
+            {configuredCode === '404' ? 'Page Not Found' : current.title}
+          </h1>
+
+          {/* Explanatory Description */}
+          <p
+            style={{
+              margin: '0 0 24px 0',
+              fontSize: 'calc(var(--ts-base-size) * 0.85)',
+              opacity: 0.7,
+              lineHeight: 1.5,
+              maxWidth: '320px',
+            }}
+          >
+            {configuredCode === '404'
+              ? "The page you are looking for doesn't exist, has been moved, or the link is incorrect."
+              : current.desc}
+          </p>
+
+          {showTrace && <div style={{ width: '100%', marginBottom: '20px' }}>{renderTraceBox()}</div>}
+
+          {/* Two Action Buttons Side-by-Side */}
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', width: '100%' }}>
+            <button
+              type="button"
+              style={{
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                border: 'none',
+                borderRadius: 'var(--ts-radius)',
+                padding: '10px 18px',
+                fontSize: 'calc(var(--ts-base-size) * 0.84)',
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer',
+                boxShadow: 'var(--ts-shadow)',
+                transition: 'opacity 0.15s ease',
+              }}
+            >
+              <AppIcon name="home" size={14} />
+              <span>Back to Dashboard</span>
+            </button>
+
+            <button
+              type="button"
+              style={{
+                backgroundColor: 'transparent',
+                color: 'var(--ts-color-text)',
+                border: '1px solid var(--ts-color-border)',
+                borderRadius: 'var(--ts-radius)',
+                padding: '10px 18px',
+                fontSize: 'calc(var(--ts-base-size) * 0.84)',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                cursor: 'pointer',
+                transition: 'background-color 0.15s ease',
+              }}
+            >
+              <AppIcon name="layers" size={14} />
+              <span>Tasks Board</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 5. Default Giant Typographic Hero Layout
   return (
     <div
       style={{

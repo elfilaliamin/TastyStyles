@@ -851,6 +851,24 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       mobile: 'Links stack vertically with high-contrast tap targets.',
       tablet: 'Clean left-aligned editorial layout with inline link list.',
     },
+    {
+      page: 'error',
+      id: 'simple-card',
+      title: 'Simple Card',
+      description: 'Centered minimal card with status code gradient, clear error message, and primary recovery actions.',
+      variant: 'simple-card',
+      ascii: `+-------------------------------------------------------+
+|        +-------------------------------------+        |
+|        |                [*]                  |        |
+|        |                404                  |        |
+|        |           Page Not Found            |        |
+|        |  The page you are looking for...    |        |
+|        |   [Back to Dashboard] [Tasks Board] |        |
+|        +-------------------------------------+        |
++-------------------------------------------------------+`,
+      mobile: 'Card fills viewport width with comfortable touch padding and stacked buttons.',
+      tablet: 'Centered 420px card with radial background glow and inline recovery buttons.',
+    },
   ],
 
   onboarding: [

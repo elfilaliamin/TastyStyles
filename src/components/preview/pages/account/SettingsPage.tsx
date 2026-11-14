@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
-import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 
 export const SettingsPage: React.FC = () => {
@@ -220,26 +219,17 @@ export const SettingsPage: React.FC = () => {
           color: 'var(--ts-color-text)',
           fontFamily: 'var(--ts-font-body)',
           width: '100%',
+          height: '100%',
           minHeight: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: isMobile ? 'column' : 'row',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <DynamicNavbar />
+        <DynamicSidebar />
 
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            flex: 1,
-            minHeight: 0,
-            width: '100%',
-            position: 'relative',
-          }}
-        >
-          <DynamicSidebar />
-
-          <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
             <div
               style={{
                 flex: 1,
@@ -286,7 +276,6 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
         </main>
-      </div>
     </div>
   );
 }
@@ -300,26 +289,17 @@ export const SettingsPage: React.FC = () => {
           color: 'var(--ts-color-text)',
           fontFamily: 'var(--ts-font-body)',
           width: '100%',
+          height: '100%',
           minHeight: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: isMobile ? 'column' : 'row',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <DynamicNavbar />
+        <DynamicSidebar />
 
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            flex: 1,
-            minHeight: 0,
-            width: '100%',
-            position: 'relative',
-          }}
-        >
-          <DynamicSidebar />
-
-          <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
             <div
               style={{
                 flex: 1,
@@ -397,7 +377,6 @@ export const SettingsPage: React.FC = () => {
         </div>
             </div>
           </main>
-        </div>
       </div>
     );
   }
@@ -410,26 +389,17 @@ export const SettingsPage: React.FC = () => {
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
+        height: '100%',
         minHeight: '100%',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: isMobile ? 'column' : 'row',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <DynamicNavbar />
+      <DynamicSidebar />
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          flex: 1,
-          minHeight: 0,
-          width: '100%',
-          position: 'relative',
-        }}
-      >
-        <DynamicSidebar />
-
-        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
           <div
             style={{
               flex: 1,
@@ -565,7 +535,6 @@ export const SettingsPage: React.FC = () => {
       </div>
           </div>
         </main>
-      </div>
     </div>
   );
 };

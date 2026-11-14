@@ -5,7 +5,7 @@ export const manifest: LayoutManifest = {
   pageType: "settings",
   label: "Stacked Cards",
   purposes: ['saas', 'ecommerce', 'portfolio', 'marketplace'],
-  sections: ['navbar', 'sidebar', 'settings'],
+  sections: ['sidebar', 'settings'],
   description: "Vertical stacked section cards on a single scrollable page with individual save actions.",
   tags: ["settings", "stacked-cards"],
 };

@@ -206,6 +206,7 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
     // 4. Centered Card / Modal Dialog
     case 'centered-card':
     case 'dialog-card':
+    case 'simple-card':
     case 'celebration-card':
     case 'minimal-modal':
       return (
