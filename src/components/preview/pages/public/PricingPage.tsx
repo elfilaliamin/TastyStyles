@@ -3,6 +3,7 @@ import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const PricingPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -333,6 +334,8 @@ export const PricingPage: React.FC = () => {
         </div>
       )}
       </div>
+
+      <DynamicFooter />
     </div>
   );
 };

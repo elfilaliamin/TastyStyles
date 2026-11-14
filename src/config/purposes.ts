@@ -3,23 +3,6 @@ import { PAGE_TYPES_BY_ID } from './pageTypes';
 
 export const PURPOSES: PurposeDefinition[] = [
   {
-    id: 'saas',
-    label: 'B2B SaaS Platform',
-    description: 'Multi-tenant cloud application with dashboard telemetry, team administration, and subscription billing.',
-    emoji: '🏢',
-    tagline: 'Enterprise-grade software with subscription billing and workflows',
-    pages: [
-      { pageType: 'landing', required: true, defaultLayout: 'hero-split' },
-      { pageType: 'pricing', required: true, defaultLayout: 'cards-3col' },
-      { pageType: 'auth', required: true, defaultLayout: 'centered-card' },
-      { pageType: 'dashboard', required: true, defaultLayout: 'sidebar-grid' },
-      { pageType: 'settings', required: false, defaultLayout: 'tabbed' },
-      { pageType: 'billing', required: false, defaultLayout: 'default' },
-      { pageType: 'team', required: false, defaultLayout: 'default' },
-      { pageType: 'contact', required: false, defaultLayout: 'default' },
-    ],
-  },
-  {
     id: 'agency-studio',
     label: 'Creative Studio & Agency',
     description: 'Agency or studio portfolio highlighting client case studies, deliverables, team leadership, and service inquiry packages.',
@@ -74,6 +57,24 @@ export const PURPOSES: PurposeDefinition[] = [
       { pageType: 'portfolio-dashboard', required: false, defaultLayout: 'analytics-cms-split' },
       { pageType: 'auth', required: false, defaultLayout: 'centered-card' },
       { pageType: 'contact', required: false, defaultLayout: 'default' },
+    ],
+  },
+  {
+    id: 'saas',
+    label: 'SaaS Platform',
+    description: 'Multi-tenant cloud application with dashboard telemetry, team administration, and subscription billing.',
+    emoji: '🏢',
+    tagline: 'Enterprise-grade software with subscription billing and workflows',
+    pages: [
+      { pageType: 'landing', required: true, defaultLayout: 'hero-split' },
+      { pageType: 'pricing', required: true, defaultLayout: 'cards-3col' },
+      { pageType: 'auth', required: true, defaultLayout: 'centered-card' },
+      { pageType: 'dashboard', required: true, defaultLayout: 'sidebar-grid' },
+      { pageType: 'settings', required: false, defaultLayout: 'tabbed' },
+      { pageType: 'billing', required: false, defaultLayout: 'default' },
+      { pageType: 'team', required: false, defaultLayout: 'default' },
+      { pageType: 'contact', required: false, defaultLayout: 'default' },
+      { pageType: 'error', required: false, defaultLayout: 'giant-hero' },
     ],
   },
   {

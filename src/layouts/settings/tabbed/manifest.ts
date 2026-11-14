@@ -5,7 +5,7 @@ export const manifest: LayoutManifest = {
   pageType: "settings",
   label: "Horizontal Tabs",
   purposes: ['saas', 'ecommerce', 'portfolio', 'marketplace'],
-  sections: ['navbar', "settings", 'footer'],
-  description: "Horizontal top tab bar switching between Profile, Preferences, Security, and Integrations.",
+  sections: ['navbar', 'sidebar', 'settings'],
+  description: "Horizontal top tab bar switching between General & Profile, Notifications & Alerts, and Security & Access.",
   tags: ["settings", "tabbed"],
 };

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 
 interface KanbanTask {
   id: string;
@@ -143,13 +145,26 @@ export const KanbanPage: React.FC = () => {
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-md)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--ts-space-md)',
       }}
     >
-      {/* Top Board Bar */}
+      <DynamicNavbar />
+
+      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+        <DynamicSidebar className="hidden md:flex shrink-0" />
+
+        <main
+          style={{
+            flex: 1,
+            padding: 'var(--ts-space-md)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--ts-space-md)',
+            overflowX: 'auto',
+          }}
+        >
+          {/* Top Board Bar */}
       <div
         style={{
           display: 'flex',
@@ -534,6 +549,8 @@ export const KanbanPage: React.FC = () => {
         })}
       </div>
       )}
+        </main>
+      </div>
     </div>
   );
 };

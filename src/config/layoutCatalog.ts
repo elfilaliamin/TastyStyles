@@ -182,7 +182,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Full-width app header with brand breadcrumbs, command bar (Cmd+K), and user profile drawer.',
       variant: 'navbar-saas',
       ascii: `+-------------------------------------------------------+
-| [TS] App / Project   [Search or Cmd+K]   (+) [Bell] [User]|
+| [Brand] / Project    [Search or Cmd+K]   (+) [Bell] [User]|
 +-------------------------------------------------------+`,
       mobile: 'Search collapses to search icon button; breadcrumb shortens to current entity.',
       tablet: 'Compact search bar with breadcrumb trail and quick action buttons.',
@@ -247,11 +247,11 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Categorized collapsible navigation groups with unread notification badges and workspace switcher.',
       variant: 'sidebar-content',
       ascii: `+---------------+---------------------------------------+
-| [TS] Brand    | Main Workspace Content                |
+| [Brand]       | Main Workspace Content                |
 |               |                                       |
 | CORE SYSTEM   |                                       |
 | - Dashboard   |                                       |
-| - Tokens [3]  |                                       |
+| - Reports [3] |                                       |
 |               |                                       |
 | ADMIN         |                                       |
 | - Settings    |                                       |
@@ -319,6 +319,84 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-----------------+-------------------------------------+`,
       mobile: 'Converts to sliding sheet drawer triggered from header hamburger toggle.',
       tablet: 'Sidebar narrows to 220px with truncated labels and icon emphasis.',
+    },
+  ],
+
+  footer: [
+    {
+      page: 'footer',
+      id: 'columns-mega',
+      title: 'Multi-Column Mega Footer',
+      description: 'Comprehensive grid with brand column, product/solution/resource/legal links, system status, and social bar.',
+      variant: 'footer-mega',
+      ascii: `+-------------------------------------------------------+
+| [Brand]     Product      Solutions    Resources    Legal      |
+| Description Features     SaaS         Docs         Privacy    |
+| [Status]    Pricing      Security     API          Terms      |
+|-------------------------------------------------------|
+| (c) 2026 Brand Name. All rights reserved.    [gh] [tw] [dc]   |
++-------------------------------------------------------+`,
+      mobile: 'Columns collapse into vertical stack with full-width link items.',
+      tablet: 'Balanced 4-column responsive grid with brand header.',
+    },
+    {
+      page: 'footer',
+      id: 'minimal-inline',
+      title: 'Minimalist Single-Line',
+      description: 'Clean horizontal toolbar with brand avatar, inline links, social icons, and copyright.',
+      variant: 'footer-inline',
+      ascii: `+-------------------------------------------------------+
+| [Logo] Brand   Features  Pricing  Docs  (c) 2026   [gh] [tw]  |
++-------------------------------------------------------+`,
+      mobile: 'Stacks brand, links, and social items into centered column.',
+      tablet: 'Horizontal row with balanced margins and center navigation.',
+    },
+    {
+      page: 'footer',
+      id: 'centered-newsletter',
+      title: 'Centered Newsletter & Community',
+      description: 'Prominent email newsletter capture box, brand headline, centered navigation links, and community channels.',
+      variant: 'footer-newsletter',
+      ascii: `+-------------------------------------------------------+
+|                       [Brand Logo]                    |
+|             Subscribe to our Engineering Weekly       |
+|             [ Enter your work email... ] [Join]       |
+|             Features  -  Pricing  -  Docs  -  Status  |
+|                 (c) 2026 Brand. Zero Drift.           |
++-------------------------------------------------------+`,
+      mobile: 'Newsletter input and subscribe button stack vertically with tap targets.',
+      tablet: 'Centered 520px container with inline email input and button.',
+    },
+    {
+      page: 'footer',
+      id: 'split-brand-legal',
+      title: 'Asymmetric Split Showcase',
+      description: 'High-contrast 50/50 split with oversized brand identity and mission on left, dual link columns and legal on right.',
+      variant: 'footer-split',
+      ascii: `+---------------------------+---------------------------+
+| BRAND NAME                | Products       Resources  |
+| Autonomous design tokens  | Features       Docs       |
+| for precision agents.     | Changelog      API        |
+| [*] Operational 99.99%    | Legal Policy   Security   |
++---------------------------+---------------------------+`,
+      mobile: 'Left brand section appears above link columns with compact typography.',
+      tablet: 'Side-by-side 50/50 split remains with proportional typography.',
+    },
+    {
+      page: 'footer',
+      id: 'bento-grid',
+      title: 'Bento Card Grid',
+      description: 'Modular card pods separating newsletter capture, system status & uptime, directory links, and social community.',
+      variant: 'footer-bento',
+      ascii: `+----------------------------+--------------------------+
+| [ Bento Card: Newsletter ] | [ Bento Card: Status ]   |
+| Stay updated on releases.  | 99.98% SLA Guaranteed    |
++----------------------------+--------------------------+
+| [ Bento Card: Directory ]  | [ Bento Card: Social ]   |
+| Product - Docs - Pricing   | GitHub - Discord - X     |
++----------------------------+--------------------------+`,
+      mobile: 'Bento cards stack into 1-column cards.',
+      tablet: '2x2 bento grid with elevated surface cards.',
     },
   ],
 
@@ -428,6 +506,93 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Bento grid converts into single-column vertical stack with full card widths.',
       tablet: 'Bento grid reorganizes into balanced 2-column layout.',
+    },
+    {
+      page: 'landing',
+      id: 'warm-editorial',
+      title: 'Warm Editorial AI',
+      description: 'Warm architectural brutalist aesthetic with floating dark code split hero, 6-feature grid, workflow tabs, founder line-art sketches, and FAQ accordion.',
+      variant: 'warm-editorial',
+      ascii: `+-----------------------+-------------------------------+
+| Warm Headline & Copy  | [ Floating Dark Code Window  ]|
+| [Start Trial] [Demo]  | [ Warm Architectural Backdrop]|
++-----------------------+-------------------------------+
+| [Feature 1] [Feature 2] [Feature 3] [Feature 4]...    |
++-------------------------------------------------------+
+| [Tabbed Product Workflow Inspection Console]          |
++-------------------------------------------------------+
+| [Founder Sketches Proof]   | [FAQ Accordion & CTA]    |
++-------------------------------------------------------+`,
+      mobile: 'Code window stacks beneath pitch; tabs convert to swipeable pill buttons; feature grid stacks to 1 column.',
+      tablet: 'Split hero maintains 45/55 proportion; feature cards flow into 2-column grid.',
+    },
+    {
+      page: 'landing',
+      id: 'organic-wellness',
+      title: 'Organic Wellness',
+      description: 'Serene stone & olive palette with travertine interior hero, why-us split pills, 3-card courses carousel, star rating reviews, and dark spruce consultation form.',
+      variant: 'organic-wellness',
+      ascii: `+-------------------------------------------------------+
+| [ Peaceful Travertine Interior & Serene Green Armchair] |
+| "Find Your Enlightenment Through Modern Wellness"      |
+| [Get Free Consultancy]                                 |
++-------------------------------------------------------+
+| [Artisanal Bowl Image] | Why Us: [Pill 1] [Pill 2]... |
++-------------------------------------------------------+
+| [Course 1: Mindfulness] [Course 2: Breath] [Course 3] |
++-------------------------------------------------------+
+| [ Alternating Zigzag Image & Story Blocks ]           |
++-------------------------------------------------------+
+| [ Deep Spruce Green Lead-Gen Consultation Banner ]    |
++-------------------------------------------------------+`,
+      mobile: 'Travertine hero text stacks centered; courses convert to single-column card deck; consultation form full width.',
+      tablet: 'Why-us section remains 50/50 split; course cards scale to 2-column flow with wrap.',
+    },
+    {
+      page: 'landing',
+      id: 'cyber-spotlight',
+      title: 'Cyber Spotlight Studio',
+      description: 'Futuristic obsidian dark mode with volumetric spotlight beam, floating dark app shell, 4 glass pillar cards, interactive video preview, and 3-tier dark glass pricing.',
+      variant: 'cyber-spotlight',
+      ascii: `+-------------------------------------------------------+
+| \\ Volumetric Spotlight Ray \\                         |
+|       "Smarter Conversations Powered by AI"           |
+|            [Get Started]       [Live Demo]            |
+|       +---------------------------------------+       |
+|       |   [ Floating Dark App Shell Window ]  |       |
+|       +---------------------------------------+       |
++-------------------------------------------------------+
+| [Pillar 1]    [Pillar 2]    [Pillar 3]    [Pillar 4]  |
++-------------------------------------------------------+
+| [3-Tier Dark Glass Pricing Cards with Pro Radial Glow]|
++-------------------------------------------------------+
+| [ GRAND REFLECTIVE BRAND TYPOGRAPHY FOOTER ]          |
++-------------------------------------------------------+`,
+      mobile: 'Spotlight beam soft fades; app shell preview shrinks fluidly; 4 pillars stack vertically; pricing cards stack 1 per row.',
+      tablet: 'Pillars display as 2x2 grid; pricing tiers display responsive cards with horizontal scroll.',
+    },
+    {
+      page: 'landing',
+      id: 'fintech-flow',
+      title: 'Fintech Operations & Crypto',
+      description: 'Deep maritime cyan-teal gradient hero with floating smartphone balance card, 4 banking feature cards, alternating KYC & transaction mockups, and client quote.',
+      variant: 'fintech-flow',
+      ascii: `+-------------------------------------------------------+
+| ~~~ Cyan-Teal Gradient Sky ~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| "Powering Secure Crypto Payments & Financial Ops"     |
+|       [Open Account]          [Explore Contract]      |
+|       +---------------------------------------+       |
+|       |  [ Floating Phone: $1,250.00 ]        |       |
+|       +---------------------------------------+       |
++-------------------------------------------------------+
+| [4 Banking Feature Cards: Account, Payments, API...]  |
++-------------------------------------------------------+
+| [Alternating KYC Customer & Balance Settlement Specs] |
++-------------------------------------------------------+
+| [Client Quote] | [FAQ Accordion] | [Cyan Gradient CTA]|
++-------------------------------------------------------+`,
+      mobile: 'Floating phone scales to viewport; banking cards stack 1 per row; alternating mockups stack device above copy.',
+      tablet: 'Banking feature cards align in 2x2 grid; alternating mockups retain side-by-side format with compact gutters.',
     },
   ],
 
@@ -575,13 +740,13 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       page: 'settings',
       id: 'tabbed',
       title: 'Horizontal Tabs',
-      description: 'Horizontal top tab bar switching between Profile, Preferences, Security, and Integrations.',
+      description: 'Horizontal top tab bar switching between General & Profile, Notifications & Alerts, and Security & Access.',
       variant: 'tabbed',
       ascii: `+-------------------------------------------------------+
-| [Profile]   [Preferences]   [Security]   [API Keys]           |
+| [General & Profile]   [Notifications & Alerts]   [Security & Access] |
 |                                                       |
-| Display Name: [Alex Rivers                          ] |
-| Email:        [alex@tastystyles.io                  ] |
+| Display Name: [Jane Doe                             ] |
+| Email:        [user@example.com                     ] |
 | [Save Changes]                                        |
 +-------------------------------------------------------+`,
       mobile: 'Tabs become horizontally scrollable strip with bottom border indicator.',
@@ -719,7 +884,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'minimal-modal',
       ascii: `+-------------------------------------------------------+
 |        +-------------------------------------+        |
-|        | Welcome to TastyStyles!             |        |
+|        | Welcome to the Platform!            |        |
 |        | Let us tailor your workspace setup. |        |
 |        | [Get Started ->]          [Skip]    |        |
 |        +-------------------------------------+        |
@@ -738,9 +903,9 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'centered-action',
       ascii: `+-------------------------------------------------------+
 |                     [Empty Box Icon]                  |
-|                    No Design Tokens Yet               |
-|      Get started by creating your first token palette |
-|                 [ + Create Token Palette ]            |
+|                    No Items Yet                       |
+|      Get started by creating your first item          |
+|                 [ + Create Item ]                     |
 +-------------------------------------------------------+`,
       mobile: 'Button takes full container width with accessible 44px height.',
       tablet: 'Centered element group with generous whitespace.',
@@ -789,8 +954,8 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       ascii: `+-------------------------------------------------------+
 |        +-------------------------------------+        |
 |        |           [Check Circle]            |        |
-|        |         Tokens Exported!            |        |
-|        | Receipt ID: #TS-94827               |        |
+|        |         Export Complete!            |        |
+|        | Receipt ID: INV-1001                |        |
 |        | [Download ZIP Bundle]  [Close]      |        |
 |        +-------------------------------------+        |
 +-------------------------------------------------------+`,
@@ -804,7 +969,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Itemized transaction breakdown with next steps and audit trail details.',
       variant: 'table-matrix',
       ascii: `+-------------------------------------------------------+
-| Transaction Receipt: #TS-88219                        |
+| Transaction Receipt: #INV-88219                       |
 | - Spec File: DESIGN.md                      Included  |
 | - Tailwind Config: tailwind.config.ts       Included  |
 | - CSS Custom Properties: tokens.css         Included  |
@@ -999,7 +1164,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       title: 'Masonry News Frontpage',
       description: 'NYT standard: 2-column lead story with headline + 1-column trending list + 3-col topic grid.',
       variant: 'bento-grid',
-      ascii: '+-------------------+-----------+\n| Lead Story Hero   | Trending  |\n| Large Cover Photo | 1. DTCG v2|\n+-------------------+-----------+',
+      ascii: '+-------------------+-----------+\n| Lead Story Hero   | Trending  |\n| Large Cover Photo | 1. Release notes|\n+-------------------+-----------+',
       mobile: 'Stories stack vertically in chronological order.',
       tablet: '2-column responsive masonry.',
     },
@@ -1146,7 +1311,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Single-column resume storytelling with career timeline, education milestones, skills matrix, and project list.',
       variant: 'timeline-list',
       ascii: `+-------------------------------------------------------+
-| [Avatar] Alex Rivers — Staff Design Technologist      |
+| [Avatar] Jane Doe — Staff Design Technologist         |
 | Career Experiences: 2024-Present, 2021-2024...        |
 | Education, Degrees & Certifications                   |
 | Projects Showcase & Spoken / Code Languages           |
@@ -1177,7 +1342,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'split-terminal',
       ascii: `+-------------------------------------------------------+
 | > cat profile.json | grep -E "experiences|skills"     |
-| > run demo --project=tastystyles                      |
+| > run demo --project=my-app                           |
 | [Live Project Output & Metrics Dashboard]             |
 +-------------------------------------------------------+`,
       mobile: 'Full-bleed monospace console with tabbed command buttons.',
@@ -1189,7 +1354,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       title: 'Case Study Hero & Metrics',
       description: 'ReadCV benchmark: statement typography intro + 2-column full-bleed project cards with impact metrics.',
       variant: 'bento-grid',
-      ascii: '+-------------------------------------------------------+\n| Statement: Alex Rivers — Staff Product Designer       |\n+---------------------------+---------------------------+\n| [Project 1: +340% Veloc.] | [Project 2: 65% Latency]  |\n+---------------------------+---------------------------+',
+      ascii: '+-------------------------------------------------------+\n| Statement: Jane Doe — Staff Product Designer          |\n+---------------------------+---------------------------+\n| [Project 1: +340% Veloc.] | [Project 2: 65% Latency]  |\n+---------------------------+---------------------------+',
       mobile: 'Project cards stack in single column.',
       tablet: '2-column responsive grid.',
     },
@@ -1199,7 +1364,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       title: 'Minimalist Editorial',
       description: 'Substack standard: text-first chronological narrative of work, speaking engagements, and patents.',
       variant: 'minimal',
-      ascii: '+-------------------------------------------------------+\n| Chronological Career Narrative & Selected Writing     |\n| - 2026: TastyStyles Autonomous Token Engine           |\n+-------------------------------------------------------+',
+      ascii: '+-------------------------------------------------------+\n| Chronological Career Narrative & Selected Writing     |\n| - 2026: Design System Engine                          |\n+-------------------------------------------------------+',
       mobile: 'Single column with comfortable line length.',
       tablet: 'Centered 720px max reading width.',
     },
@@ -1252,8 +1417,8 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Longform developer essay explaining the technical why, design decisions, and retrospective learnings.',
       variant: 'minimal',
       ascii: `+-------------------------------------------------------+
-| Deep Dive: Building an Autonomous Design Token Engine |
-| By Alex Rivers • 8 min read • React, TypeScript       |
+| Deep Dive: Modern System Architecture & Design        |
+| By Jane Doe • 8 min read • React, TypeScript          |
 | In-depth narrative prose with inline code snippets... |
 +-------------------------------------------------------+`,
       mobile: 'Single column with generous line-height and readable font scale.',
@@ -1284,7 +1449,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'board-columns',
       ascii: `+---------------+---------------+---------------+
 | Ideas & Drafts| In Review     | Published Live|
-| - Project Alpha| - Project Beta| - TastyStyles |
+| - Project Alpha| - Project Beta| - Project Gamma|
 | - Blog Post 1 | - Video Demo  | - Agent Token |
 +---------------+---------------+---------------+`,
       mobile: 'Lanes stack or horizontally swipe on mobile.',
@@ -1315,9 +1480,9 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'sidebar-content',
       ascii: `+-------------------------------+-----------------------+
 | Main Entity Summary           | Metadata Inspector    |
-| - Token Name: Primary Brand   | Created: 2026-11-04   |
-| - Value: #0284c7              | Author: Alex Rivers   |
-| - Contrast: 21.0:1 AAA Pass   | [Edit Token] [Delete] |
+| - Item Name: Primary Asset    | Created: 2026-11-04   |
+| - Value: #0284c7              | Author: Jane Doe      |
+| - Status: Active              | [Edit Item] [Delete]  |
 +-------------------------------+-----------------------+`,
       mobile: 'Metadata panel collapses below entity summary in single vertical column.',
       tablet: 'Sidepanel narrows to 240px; main view adapts gracefully.',
@@ -1350,6 +1515,156 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Tabs become horizontal scroll strip; code blocks scroll horizontally.',
       tablet: 'Tab bar and code blocks fit standard tablet dimensions.',
+    },
+  ],
+
+  contact: [
+    {
+      page: 'contact',
+      id: 'default',
+      title: 'Contact & Sales Inquiry',
+      description: 'Multi-field conversion form with office details, map preview, and live support banner.',
+      variant: 'split',
+      ascii: `+-------------------------------+-----------------------+
+| Inquire & Get in Touch        | Office & Global Hubs  |
+| Full Name: [John Doe        ] | 100 Innovation Way    |
+| Work Email: [user@example.com]| San Francisco, CA     |
+| [Send Message ->]             | Support: 24/7 Live    |
++-------------------------------+-----------------------+`,
+      mobile: 'Office details collapse beneath the inquiry form in a single column.',
+      tablet: '50/50 balanced split between inquiry form and contact info cards.',
+    },
+  ],
+
+  billing: [
+    {
+      page: 'billing',
+      id: 'default',
+      title: 'Billing & Invoices',
+      description: 'Subscription usage meters, payment card details, and downloadable PDF invoices.',
+      variant: 'sidebar-content',
+      ascii: `+-------------------------------------------------------+
+| Plan: Pro Tier ($49/mo)              [Upgrade Plan]   |
+| Usage: 8,420 / 10,000 API calls      [████████░░] 84% |
++-------------------------------------------------------+
+| Invoice ID     Date         Amount     Status  Action |
+| INV-2026-001   Nov 01, 2026 $49.00     Paid    [PDF]  |
+| INV-2026-002   Oct 01, 2026 $49.00     Paid    [PDF]  |
++-------------------------------------------------------+`,
+      mobile: 'Invoice table wraps inside horizontal scroll box; plan cards stack.',
+      tablet: 'Two-tier summary with plan card above responsive invoice table.',
+    },
+  ],
+
+  team: [
+    {
+      page: 'team',
+      id: 'default',
+      title: 'Team Members & Permissions',
+      description: 'Team member directory table with role badges, invite modal trigger, and permission toggles.',
+      variant: 'sidebar-content',
+      ascii: `+-------------------------------------------------------+
+| Team Directory (12 Members)           [+ Invite Member]|
+| Filter: [All Roles ▼]                 [Search members]|
++-------------------------------------------------------+
+| Member Name       Role       Access Level     Status  |
+| Jane Doe          Admin      Full Control     Active  |
+| Alex Smith        Editor     Write & Publish  Active  |
++-------------------------------------------------------+`,
+      mobile: 'Member cards stack vertically with role badges and action ellipsis menu.',
+      tablet: 'Compact table with role badges and inline action triggers.',
+    },
+  ],
+
+  about: [
+    {
+      page: 'about',
+      id: 'default',
+      title: 'About & Company Narrative',
+      description: 'Mission statement, leadership executive team, company milestones, and culture values.',
+      variant: 'minimal',
+      ascii: `+-------------------------------------------------------+
+| Our Mission: Empowering autonomous product teams      |
+| We build deterministic, accessible design tooling.    |
++-------------------------------------------------------+
+| Executive Leadership:                                 |
+| [Leader 1: Engineering]     [Leader 2: Design Systems]|
++-------------------------------------------------------+`,
+      mobile: 'Executive cards stack in single column.',
+      tablet: '2-column leadership grid with comfortable spacing.',
+    },
+  ],
+
+  services: [
+    {
+      page: 'services',
+      id: 'default',
+      title: 'Services & Capabilities',
+      description: 'Service packages, deliverables matrix, client engagement workflow, and SLAs.',
+      variant: 'cards-3col',
+      ascii: `+-------------------------------------------------------+
+| Specialized Capabilities & Client Engagements         |
++-------------------+-------------------+---------------+
+| 1. Design Systems | 2. Cloud Infra    | 3. AI Workflows|
+| Scalable tokens   | Zero-downtime Ops | Agent briefs  |
++-------------------+-------------------+---------------+`,
+      mobile: 'Service cards stack vertically in order of priority.',
+      tablet: '3-column balanced cards with icon badges.',
+    },
+  ],
+
+  blog: [
+    {
+      page: 'blog',
+      id: 'default',
+      title: 'Blog Article & Editorial',
+      description: 'Longform reading typography, author bylines, pull quotes, and related posts.',
+      variant: 'minimal',
+      ascii: `+-------------------------------------------------------+
+| Article Title: Building Accessible Design Tokens      |
+| By Editorial Team • 6 min read • Published Nov 2026   |
+| [ Hero Featured Cover Photo ]                         |
+| Body typography formatted for optimal readability...  |
++-------------------------------------------------------+`,
+      mobile: 'Prose margins expand to full width with 16px lateral padding.',
+      tablet: 'Single constrained reading column (680px max-width) with comfortable margins.',
+    },
+  ],
+
+  cart: [
+    {
+      page: 'cart',
+      id: 'default',
+      title: 'Shopping Cart & Summary',
+      description: 'Slide-over cart drawer, item counters, promotional code input, and checkout summary.',
+      variant: 'split',
+      ascii: `+-------------------------------+-----------------------+
+| Items in Your Cart (2)        | Order Summary         |
+| - Mechanical Keyboard ($180)  | Subtotal: $260.00     |
+| - Custom Keycaps ($80)        | Shipping: Free        |
+| Promo: [PROMO2026] [Apply]    | [Proceed to Checkout] |
++-------------------------------+-----------------------+`,
+      mobile: 'Cart items stack above order summary card; checkout button fixed to bottom.',
+      tablet: 'Two-column layout with cart line items on left and sticky summary rail on right.',
+    },
+  ],
+
+  'case-study': [
+    {
+      page: 'case-study',
+      id: 'default',
+      title: 'Case Study Narrative',
+      description: 'In-depth project breakdown with problem statement, design solutions, metrics impact, and client review.',
+      variant: 'minimal',
+      ascii: `+-------------------------------------------------------+
+| Client Case Study: Modernizing Global Payment Flows   |
+| Metrics: +340% Conversion Velocity • -65% Latency     |
++-------------------------------------------------------+
+| Problem Discovery | Design Architecture | Impact Results |
+| Legacy checkout   | Unified tokens      | $12M recovered |
++-------------------------------------------------------+`,
+      mobile: 'Key metric cards stack vertically; sections flow linearly.',
+      tablet: 'Metric badges in 2-column grid; rich narrative callout blocks.',
     },
   ],
 };

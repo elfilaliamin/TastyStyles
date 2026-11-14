@@ -466,5 +466,317 @@
       "shadow": "glow",
       "spacing": "comfortable"
     }
+  },
+  {
+    "id": "crisp-amber",
+    "label": "Crisp Amber",
+    "description": "Warm editorial stone and amber architectural palette crafted for intelligent AI workflows and SaaS.",
+    "state": {
+      "name": "Crisp Amber System",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#18181b",
+          "secondary": "#71717a",
+          "accent": "#d97706",
+          "background": "#fcfaf7",
+          "surface": "#f4efe6",
+          "text": "#1c1917",
+          "border": "#e7e0d3"
+        },
+        "dark": {
+          "primary": "#fafaf9",
+          "secondary": "#a8a29e",
+          "accent": "#f59e0b",
+          "background": "#141210",
+          "surface": "#1c1917",
+          "text": "#f5f5f4",
+          "border": "#292524"
+        }
+      },
+      "typography": {
+        "headingFont": "plus-jakarta-sans",
+        "bodyFont": "inter",
+        "scale": 1.15,
+        "baseSize": 16
+      },
+      "layout": "landing",
+      "radius": "rounded",
+      "shadow": "soft",
+      "spacing": "comfortable"
+    }
+  },
+  {
+    "id": "sage-wellness",
+    "label": "Sage Wellness",
+    "description": "Serene natural linen, travertine stone, and deep forest sage for holistic wellness and lifestyle.",
+    "state": {
+      "name": "Sage Wellness Theme",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#26362e",
+          "secondary": "#52796f",
+          "accent": "#3b5e4f",
+          "background": "#f7f5f0",
+          "surface": "#eeeae1",
+          "text": "#1b2721",
+          "border": "#dcd6c8"
+        },
+        "dark": {
+          "primary": "#e8f0ec",
+          "secondary": "#84a98c",
+          "accent": "#52796f",
+          "background": "#111916",
+          "surface": "#1a2622",
+          "text": "#f0f5f2",
+          "border": "#263832"
+        }
+      },
+      "typography": {
+        "headingFont": "playfair-display",
+        "bodyFont": "plus-jakarta-sans",
+        "scale": 1.18,
+        "baseSize": 16
+      },
+      "layout": "landing",
+      "radius": "pill",
+      "shadow": "soft",
+      "spacing": "comfortable"
+    }
+  },
+  {
+    "id": "obsidian-beam",
+    "label": "Obsidian Beam",
+    "description": "Deep graphite dark mode with volumetric spotlight indigo glow and crisp glass surfaces.",
+    "state": {
+      "name": "Obsidian Beam Studio",
+      "activeMode": "dark",
+      "colors": {
+        "light": {
+          "primary": "#0f172a",
+          "secondary": "#64748b",
+          "accent": "#4f46e5",
+          "background": "#f8fafc",
+          "surface": "#f1f5f9",
+          "text": "#090d16",
+          "border": "#cbd5e1"
+        },
+        "dark": {
+          "primary": "#ffffff",
+          "secondary": "#94a3b8",
+          "accent": "#6366f1",
+          "background": "#08090c",
+          "surface": "#12131a",
+          "text": "#f8fafc",
+          "border": "#1f222e"
+        }
+      },
+      "typography": {
+        "headingFont": "plus-jakarta-sans",
+        "bodyFont": "inter",
+        "scale": 1.15,
+        "baseSize": 15
+      },
+      "layout": "landing",
+      "radius": "pill",
+      "shadow": "glow",
+      "spacing": "comfortable"
+    }
+  },
+  {
+    "id": "fintech-teal",
+    "label": "Fintech Teal",
+    "description": "Deep maritime cyan-teal gradient and crisp icy white designed for modern crypto banking and treasury.",
+    "state": {
+      "name": "Fintech Teal Operations",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#0a364a",
+          "secondary": "#475569",
+          "accent": "#0284c7",
+          "background": "#f0fdfa",
+          "surface": "#e0f2fe",
+          "text": "#08202c",
+          "border": "#bae6fd"
+        },
+        "dark": {
+          "primary": "#38bdf8",
+          "secondary": "#94a3b8",
+          "accent": "#06b6d4",
+          "background": "#061e29",
+          "surface": "#0a364a",
+          "text": "#f0fdfa",
+          "border": "#0e5a77"
+        }
+      },
+      "typography": {
+        "headingFont": "inter",
+        "bodyFont": "inter",
+        "scale": 1.125,
+        "baseSize": 16
+      },
+      "layout": "landing",
+      "radius": "rounded",
+      "shadow": "elevated",
+      "spacing": "comfortable"
+    }
+  },
+  {
+    "id": "tokyo-night",
+    "label": "Tokyo Night",
+    "description": "Iconic storm blue and neon indigo developer palette with terminal syntax contrast.",
+    "state": {
+      "name": "Tokyo Night Spec",
+      "activeMode": "dark",
+      "colors": {
+        "light": {
+          "primary": "#1f2335",
+          "secondary": "#6172b0",
+          "accent": "#3d59a1",
+          "background": "#f0f4fc",
+          "surface": "#e2eaf8",
+          "text": "#1a1b26",
+          "border": "#c0caf5"
+        },
+        "dark": {
+          "primary": "#7aa2f7",
+          "secondary": "#a9b1d6",
+          "accent": "#bb9af7",
+          "background": "#1a1b26",
+          "surface": "#24283b",
+          "text": "#c0caf5",
+          "border": "#292e42"
+        }
+      },
+      "typography": {
+        "headingFont": "space-grotesk",
+        "bodyFont": "jetbrains-mono",
+        "scale": 1.15,
+        "baseSize": 15
+      },
+      "layout": "dashboard-split",
+      "radius": "sharp",
+      "shadow": "glow",
+      "spacing": "compact"
+    }
+  },
+  {
+    "id": "terracotta-clay",
+    "label": "Terracotta Clay",
+    "description": "Warm Mediterranean baked earth and Tuscan clay for bespoke craftsmanship and publications.",
+    "state": {
+      "name": "Terracotta Clay Atelier",
+      "activeMode": "light",
+      "colors": {
+        "light": {
+          "primary": "#9a3412",
+          "secondary": "#78716c",
+          "accent": "#c2410c",
+          "background": "#faf6f0",
+          "surface": "#f2ebe1",
+          "text": "#1c1917",
+          "border": "#e4d9cc"
+        },
+        "dark": {
+          "primary": "#fed7aa",
+          "secondary": "#a8a29e",
+          "accent": "#ea580c",
+          "background": "#18120c",
+          "surface": "#231c15",
+          "text": "#fafaf9",
+          "border": "#362c24"
+        }
+      },
+      "typography": {
+        "headingFont": "playfair-display",
+        "bodyFont": "plus-jakarta-sans",
+        "scale": 1.2,
+        "baseSize": 16
+      },
+      "layout": "landing",
+      "radius": "rounded-lg",
+      "shadow": "soft",
+      "spacing": "comfortable"
+    }
+  },
+  {
+    "id": "monokai-pro",
+    "label": "Monokai Pro",
+    "description": "Famous vibrant developer theme with vivid golden yellow and electric magenta syntax contrast.",
+    "state": {
+      "name": "Monokai Pro Standard",
+      "activeMode": "dark",
+      "colors": {
+        "light": {
+          "primary": "#2d2a2e",
+          "secondary": "#727072",
+          "accent": "#d97706",
+          "background": "#fbfaf9",
+          "surface": "#f1eeea",
+          "text": "#221f22",
+          "border": "#e1deda"
+        },
+        "dark": {
+          "primary": "#ffd866",
+          "secondary": "#939293",
+          "accent": "#ff6188",
+          "background": "#221f22",
+          "surface": "#2d2a2e",
+          "text": "#fcfcfa",
+          "border": "#403e41"
+        }
+      },
+      "typography": {
+        "headingFont": "fira-code",
+        "bodyFont": "inter",
+        "scale": 1.125,
+        "baseSize": 15
+      },
+      "layout": "bento-grid",
+      "radius": "sharp",
+      "shadow": "flat",
+      "spacing": "compact"
+    }
+  },
+  {
+    "id": "aurora-emerald",
+    "label": "Aurora Emerald",
+    "description": "Nordic glacial nights paired with ethereal radiant emerald and violet luminescence.",
+    "state": {
+      "name": "Aurora Emerald Studio",
+      "activeMode": "dark",
+      "colors": {
+        "light": {
+          "primary": "#065f46",
+          "secondary": "#4b5563",
+          "accent": "#059669",
+          "background": "#f0fdf4",
+          "surface": "#dcfce7",
+          "text": "#022c22",
+          "border": "#bbf7d0"
+        },
+        "dark": {
+          "primary": "#34d399",
+          "secondary": "#9ca3af",
+          "accent": "#a855f7",
+          "background": "#061410",
+          "surface": "#0d231d",
+          "text": "#ecfdf5",
+          "border": "#133e33"
+        }
+      },
+      "typography": {
+        "headingFont": "plus-jakarta-sans",
+        "bodyFont": "inter",
+        "scale": 1.15,
+        "baseSize": 16
+      },
+      "layout": "landing",
+      "radius": "rounded",
+      "shadow": "glow",
+      "spacing": "comfortable"
+    }
   }
 ]

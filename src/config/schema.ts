@@ -38,7 +38,15 @@ export const PageLayoutsSchema = z.object({
   errorCode: z.enum(['404', '403', '500']).default('404'),
   errorShowTrace: z.boolean().default(true),
   dashboard: z.enum(['sidebar-grid', 'header-compact', 'analytical', 'feed-focus']).default('sidebar-grid'),
-  landing: z.enum(['hero-split', 'hero-centered', 'feature-grid']).default('hero-split'),
+  landing: z.enum([
+    'hero-split',
+    'hero-centered',
+    'feature-grid',
+    'warm-editorial',
+    'organic-wellness',
+    'cyber-spotlight',
+    'fintech-flow',
+  ]).default('hero-split'),
   pricing: z.enum(['cards-3col', 'table-matrix', 'compact-toggle']).default('cards-3col'),
   kanban: z.enum(['board-columns', 'timeline-list', 'compact-grid']).default('board-columns'),
   chat: z.enum(['split-pane', 'compact-feed', 'minimal-bubble']).default('split-pane'),
@@ -49,6 +57,7 @@ export const PageLayoutsSchema = z.object({
   success: z.enum(['celebration-card', 'receipt-summary', 'minimal-banner']).default('celebration-card'),
   navbar: z.enum(['saas-header', 'minimal-center', 'floating-pill', 'tabbed-nav', 'ecommerce-action']).default('saas-header'),
   sidebar: z.enum(['classic-grouped', 'compact-rail', 'dual-pane', 'floating-card', 'workspace-shell']).default('classic-grouped'),
+  footer: z.enum(['columns-mega', 'minimal-inline', 'centered-newsletter', 'split-brand-legal', 'bento-grid']).default('columns-mega'),
   ecommerceCatalog: z.enum(['faceted-sidebar', 'top-filter-bar', 'split-map-view']).default('faceted-sidebar'),
   productDetail: z.enum(['split-sticky-buy', 'vertical-scroll-story', 'two-column-tabs']).default('split-sticky-buy'),
   checkout: z.enum(['slide-over-cart', 'one-page-accordion', 'split-order-rail']).default('slide-over-cart'),
@@ -103,6 +112,7 @@ export const IconLibrarySchema = z.enum([
   'phosphor',
   'heroicons',
   'remix',
+  'react-icons',
 ]).default('lucide');
 
 export const IconModeSchema = z.enum(['outline', 'solid']).default('outline');
@@ -144,6 +154,7 @@ export const PageTypeDefinitionSchema = z.object({
   description: z.string(),
   category: z.enum(['public', 'commerce', 'core', 'community', 'auth', 'account', 'system']),
   defaultLayout: z.string().default('default'),
+  scope: z.enum(['system', 'feature']).default('feature'),
 });
 
 export const PurposePageRefSchema = z.object({
@@ -189,10 +200,12 @@ export const DesignStateSchema = z.object({
     dark: ColorPaletteSchema,
   }),
   typography: TypographyStateSchema,
+  /** @deprecated Legacy global layout. Use project.pageLayouts or pageLayouts instead. */
   layout: z.string().min(1),
   radius: z.string().min(1),
   shadow: z.string().min(1),
   spacing: z.string().min(1),
+  /** @deprecated Legacy icon style string. Use icons configuration instead. */
   iconStyle: z.enum(['clean-outline', 'bold-stroke', 'minimal-thin', 'duotone', 'solid-badge']).default('clean-outline'),
   icons: IconConfigSchema.optional().default(() => IconConfigSchema.parse({})),
   pageLayouts: PageLayoutsSchema.optional().default(() => PageLayoutsSchema.parse({})),

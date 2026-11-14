@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 import { DiscussionReviewBlock } from '../../../blocks/DiscussionReviewBlock';
 import { AppIcon } from '../../../common/AppIcon';
 
@@ -616,6 +617,8 @@ export const CommunityForumPage: React.FC = () => {
           </div>
         )}
       </main>
+
+      <DynamicFooter />
     </div>
   );
 };

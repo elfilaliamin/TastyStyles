@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicSidebar } from '../../navigation/DynamicSidebar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const ItemDetailPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -179,15 +182,30 @@ export const ItemDetailPage: React.FC = () => {
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-lg)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--ts-space-md)',
-        maxWidth: layout === 'full-document' ? '820px' : '1020px',
-        margin: '0 auto',
       }}
     >
-      {/* Breadcrumb */}
+      <DynamicNavbar />
+
+      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+        <DynamicSidebar className="hidden md:flex shrink-0" />
+
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+          <div
+            style={{
+              flex: 1,
+              padding: 'var(--ts-space-lg)',
+              maxWidth: layout === 'full-document' ? '820px' : '1020px',
+              margin: '0 auto',
+              width: '100%',
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--ts-space-md)',
+            }}
+          >
+            {/* Breadcrumb */}
       <div
         style={{
           display: 'flex',
@@ -337,6 +355,10 @@ export const ItemDetailPage: React.FC = () => {
           </div>
         </div>
       )}
+          </div>
+          <DynamicFooter />
+        </main>
+      </div>
     </div>
   );
 };

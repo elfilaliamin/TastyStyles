@@ -2,7 +2,7 @@ import type { DesignState } from '../config/schema';
 import { compileMarkdown } from './compileMarkdown';
 import { getPurposeDefinition } from '../config/purposes';
 import { PAGE_TYPES_BY_ID } from '../config/pageTypes';
-import { getLayout } from './layoutRegistry';
+import { getLayout, resolveLayout } from './layoutRegistry';
 
 /**
  * Compiles a comprehensive PROJECT-BRIEF.md:
@@ -29,14 +29,29 @@ export function compileProjectBrief(state: DesignState): string {
           enabled: true,
         }));
 
+  // Determine if any enabled page uses a sidebar
+  const SIDEBAR_PAGE_TYPES = new Set([
+    'dashboard',
+    'settings',
+    'billing',
+    'team',
+    'kanban',
+    'chat',
+    'portfolio-dashboard',
+    'detail',
+  ]);
+  const usesSidebar = effectivePages.some((p) => SIDEBAR_PAGE_TYPES.has(p.pageType));
+
   // Build Part A: Project & Site Specification
   const partA = `# ${state.name} — Project Brief & Site Architecture Specification
 
-> **MANDATORY AI AGENT PRIME DIRECTIVE**
-> 1. Build this site using the EXACT sitemap, section architecture, and token system defined below.
-> 2. **DO NOT INVENT SECTIONS**: Every page MUST adhere strictly to its declared layout and ordered sections list.
-> 3. All styles MUST bind to the CSS variables in \`tokens.css\` / Part B below. Never hardcode arbitrary hex colors, font-families, or raw border-radius values.
-> 4. All surface containers must use \`var(--radius-surface, 16px)\` (clamped to 20px max). Never apply extreme pill radius to surface containers.
+> **AI AGENT IMPLEMENTATION DIRECTIVE & DESIGN CONTRACT**
+> 1. **Page Scope & Restyling Contract**: A page listed in this brief is NOT an instruction to create it. If the page already exists in the target project, restyle it (UI/UX only, no logic changes). If a feature page does NOT exist in the target project, DO NOT create it unprompted (e.g. a free SaaS without payments must not get /pricing or /billing). EXCEPTION: System/utility pages (login, sign up, forgot/reset password, email verification, MFA/OTP, error pages 404/403/500, offline, maintenance) may be created if missing, visual only (mark 'not wired' and report). For prescribed pages, DO NOT INVENT SECTIONS outside their declared layout manifests.
+> 2. **Extensibility & User-Requested Views**: You may only synthesize additional views, sub-routes, or specialized screens that the user has explicitly requested, or essential system/utility pages. Do NOT invent new feature pages unprompted. Ensure all new views strictly adhere to the active design theme, typography scales, Target: WCAG AA (4.5:1 body text, 3:1 large text and UI components); AAA where the palette allows (see the contrast report), surface radii, and component styling rules.
+> 3. **UI Redesign Guidance**: When using this brief to redesign an existing web application, map existing features directly onto these clean layouts and token variables—delivering a modern, world-class UI without breaking existing business logic.
+> 4. **Strict Token Binding**: All styles MUST bind to the CSS variables in \`tokens.css\` / Part B below. Never hardcode arbitrary hex colors, ad-hoc font families, or raw border-radius values.
+> 5. **Dual-Radius Isolation**: Interactive elements use \`var(--radius-base)\`, while surface containers (cards, modals, form panels) strictly use \`var(--radius-surface)\` (derived from radius preset, max 20px). Never apply extreme pill radius to surface cards.
+> 6. **Illustrative Content & Sample Copy**: Wireframe copy and sample data are illustrative. Replace them with the project's real content and keep existing product copy.
 
 ---
 
@@ -50,11 +65,12 @@ export function compileProjectBrief(state: DesignState): string {
 - **Target Viewport Baseline**: 375px mobile through 1440px desktop with zero horizontal overflow.
 
 ### 2. Sitemap Sequence (${effectivePages.length} Enabled Pages)
-Below is the ordered user journey sequence. Pages should be routed and linked in this priority order:
+Below is the ordered user journey sequence. Pages that exist in the project should be routed and linked in this priority order:
 ${effectivePages
   .map((p, idx) => {
     const pageDef = PAGE_TYPES_BY_ID.get(p.pageType);
-    return `${idx + 1}. **${pageDef?.label ?? p.pageType}** (\`/${p.pageType}\`) — Layout: \`${p.layoutId}\``;
+    const resolvedLayoutId = resolveLayout(state, p.pageType);
+    return `${idx + 1}. **${pageDef?.label ?? p.pageType}** (\`/${p.pageType}\`) — Layout: \`${resolvedLayoutId}\``;
   })
   .join('\n')}
 
@@ -62,18 +78,27 @@ ${effectivePages
 ${effectivePages
   .map((p, idx) => {
     const pageDef = PAGE_TYPES_BY_ID.get(p.pageType);
-    const layout = getLayout(p.layoutId) ?? getLayout(`${p.pageType}:${p.layoutId}`);
+    const layoutId = resolveLayout(state, p.pageType);
+    const layout = getLayout(layoutId, p.pageType) ?? getLayout(`${p.pageType}:${layoutId}`) ?? getLayout(layoutId);
     const sections = layout?.sections && layout.sections.length > 0
       ? layout.sections
-      : ['header-navbar', `${p.pageType}-main`, 'footer'];
+      : ['navbar', p.pageType, 'footer'];
+    const pageScope = pageDef?.scope ?? (p.pageType === 'auth' || p.pageType === 'error' ? 'system' : 'feature');
+    const scopeDirective =
+      pageScope === 'system'
+        ? 'restyle if exists; may create if missing, visual only'
+        : 'restyle if exists; do not create if missing';
+    const layoutTitle = layout?.label ?? pageDef?.label ?? layoutId;
+    const layoutDescription = layout?.description ?? pageDef?.description ?? 'Standard archetype view.';
 
     return `#### 3.${idx + 1} ${pageDef?.label ?? p.pageType} (\`${p.pageType}\`)
 - **Route / Anchor**: \`/${p.pageType}\`
+- **Scope**: ${scopeDirective}
 - **Archetype Category**: ${pageDef?.category ?? 'core'}
-- **Layout Architecture ID**: \`${p.layoutId}\`
-- **Layout Title**: ${layout?.label ?? p.layoutId}
+- **Layout Architecture ID**: \`${layoutId}\`
+- **Layout Title**: ${layoutTitle}
 - **Layout Blueprint Description**:
-  ${layout?.description ?? pageDef?.description ?? 'Standard archetype view.'}
+  ${layoutDescription}
 - **Ordered Section Breakdown**:
 ${sections.map((s, sIdx) => `  ${sIdx + 1}. \`${s}\``).join('\n')}
 - **Responsive Directives**:
@@ -84,11 +109,29 @@ ${sections.map((s, sIdx) => `  ${sIdx + 1}. \`${s}\``).join('\n')}
 
 ### 4. Global Navigation & Layout Shell Rules
 - **Header Navigation Pattern**: \`${state.pageLayouts?.navbar ?? 'saas-header'}\`
-- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`
+${usesSidebar ? `- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`\n` : ''}- **Footer Layout Pattern**: \`${state.pageLayouts?.footer ?? 'columns-mega'}\`
 - **Dual-Radius Isolation**:
   - Interactive controls (buttons, badges, pills, avatar circles): use \`var(--radius-base)\`.
-  - Surface containers (cards, modals, drawers, form panels): strictly use \`var(--radius-surface, 16px)\` (never exceed 20px).
+  - Surface containers (cards, modals, drawers, form panels): strictly use \`var(--radius-surface)\` (derived from radius preset, max 20px).
 - **Form Overflow Safeguard**: Two-column form grids must use \`gridTemplateColumns: repeat(2, minmax(0, 1fr))\` with \`boxSizing: border-box\` and \`minWidth: 0\` on all inputs.
+
+### 5. Conflict Precedence & Redesign Invariants
+
+#### Conflict Resolution Order
+When instructions, archetype layouts, or existing codebases conflict, resolve in this strict precedence order:
+1. **Existing application routes, features, and domain content** (highest priority)
+2. **Part A sitemap sequence and scope directives**
+3. **Canonical CSS tokens** (\`tokens.css\`)
+4. **Component recipes** (Section 6)
+5. **Wireframe structural zones** (Section 7.3) as structural hints
+6. **General prose descriptions** (lowest priority)
+
+#### Invariant Constraints for AI Agents
+- **Preserve Business Logic**: Never break, delete, or alter application routes, data-fetching logic, state machines, event handlers, props, DOM IDs, or \`data-testid\` attributes.
+- **Presentation Only**: Restyling must strictly alter visual presentation (CSS classes, layout containers, typography, spacing, colors).
+- **Approval Required**: Stop and request user confirmation before modifying any functional logic or omitting established product features.
+- **Incremental Execution**: Refactor page-by-page. Run existing test suites after each page to verify zero functional regressions.
+- **Transparency**: Explicitly report all skipped pages (due to feature scope) and all newly created system/utility pages to the user.
 
 ---
 

@@ -82,7 +82,7 @@ export function generateTailwindConfig(state: DesignState): string {
 
   return `import type { Config } from 'tailwindcss';
 
-// TastyStyles Tailwind Theme Configuration for: ${state.name}
+// Tailwind Theme Configuration for: ${state.name}
 const config: Config = {
   darkMode: ['class', '[data-theme="dark"]'],
   content: ['./src/**/*.{js,ts,jsx,tsx}', './index.html'],
@@ -90,21 +90,37 @@ const config: Config = {
     extend: {
       colors: {
         primary: 'var(--color-primary)',
+        'primary-text': 'var(--color-primary-text)',
         secondary: 'var(--color-secondary)',
+        'secondary-text': 'var(--color-secondary-text)',
         accent: 'var(--color-accent)',
+        'accent-text': 'var(--color-accent-text)',
         background: 'var(--color-background)',
         surface: 'var(--color-surface)',
         text: 'var(--color-text)',
         border: 'var(--color-border)',
         success: 'var(--color-success)',
+        'success-bg': 'var(--color-success-bg)',
+        'success-text': 'var(--color-success-text)',
         warning: 'var(--color-warning)',
+        'warning-bg': 'var(--color-warning-bg)',
+        'warning-text': 'var(--color-warning-text)',
         danger: 'var(--color-danger)',
+        'danger-bg': 'var(--color-danger-bg)',
+        'danger-text': 'var(--color-danger-text)',
         info: 'var(--color-info)',
+        'info-bg': 'var(--color-info-bg)',
+        'info-text': 'var(--color-info-text)',
         'on-primary': 'var(--color-on-primary)',
         'on-secondary': 'var(--color-on-secondary)',
         'on-accent': 'var(--color-on-accent)',
+        'on-success': 'var(--color-on-success)',
+        'on-warning': 'var(--color-on-warning)',
+        'on-danger': 'var(--color-on-danger)',
+        'on-info': 'var(--color-on-info)',
         muted: 'var(--color-muted)',
         ring: 'var(--color-ring)',
+        scrim: 'var(--color-scrim)',
       },
       fontFamily: {
         heading: ['var(--font-heading)', '${tokens.typography.headingCategory}'],
@@ -113,9 +129,25 @@ const config: Config = {
       borderRadius: {
         brand: 'var(--radius-base)',
         surface: 'var(--radius-surface)',
+        pill: 'var(--radius-pill)',
       },
       boxShadow: {
+        sm: 'var(--shadow-sm)',
         brand: 'var(--shadow-base)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+        hover: 'var(--shadow-hover)',
+      },
+      zIndex: {
+        dropdown: 'var(--z-dropdown)',
+        sticky: 'var(--z-sticky)',
+        modal: 'var(--z-modal)',
+        toast: 'var(--z-toast)',
+      },
+      transitionDuration: {
+        fast: 'var(--duration-fast)',
+        base: 'var(--duration-base)',
+        slow: 'var(--duration-slow)',
       },
       spacing: {
         'ts-xs': 'var(--spacing-xs)',
@@ -138,7 +170,7 @@ export default config;
  */
 export function generateTypeScriptTokens(state: DesignState): string {
   return `/**
- * TastyStyles Design System Tokens: ${state.name}
+ * Design System Tokens: ${state.name}
  * Typed constant contract for React / React Native / Node
  */
 

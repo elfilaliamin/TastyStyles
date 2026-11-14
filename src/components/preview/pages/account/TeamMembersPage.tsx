@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 
 interface TeamMember {
   id: string;
@@ -77,14 +79,29 @@ export const TeamMembersPage: React.FC = () => {
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-lg)',
-        maxWidth: '860px',
-        margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--ts-space-md)',
       }}
     >
+      <DynamicNavbar />
+
+      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+        <DynamicSidebar className="hidden md:flex shrink-0" />
+
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+          <div
+            style={{
+              flex: 1,
+              padding: 'var(--ts-space-lg)',
+              maxWidth: '860px',
+              margin: '0 auto',
+              width: '100%',
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--ts-space-md)',
+            }}
+          >
       {/* Header */}
       <div>
         <h1
@@ -322,6 +339,9 @@ export const TeamMembersPage: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+          </div>
+        </main>
       </div>
     </div>
   );

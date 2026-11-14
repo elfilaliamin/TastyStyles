@@ -5,7 +5,7 @@ export const manifest: LayoutManifest = {
   pageType: "dashboard",
   label: "Analytical Matrix",
   purposes: ['saas', 'ecommerce', 'portfolio', 'marketplace'],
-  sections: ['navbar', "dashboard", 'footer'],
+  sections: ['navbar', 'sidebar', 'dashboard'],
   description: "Dense multi-metric KPI matrix and dual comparative analytics graphs.",
   tags: ["dashboard", "analytical"],
 };

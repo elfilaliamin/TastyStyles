@@ -5,6 +5,8 @@ import { designReducer, defaultInitialState, type DesignAction } from './designR
 import { compileProjectBrief } from '../lib/compileProjectBrief';
 import { updateDynamicFonts, loadAllPreviewFonts } from '../lib/fonts';
 import { getFontEntry, registries } from '../lib/registry';
+import { getPurposeDefinition } from '../config/purposes';
+import { PAGE_TYPE_TO_PAGE_LAYOUTS_KEY } from '../config/pageTypes';
 import type { PreviewComponentType } from '../types';
 
 interface DesignContextType {
@@ -101,17 +103,49 @@ function migrateDesignState(raw: any): DesignState {
     ...(typeof raw.pageLayouts === 'object' && raw.pageLayouts !== null ? raw.pageLayouts : {}),
   };
 
+  const rawPages = Array.isArray(raw.project?.pages)
+    ? raw.project.pages
+        .filter((p: any) => p && typeof p.pageType === 'string')
+        .map((p: any) => ({
+          pageType: p.pageType,
+          layoutId: typeof p.layoutId === 'string' ? p.layoutId : 'default',
+          enabled: typeof p.enabled === 'boolean' ? p.enabled : true,
+        }))
+    : (defaultInitialState.project?.pages ?? []);
+
+  // Reconcile diverged pageLayouts and project.pages:
+  // User selections in pageLayouts win and populate project.pages
+  const reconciledPages = rawPages.map((p: any) => {
+    const layoutKey = PAGE_TYPE_TO_PAGE_LAYOUTS_KEY[p.pageType] ?? p.pageType;
+    const customLayout = (pageLayouts as any)[layoutKey] ?? (pageLayouts as any)[p.pageType];
+    if (typeof customLayout === 'string' && customLayout.trim().length > 0 && customLayout !== 'default') {
+      return { ...p, layoutId: customLayout };
+    }
+    return p;
+  });
+
+  const rawPurpose = typeof raw.project?.purpose === 'string' ? raw.project.purpose : null;
+
+  // If pages were empty but a purpose was selected, initialize from purpose definition
+  let finalPages = reconciledPages;
+  if (finalPages.length === 0 && rawPurpose) {
+    const pDef = getPurposeDefinition(rawPurpose);
+    if (pDef) {
+      finalPages = pDef.pages.map((p) => {
+        const layoutKey = PAGE_TYPE_TO_PAGE_LAYOUTS_KEY[p.pageType] ?? p.pageType;
+        const customLayout = (pageLayouts as any)[layoutKey] ?? (pageLayouts as any)[p.pageType];
+        return {
+          pageType: p.pageType,
+          layoutId: typeof customLayout === 'string' && customLayout !== 'default' ? customLayout : (p.defaultLayout ?? 'default'),
+          enabled: true,
+        };
+      });
+    }
+  }
+
   const project = {
-    purpose: typeof raw.project?.purpose === 'string' ? raw.project.purpose : null,
-    pages: Array.isArray(raw.project?.pages)
-      ? raw.project.pages
-          .filter((p: any) => p && typeof p.pageType === 'string')
-          .map((p: any) => ({
-            pageType: p.pageType,
-            layoutId: typeof p.layoutId === 'string' ? p.layoutId : 'default',
-            enabled: typeof p.enabled === 'boolean' ? p.enabled : true,
-          }))
-      : (defaultInitialState.project?.pages ?? []),
+    purpose: rawPurpose,
+    pages: finalPages,
   };
 
   return {

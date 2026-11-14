@@ -2,6 +2,7 @@ import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 import { MediaHeroBlock } from '../../../blocks/MediaHeroBlock';
 import { DiscussionReviewBlock } from '../../../blocks/DiscussionReviewBlock';
 import { AppIcon } from '../../../common/AppIcon';
@@ -268,6 +269,8 @@ export const EditorialPage: React.FC = () => {
           totalCount={48}
         />
       </main>
+
+      <DynamicFooter />
     </div>
   );
 };

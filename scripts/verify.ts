@@ -15,6 +15,7 @@ import spacingRaw from '../src/config/spacing.json';
 import presetsRaw from '../src/config/presets.json';
 import { compileMarkdown } from '../src/lib/compileMarkdown';
 import { compileProjectBrief } from '../src/lib/compileProjectBrief';
+import { resolveLayout } from '../src/lib/layoutRegistry';
 import { calculateContrastRatio, calculateAPCA, checkColorHarmony } from '../src/lib/contrast';
 import { defaultInitialState, designReducer } from '../src/context/designReducer';
 import { validatePageTypes, PAGE_TYPES } from '../src/config/pageTypes';
@@ -26,7 +27,8 @@ import {
   generateDtcgTokens,
   createZipBlob,
 } from '../src/lib/exportUtils';
-import { generateUnifiedCssTokens } from '../src/lib/tokenModel';
+import { generateUnifiedCssTokens, resolveTokens } from '../src/lib/tokenModel';
+import { COMPONENT_RECIPES } from '../src/config/recipes';
 
 console.log('--- Verifying TastyStyles Registries & Specs ---');
 
@@ -383,6 +385,307 @@ for (const page of ecommerceState.project.pages.filter((p) => p.enabled)) {
   }
 }
 console.log('✅ PROJECT-BRIEF.md verified: Contains Part A sitemap, per-page layout specs, and Part B tokens.');
+
+console.log('--- Testing Layout Parity: Part A Layout ID == Part B Layout ID ---');
+// 1. Test for every purpose
+for (const purpose of PURPOSES) {
+  const pState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: purpose.id });
+  const brief = compileProjectBrief(pState);
+  for (const page of pState.project.pages.filter((p) => p.enabled)) {
+    const canonicalLayout = resolveLayout(pState, page.pageType);
+    if (!brief.includes(page.pageType)) {
+      console.error(`❌ Layout parity failed: Purpose ${purpose.id} missing page ${page.pageType} in brief`);
+      process.exit(1);
+    }
+    if (page.layoutId !== canonicalLayout) {
+      console.error(`❌ Layout parity failed: Purpose ${purpose.id} page ${page.pageType} mismatch: project ${page.layoutId} vs resolved ${canonicalLayout}`);
+      process.exit(1);
+    }
+  }
+}
+
+// 2. Test for every preset with SaaS purpose
+for (const preset of presets) {
+  const saasState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'saas' });
+  const presetState = designReducer(saasState, { type: 'LOAD_PRESET', id: preset.id });
+  for (const page of presetState.project.pages.filter((p) => p.enabled)) {
+    const canonicalLayout = resolveLayout(presetState, page.pageType);
+    if (page.layoutId !== canonicalLayout) {
+      console.error(`❌ Layout parity failed: Preset ${preset.id} page ${page.pageType} mismatch: project ${page.layoutId} vs resolved ${canonicalLayout}`);
+      process.exit(1);
+    }
+  }
+}
+console.log('✅ Layout parity verified: Part A layout ID strictly equals Part B layout ID for all purposes and presets.');
+
+console.log('--- Testing Batch 2: Export Scoping & Foreign Wireframe Isolation ---');
+const saasState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'saas' });
+const saasBrief = compileProjectBrief(saasState);
+const foreignToSaas = [
+  'cinema-theater',
+  'hero-impact-thermometer',
+  'three-column-reddit',
+  'split-calendar-slots',
+  'split-map-list',
+  'faceted-sidebar',
+];
+for (const foreignId of foreignToSaas) {
+  if (saasBrief.includes(foreignId)) {
+    console.error(`❌ Batch 2 check failed: SaaS export leaked foreign archetype '${foreignId}'`);
+    process.exit(1);
+  }
+}
+
+const ecomState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'ecommerce' });
+const ecomBrief = compileProjectBrief(ecomState);
+const foreignToEcom = [
+  'sidebar-grid',
+  'cinema-theater',
+  'hero-impact-thermometer',
+  'three-column-reddit',
+];
+for (const foreignId of foreignToEcom) {
+  if (ecomBrief.includes(foreignId)) {
+    console.error(`❌ Batch 2 check failed: E-Commerce export leaked foreign archetype '${foreignId}'`);
+    process.exit(1);
+  }
+}
+if (ecomBrief.includes('Sidebar Application Rail:')) {
+  console.error("❌ Batch 2 check failed: E-Commerce export unexpectedly emitted 'Sidebar Application Rail:'");
+  process.exit(1);
+}
+console.log('✅ Batch 2 verified: Foreign wireframes isolated and global rails scoped.');
+
+console.log('--- Testing Batch 3: Page Scope Rules & Restyle Directives ---');
+if (!saasBrief.includes('- **Scope**: restyle if exists; do not create if missing')) {
+  console.error("❌ Batch 3 check failed: SaaS export missing feature page scope directive");
+  process.exit(1);
+}
+if (!saasBrief.includes('- **Scope**: restyle if exists; may create if missing, visual only')) {
+  console.error("❌ Batch 3 check failed: SaaS export missing system page scope directive");
+  process.exit(1);
+}
+if (!saasBrief.includes('Page Scope & Restyling Contract')) {
+  console.error("❌ Batch 3 check failed: SaaS export missing 'Page Scope & Restyling Contract' directive");
+  process.exit(1);
+}
+const saasMarkdown = compileMarkdown(saasState);
+if (!saasMarkdown.includes('Every page declared in the sitemap that exists in the project is restyled; missing feature pages were NOT created; missing system pages were added as visual shells and reported.')) {
+  console.error("❌ Batch 3 check failed: compileMarkdown missing updated Section 9.2 checklist text");
+  process.exit(1);
+}
+console.log('✅ Batch 3 verified: Page scope rules, restyle directives, and checklist sign-off verified.');
+
+console.log('--- Testing Batch 4: Shell, Manifest & Title Consistency ---');
+for (const p of PURPOSES) {
+  const st = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: p.id });
+  const brief = compileProjectBrief(st);
+  if (brief.includes('header-navbar')) {
+    console.error(`❌ Batch 4 check failed: Purpose ${p.id} leaked fallback section 'header-navbar'`);
+    process.exit(1);
+  }
+  if (brief.match(/\b\w+-main\b/)) {
+    console.error(`❌ Batch 4 check failed: Purpose ${p.id} leaked fallback section *-main`);
+    process.exit(1);
+  }
+  // Verify Part A titles never equal raw layout IDs
+  for (const page of st.project.pages.filter((pg) => pg.enabled)) {
+    const rawId = resolveLayout(st, page.pageType);
+    if (brief.includes(`- **Layout Title**: ${rawId}`)) {
+      console.error(`❌ Batch 4 check failed: Purpose ${p.id} page ${page.pageType} has raw layout ID as title: '${rawId}'`);
+      process.exit(1);
+    }
+  }
+}
+
+// In default SaaS brief: dashboard must have sidebar section and no footer section
+const saasDashboardSectionsMatch = saasBrief.match(/#### 3\.\d+ Application Dashboard & Analytics[^\n]*\n([\s\S]*?)(?=#### 3\.\d+|\n### 4)/);
+if (!saasDashboardSectionsMatch) {
+  console.error("❌ Batch 4 check failed: Could not find Dashboard section breakdown in SaaS brief");
+  process.exit(1);
+}
+const saasDashboardBlock = saasDashboardSectionsMatch[1];
+if (!saasDashboardBlock.includes('`sidebar`')) {
+  console.error("❌ Batch 4 check failed: Dashboard section breakdown missing `sidebar` section");
+  process.exit(1);
+}
+if (saasDashboardBlock.includes('`footer`')) {
+  console.error("❌ Batch 4 check failed: Dashboard section breakdown unexpectedly contained `footer` section");
+  process.exit(1);
+}
+if (!saasBrief.includes('- **Footer Layout Pattern**:')) {
+  console.error("❌ Batch 4 check failed: SaaS brief missing '- **Footer Layout Pattern**:' in Section 4");
+  process.exit(1);
+}
+console.log('✅ Batch 4 verified: Manifest sections updated, no fallback sections/titles, dashboard has sidebar & no footer.');
+
+console.log('--- Testing Batch 5: Tokens, Recipes & Font Weights ---');
+const saasCss = generateUnifiedCssTokens(saasState);
+const requiredCssTokens = [
+  '--radius-pill: 9999px',
+  '--radius-surface:',
+  '--shadow-sm:',
+  '--shadow-hover:',
+  '--blur-glass: 12px',
+  '--color-scrim:',
+  '--z-dropdown: 1000',
+  '--z-sticky: 1100',
+  '--z-modal: 1200',
+  '--z-toast: 1300',
+  '--duration-fast: 150ms',
+  '--duration-base: 200ms',
+  '--duration-slow: 300ms',
+  '--ease-standard:',
+  '--font-weight-regular: 400',
+  '--font-weight-medium: 500',
+  '--font-weight-semibold: 600',
+  '--font-weight-bold: 700',
+  '--color-primary-text:',
+  '--color-secondary-text:',
+  '--color-accent-text:',
+  '--color-success-text:',
+  '--color-warning-text:',
+  '--color-danger-text:',
+  '--color-info-text:',
+  '--color-success-bg:',
+  '--color-warning-bg:',
+  '--color-danger-bg:',
+  '--color-info-bg:',
+];
+for (const tok of requiredCssTokens) {
+  if (!saasCss.includes(tok)) {
+    console.error(`❌ Batch 5 check failed: tokens.css missing '${tok}'`);
+    process.exit(1);
+  }
+}
+
+// Verify no "strictly 16px" or "16px fallback" in compiled brief or spec
+const freshSaasBrief = compileProjectBrief(saasState);
+if (freshSaasBrief.includes('16px fallback') || freshSaasBrief.includes('strictly 16px')) {
+  console.error("❌ Batch 5 check failed: Export brief leaked '16px fallback' or 'strictly 16px'");
+  process.exit(1);
+}
+
+// Verify font weights embed in default SaaS state
+const saasTokens = resolveTokens(saasState);
+if (!saasTokens.typography.googleFontsUrl.includes('wght@400;500;600;700')) {
+  console.error(`❌ Batch 5 check failed: Google Fonts URL missing required weights 400;500;600;700: ${saasTokens.typography.googleFontsUrl}`);
+  process.exit(1);
+}
+
+// Verify recipes
+const cardRecipe = COMPONENT_RECIPES.find((r) => r.id === 'card-surface');
+if (!cardRecipe || cardRecipe.radius !== 'var(--radius-surface)' || !cardRecipe.states.hover?.includes('var(--shadow-hover)')) {
+  console.error("❌ Batch 5 check failed: card-surface recipe missing --radius-surface or --shadow-hover");
+  process.exit(1);
+}
+const badgeRecipe = COMPONENT_RECIPES.find((r) => r.id === 'badge-pill');
+if (!badgeRecipe || badgeRecipe.radius !== 'var(--radius-pill)') {
+  console.error("❌ Batch 5 check failed: badge-pill recipe missing --radius-pill");
+  process.exit(1);
+}
+console.log('✅ Batch 5 verified: Tokens, text-safe pairs, recipes, and font weights verified.');
+
+console.log('--- Testing Batch 6: Contrast Honesty & Report Generation ---');
+// 1. Verify no unconditional "WCAG AAA contrast" or "AAA contrast" claims
+for (const p of PURPOSES) {
+  const pSt = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: p.id });
+  const pBrief = compileProjectBrief(pSt);
+  const pSpec = compileMarkdown(pSt);
+  if (pBrief.includes('WCAG AAA contrast') || pSpec.includes('WCAG AAA contrast') || pBrief.includes('AAA contrast') || pSpec.includes('AAA contrast')) {
+    console.error(`❌ Batch 6 check failed: Purpose ${p.id} leaked unconditional 'AAA contrast' claim`);
+    process.exit(1);
+  }
+}
+
+// 2. Verify contrast report with real numbers across presets
+for (const preset of presets) {
+  const prState = designReducer(defaultInitialState, { type: 'LOAD_PRESET', id: preset.id });
+  const prSpec = compileMarkdown(prState);
+  if (!prSpec.includes('### 2.1b Contrast Report')) {
+    console.error(`❌ Batch 6 check failed: Preset ${preset.id} missing '### 2.1b Contrast Report'`);
+    process.exit(1);
+  }
+  if (!prSpec.includes('Target: WCAG AA (4.5:1 body text, 3:1 large text and UI components)')) {
+    console.error(`❌ Batch 6 check failed: Preset ${preset.id} missing realistic WCAG AA target statement`);
+    process.exit(1);
+  }
+  // Check that real numbers (e.g. ratio pattern :1) are present
+  const ratioMatches = prSpec.match(/\*\*\d+\.\d{2}:1\*\*/g);
+  if (!ratioMatches || ratioMatches.length < 20) {
+    console.error(`❌ Batch 6 check failed: Preset ${preset.id} contrast report missing calculated numeric ratios`);
+    process.exit(1);
+  }
+}
+console.log('✅ Batch 6 verified: No unconditional AAA claims, contrast report generated with computed ratios for all presets.');
+
+console.log('--- Testing Batch 7: Content Hygiene, Single H1 & Redesign Invariants ---');
+// 1. Single H1 check in PROJECT-BRIEF.md
+const defaultBrief = compileProjectBrief(defaultInitialState);
+const h1Matches = defaultBrief.split('\n').filter((l) => /^#\s/.test(l));
+if (h1Matches.length !== 1 || !h1Matches[0].includes('Project Brief & Site Architecture Specification')) {
+  console.error(`❌ Batch 7 check failed: PROJECT-BRIEF.md has ${h1Matches.length} H1 headers, expected exactly 1.`);
+  process.exit(1);
+}
+
+// 2. Content hygiene check
+const forbiddenPatterns = [
+  'alex@tastystyles.io',
+  'Alex Rivers',
+  'Rp 1.457.078.000',
+  '#TS-',
+  'DTCG v2',
+  '[TS] Brand',
+  '[TS] App',
+  'Tokens [3]',
+  'No Design Tokens Yet',
+  'Create Token Palette',
+];
+
+for (const p of PURPOSES) {
+  const pSt = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: p.id });
+  const pBrief = compileProjectBrief(pSt);
+  const pSpec = compileMarkdown(pSt);
+  for (const forbidden of forbiddenPatterns) {
+    if (pBrief.includes(forbidden) || pSpec.includes(forbidden)) {
+      console.error(`❌ Batch 7 check failed: Purpose ${p.id} leaked '${forbidden}'`);
+      process.exit(1);
+    }
+  }
+}
+
+// 3. Redesign Invariants & Conflict Precedence in Part A
+if (!defaultBrief.includes('### 5. Conflict Precedence & Redesign Invariants')) {
+  console.error("❌ Batch 7 check failed: Part A missing '### 5. Conflict Precedence & Redesign Invariants'");
+  process.exit(1);
+}
+if (!defaultBrief.includes('Existing application routes, features, and domain content')) {
+  console.error("❌ Batch 7 check failed: Part A missing 'Existing application routes, features, and domain content'");
+  process.exit(1);
+}
+
+// 4. Section 8 Accessibility, Dark Mode & Section 9.2 Checklist
+const defaultSpec = compileMarkdown(defaultInitialState);
+if (!defaultSpec.includes('Theme & Dark Mode') || !defaultSpec.includes('Accessibility & Motion')) {
+  console.error('❌ Batch 7 check failed: Section 8 missing Theme & Dark Mode or Accessibility & Motion rules');
+  process.exit(1);
+}
+
+const requiredChecklistItems = [
+  'Token Verification',
+  'Responsive Integrity',
+  'Theme & Contrast',
+  'Accessibility & Motion',
+  'Layout & Scope Adherence',
+  'Zero Logic Regression',
+];
+for (const item of requiredChecklistItems) {
+  if (!defaultSpec.includes(item)) {
+    console.error(`❌ Batch 7 check failed: Section 9.2 checklist missing '${item}'`);
+    process.exit(1);
+  }
+}
+console.log('✅ Batch 7 verified: Content hygiene confirmed, single H1 enforced, redesign invariants and checkable acceptance checklist validated.');
 
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');

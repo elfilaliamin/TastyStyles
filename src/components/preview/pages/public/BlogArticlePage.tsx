@@ -1,27 +1,43 @@
 import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const BlogArticlePage: React.FC = () => {
   const { state } = useDesign();
 
   return (
-    <article
+    <div
       style={{
         backgroundColor: 'var(--ts-color-background)',
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-lg)',
-        maxWidth: '740px',
-        margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--ts-space-md)',
-        lineHeight: 1.6,
       }}
     >
+      <DynamicNavbar />
+
+      <article
+        style={{
+          backgroundColor: 'var(--ts-color-background)',
+          color: 'var(--ts-color-text)',
+          fontFamily: 'var(--ts-font-body)',
+          width: '100%',
+          flex: 1,
+          padding: 'var(--ts-space-lg)',
+          maxWidth: '740px',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--ts-space-md)',
+          lineHeight: 1.6,
+          boxSizing: 'border-box',
+        }}
+      >
       {/* Category & Meta */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
         <span
@@ -202,6 +218,9 @@ export const BlogArticlePage: React.FC = () => {
         </div>
       </div>
     </article>
-  );
+
+    <DynamicFooter />
+  </div>
+);
 };
 

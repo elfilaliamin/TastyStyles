@@ -27,7 +27,7 @@ export const ControlsPanel: React.FC = () => {
           value={state.name}
           onChange={(e) => dispatch({ type: 'SET_NAME', name: e.target.value })}
           className="w-full px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-slate-100 focus-ring transition-colors"
-          placeholder="e.g. TastyStyles Spec"
+          placeholder="e.g. My Project"
         />
       </div>
 

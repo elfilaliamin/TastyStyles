@@ -3,6 +3,7 @@ import { useDesign } from '../../context/DesignContext';
 import { registries } from '../../lib/registry';
 import type { PageLayouts } from '../../config/schema';
 import { getLayoutsForPage } from '../../config/layoutCatalog';
+import { resolveLayout } from '../../lib/layoutRegistry';
 import {
   PREVIEW_REGISTRY,
   type PreviewDefinition,
@@ -29,6 +30,7 @@ import {
   Layers,
   PanelTop,
   PanelLeft,
+  PanelBottom,
 } from 'lucide-react';
 
 /* ==========================================================================
@@ -108,6 +110,95 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
           <div className={`w-1/2 h-full rounded-[2px] ${fill} border ${border} p-1 flex flex-col justify-center gap-1`}>
             <div className={`w-full h-1.5 rounded-[2px] ${fill}`} />
             <div className={`w-3/4 h-1.5 rounded-[2px] ${fill}`} />
+          </div>
+        </div>
+      );
+
+    // 3c. Warm Editorial AI Landing (Architectural + Code Split)
+    case 'warm-editorial':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex gap-1.5 bg-[#fdfbf7] dark:bg-[#141210] transition-colors overflow-hidden relative`}>
+          <div className="w-1/2 flex flex-col justify-center gap-1">
+            <div className="w-1/2 h-1 rounded-full bg-amber-500" />
+            <div className={`w-4/5 h-2 rounded-[2px] ${accent}`} />
+            <div className={`w-full h-1 rounded-[2px] ${fill}`} />
+            <div className="w-1/3 h-1.5 rounded-[2px] bg-amber-600 dark:bg-amber-500 mt-0.5" />
+          </div>
+          <div className="w-1/2 h-full rounded-[3px] bg-[#1c1917] border border-amber-900/40 p-1 flex flex-col justify-between">
+            <div className="flex gap-0.5">
+              <div className="w-1 h-1 rounded-full bg-red-400" />
+              <div className="w-1 h-1 rounded-full bg-amber-400" />
+              <div className="w-1 h-1 rounded-full bg-green-400" />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <div className="w-3/4 h-1 rounded-[1px] bg-amber-400/80" />
+              <div className="w-1/2 h-1 rounded-[1px] bg-slate-400/60" />
+            </div>
+          </div>
+        </div>
+      );
+
+    // 3d. Organic Wellness Landing (Calm Travertine & Sage)
+    case 'organic-wellness':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex flex-col justify-between bg-[#f7f5f0] dark:bg-[#121a16] transition-colors relative overflow-hidden`}>
+          <div className="w-full h-5 rounded-[4px] bg-[#4a5d4e]/15 dark:bg-[#4a5d4e]/30 flex items-center justify-between px-1.5">
+            <div className="w-1/3 h-1.5 rounded-full bg-[#3b5e4f] dark:bg-[#84a98c]" />
+            <div className="w-1/4 h-2 rounded-full bg-[#3b5e4f] dark:bg-[#84a98c]" />
+          </div>
+          <div className="flex gap-1">
+            <div className="flex-1 h-3 rounded-[3px] bg-[#4a5d4e]/20 flex flex-col justify-center px-1">
+              <div className="w-2/3 h-0.5 rounded-full bg-[#3b5e4f]" />
+            </div>
+            <div className="flex-1 h-3 rounded-[3px] bg-[#4a5d4e]/20 flex flex-col justify-center px-1">
+              <div className="w-2/3 h-0.5 rounded-full bg-[#3b5e4f]" />
+            </div>
+            <div className="flex-1 h-3 rounded-[3px] bg-[#4a5d4e]/20 flex flex-col justify-center px-1">
+              <div className="w-2/3 h-0.5 rounded-full bg-[#3b5e4f]" />
+            </div>
+          </div>
+        </div>
+      );
+
+    // 3e. Cyber Spotlight Studio Landing (Dark Volumetric Beam)
+    case 'cyber-spotlight':
+      return (
+        <div className="w-full h-14 rounded-lg border border-slate-800 p-1.5 flex flex-col items-center justify-between bg-[#08090c] relative overflow-hidden">
+          {/* Volumetric Spotlight Ray */}
+          <div className="absolute top-0 right-0 w-16 h-14 bg-gradient-to-bl from-indigo-500/25 via-sky-500/10 to-transparent pointer-events-none" />
+          <div className="w-1/2 h-1.5 rounded-full bg-slate-200 mt-0.5" />
+          <div className="w-3/4 h-5 rounded-[3px] bg-[#12131a] border border-indigo-500/40 shadow-[0_0_8px_rgba(99,102,241,0.25)] flex flex-col items-center justify-center gap-0.5 p-1 z-10">
+            <div className="w-2/3 h-1 rounded-full bg-indigo-400" />
+            <div className="w-1/2 h-0.5 rounded-full bg-slate-400" />
+          </div>
+          <div className="flex gap-1 w-full justify-center">
+            <div className="w-3 h-1 rounded-full bg-indigo-500/40" />
+            <div className="w-3 h-1 rounded-full bg-indigo-500/40" />
+            <div className="w-3 h-1 rounded-full bg-indigo-500/40" />
+          </div>
+        </div>
+      );
+
+    // 3f. Fintech Flow & Crypto Operations Landing
+    case 'fintech-flow':
+      return (
+        <div className="w-full h-14 rounded-lg border border-cyan-800/40 flex flex-col bg-slate-900 overflow-hidden relative">
+          {/* Teal Gradient Header with Phone Silhouette */}
+          <div className="w-full h-8 bg-gradient-to-r from-teal-900 via-cyan-900 to-slate-900 p-1 flex items-center justify-between">
+            <div className="w-1/3 flex flex-col gap-0.5">
+              <div className="w-full h-1 rounded-[1px] bg-cyan-300" />
+              <div className="w-2/3 h-0.5 rounded-[1px] bg-cyan-100/60" />
+            </div>
+            {/* Phone Silhouette */}
+            <div className="w-7 h-9 rounded-[3px] bg-slate-950 border border-cyan-400/60 shadow-sm flex flex-col items-center justify-center p-0.5 -mb-2 z-10">
+              <div className="w-4 h-1 rounded-full bg-cyan-400" />
+              <div className="w-3 h-0.5 rounded-full bg-emerald-400 mt-0.5" />
+            </div>
+          </div>
+          <div className="flex-1 bg-white dark:bg-slate-950 p-1 flex items-center justify-around gap-1">
+            <div className="w-3 h-2 rounded-[2px] bg-cyan-500/20 border border-cyan-500/40" />
+            <div className="w-3 h-2 rounded-[2px] bg-cyan-500/20 border border-cyan-500/40" />
+            <div className="w-3 h-2 rounded-[2px] bg-cyan-500/20 border border-cyan-500/40" />
           </div>
         </div>
       );
@@ -426,6 +517,79 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
         </div>
       );
 
+    // 8d. Footer Variations
+    case 'footer-mega':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col justify-between bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className="flex-1 rounded-[2px] bg-slate-200/40 dark:bg-slate-800/30 p-1 flex items-center justify-center">
+            <div className={`w-3/4 h-2 rounded-[1px] ${fill}`} />
+          </div>
+          <div className={`w-full h-5 rounded-b-[2px] border-t ${border} p-1 grid grid-cols-4 gap-0.5 bg-white dark:bg-slate-900`}>
+            <div className={`col-span-1 h-3 rounded-[1px] ${accent}`} />
+            <div className={`col-span-1 h-3 rounded-[1px] ${fill}`} />
+            <div className={`col-span-1 h-3 rounded-[1px] ${fill}`} />
+            <div className={`col-span-1 h-3 rounded-[1px] ${fill}`} />
+          </div>
+        </div>
+      );
+
+    case 'footer-inline':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col justify-between bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className="flex-1 rounded-[2px] bg-slate-200/40 dark:bg-slate-800/30" />
+          <div className={`w-full h-3 rounded-b-[2px] border-t ${border} px-1.5 flex items-center justify-between bg-white dark:bg-slate-900`}>
+            <div className={`w-3 h-1.5 rounded-[1px] ${accent}`} />
+            <div className="flex gap-1">
+              <div className={`w-3 h-1 rounded-[1px] ${fill}`} />
+              <div className={`w-3 h-1 rounded-[1px] ${fill}`} />
+              <div className={`w-3 h-1 rounded-[1px] ${fill}`} />
+            </div>
+            <div className={`w-2 h-1 rounded-full ${accent}`} />
+          </div>
+        </div>
+      );
+
+    case 'footer-newsletter':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col justify-between bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className="flex-1 rounded-[2px] bg-slate-200/40 dark:bg-slate-800/30" />
+          <div className={`w-full h-6 rounded-b-[2px] border-t ${border} p-1 flex flex-col items-center justify-center gap-0.5 bg-white dark:bg-slate-900`}>
+            <div className={`w-2 h-1 rounded-[1px] ${accent}`} />
+            <div className="w-4/5 h-2 rounded-[1px] flex gap-0.5">
+              <div className={`flex-1 h-full rounded-[1px] border ${border} ${fill}`} />
+              <div className={`w-3 h-full rounded-[1px] ${accent}`} />
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'footer-split':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col justify-between bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className="flex-1 rounded-[2px] bg-slate-200/40 dark:bg-slate-800/30" />
+          <div className={`w-full h-5 rounded-b-[2px] border-t ${border} p-1 flex gap-1 bg-white dark:bg-slate-900`}>
+            <div className={`w-1/2 h-full rounded-[1px] ${accent}`} />
+            <div className="w-1/2 h-full grid grid-cols-2 gap-0.5">
+              <div className={`h-full rounded-[1px] ${fill}`} />
+              <div className={`h-full rounded-[1px] ${fill}`} />
+            </div>
+          </div>
+        </div>
+      );
+
+    case 'footer-bento':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1 flex flex-col justify-between bg-slate-50 dark:bg-slate-950 transition-colors`}>
+          <div className="flex-1 rounded-[2px] bg-slate-200/40 dark:bg-slate-800/30" />
+          <div className={`w-full h-6 rounded-b-[2px] border-t ${border} p-0.5 grid grid-cols-2 gap-0.5 bg-white dark:bg-slate-900`}>
+            <div className={`h-2.5 rounded-[1px] border ${border} ${accent}`} />
+            <div className={`h-2.5 rounded-[1px] border ${border} ${fill}`} />
+            <div className={`h-2.5 rounded-[1px] border ${border} ${fill}`} />
+            <div className={`h-2.5 rounded-[1px] border ${border} ${accent}`} />
+          </div>
+        </div>
+      );
+
     // 9. Minimalist Clean / Terminal
     case 'minimal':
     case 'split-terminal':
@@ -513,168 +677,168 @@ export const LayoutSection: React.FC = () => {
       case 'auth':
         return {
           options: getLayoutsForPage('auth'),
-          selectedId: pageLayouts.auth ?? 'centered-card',
+          selectedId: resolveLayout(state, 'auth'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { auth: id as PageLayouts['auth'] } }),
         };
 
       case 'dashboard':
         return {
           options: getLayoutsForPage('dashboard'),
-          selectedId: pageLayouts.dashboard ?? 'sidebar-grid',
+          selectedId: resolveLayout(state, 'dashboard'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { dashboard: id as PageLayouts['dashboard'] } }),
         };
 
       case 'landing':
         return {
           options: getLayoutsForPage('landing'),
-          selectedId: pageLayouts.landing ?? 'hero-split',
+          selectedId: resolveLayout(state, 'landing'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { landing: id as PageLayouts['landing'] } }),
         };
 
       case 'pricing':
         return {
           options: getLayoutsForPage('pricing'),
-          selectedId: pageLayouts.pricing ?? 'cards-3col',
+          selectedId: resolveLayout(state, 'pricing'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { pricing: id as PageLayouts['pricing'] } }),
         };
 
       case 'kanban':
         return {
           options: getLayoutsForPage('kanban'),
-          selectedId: pageLayouts.kanban ?? 'board-columns',
+          selectedId: resolveLayout(state, 'kanban'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { kanban: id as PageLayouts['kanban'] } }),
         };
 
       case 'chat':
         return {
           options: getLayoutsForPage('chat'),
-          selectedId: pageLayouts.chat ?? 'split-pane',
+          selectedId: resolveLayout(state, 'chat'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { chat: id as PageLayouts['chat'] } }),
         };
 
       case 'settings':
         return {
           options: getLayoutsForPage('settings'),
-          selectedId: pageLayouts.settings ?? 'tabbed',
+          selectedId: resolveLayout(state, 'settings'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { settings: id as PageLayouts['settings'] } }),
         };
 
       case 'error':
         return {
           options: getLayoutsForPage('error'),
-          selectedId: pageLayouts.error ?? 'giant-hero',
+          selectedId: resolveLayout(state, 'error'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { error: id as PageLayouts['error'] } }),
         };
 
       case 'onboarding':
         return {
           options: getLayoutsForPage('onboarding'),
-          selectedId: pageLayouts.onboarding ?? 'wizard-stepper',
+          selectedId: resolveLayout(state, 'onboarding'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { onboarding: id as PageLayouts['onboarding'] } }),
         };
 
       case 'empty-state':
         return {
           options: getLayoutsForPage('emptyState'),
-          selectedId: pageLayouts.emptyState ?? 'centered-action',
+          selectedId: resolveLayout(state, 'empty-state'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { emptyState: id as PageLayouts['emptyState'] } }),
         };
 
       case 'success':
         return {
           options: getLayoutsForPage('success'),
-          selectedId: pageLayouts.success ?? 'celebration-card',
+          selectedId: resolveLayout(state, 'success-confirm'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { success: id as PageLayouts['success'] } }),
         };
 
       case 'detail':
         return {
           options: getLayoutsForPage('detail'),
-          selectedId: pageLayouts.detail ?? 'split-sidepanel',
+          selectedId: resolveLayout(state, 'detail'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { detail: id as PageLayouts['detail'] } }),
         };
 
       case 'ecommerce-catalog':
         return {
           options: getLayoutsForPage('ecommerce-catalog'),
-          selectedId: pageLayouts.ecommerceCatalog ?? 'faceted-sidebar',
+          selectedId: resolveLayout(state, 'ecommerce-catalog'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { ecommerceCatalog: id as PageLayouts['ecommerceCatalog'] } }),
         };
 
       case 'product-detail':
         return {
           options: getLayoutsForPage('product-detail'),
-          selectedId: pageLayouts.productDetail ?? 'split-sticky-buy',
+          selectedId: resolveLayout(state, 'product-detail'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { productDetail: id as PageLayouts['productDetail'] } }),
         };
 
       case 'checkout':
         return {
           options: getLayoutsForPage('checkout'),
-          selectedId: pageLayouts.checkout ?? 'slide-over-cart',
+          selectedId: resolveLayout(state, 'checkout'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { checkout: id as PageLayouts['checkout'] } }),
         };
 
       case 'marketplace':
         return {
           options: getLayoutsForPage('marketplace'),
-          selectedId: pageLayouts.marketplace ?? 'split-map-list',
+          selectedId: resolveLayout(state, 'marketplace'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { marketplace: id as PageLayouts['marketplace'] } }),
         };
 
       case 'booking':
         return {
           options: getLayoutsForPage('booking'),
-          selectedId: pageLayouts.booking ?? 'split-calendar-slots',
+          selectedId: resolveLayout(state, 'booking'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { booking: id as PageLayouts['booking'] } }),
         };
 
       case 'editorial':
         return {
           options: getLayoutsForPage('editorial'),
-          selectedId: pageLayouts.editorial ?? 'masonry-frontpage',
+          selectedId: resolveLayout(state, 'editorial'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { editorial: id as PageLayouts['editorial'] } }),
         };
 
       case 'charity':
         return {
           options: getLayoutsForPage('charity'),
-          selectedId: pageLayouts.charity ?? 'hero-impact-thermometer',
+          selectedId: resolveLayout(state, 'charity'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { charity: id as PageLayouts['charity'] } }),
         };
 
       case 'forum':
         return {
           options: getLayoutsForPage('forum'),
-          selectedId: pageLayouts.forum ?? 'three-column-reddit',
+          selectedId: resolveLayout(state, 'forum'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { forum: id as PageLayouts['forum'] } }),
         };
 
       case 'streaming':
         return {
           options: getLayoutsForPage('streaming'),
-          selectedId: pageLayouts.streaming ?? 'cinema-theater',
+          selectedId: resolveLayout(state, 'streaming'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { streaming: id as PageLayouts['streaming'] } }),
         };
 
       case 'portfolio':
         return {
           options: getLayoutsForPage('portfolio'),
-          selectedId: pageLayouts.portfolio ?? 'bento-developer',
+          selectedId: resolveLayout(state, 'portfolio'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolio: id as PageLayouts['portfolio'] } }),
         };
 
       case 'portfolio-project':
         return {
           options: getLayoutsForPage('portfolio-project'),
-          selectedId: pageLayouts.portfolioProject ?? 'case-study-narrative',
+          selectedId: resolveLayout(state, 'portfolio-project'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolioProject: id as PageLayouts['portfolioProject'] } }),
         };
 
       case 'portfolio-dashboard':
         return {
           options: getLayoutsForPage('portfolio-dashboard'),
-          selectedId: pageLayouts.portfolioDashboard ?? 'analytics-cms-split',
+          selectedId: resolveLayout(state, 'portfolio-dashboard'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolioDashboard: id as PageLayouts['portfolioDashboard'] } }),
         };
 
@@ -724,6 +888,7 @@ export const LayoutSection: React.FC = () => {
     return [
       'landing',
       'pricing',
+      'contact',
       'ecommerce-catalog',
       'product-detail',
       'checkout',
@@ -745,11 +910,38 @@ export const LayoutSection: React.FC = () => {
     if (activePreview === 'portfolio-dashboard') {
       return (pageLayouts.portfolioDashboard ?? 'analytics-cms-split') === 'analytics-cms-split';
     }
-    return false;
+    return [
+      'settings',
+      'billing',
+      'team',
+      'kanban',
+      'chat',
+      'detail',
+    ].includes(activePreview);
   }, [activePreview, pageLayouts.dashboard, pageLayouts.portfolioDashboard]);
+
+  const hasFooter = useMemo(() => {
+    return [
+      'landing',
+      'pricing',
+      'contact',
+      'ecommerce-catalog',
+      'product-detail',
+      'checkout',
+      'marketplace',
+      'booking',
+      'editorial',
+      'portfolio',
+      'portfolio-project',
+      'charity',
+      'forum',
+      'streaming',
+    ].includes(activePreview);
+  }, [activePreview]);
 
   const navbarOptions = useMemo(() => getLayoutsForPage('navbar'), []);
   const sidebarOptions = useMemo(() => getLayoutsForPage('sidebar'), []);
+  const footerOptions = useMemo(() => getLayoutsForPage('footer'), []);
 
   return (
     <div className="space-y-3">
@@ -921,6 +1113,60 @@ export const LayoutSection: React.FC = () => {
                     dispatch({
                       type: 'SET_PAGE_LAYOUT',
                       updates: { navbar: layout.id as PageLayouts['navbar'] },
+                    })
+                  }
+                  className={`p-3 rounded-xl border text-left transition-all min-h-[114px] flex flex-col justify-between focus-ring group cursor-pointer relative overflow-hidden ${
+                    isSelected
+                      ? 'border-sky-500 ring-2 ring-sky-500/20 bg-sky-50/70 dark:bg-sky-950/30 shadow-sm'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100/80 dark:hover:bg-slate-900'
+                  }`}
+                >
+                  <WireframeThumbnail variant={layout.variant} isSelected={isSelected} />
+
+                  <div className="mt-2.5">
+                    <div
+                      className={`text-xs font-bold leading-tight ${
+                        isSelected
+                          ? 'text-sky-600 dark:text-sky-400'
+                          : 'text-slate-900 dark:text-slate-100 group-hover:text-sky-600 dark:group-hover:text-sky-400'
+                      }`}
+                    >
+                      {layout.title}
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5 leading-snug">
+                      {layout.description}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* 2b. Separate Footer Layout Section (if this page features a footer) */}
+      {hasFooter && (
+        <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+          <div className="flex items-center justify-between px-0.5">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+              <PanelBottom className="w-3.5 h-3.5 text-sky-500" />
+              <span>Footer Layout</span>
+            </div>
+            <span className="text-[10px] text-slate-400 font-mono">Footer Shell</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5">
+            {footerOptions.map((layout) => {
+              const isSelected = (pageLayouts.footer ?? 'columns-mega') === layout.id;
+
+              return (
+                <button
+                  key={layout.id}
+                  type="button"
+                  onClick={() =>
+                    dispatch({
+                      type: 'SET_PAGE_LAYOUT',
+                      updates: { footer: layout.id as PageLayouts['footer'] },
                     })
                   }
                   className={`p-3 rounded-xl border text-left transition-all min-h-[114px] flex flex-col justify-between focus-ring group cursor-pointer relative overflow-hidden ${

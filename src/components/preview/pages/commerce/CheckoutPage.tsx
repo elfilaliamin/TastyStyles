@@ -2,6 +2,7 @@ import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 import { CheckoutInvoiceBlock } from '../../../blocks/CheckoutInvoiceBlock';
 import { AppIcon } from '../../../common/AppIcon';
 
@@ -213,6 +214,8 @@ export const CheckoutPage: React.FC = () => {
           </div>
         )}
       </main>
+
+      <DynamicFooter />
     </div>
   );
 };
