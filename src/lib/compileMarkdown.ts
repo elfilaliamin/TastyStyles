@@ -1,4 +1,4 @@
-import type { DesignState } from '../config/schema';
+import type { DesignState, PageLayouts } from '../config/schema';
 import { resolveTokens, generateUnifiedCssTokens } from './tokenModel';
 import { generateContrastReport } from './contrast';
 import { LAYOUT_CATALOG, type LayoutCatalogItem } from '../config/layoutCatalog';
@@ -18,7 +18,7 @@ import { resolveLayout } from './layoutRegistry';
  */
 export function compileMarkdown(state: DesignState): string {
   const tokens = resolveTokens(state);
-  const pageLayouts = state.pageLayouts ?? {};
+  const pageLayouts: Partial<PageLayouts> = state.pageLayouts ?? {};
   const purposeId = state.project?.purpose ?? state.projectGoal ?? 'saas';
   const purposeDef = getPurposeDefinition(purposeId);
   const enabledProjectPages = (state.project?.pages ?? []).filter((p) => p.enabled);
