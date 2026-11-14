@@ -12,8 +12,8 @@ export const ExportBar: React.FC<ExportBarProps> = ({ onNotify, onOpenExportModa
   const { compiledMarkdown, dispatch } = useDesign();
 
   const handleDownload = () => {
-    downloadFile(compiledMarkdown, 'DESIGN.md');
-    onNotify('Downloaded Spec!', 'File saved as DESIGN.md', 'success');
+    downloadFile(compiledMarkdown, 'PROJECT-BRIEF.md');
+    onNotify('Downloaded Brief!', 'File saved as PROJECT-BRIEF.md', 'success');
   };
 
   const handleReset = () => {

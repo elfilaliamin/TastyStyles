@@ -165,3 +165,42 @@ export function checkColorHarmony(primaryHex: string, accentHex: string): {
     return { status: 'subtle', hueDiff: 0, message: 'Balanced palette.' };
   }
 }
+
+export function rgbToHex(r: number, g: number, b: number): string {
+  const toHex = (n: number) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+/**
+ * Automatically compute the nearest text-safe shade of a base color that achieves >= 4.5:1
+ * contrast against both the given background and surface containers.
+ */
+export function computeTextSafeColor(
+  baseHex: string,
+  bgHex: string,
+  surfaceHex: string,
+  mode: 'light' | 'dark'
+): string {
+  const currentRatioBg = calculateContrastRatio(baseHex, bgHex).ratio;
+  const currentRatioSurface = calculateContrastRatio(baseHex, surfaceHex).ratio;
+  if (currentRatioBg >= 4.5 && currentRatioSurface >= 4.5) {
+    return baseHex;
+  }
+
+  const [r, g, b] = hexToRgb(baseHex);
+  const target = mode === 'light' ? [0, 0, 0] : [255, 255, 255];
+  for (let i = 1; i <= 100; i++) {
+    const t = i / 100;
+    const curR = r + (target[0] - r) * t;
+    const curG = g + (target[1] - g) * t;
+    const curB = b + (target[2] - b) * t;
+    const candidate = rgbToHex(curR, curG, curB);
+    if (
+      calculateContrastRatio(candidate, bgHex).ratio >= 4.5 &&
+      calculateContrastRatio(candidate, surfaceHex).ratio >= 4.5
+    ) {
+      return candidate;
+    }
+  }
+  return mode === 'light' ? '#000000' : '#ffffff';
+}

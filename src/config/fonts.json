@@ -32,7 +32,7 @@
     "label": "DM Sans",
     "family": "DM Sans",
     "category": "sans-serif",
-    "weights": [400, 500, 700]
+    "weights": [400, 500, 600, 700]
   },
   {
     "id": "roboto",
@@ -53,7 +53,7 @@
     "label": "Space Grotesk",
     "family": "Space Grotesk",
     "category": "sans-serif",
-    "weights": [400, 500, 700]
+    "weights": [400, 500, 600, 700]
   },
   {
     "id": "manrope",
@@ -179,7 +179,7 @@
     "label": "JetBrains Mono",
     "family": "JetBrains Mono",
     "category": "monospace",
-    "weights": [400, 500, 700]
+    "weights": [400, 500, 600, 700]
   },
   {
     "id": "fira-code",

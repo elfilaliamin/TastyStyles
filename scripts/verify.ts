@@ -27,7 +27,8 @@ import {
   generateDtcgTokens,
   createZipBlob,
 } from '../src/lib/exportUtils';
-import { generateUnifiedCssTokens } from '../src/lib/tokenModel';
+import { generateUnifiedCssTokens, resolveTokens } from '../src/lib/tokenModel';
+import { COMPONENT_RECIPES } from '../src/config/recipes';
 
 console.log('--- Verifying TastyStyles Registries & Specs ---');
 
@@ -517,6 +518,73 @@ if (!saasBrief.includes('- **Footer Layout Pattern**:')) {
   process.exit(1);
 }
 console.log('✅ Batch 4 verified: Manifest sections updated, no fallback sections/titles, dashboard has sidebar & no footer.');
+
+console.log('--- Testing Batch 5: Tokens, Recipes & Font Weights ---');
+const saasCss = generateUnifiedCssTokens(saasState);
+const requiredCssTokens = [
+  '--radius-pill: 9999px',
+  '--radius-surface:',
+  '--shadow-sm:',
+  '--shadow-hover:',
+  '--blur-glass: 12px',
+  '--color-scrim:',
+  '--z-dropdown: 1000',
+  '--z-sticky: 1100',
+  '--z-modal: 1200',
+  '--z-toast: 1300',
+  '--duration-fast: 150ms',
+  '--duration-base: 200ms',
+  '--duration-slow: 300ms',
+  '--ease-standard:',
+  '--font-weight-regular: 400',
+  '--font-weight-medium: 500',
+  '--font-weight-semibold: 600',
+  '--font-weight-bold: 700',
+  '--color-primary-text:',
+  '--color-secondary-text:',
+  '--color-accent-text:',
+  '--color-success-text:',
+  '--color-warning-text:',
+  '--color-danger-text:',
+  '--color-info-text:',
+  '--color-success-bg:',
+  '--color-warning-bg:',
+  '--color-danger-bg:',
+  '--color-info-bg:',
+];
+for (const tok of requiredCssTokens) {
+  if (!saasCss.includes(tok)) {
+    console.error(`❌ Batch 5 check failed: tokens.css missing '${tok}'`);
+    process.exit(1);
+  }
+}
+
+// Verify no "strictly 16px" or "16px fallback" in compiled brief or spec
+const freshSaasBrief = compileProjectBrief(saasState);
+if (freshSaasBrief.includes('16px fallback') || freshSaasBrief.includes('strictly 16px')) {
+  console.error("❌ Batch 5 check failed: Export brief leaked '16px fallback' or 'strictly 16px'");
+  process.exit(1);
+}
+
+// Verify font weights embed in default SaaS state
+const saasTokens = resolveTokens(saasState);
+if (!saasTokens.typography.googleFontsUrl.includes('wght@400;500;600;700')) {
+  console.error(`❌ Batch 5 check failed: Google Fonts URL missing required weights 400;500;600;700: ${saasTokens.typography.googleFontsUrl}`);
+  process.exit(1);
+}
+
+// Verify recipes
+const cardRecipe = COMPONENT_RECIPES.find((r) => r.id === 'card-surface');
+if (!cardRecipe || cardRecipe.radius !== 'var(--radius-surface)' || !cardRecipe.states.hover?.includes('var(--shadow-hover)')) {
+  console.error("❌ Batch 5 check failed: card-surface recipe missing --radius-surface or --shadow-hover");
+  process.exit(1);
+}
+const badgeRecipe = COMPONENT_RECIPES.find((r) => r.id === 'badge-pill');
+if (!badgeRecipe || badgeRecipe.radius !== 'var(--radius-pill)') {
+  console.error("❌ Batch 5 check failed: badge-pill recipe missing --radius-pill");
+  process.exit(1);
+}
+console.log('✅ Batch 5 verified: Tokens, text-safe pairs, recipes, and font weights verified.');
 
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');

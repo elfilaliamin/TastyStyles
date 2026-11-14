@@ -5,7 +5,8 @@ import {
   getShadowEntry,
   getSpacingEntry,
 } from './registry';
-import { getBestContrastingColor } from './contrast';
+import { getBestContrastingColor, computeTextSafeColor, hexToRgb } from './contrast';
+import { COMPONENT_RECIPES } from '../config/recipes';
 
 export interface TypeScaleStep {
   role: string;
@@ -17,45 +18,47 @@ export interface TypeScaleStep {
   tracking: string;
 }
 
+export interface ColorTokenGroup {
+  primary: string;
+  primaryBg: string;
+  primaryText: string;
+  secondary: string;
+  secondaryText: string;
+  accent: string;
+  accentText: string;
+  background: string;
+  surface: string;
+  text: string;
+  border: string;
+  success: string;
+  successBg: string;
+  successText: string;
+  warning: string;
+  warningBg: string;
+  warningText: string;
+  danger: string;
+  dangerBg: string;
+  dangerText: string;
+  info: string;
+  infoBg: string;
+  infoText: string;
+  onPrimary: string;
+  onSecondary: string;
+  onAccent: string;
+  onSuccess: string;
+  onWarning: string;
+  onDanger: string;
+  onInfo: string;
+  muted: string;
+  ring: string;
+  scrim: string;
+}
+
 export interface ResolvedTokenSet {
   name: string;
   activeMode: 'light' | 'dark';
-  lightColors: {
-    primary: string;
-    secondary: string;
-    accent: string;
-    background: string;
-    surface: string;
-    text: string;
-    border: string;
-    success: string;
-    warning: string;
-    danger: string;
-    info: string;
-    onPrimary: string;
-    onSecondary: string;
-    onAccent: string;
-    muted: string;
-    ring: string;
-  };
-  darkColors: {
-    primary: string;
-    secondary: string;
-    accent: string;
-    background: string;
-    surface: string;
-    text: string;
-    border: string;
-    success: string;
-    warning: string;
-    danger: string;
-    info: string;
-    onPrimary: string;
-    onSecondary: string;
-    onAccent: string;
-    muted: string;
-    ring: string;
-  };
+  lightColors: ColorTokenGroup;
+  darkColors: ColorTokenGroup;
   typography: {
     headingFamily: string;
     headingCategory: string;
@@ -75,7 +78,32 @@ export interface ResolvedTokenSet {
     xl: string;
   };
   radius: string;
+  radiusSurface: string;
+  radiusPill: string;
   shadow: string;
+  shadowSm: string;
+  shadowMd: string;
+  shadowLg: string;
+  shadowHover: string;
+  blurGlass: string;
+  zIndex: {
+    dropdown: string;
+    sticky: string;
+    modal: string;
+    toast: string;
+  };
+  transitions: {
+    durationFast: string;
+    durationBase: string;
+    durationSlow: string;
+    easeStandard: string;
+  };
+  fontWeights: {
+    regular: string;
+    medium: string;
+    semibold: string;
+    bold: string;
+  };
   icons: {
     library: string;
     mode: string;
@@ -85,12 +113,15 @@ export interface ResolvedTokenSet {
     strokeWidthNum: number;
     fillOpacity: string;
     pkg: string;
+    supportsStroke: boolean;
   };
   breakpoints: {
+    sm: string;
+    lg: string;
+    wide: string;
     mobile: string;
     tablet: string;
     desktop: string;
-    wide: string;
   };
 }
 
@@ -192,16 +223,6 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
     },
   };
 
-  // Google Fonts URL building with verified available weights
-  const uniqueFamilies = Array.from(new Set([headingFont, bodyFont]));
-  const fontLinkParams = uniqueFamilies
-    .map((f) => {
-      const weightsParam = f.weights.length > 0 ? `:wght@${f.weights.sort().join(';')}` : ':wght@400;700';
-      return `family=${f.family.replace(/\s+/g, '+')}${weightsParam}`;
-    })
-    .join('&');
-  const googleFontsUrl = `https://fonts.googleapis.com/css2?${fontLinkParams}&display=swap`;
-
   const allAvailableWeights = Array.from(
     new Set([...headingFont.weights, ...bodyFont.weights])
   );
@@ -210,6 +231,31 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
     state.typography.scale,
     allAvailableWeights
   );
+
+  const neededWeights = new Set<number>([400]);
+  typeScaleSteps.forEach((s) => {
+    const w = parseInt(s.fontWeight, 10);
+    if (!isNaN(w)) neededWeights.add(w);
+  });
+  COMPONENT_RECIPES.forEach((r) => {
+    const match = r.typography.match(/font-weight:\s*(\d+)/);
+    if (match) {
+      neededWeights.add(parseInt(match[1], 10));
+    }
+  });
+
+  // Google Fonts URL building with verified available weights
+  const uniqueFamilies = Array.from(new Set([headingFont, bodyFont]));
+  const fontLinkParams = uniqueFamilies
+    .map((f) => {
+      const available = f.weights && f.weights.length > 0 ? f.weights : [400, 700];
+      const included = available.filter((w) => neededWeights.has(w));
+      const weightsToEmbed = included.length > 0 ? included : available;
+      weightsToEmbed.sort((a, b) => a - b);
+      return `family=${f.family.replace(/\s+/g, '+')}:wght@${weightsToEmbed.join(';')}`;
+    })
+    .join('&');
+  const googleFontsUrl = `https://fonts.googleapis.com/css2?${fontLinkParams}&display=swap`;
 
   // Icon geometry
   const iconConfig = state.icons ?? {
@@ -223,6 +269,11 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
   const iconFillOpacity = iconConfig.mode === 'solid' ? '1' : iconConfig.duotone ? '0.22' : '0';
 
   // Semantic Status & On-Colors
+  const lightBg = state.colors.light.background;
+  const lightSurface = state.colors.light.surface;
+  const darkBg = state.colors.dark.background;
+  const darkSurface = state.colors.dark.surface;
+
   const lightPrimary = state.colors.light.primary;
   const darkPrimary = state.colors.dark.primary;
   const lightSecondary = state.colors.light.secondary;
@@ -230,32 +281,98 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
   const lightAccent = state.colors.light.accent;
   const darkAccent = state.colors.dark.accent;
 
+  const lightSuccess = '#10b981';
+  const lightWarning = '#f59e0b';
+  const lightDanger = '#ef4444';
+  const lightInfo = '#0284c7';
+
+  const darkSuccess = '#34d399';
+  const darkWarning = '#fbbf24';
+  const darkDanger = '#f87171';
+  const darkInfo = '#38bdf8';
+
+  const lightPrimaryText = computeTextSafeColor(lightPrimary, lightBg, lightSurface, 'light');
+  const lightSecondaryText = computeTextSafeColor(lightSecondary, lightBg, lightSurface, 'light');
+  const lightAccentText = computeTextSafeColor(lightAccent, lightBg, lightSurface, 'light');
+  const lightSuccessText = computeTextSafeColor(lightSuccess, lightBg, lightSurface, 'light');
+  const lightWarningText = computeTextSafeColor(lightWarning, lightBg, lightSurface, 'light');
+  const lightDangerText = computeTextSafeColor(lightDanger, lightBg, lightSurface, 'light');
+  const lightInfoText = computeTextSafeColor(lightInfo, lightBg, lightSurface, 'light');
+
+  const darkPrimaryText = computeTextSafeColor(darkPrimary, darkBg, darkSurface, 'dark');
+  const darkSecondaryText = computeTextSafeColor(darkSecondary, darkBg, darkSurface, 'dark');
+  const darkAccentText = computeTextSafeColor(darkAccent, darkBg, darkSurface, 'dark');
+  const darkSuccessText = computeTextSafeColor(darkSuccess, darkBg, darkSurface, 'dark');
+  const darkWarningText = computeTextSafeColor(darkWarning, darkBg, darkSurface, 'dark');
+  const darkDangerText = computeTextSafeColor(darkDanger, darkBg, darkSurface, 'dark');
+  const darkInfoText = computeTextSafeColor(darkInfo, darkBg, darkSurface, 'dark');
+
+  const radiusSurface = parseInt(radius.value, 10) > 20 || radius.value === '9999px' ? '20px' : radius.value;
+  const supportsStroke = iconConfig.library === 'lucide' || iconConfig.library === 'tabler';
+
+  const [lpr, lpg, lpb] = hexToRgb(lightPrimary);
+  const [dpr, dpg, dpb] = hexToRgb(darkPrimary);
+
   return {
     name: state.name,
     activeMode: state.activeMode,
     lightColors: {
       ...state.colors.light,
-      success: '#10b981',
-      warning: '#f59e0b',
-      danger: '#ef4444',
-      info: '#0284c7',
+      primaryBg: `rgba(${lpr}, ${lpg}, ${lpb}, 0.08)`,
+      primaryText: lightPrimaryText,
+      secondaryText: lightSecondaryText,
+      accentText: lightAccentText,
+      success: lightSuccess,
+      successBg: 'rgba(16, 185, 129, 0.12)',
+      successText: lightSuccessText,
+      warning: lightWarning,
+      warningBg: 'rgba(245, 158, 11, 0.12)',
+      warningText: lightWarningText,
+      danger: lightDanger,
+      dangerBg: 'rgba(239, 68, 68, 0.12)',
+      dangerText: lightDangerText,
+      info: lightInfo,
+      infoBg: 'rgba(2, 132, 199, 0.12)',
+      infoText: lightInfoText,
       onPrimary: getBestContrastingColor(lightPrimary),
       onSecondary: getBestContrastingColor(lightSecondary),
       onAccent: getBestContrastingColor(lightAccent),
+      onSuccess: '#ffffff',
+      onWarning: '#000000',
+      onDanger: '#ffffff',
+      onInfo: '#ffffff',
       muted: '#64748b',
       ring: lightPrimary,
+      scrim: 'rgba(0, 0, 0, 0.5)',
     },
     darkColors: {
       ...state.colors.dark,
-      success: '#34d399',
-      warning: '#fbbf24',
-      danger: '#f87171',
-      info: '#38bdf8',
+      primaryBg: `rgba(${dpr}, ${dpg}, ${dpb}, 0.16)`,
+      primaryText: darkPrimaryText,
+      secondaryText: darkSecondaryText,
+      accentText: darkAccentText,
+      success: darkSuccess,
+      successBg: 'rgba(52, 211, 153, 0.16)',
+      successText: darkSuccessText,
+      warning: darkWarning,
+      warningBg: 'rgba(251, 191, 36, 0.16)',
+      warningText: darkWarningText,
+      danger: darkDanger,
+      dangerBg: 'rgba(248, 113, 113, 0.16)',
+      dangerText: darkDangerText,
+      info: darkInfo,
+      infoBg: 'rgba(56, 189, 248, 0.16)',
+      infoText: darkInfoText,
       onPrimary: getBestContrastingColor(darkPrimary),
       onSecondary: getBestContrastingColor(darkSecondary),
       onAccent: getBestContrastingColor(darkAccent),
+      onSuccess: '#000000',
+      onWarning: '#000000',
+      onDanger: '#ffffff',
+      onInfo: '#000000',
       muted: '#94a3b8',
       ring: darkAccent,
+      scrim: 'rgba(0, 0, 0, 0.75)',
     },
     typography: {
       headingFamily: headingFont.family,
@@ -270,7 +387,32 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
     },
     spacing: spacing.scale,
     radius: radius.value,
+    radiusSurface,
+    radiusPill: '9999px',
     shadow: shadow.value,
+    shadowSm: '0 1px 2px rgba(0, 0, 0, 0.05)',
+    shadowMd: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+    shadowLg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+    shadowHover: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+    blurGlass: '12px',
+    zIndex: {
+      dropdown: '1000',
+      sticky: '1100',
+      modal: '1200',
+      toast: '1300',
+    },
+    transitions: {
+      durationFast: '150ms',
+      durationBase: '200ms',
+      durationSlow: '300ms',
+      easeStandard: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
+    },
+    fontWeights: {
+      regular: '400',
+      medium: '500',
+      semibold: '600',
+      bold: '700',
+    },
     icons: {
       library: iconConfig.library,
       mode: iconConfig.mode,
@@ -280,12 +422,15 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
       strokeWidthNum: iconWeight.num,
       fillOpacity: iconFillOpacity,
       pkg: iconPkg,
+      supportsStroke,
     },
     breakpoints: {
-      mobile: '375px',
-      tablet: '768px',
-      desktop: '1024px',
+      sm: '640px',
+      lg: '1024px',
       wide: '1280px',
+      mobile: '640px',
+      tablet: '1024px',
+      desktop: '1280px',
     },
   };
 }
@@ -299,27 +444,56 @@ export function generateUnifiedCssTokens(state: DesignState): string {
   return `:root {
   /* Colors (Light Mode) */
   --color-primary: ${tokens.lightColors.primary};
+  --color-primary-bg: ${tokens.lightColors.primaryBg};
+  --color-primary-text: ${tokens.lightColors.primaryText};
   --color-secondary: ${tokens.lightColors.secondary};
+  --color-secondary-text: ${tokens.lightColors.secondaryText};
   --color-accent: ${tokens.lightColors.accent};
+  --color-accent-text: ${tokens.lightColors.accentText};
   --color-background: ${tokens.lightColors.background};
   --color-surface: ${tokens.lightColors.surface};
   --color-text: ${tokens.lightColors.text};
   --color-border: ${tokens.lightColors.border};
+  --color-muted: ${tokens.lightColors.muted};
+  --color-ring: ${tokens.lightColors.ring};
+  --color-scrim: ${tokens.lightColors.scrim};
+
+  /* Status Colors & Text-Safe Pairs (Light Mode) */
   --color-success: ${tokens.lightColors.success};
+  --color-success-bg: ${tokens.lightColors.successBg};
+  --color-success-text: ${tokens.lightColors.successText};
+  --color-on-success: ${tokens.lightColors.onSuccess};
+
   --color-warning: ${tokens.lightColors.warning};
+  --color-warning-bg: ${tokens.lightColors.warningBg};
+  --color-warning-text: ${tokens.lightColors.warningText};
+  --color-on-warning: ${tokens.lightColors.onWarning};
+
   --color-danger: ${tokens.lightColors.danger};
+  --color-danger-bg: ${tokens.lightColors.dangerBg};
+  --color-danger-text: ${tokens.lightColors.dangerText};
+  --color-on-danger: ${tokens.lightColors.onDanger};
+
   --color-info: ${tokens.lightColors.info};
+  --color-info-bg: ${tokens.lightColors.infoBg};
+  --color-info-text: ${tokens.lightColors.infoText};
+  --color-on-info: ${tokens.lightColors.onInfo};
+
   --color-on-primary: ${tokens.lightColors.onPrimary};
   --color-on-secondary: ${tokens.lightColors.onSecondary};
   --color-on-accent: ${tokens.lightColors.onAccent};
-  --color-muted: ${tokens.lightColors.muted};
-  --color-ring: ${tokens.lightColors.ring};
 
   /* Typography */
   --font-heading: '${tokens.typography.headingFamily}', ${tokens.typography.headingCategory};
   --font-body: '${tokens.typography.bodyFamily}', ${tokens.typography.bodyCategory};
   --font-size-base: ${tokens.typography.baseSize}px;
   --font-scale: ${tokens.typography.scaleRatio};
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   /* Typographic Hierarchy Steps */
 ${tokens.typography.steps
@@ -338,40 +512,78 @@ ${tokens.typography.steps
 
   /* Shape & Elevation */
   --radius-base: ${tokens.radius};
-  --radius-surface: ${parseInt(tokens.radius, 10) > 20 || tokens.radius === '9999px' ? '20px' : tokens.radius};
+  --radius-surface: ${tokens.radiusSurface};
+  --radius-pill: 9999px;
+  --shadow-sm: ${tokens.shadowSm};
   --shadow-base: ${tokens.shadow};
+  --shadow-md: ${tokens.shadowMd};
+  --shadow-lg: ${tokens.shadowLg};
+  --shadow-hover: ${tokens.shadowHover};
+  --blur-glass: 12px;
+
+  /* Z-Index Hierarchy */
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-modal: 1200;
+  --z-toast: 1300;
+
+  /* Animation & Transitions */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
 
   /* Icon System (${tokens.icons.library} • ${tokens.icons.mode} • ${tokens.icons.weight}) */
   --icon-library: '${tokens.icons.library}';
-  --icon-stroke: ${tokens.icons.strokeWidth};
-  --icon-fill-opacity: ${tokens.icons.fillOpacity};
+${tokens.icons.supportsStroke ? `  --icon-stroke: ${tokens.icons.strokeWidth};\n` : ''}  --icon-fill-opacity: ${tokens.icons.fillOpacity};
 
   /* Breakpoints */
-  --breakpoint-mobile: ${tokens.breakpoints.mobile};
-  --breakpoint-tablet: ${tokens.breakpoints.tablet};
-  --breakpoint-desktop: ${tokens.breakpoints.desktop};
-  --breakpoint-wide: ${tokens.breakpoints.wide};
+  --breakpoint-sm: 640px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-wide: 1280px;
 }
 
 /* Dark Mode Overrides */
 [data-theme='dark'],
 .dark {
   --color-primary: ${tokens.darkColors.primary};
+  --color-primary-bg: ${tokens.darkColors.primaryBg};
+  --color-primary-text: ${tokens.darkColors.primaryText};
   --color-secondary: ${tokens.darkColors.secondary};
+  --color-secondary-text: ${tokens.darkColors.secondaryText};
   --color-accent: ${tokens.darkColors.accent};
+  --color-accent-text: ${tokens.darkColors.accentText};
   --color-background: ${tokens.darkColors.background};
   --color-surface: ${tokens.darkColors.surface};
   --color-text: ${tokens.darkColors.text};
   --color-border: ${tokens.darkColors.border};
+  --color-muted: ${tokens.darkColors.muted};
+  --color-ring: ${tokens.darkColors.ring};
+  --color-scrim: ${tokens.darkColors.scrim};
+
   --color-success: ${tokens.darkColors.success};
+  --color-success-bg: ${tokens.darkColors.successBg};
+  --color-success-text: ${tokens.darkColors.successText};
+  --color-on-success: ${tokens.darkColors.onSuccess};
+
   --color-warning: ${tokens.darkColors.warning};
+  --color-warning-bg: ${tokens.darkColors.warningBg};
+  --color-warning-text: ${tokens.darkColors.warningText};
+  --color-on-warning: ${tokens.darkColors.onWarning};
+
   --color-danger: ${tokens.darkColors.danger};
+  --color-danger-bg: ${tokens.darkColors.dangerBg};
+  --color-danger-text: ${tokens.darkColors.dangerText};
+  --color-on-danger: ${tokens.darkColors.onDanger};
+
   --color-info: ${tokens.darkColors.info};
+  --color-info-bg: ${tokens.darkColors.infoBg};
+  --color-info-text: ${tokens.darkColors.infoText};
+  --color-on-info: ${tokens.darkColors.onInfo};
+
   --color-on-primary: ${tokens.darkColors.onPrimary};
   --color-on-secondary: ${tokens.darkColors.onSecondary};
   --color-on-accent: ${tokens.darkColors.onAccent};
-  --color-muted: ${tokens.darkColors.muted};
-  --color-ring: ${tokens.darkColors.ring};
 }`;
 }
 
@@ -384,16 +596,27 @@ export function getPreviewCssVariables(state: DesignState): Record<string, strin
 
   return {
     '--ts-color-primary': activeColors.primary,
+    '--ts-color-primary-text': activeColors.primaryText,
     '--ts-color-secondary': activeColors.secondary,
+    '--ts-color-secondary-text': activeColors.secondaryText,
     '--ts-color-accent': activeColors.accent,
+    '--ts-color-accent-text': activeColors.accentText,
     '--ts-color-background': activeColors.background,
     '--ts-color-surface': activeColors.surface,
     '--ts-color-text': activeColors.text,
     '--ts-color-border': activeColors.border,
     '--ts-color-success': activeColors.success,
+    '--ts-color-success-bg': activeColors.successBg,
+    '--ts-color-success-text': activeColors.successText,
     '--ts-color-warning': activeColors.warning,
+    '--ts-color-warning-bg': activeColors.warningBg,
+    '--ts-color-warning-text': activeColors.warningText,
     '--ts-color-danger': activeColors.danger,
+    '--ts-color-danger-bg': activeColors.dangerBg,
+    '--ts-color-danger-text': activeColors.dangerText,
     '--ts-color-info': activeColors.info,
+    '--ts-color-info-bg': activeColors.infoBg,
+    '--ts-color-info-text': activeColors.infoText,
     '--ts-color-on-primary': activeColors.onPrimary,
     '--ts-color-on-secondary': activeColors.onSecondary,
     '--ts-color-on-accent': activeColors.onAccent,

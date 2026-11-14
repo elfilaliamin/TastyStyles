@@ -124,22 +124,32 @@ The **${tokens.name}** visual system pairs **${tokens.typography.headingFamily}*
 ### 2.1 Color Palette
 | Token | Light Value | Dark Value | Semantic Role |
 | :--- | :--- | :--- | :--- |
-| **primary** | \`${tokens.lightColors.primary}\` | \`${tokens.darkColors.primary}\` | Brand anchor, primary call-to-actions, prominent buttons |
+| **primary** | \`${tokens.lightColors.primary}\` | \`${tokens.darkColors.primary}\` | Brand anchor, primary call-to-actions, prominent buttons (fills/borders) |
+| **primary-text** | \`${tokens.lightColors.primaryText}\` | \`${tokens.darkColors.primaryText}\` | Accessible body/link text on background & surface (>= 4.5:1) |
 | **secondary** | \`${tokens.lightColors.secondary}\` | \`${tokens.darkColors.secondary}\` | Supporting elements, subtle badges, secondary buttons |
+| **secondary-text** | \`${tokens.lightColors.secondaryText}\` | \`${tokens.darkColors.secondaryText}\` | Accessible secondary copy & links (>= 4.5:1) |
 | **accent** | \`${tokens.lightColors.accent}\` | \`${tokens.darkColors.accent}\` | Focal highlights, active tab indicators, data charts |
+| **accent-text** | \`${tokens.lightColors.accentText}\` | \`${tokens.darkColors.accentText}\` | Accessible accent copy on background & surface (>= 4.5:1) |
 | **background** | \`${tokens.lightColors.background}\` | \`${tokens.darkColors.background}\` | Application canvas and page root background |
 | **surface** | \`${tokens.lightColors.surface}\` | \`${tokens.darkColors.surface}\` | Elevated cards, sidebars, modal panels, sheets |
 | **text** | \`${tokens.lightColors.text}\` | \`${tokens.darkColors.text}\` | High-contrast body copy, titles, and iconography |
 | **border** | \`${tokens.lightColors.border}\` | \`${tokens.darkColors.border}\` | Structural dividers, input strokes, container borders |
-| **success** | \`${tokens.lightColors.success}\` | \`${tokens.darkColors.success}\` | Positive confirmations, successful task milestones |
-| **warning** | \`${tokens.lightColors.warning}\` | \`${tokens.darkColors.warning}\` | Attention notices, non-fatal alert warnings |
-| **danger** | \`${tokens.lightColors.danger}\` | \`${tokens.darkColors.danger}\` | Destructive actions, validation errors, system failures |
-| **info** | \`${tokens.lightColors.info}\` | \`${tokens.darkColors.info}\` | Informational announcements, telemetry badges |
+| **success** | \`${tokens.lightColors.success}\` | \`${tokens.darkColors.success}\` | Positive confirmations, successful task milestones (fills/icons) |
+| **success-text** | \`${tokens.lightColors.successText}\` | \`${tokens.darkColors.successText}\` | Accessible success text & status notices (>= 4.5:1) |
+| **warning** | \`${tokens.lightColors.warning}\` | \`${tokens.darkColors.warning}\` | Attention notices, non-fatal alert warnings (fills/icons) |
+| **warning-text** | \`${tokens.lightColors.warningText}\` | \`${tokens.darkColors.warningText}\` | Accessible warning text (>= 4.5:1) |
+| **danger** | \`${tokens.lightColors.danger}\` | \`${tokens.darkColors.danger}\` | Destructive actions, validation errors, system failures (fills/icons) |
+| **danger-text** | \`${tokens.lightColors.dangerText}\` | \`${tokens.darkColors.dangerText}\` | Accessible error & danger text (>= 4.5:1) |
+| **info** | \`${tokens.lightColors.info}\` | \`${tokens.darkColors.info}\` | Informational announcements, telemetry badges (fills/icons) |
+| **info-text** | \`${tokens.lightColors.infoText}\` | \`${tokens.darkColors.infoText}\` | Accessible info text (>= 4.5:1) |
 | **on-primary** | \`${tokens.lightColors.onPrimary}\` | \`${tokens.darkColors.onPrimary}\` | High-contrast accessible text sitting on Primary |
 | **on-secondary**| \`${tokens.lightColors.onSecondary}\` | \`${tokens.darkColors.onSecondary}\` | High-contrast accessible text sitting on Secondary |
 | **on-accent** | \`${tokens.lightColors.onAccent}\` | \`${tokens.darkColors.onAccent}\` | High-contrast accessible text sitting on Accent |
 | **muted** | \`${tokens.lightColors.muted}\` | \`${tokens.darkColors.muted}\` | Secondary helper labels, timestamps, disabled hints |
 | **ring** | \`${tokens.lightColors.ring}\` | \`${tokens.darkColors.ring}\` | Accessible keyboard focus outline ring (2px offset) |
+| **scrim** | \`${tokens.lightColors.scrim}\` | \`${tokens.darkColors.scrim}\` | Modal & drawer backdrop overlay mask |
+
+> **Color Application Rule**: Use \`*-text\` tokens (\`--color-primary-text\`, \`--color-success-text\`, etc.) for text, labels, and links; use base colors for component fills, borders, and icons.
 
 ### 2.2 Typography Scale
 - **Heading Font**: \`${tokens.typography.headingFamily}\` (${tokens.typography.headingCategory})
@@ -164,15 +174,23 @@ ${tokens.typography.steps
 | **spacing-lg** | \`${tokens.spacing.lg}\` | Container section padding, grid column gaps |
 | **spacing-xl** | \`${tokens.spacing.xl}\` | Major layout gutter, hero section padding |
 
-### 2.4 Border Radius & Shadows
-- **Base Corner Radius**: \`${tokens.radius}\` (applied across buttons, cards, and input fields)
-- **Base Elevation Shadow**: \`${tokens.shadow}\` (applied across cards, dropdowns, and dialogs)
+### 2.4 Border Radius, Elevation & Motion
+- **Base Corner Radius (\`--radius-base\`)**: \`${tokens.radius}\` (buttons, inputs, tabs, interactive elements)
+- **Surface Corner Radius (\`--radius-surface\`)**: \`${tokens.radiusSurface}\` (cards, dialogs, drawers; derived, max 20px). Use \`var(--radius-surface)\` with no fallback everywhere.
+- **Pill Radius (\`--radius-pill\`)**: \`${tokens.radiusPill}\` (badges, switch toggles, search pills)
+- **Elevation Shadows**:
+  - \`--shadow-sm\`: \`${tokens.shadowSm}\` (subtle cards, inputs)
+  - \`--shadow-base\`: \`${tokens.shadow}\` (standard surface elevation)
+  - \`--shadow-md\`: \`${tokens.shadowMd}\` (popovers, tooltips)
+  - \`--shadow-lg\`: \`${tokens.shadowLg}\` (modals, slide-over sheets)
+  - \`--shadow-hover\`: \`${tokens.shadowHover}\` (card and interactive surface hover elevation)
+- **Glass & Scrim**: \`--blur-glass: ${tokens.blurGlass}\`, \`--color-scrim: ${tokens.lightColors.scrim}\`
+- **Z-Index Hierarchy**: \`--z-dropdown: 1000\`, \`--z-sticky: 1100\`, \`--z-modal: 1200\`, \`--z-toast: 1300\`
+- **Transitions**: \`--duration-fast: 150ms\`, \`--duration-base: 200ms\`, \`--duration-slow: 300ms\`, \`--ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1)\`
 
-### 2.5 Responsive Breakpoints
-- **Mobile Viewport**: \`${tokens.breakpoints.mobile}\` (Single column fluid layout, 44px min tap targets)
-- **Tablet Viewport**: \`${tokens.breakpoints.tablet}\` (Two-column adaptive grid, compact rails)
-- **Desktop Viewport**: \`${tokens.breakpoints.desktop}\` (Multi-column full-fidelity desktop workspace)
-- **Wide Container Cap**: \`${tokens.breakpoints.wide}\` (Max-width content containment)
+### 2.5 Breakpoints & Test Viewports
+- **Media Query Breakpoints**: \`sm: 640px\` (mobile-to-tablet), \`lg: 1024px\` (tablet-to-desktop), \`wide: 1280px\` (max-width canvas cap).
+- **Test Viewports**: \`375px\` (Compact Mobile), \`768px\` (Tablet Portrait), \`1280px\` (Desktop Canvas).
 
 ---
 
@@ -203,19 +221,44 @@ ${generateTailwindConfig(state).trim()}
   npm install ${tokens.icons.pkg}
   \`\`\`
 - **Style Mode**: \`${tokens.icons.mode.toUpperCase()}\`
-- **Stroke Geometry**: \`${tokens.icons.strokeWidth}\` (${tokens.icons.strokeWidthNum}px line width)
+- **Stroke Geometry**: ${
+  tokens.icons.supportsStroke
+    ? `\`${tokens.icons.strokeWidth}\` (${tokens.icons.strokeWidthNum}px line width; bound to \`--icon-stroke\`)`
+    : 'Not applicable (geometry rendered via icon library vector shapes)'
+}
 - **Duotone Depth**: ${tokens.icons.duotone ? 'Enabled (22% opacity accent fill beneath stroke)' : 'Disabled'}
 - **Component Import Example**:
   \`\`\`tsx
-  ${tokens.icons.pkg === 'react-icons' ? `import { LuSparkles as Sparkles } from 'react-icons/lu';` : `import { Sparkles } from '${tokens.icons.pkg}';`}
+  ${
+    tokens.icons.pkg === 'react-icons'
+      ? `import { LuSparkles as Sparkles } from 'react-icons/lu';
 
   export const ActionIcon = () => (
     <Sparkles
       size={20}
-      strokeWidth={${tokens.icons.strokeWidthNum}}
+      color="currentColor"
+    />
+  );`
+      : tokens.icons.pkg === '@tabler/icons-react'
+      ? `import { IconSparkles } from '@tabler/icons-react';
+
+  export const ActionIcon = () => (
+    <IconSparkles
+      size={20}
+      stroke={${tokens.icons.strokeWidthNum}}
+      color="currentColor"
+    />
+  );`
+      : `import { Sparkles } from '${tokens.icons.pkg}';
+
+  export const ActionIcon = () => (
+    <Sparkles
+      size={20}
+      ${tokens.icons.supportsStroke ? `strokeWidth={${tokens.icons.strokeWidthNum}}` : ''}
       ${tokens.icons.mode === 'solid' ? 'fill="currentColor"' : tokens.icons.duotone ? 'fill="currentColor" fillOpacity={0.22}' : 'fill="none"'}
     />
-  );
+  );`
+  }
   \`\`\`
 
 ### 5.2 Google Fonts Embed

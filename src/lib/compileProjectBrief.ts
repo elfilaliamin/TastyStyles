@@ -50,7 +50,7 @@ export function compileProjectBrief(state: DesignState): string {
 > 2. **Extensibility & User-Requested Views**: You may only synthesize additional views, sub-routes, or specialized screens that the user has explicitly requested, or essential system/utility pages. Do NOT invent new feature pages unprompted. Ensure all new views strictly adhere to the active design theme, typography scales, WCAG AAA contrast, surface radii, and component styling rules.
 > 3. **UI Redesign Guidance**: When using this brief to redesign an existing web application, map existing features directly onto these clean layouts and token variables—delivering a modern, world-class UI without breaking existing business logic.
 > 4. **Strict Token Binding**: All styles MUST bind to the CSS variables in \`tokens.css\` / Part B below. Never hardcode arbitrary hex colors, ad-hoc font families, or raw border-radius values.
-> 5. **Dual-Radius Isolation**: Interactive elements use \`var(--radius-base)\`, while surface containers (cards, modals, form panels) strictly use \`var(--radius-surface, 16px)\` (never exceed 20px). Never apply extreme pill radius to surface cards.
+> 5. **Dual-Radius Isolation**: Interactive elements use \`var(--radius-base)\`, while surface containers (cards, modals, form panels) strictly use \`var(--radius-surface)\` (derived from radius preset, max 20px). Never apply extreme pill radius to surface cards.
 
 ---
 
@@ -111,7 +111,7 @@ ${sections.map((s, sIdx) => `  ${sIdx + 1}. \`${s}\``).join('\n')}
 ${usesSidebar ? `- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`\n` : ''}- **Footer Layout Pattern**: \`${state.pageLayouts?.footer ?? 'columns-mega'}\`
 - **Dual-Radius Isolation**:
   - Interactive controls (buttons, badges, pills, avatar circles): use \`var(--radius-base)\`.
-  - Surface containers (cards, modals, drawers, form panels): strictly use \`var(--radius-surface, 16px)\` (never exceed 20px).
+  - Surface containers (cards, modals, drawers, form panels): strictly use \`var(--radius-surface)\` (derived from radius preset, max 20px).
 - **Form Overflow Safeguard**: Two-column form grids must use \`gridTemplateColumns: repeat(2, minmax(0, 1fr))\` with \`boxSizing: border-box\` and \`minWidth: 0\` on all inputs.
 
 ---

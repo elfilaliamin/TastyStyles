@@ -10,6 +10,7 @@ import {
   generateDtcgTokens,
   generateAgentRulesSnippet,
 } from '../../lib/exportUtils';
+import { compileMarkdown } from '../../lib/compileMarkdown';
 import { Copy, Download, FileCode, X, Terminal, Code2, Palette, FileText, Package, Braces } from 'lucide-react';
 
 interface MarkdownModalProps {
@@ -18,7 +19,7 @@ interface MarkdownModalProps {
   onNotify?: (title: string, desc?: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-type ExportTab = 'markdown' | 'css' | 'tailwind' | 'typescript' | 'dtcg' | 'agents';
+type ExportTab = 'markdown' | 'design-md' | 'css' | 'tailwind' | 'typescript' | 'dtcg' | 'agents';
 
 export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, onNotify }) => {
   const { compiledMarkdown, state } = useDesign();
@@ -75,13 +76,20 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
           mime: 'text/markdown',
           label: 'Agent Rules (AGENTS.md)',
         };
+      case 'design-md':
+        return {
+          content: compileMarkdown(state),
+          filename: 'DESIGN.md',
+          mime: 'text/markdown',
+          label: 'Design Tokens Specification (DESIGN.md)',
+        };
       case 'markdown':
       default:
         return {
           content: compiledMarkdown,
-          filename: 'DESIGN.md',
+          filename: 'PROJECT-BRIEF.md',
           mime: 'text/markdown',
-          label: 'Markdown Specification (DESIGN.md)',
+          label: 'Project Brief & Architecture (PROJECT-BRIEF.md)',
         };
     }
   };
@@ -185,7 +193,8 @@ export const MarkdownModal: React.FC<MarkdownModalProps> = ({ isOpen, onClose, o
         {/* Format Switcher Tabs */}
         <div className="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-100/70 dark:bg-slate-950/40 flex items-center gap-1 overflow-x-auto">
           {[
-            { id: 'markdown', label: 'Markdown Spec (.md)', icon: <FileText className="w-3.5 h-3.5" /> },
+            { id: 'markdown', label: 'PROJECT-BRIEF.md', icon: <FileText className="w-3.5 h-3.5" /> },
+            { id: 'design-md', label: 'DESIGN.md', icon: <FileText className="w-3.5 h-3.5" /> },
             { id: 'css', label: 'Pure CSS (.css)', icon: <Palette className="w-3.5 h-3.5" /> },
             { id: 'tailwind', label: 'Tailwind Config (.ts)', icon: <Code2 className="w-3.5 h-3.5" /> },
             { id: 'typescript', label: 'TypeScript (.ts)', icon: <Code2 className="w-3.5 h-3.5" /> },
