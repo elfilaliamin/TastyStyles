@@ -475,6 +475,49 @@ if (!saasMarkdown.includes('Every page declared in the sitemap that exists in th
 }
 console.log('✅ Batch 3 verified: Page scope rules, restyle directives, and checklist sign-off verified.');
 
+console.log('--- Testing Batch 4: Shell, Manifest & Title Consistency ---');
+for (const p of PURPOSES) {
+  const st = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: p.id });
+  const brief = compileProjectBrief(st);
+  if (brief.includes('header-navbar')) {
+    console.error(`❌ Batch 4 check failed: Purpose ${p.id} leaked fallback section 'header-navbar'`);
+    process.exit(1);
+  }
+  if (brief.match(/\b\w+-main\b/)) {
+    console.error(`❌ Batch 4 check failed: Purpose ${p.id} leaked fallback section *-main`);
+    process.exit(1);
+  }
+  // Verify Part A titles never equal raw layout IDs
+  for (const page of st.project.pages.filter((pg) => pg.enabled)) {
+    const rawId = resolveLayout(st, page.pageType);
+    if (brief.includes(`- **Layout Title**: ${rawId}`)) {
+      console.error(`❌ Batch 4 check failed: Purpose ${p.id} page ${page.pageType} has raw layout ID as title: '${rawId}'`);
+      process.exit(1);
+    }
+  }
+}
+
+// In default SaaS brief: dashboard must have sidebar section and no footer section
+const saasDashboardSectionsMatch = saasBrief.match(/#### 3\.\d+ Application Dashboard & Analytics[^\n]*\n([\s\S]*?)(?=#### 3\.\d+|\n### 4)/);
+if (!saasDashboardSectionsMatch) {
+  console.error("❌ Batch 4 check failed: Could not find Dashboard section breakdown in SaaS brief");
+  process.exit(1);
+}
+const saasDashboardBlock = saasDashboardSectionsMatch[1];
+if (!saasDashboardBlock.includes('`sidebar`')) {
+  console.error("❌ Batch 4 check failed: Dashboard section breakdown missing `sidebar` section");
+  process.exit(1);
+}
+if (saasDashboardBlock.includes('`footer`')) {
+  console.error("❌ Batch 4 check failed: Dashboard section breakdown unexpectedly contained `footer` section");
+  process.exit(1);
+}
+if (!saasBrief.includes('- **Footer Layout Pattern**:')) {
+  console.error("❌ Batch 4 check failed: SaaS brief missing '- **Footer Layout Pattern**:' in Section 4");
+  process.exit(1);
+}
+console.log('✅ Batch 4 verified: Manifest sections updated, no fallback sections/titles, dashboard has sidebar & no footer.');
+
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');
 if (!fs.existsSync(workflowDoc)) {

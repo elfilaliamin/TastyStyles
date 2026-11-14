@@ -64,7 +64,7 @@ export function compileProjectBrief(state: DesignState): string {
 - **Target Viewport Baseline**: 375px mobile through 1440px desktop with zero horizontal overflow.
 
 ### 2. Sitemap Sequence (${effectivePages.length} Enabled Pages)
-Below is the ordered user journey sequence. Pages should be routed and linked in this priority order:
+Below is the ordered user journey sequence. Pages that exist in the project should be routed and linked in this priority order:
 ${effectivePages
   .map((p, idx) => {
     const pageDef = PAGE_TYPES_BY_ID.get(p.pageType);
@@ -78,24 +78,26 @@ ${effectivePages
   .map((p, idx) => {
     const pageDef = PAGE_TYPES_BY_ID.get(p.pageType);
     const layoutId = resolveLayout(state, p.pageType);
-    const layout = getLayout(layoutId) ?? getLayout(`${p.pageType}:${layoutId}`);
+    const layout = getLayout(layoutId, p.pageType) ?? getLayout(`${p.pageType}:${layoutId}`) ?? getLayout(layoutId);
     const sections = layout?.sections && layout.sections.length > 0
       ? layout.sections
-      : ['header-navbar', `${p.pageType}-main`, 'footer'];
+      : ['navbar', p.pageType, 'footer'];
     const pageScope = pageDef?.scope ?? (p.pageType === 'auth' || p.pageType === 'error' ? 'system' : 'feature');
     const scopeDirective =
       pageScope === 'system'
         ? 'restyle if exists; may create if missing, visual only'
         : 'restyle if exists; do not create if missing';
+    const layoutTitle = layout?.label ?? pageDef?.label ?? layoutId;
+    const layoutDescription = layout?.description ?? pageDef?.description ?? 'Standard archetype view.';
 
     return `#### 3.${idx + 1} ${pageDef?.label ?? p.pageType} (\`${p.pageType}\`)
 - **Route / Anchor**: \`/${p.pageType}\`
 - **Scope**: ${scopeDirective}
 - **Archetype Category**: ${pageDef?.category ?? 'core'}
 - **Layout Architecture ID**: \`${layoutId}\`
-- **Layout Title**: ${layout?.label ?? layoutId}
+- **Layout Title**: ${layoutTitle}
 - **Layout Blueprint Description**:
-  ${layout?.description ?? pageDef?.description ?? 'Standard archetype view.'}
+  ${layoutDescription}
 - **Ordered Section Breakdown**:
 ${sections.map((s, sIdx) => `  ${sIdx + 1}. \`${s}\``).join('\n')}
 - **Responsive Directives**:
@@ -106,7 +108,8 @@ ${sections.map((s, sIdx) => `  ${sIdx + 1}. \`${s}\``).join('\n')}
 
 ### 4. Global Navigation & Layout Shell Rules
 - **Header Navigation Pattern**: \`${state.pageLayouts?.navbar ?? 'saas-header'}\`
-${usesSidebar ? `- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`\n` : ''}- **Dual-Radius Isolation**:
+${usesSidebar ? `- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar ?? 'classic-grouped'}\`\n` : ''}- **Footer Layout Pattern**: \`${state.pageLayouts?.footer ?? 'columns-mega'}\`
+- **Dual-Radius Isolation**:
   - Interactive controls (buttons, badges, pills, avatar circles): use \`var(--radius-base)\`.
   - Surface containers (cards, modals, drawers, form panels): strictly use \`var(--radius-surface, 16px)\` (never exceed 20px).
 - **Form Overflow Safeguard**: Two-column form grids must use \`gridTemplateColumns: repeat(2, minmax(0, 1fr))\` with \`boxSizing: border-box\` and \`minWidth: 0\` on all inputs.

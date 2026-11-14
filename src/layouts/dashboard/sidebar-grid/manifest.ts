@@ -5,7 +5,7 @@ export const manifest: LayoutManifest = {
   pageType: "dashboard",
   label: "Sidebar + Content",
   purposes: ['saas', 'ecommerce', 'portfolio', 'marketplace'],
-  sections: ['navbar', "dashboard", 'footer'],
+  sections: ['navbar', 'sidebar', 'dashboard'],
   description: "Left sidebar navigation with stat KPI cards and telemetry charts.",
   tags: ["dashboard", "sidebar-grid"],
 };

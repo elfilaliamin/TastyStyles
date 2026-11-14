@@ -5,7 +5,7 @@ export const manifest: LayoutManifest = {
   pageType: "dashboard",
   label: "Feed & Telemetry",
   purposes: ['saas', 'ecommerce', 'portfolio', 'marketplace'],
-  sections: ['navbar', "dashboard", 'footer'],
+  sections: ['navbar', 'sidebar', 'dashboard'],
   description: "Realtime streaming event logs alongside system diagnostic gauges.",
   tags: ["dashboard", "feed-focus"],
 };

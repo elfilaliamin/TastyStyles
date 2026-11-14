@@ -280,21 +280,26 @@ When creating **ANY** new page, dashboard module, or custom view not explicitly 
 #### A. Master Layout Shell Architecture
 - **Root Container**: Full viewport height (\`100vh\`), \`overflow-hidden\`, with canvas background (\`var(--color-background)\`) and text color (\`var(--color-text)\`).
 - **Primary Global Sidebar**: Fixed to left margin using the configured **\`${pageLayouts.sidebar ?? 'classic-grouped'}\`** sidebar archetype (\`w-64\` to \`w-72\`, border-r \`var(--color-border)\`). On Mobile (<640px), collapses into an off-canvas drawer or sticky bottom navigation bar.
-- **Top Application Header**: Sticky top navigation using the configured **\`${pageLayouts.navbar ?? 'saas-header'}\`** header archetype (\`h-16\`, border-b \`var(--color-border)\`, \`z-20\`). Contains brand logo, search palette trigger, notification bell, and user avatar.
+- **Top Application Header**: Sticky top navigation using the configured **\`${pageLayouts.navbar ?? 'saas-header'}\`** header archetype (\`z-20\`). ${
+  pageLayouts.navbar === 'floating-pill'
+    ? 'Renders as a detached floating pill container with rounded pill curvature, surface elevation, and backdrop blur.'
+    : 'Renders as a full-width header bar (`h-16`, border-b `var(--color-border)`).'
+} Contains brand logo, search palette trigger, notification bell, and user avatar.
+- **Global / Contextual Footer**: Configured **\`${pageLayouts.footer ?? 'columns-mega'}\`** footer archetype applied across public and content-centric surfaces.
 - **Main Viewport Canvas**: Fluid scrollable container (\`flex-1 overflow-y-auto\`), bounded by wide container cap (\`${tokens.breakpoints.wide}\`) with standard padding (\`var(--spacing-lg)\` = \`${tokens.spacing.lg}\`).
 
 #### B. Default New Page Structural Zones
 Organize every new page into these four canonical vertical zones:
 1. **Header & Context Zone**:
-   - Breadcrumb navigation: uppercase small tracking label (\`var(--color-muted)\`, \`0.75rem\`).
-   - Page Heading: \`H1\` with \`var(--font-heading)\`, \`700\` weight, and size \`${tokens.typography.steps.find((s) => s.role === 'h1')?.fontSizeRem ?? '2rem'}\`.
+   - Breadcrumb navigation: uppercase small tracking label (\`var(--color-muted)\`, \`var(--font-size-step-sub1)\`).
+   - Page Heading: \`H1\` with \`var(--font-heading)\`, \`700\` weight, and size \`var(--font-size-step-4)\`.
    - Action Bar: Aligned to top-right. Maximum of 2 secondary outlined buttons + exactly 1 primary CTA button (\`var(--color-primary)\` background, \`var(--color-on-primary)\` text).
 2. **Summary / Metric Strip Zone (When applicable)**:
    - 2 to 4 responsive metric cards in a grid (\`grid-cols-1 sm:grid-cols-2 lg:grid-cols-4\` with \`var(--spacing-md)\` gap).
-   - Surface cards with \`var(--radius)\` border radius and \`var(--shadow)\` elevation.
+   - Surface cards with \`var(--radius-surface)\` border radius and \`var(--shadow-base)\` elevation.
 3. **Primary Content / Data Surface Zone**:
    - The central payload (e.g. data table, Kanban board, form group, or detail split pane).
-   - Encapsulated in a card container: \`background-color: var(--color-surface)\`, \`border: 1px solid var(--color-border)\`, \`border-radius: var(--radius-surface, 16px)\`, \`padding: var(--spacing-lg)\`.
+   - Encapsulated in a card container: \`background-color: var(--color-surface)\`, \`border: 1px solid var(--color-border)\`, \`border-radius: var(--radius-surface)\`, \`padding: var(--spacing-lg)\`.
 4. **Contextual Footer / Status Zone**:
    - Result counts, active filter tags, pagination controls, or timestamp of last synchronization.
 
@@ -326,23 +331,27 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* 2. Global Top App Header: ${pageLayouts.navbar ?? 'saas-header'} */}
-        <header className="h-16 px-4 sm:px-6 border-b border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-between flex-shrink-0 z-10">
+        <header className="${
+          pageLayouts.navbar === 'floating-pill'
+            ? 'sticky top-4 inset-x-4 max-w-5xl mx-auto rounded-[var(--radius-pill,9999px)] border border-[var(--color-border)] bg-[var(--color-surface)]/80 backdrop-blur-md shadow-[var(--shadow-base)] px-[var(--spacing-md)] h-14 flex items-center justify-between z-20'
+            : 'h-16 px-[var(--spacing-md)] lg:px-[var(--spacing-lg)] border-b border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-between flex-shrink-0 z-10'
+        }">
           {/* Render ${pageLayouts.navbar ?? 'saas-header'} controls */}
         </header>
 
         {/* 3. Main Scrollable Page Content */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-[var(--container-max-width,1280px)] w-full mx-auto flex flex-col gap-[var(--spacing-lg)]">
+        <main className="flex-1 overflow-y-auto p-[var(--spacing-md)] lg:p-[var(--spacing-lg)] max-w-[var(--container-max-width,1280px)] w-full mx-auto flex flex-col gap-[var(--spacing-lg)]">
           {/* Zone 1: Breadcrumb & Title Header */}
-          <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[var(--color-border)]">
+          <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-[var(--spacing-md)] pb-[var(--spacing-md)] border-b border-[var(--color-border)]">
             <div>
-              <div className="text-xs font-semibold text-[var(--color-muted)] uppercase tracking-wider mb-1">
+              <div className="text-[var(--font-size-step-sub1)] font-semibold text-[var(--color-muted)] uppercase tracking-wider mb-1">
                 {category}
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold font-[var(--font-heading)] text-[var(--color-text)]">
+              <h1 className="text-[var(--font-size-step-4)] font-bold font-[var(--font-heading)] text-[var(--color-text)]">
                 {title}
               </h1>
             </div>
-            {actions && <div className="flex items-center gap-2">{actions}</div>}
+            {actions && <div className="flex items-center gap-[var(--spacing-sm)]">{actions}</div>}
           </section>
 
           {/* Zone 2 & 3: Content Body & Surface */}
@@ -350,6 +359,11 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
             {children}
           </section>
         </main>
+
+        {/* 4. Global / Contextual Footer: ${pageLayouts.footer ?? 'columns-mega'} */}
+        <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--spacing-md)] text-[var(--font-size-step-sub1)] text-[var(--color-muted)] flex items-center justify-between">
+          {/* Render ${pageLayouts.footer ?? 'columns-mega'} */}
+        </footer>
       </div>
     </div>
   );

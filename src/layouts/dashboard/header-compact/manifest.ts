@@ -5,7 +5,7 @@ export const manifest: LayoutManifest = {
   pageType: "dashboard",
   label: "Header Compact",
   purposes: ['saas', 'ecommerce', 'portfolio', 'marketplace'],
-  sections: ['navbar', "dashboard", 'footer'],
+  sections: ['navbar', 'sidebar', 'dashboard'],
   description: "Top horizontal navigation bar with full-bleed metric strips and wide analytics graph.",
   tags: ["dashboard", "header-compact"],
 };

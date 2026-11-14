@@ -740,10 +740,10 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       page: 'settings',
       id: 'tabbed',
       title: 'Horizontal Tabs',
-      description: 'Horizontal top tab bar switching between Profile, Preferences, Security, and Integrations.',
+      description: 'Horizontal top tab bar switching between General & Profile, Notifications & Alerts, and Security & Access.',
       variant: 'tabbed',
       ascii: `+-------------------------------------------------------+
-| [Profile]   [Preferences]   [Security]   [API Keys]           |
+| [General & Profile]   [Notifications & Alerts]   [Security & Access] |
 |                                                       |
 | Display Name: [Alex Rivers                          ] |
 | Email:        [alex@tastystyles.io                  ] |

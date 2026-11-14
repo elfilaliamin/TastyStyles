@@ -12,20 +12,13 @@ import {
   PAGE_TYPES_BY_ID,
 } from '../config/pageTypes';
 
-// Module maps loaded via Vite import.meta.glob
-const rawLayoutManifests: Record<string, { manifest?: LayoutManifest }> =
-  typeof (import.meta as any).glob === 'function'
-    ? (import.meta as any).glob('../layouts/**/manifest.ts', { eager: true })
-    : {};
+import { ALL_LAYOUT_MANIFESTS } from '../layouts/manifestRegistry';
+import { ALL_SECTION_MANIFESTS } from '../sections/manifestRegistry';
 
+// Module maps loaded via Vite import.meta.glob
 const rawLayoutComponents: Record<string, () => Promise<{ default: React.ComponentType<any> }>> =
   typeof (import.meta as any).glob === 'function'
     ? (import.meta as any).glob('../layouts/**/Layout.tsx')
-    : {};
-
-const rawSectionManifests: Record<string, { manifest?: SectionManifest }> =
-  typeof (import.meta as any).glob === 'function'
-    ? (import.meta as any).glob('../sections/**/manifest.ts', { eager: true })
     : {};
 
 const rawSectionComponents: Record<string, () => Promise<{ default: React.ComponentType<any> }>> =
@@ -43,7 +36,7 @@ export function registerLayout(manifestRaw: unknown): LayoutManifest {
   const compositeKey = `${parsed.pageType}:${parsed.id}`;
 
   if (layoutsMap.has(compositeKey)) {
-    throw new Error(`Duplicate layout registered: pageType="${parsed.pageType}", id="${parsed.id}"`);
+    return layoutsMap.get(compositeKey)!;
   }
 
   layoutsMap.set(compositeKey, parsed);
@@ -62,33 +55,19 @@ export function registerLayout(manifestRaw: unknown): LayoutManifest {
 export function registerSection(manifestRaw: unknown): SectionManifest {
   const parsed = SectionManifestSchema.parse(manifestRaw);
   if (sectionsMap.has(parsed.id)) {
-    throw new Error(`Duplicate section registered: id="${parsed.id}"`);
+    return sectionsMap.get(parsed.id)!;
   }
   sectionsMap.set(parsed.id, parsed);
   return parsed;
 }
 
-// In Vite, initialize from eager glob
-for (const [path, mod] of Object.entries(rawLayoutManifests)) {
-  if (mod?.manifest) {
-    try {
-      registerLayout(mod.manifest);
-    } catch (e) {
-      console.error(`Failed to register layout manifest at ${path}:`, e);
-      throw e;
-    }
-  }
+// Statically initialize all manifests
+for (const m of ALL_LAYOUT_MANIFESTS) {
+  registerLayout(m);
 }
 
-for (const [path, mod] of Object.entries(rawSectionManifests)) {
-  if (mod?.manifest) {
-    try {
-      registerSection(mod.manifest);
-    } catch (e) {
-      console.error(`Failed to register section manifest at ${path}:`, e);
-      throw e;
-    }
-  }
+for (const s of ALL_SECTION_MANIFESTS) {
+  registerSection(s);
 }
 
 export function getAllLayouts(): LayoutManifest[] {
@@ -104,7 +83,13 @@ export function getLayoutsForPage(pageType: string): LayoutManifest[] {
   return layoutsByPageType.get(pageType) ?? [];
 }
 
-export function getLayout(idOrComposite: string): LayoutManifest | undefined {
+export function getLayout(idOrComposite: string, pageType?: string): LayoutManifest | undefined {
+  if (pageType) {
+    const compositeKey = `${pageType}:${idOrComposite}`;
+    if (layoutsMap.has(compositeKey)) {
+      return layoutsMap.get(compositeKey);
+    }
+  }
   return layoutsMap.get(idOrComposite);
 }
 
