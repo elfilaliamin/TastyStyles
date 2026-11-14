@@ -57,6 +57,7 @@ export const PageLayoutsSchema = z.object({
   success: z.enum(['celebration-card', 'receipt-summary', 'minimal-banner']).default('celebration-card'),
   navbar: z.enum(['saas-header', 'minimal-center', 'floating-pill', 'tabbed-nav', 'ecommerce-action']).default('saas-header'),
   sidebar: z.enum(['classic-grouped', 'compact-rail', 'dual-pane', 'floating-card', 'workspace-shell']).default('classic-grouped'),
+  footer: z.enum(['columns-mega', 'minimal-inline', 'centered-newsletter', 'split-brand-legal', 'bento-grid']).default('columns-mega'),
   ecommerceCatalog: z.enum(['faceted-sidebar', 'top-filter-bar', 'split-map-view']).default('faceted-sidebar'),
   productDetail: z.enum(['split-sticky-buy', 'vertical-scroll-story', 'two-column-tabs']).default('split-sticky-buy'),
   checkout: z.enum(['slide-over-cart', 'one-page-accordion', 'split-order-rail']).default('slide-over-cart'),

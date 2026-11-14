@@ -4,7 +4,6 @@ import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { DynamicSidebar } from '../../navigation/DynamicSidebar';
-import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const BillingPage: React.FC = () => {
   const { activeColors } = useDesign();
@@ -356,7 +355,6 @@ export const BillingPage: React.FC = () => {
         </div>
       </div>
           </div>
-          <DynamicFooter />
         </main>
       </div>
     </div>

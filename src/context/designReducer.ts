@@ -104,6 +104,7 @@ export const defaultInitialState: DesignState = {
     success: 'celebration-card',
     navbar: 'saas-header',
     sidebar: 'classic-grouped',
+    footer: 'columns-mega',
     ecommerceCatalog: 'faceted-sidebar',
     productDetail: 'split-sticky-buy',
     checkout: 'slide-over-cart',

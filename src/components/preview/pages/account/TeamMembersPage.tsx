@@ -4,7 +4,6 @@ import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { DynamicSidebar } from '../../navigation/DynamicSidebar';
-import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 interface TeamMember {
   id: string;
@@ -342,7 +341,6 @@ export const TeamMembersPage: React.FC = () => {
         ))}
       </div>
           </div>
-          <DynamicFooter />
         </main>
       </div>
     </div>

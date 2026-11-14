@@ -322,6 +322,84 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
     },
   ],
 
+  footer: [
+    {
+      page: 'footer',
+      id: 'columns-mega',
+      title: 'Multi-Column Mega Footer',
+      description: 'Comprehensive grid with brand column, product/solution/resource/legal links, system status, and social bar.',
+      variant: 'footer-mega',
+      ascii: `+-------------------------------------------------------+
+| [Brand]     Product      Solutions    Resources    Legal      |
+| Description Features     SaaS         Docs         Privacy    |
+| [Status]    Pricing      Security     API          Terms      |
+|-------------------------------------------------------|
+| (c) 2026 Brand Name. All rights reserved.    [gh] [tw] [dc]   |
++-------------------------------------------------------+`,
+      mobile: 'Columns collapse into vertical stack with full-width link items.',
+      tablet: 'Balanced 4-column responsive grid with brand header.',
+    },
+    {
+      page: 'footer',
+      id: 'minimal-inline',
+      title: 'Minimalist Single-Line',
+      description: 'Clean horizontal toolbar with brand avatar, inline links, social icons, and copyright.',
+      variant: 'footer-inline',
+      ascii: `+-------------------------------------------------------+
+| [Logo] Brand   Features  Pricing  Docs  (c) 2026   [gh] [tw]  |
++-------------------------------------------------------+`,
+      mobile: 'Stacks brand, links, and social items into centered column.',
+      tablet: 'Horizontal row with balanced margins and center navigation.',
+    },
+    {
+      page: 'footer',
+      id: 'centered-newsletter',
+      title: 'Centered Newsletter & Community',
+      description: 'Prominent email newsletter capture box, brand headline, centered navigation links, and community channels.',
+      variant: 'footer-newsletter',
+      ascii: `+-------------------------------------------------------+
+|                       [Brand Logo]                    |
+|             Subscribe to our Engineering Weekly       |
+|             [ Enter your work email... ] [Join]       |
+|             Features  -  Pricing  -  Docs  -  Status  |
+|                 (c) 2026 Brand. Zero Drift.           |
++-------------------------------------------------------+`,
+      mobile: 'Newsletter input and subscribe button stack vertically with tap targets.',
+      tablet: 'Centered 520px container with inline email input and button.',
+    },
+    {
+      page: 'footer',
+      id: 'split-brand-legal',
+      title: 'Asymmetric Split Showcase',
+      description: 'High-contrast 50/50 split with oversized brand identity and mission on left, dual link columns and legal on right.',
+      variant: 'footer-split',
+      ascii: `+---------------------------+---------------------------+
+| BRAND NAME                | Products       Resources  |
+| Autonomous design tokens  | Features       Docs       |
+| for precision agents.     | Changelog      API        |
+| [*] Operational 99.99%    | Legal Policy   Security   |
++---------------------------+---------------------------+`,
+      mobile: 'Left brand section appears above link columns with compact typography.',
+      tablet: 'Side-by-side 50/50 split remains with proportional typography.',
+    },
+    {
+      page: 'footer',
+      id: 'bento-grid',
+      title: 'Bento Card Grid',
+      description: 'Modular card pods separating newsletter capture, system status & uptime, directory links, and social community.',
+      variant: 'footer-bento',
+      ascii: `+----------------------------+--------------------------+
+| [ Bento Card: Newsletter ] | [ Bento Card: Status ]   |
+| Stay updated on releases.  | 99.98% SLA Guaranteed    |
++----------------------------+--------------------------+
+| [ Bento Card: Directory ]  | [ Bento Card: Social ]   |
+| Product - Docs - Pricing   | GitHub - Discord - X     |
++----------------------------+--------------------------+`,
+      mobile: 'Bento cards stack into 1-column cards.',
+      tablet: '2x2 bento grid with elevated surface cards.',
+    },
+  ],
+
   dashboard: [
     {
       page: 'dashboard',

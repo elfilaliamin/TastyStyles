@@ -74,6 +74,7 @@ export const PURPOSES: PurposeDefinition[] = [
       { pageType: 'billing', required: false, defaultLayout: 'default' },
       { pageType: 'team', required: false, defaultLayout: 'default' },
       { pageType: 'contact', required: false, defaultLayout: 'default' },
+      { pageType: 'error', required: false, defaultLayout: 'giant-hero' },
     ],
   },
   {

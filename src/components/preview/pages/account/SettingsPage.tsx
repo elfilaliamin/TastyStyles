@@ -4,7 +4,6 @@ import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { DynamicSidebar } from '../../navigation/DynamicSidebar';
-import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const SettingsPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -277,7 +276,6 @@ export const SettingsPage: React.FC = () => {
           {renderSecuritySection()}
         </div>
       </div>
-          <DynamicFooter />
         </main>
       </div>
     </div>
@@ -380,7 +378,6 @@ export const SettingsPage: React.FC = () => {
           </div>
         </div>
             </div>
-            <DynamicFooter />
           </main>
         </div>
       </div>
@@ -540,7 +537,6 @@ export const SettingsPage: React.FC = () => {
         </div>
       </div>
           </div>
-          <DynamicFooter />
         </main>
       </div>
     </div>
