@@ -429,6 +429,93 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       mobile: 'Bento grid converts into single-column vertical stack with full card widths.',
       tablet: 'Bento grid reorganizes into balanced 2-column layout.',
     },
+    {
+      page: 'landing',
+      id: 'warm-editorial',
+      title: 'Warm Editorial AI',
+      description: 'Warm architectural brutalist aesthetic with floating dark code split hero, 6-feature grid, workflow tabs, founder line-art sketches, and FAQ accordion.',
+      variant: 'warm-editorial',
+      ascii: `+-----------------------+-------------------------------+
+| Warm Headline & Copy  | [ Floating Dark Code Window  ]|
+| [Start Trial] [Demo]  | [ Warm Architectural Backdrop]|
++-----------------------+-------------------------------+
+| [Feature 1] [Feature 2] [Feature 3] [Feature 4]...    |
++-------------------------------------------------------+
+| [Tabbed Product Workflow Inspection Console]          |
++-------------------------------------------------------+
+| [Founder Sketches Proof]   | [FAQ Accordion & CTA]    |
++-------------------------------------------------------+`,
+      mobile: 'Code window stacks beneath pitch; tabs convert to swipeable pill buttons; feature grid stacks to 1 column.',
+      tablet: 'Split hero maintains 45/55 proportion; feature cards flow into 2-column grid.',
+    },
+    {
+      page: 'landing',
+      id: 'organic-wellness',
+      title: 'Organic Wellness',
+      description: 'Serene stone & olive palette with travertine interior hero, why-us split pills, 3-card courses carousel, star rating reviews, and dark spruce consultation form.',
+      variant: 'organic-wellness',
+      ascii: `+-------------------------------------------------------+
+| [ Peaceful Travertine Interior & Serene Green Armchair] |
+| "Find Your Enlightenment Through Modern Wellness"      |
+| [Get Free Consultancy]                                 |
++-------------------------------------------------------+
+| [Artisanal Bowl Image] | Why Us: [Pill 1] [Pill 2]... |
++-------------------------------------------------------+
+| [Course 1: Mindfulness] [Course 2: Breath] [Course 3] |
++-------------------------------------------------------+
+| [ Alternating Zigzag Image & Story Blocks ]           |
++-------------------------------------------------------+
+| [ Deep Spruce Green Lead-Gen Consultation Banner ]    |
++-------------------------------------------------------+`,
+      mobile: 'Travertine hero text stacks centered; courses convert to single-column card deck; consultation form full width.',
+      tablet: 'Why-us section remains 50/50 split; course cards scale to 2-column flow with wrap.',
+    },
+    {
+      page: 'landing',
+      id: 'cyber-spotlight',
+      title: 'Cyber Spotlight Studio',
+      description: 'Futuristic obsidian dark mode with volumetric spotlight beam, floating dark app shell, 4 glass pillar cards, interactive video preview, and 3-tier dark glass pricing.',
+      variant: 'cyber-spotlight',
+      ascii: `+-------------------------------------------------------+
+| \\ Volumetric Spotlight Ray \\                         |
+|       "Smarter Conversations Powered by AI"           |
+|            [Get Started]       [Live Demo]            |
+|       +---------------------------------------+       |
+|       |   [ Floating Dark App Shell Window ]  |       |
+|       +---------------------------------------+       |
++-------------------------------------------------------+
+| [Pillar 1]    [Pillar 2]    [Pillar 3]    [Pillar 4]  |
++-------------------------------------------------------+
+| [3-Tier Dark Glass Pricing Cards with Pro Radial Glow]|
++-------------------------------------------------------+
+| [ GRAND REFLECTIVE BRAND TYPOGRAPHY FOOTER ]          |
++-------------------------------------------------------+`,
+      mobile: 'Spotlight beam soft fades; app shell preview shrinks fluidly; 4 pillars stack vertically; pricing cards stack 1 per row.',
+      tablet: 'Pillars display as 2x2 grid; pricing tiers display responsive cards with horizontal scroll.',
+    },
+    {
+      page: 'landing',
+      id: 'fintech-flow',
+      title: 'Fintech Operations & Crypto',
+      description: 'Deep maritime cyan-teal gradient hero with floating smartphone balance card, 4 banking feature cards, alternating KYC & transaction mockups, and client quote.',
+      variant: 'fintech-flow',
+      ascii: `+-------------------------------------------------------+
+| ~~~ Cyan-Teal Gradient Sky ~~~~~~~~~~~~~~~~~~~~~~~~~~ |
+| "Powering Secure Crypto Payments & Financial Ops"     |
+|       [Open Account]          [Explore Contract]      |
+|       +---------------------------------------+       |
+|       |  [ Floating Phone: Rp 1.457.078.000 ] |       |
+|       +---------------------------------------+       |
++-------------------------------------------------------+
+| [4 Banking Feature Cards: Account, Payments, API...]  |
++-------------------------------------------------------+
+| [Alternating KYC Customer & Balance Settlement Specs] |
++-------------------------------------------------------+
+| [Client Quote] | [FAQ Accordion] | [Cyan Gradient CTA]|
++-------------------------------------------------------+`,
+      mobile: 'Floating phone scales to viewport; banking cards stack 1 per row; alternating mockups stack device above copy.',
+      tablet: 'Banking feature cards align in 2x2 grid; alternating mockups retain side-by-side format with compact gutters.',
+    },
   ],
 
   pricing: [

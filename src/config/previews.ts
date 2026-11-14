@@ -68,7 +68,7 @@ export interface GoalDefinition {
 export const GOAL_DEFINITIONS: Record<ProjectGoal, GoalDefinition> = {
   saas: {
     id: 'saas',
-    label: 'B2B SaaS Platform',
+    label: 'SaaS Platform',
     emoji: '🏢',
     tagline: 'Multi-tenant analytics, permissions & subscription operations',
     recommendedPages: ['dashboard', 'auth', 'kanban', 'chat', 'settings', 'billing', 'team'],

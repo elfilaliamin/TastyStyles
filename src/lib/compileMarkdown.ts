@@ -212,7 +212,7 @@ ${COMPONENT_RECIPES.map(
 ## 7. Page Inventory & Wireframe Architecture
 
 ### 7.0 Active Target Project Goal: ${(state.projectGoal ?? 'saas').toUpperCase()}
-This application architecture is configured specifically for the **${GOAL_DEFINITIONS[state.projectGoal ?? 'saas']?.label ?? 'B2B SaaS Platform'}** sector:
+This application architecture is configured specifically for the **${GOAL_DEFINITIONS[state.projectGoal ?? 'saas']?.label ?? 'SaaS Platform'}** sector:
 > *${GOAL_DEFINITIONS[state.projectGoal ?? 'saas']?.tagline ?? 'Multi-tenant analytics, permissions & subscription operations'}*
 
 ### 7.1 Configured Layout Archetypes Matrix

@@ -3,7 +3,7 @@
 ## 1. Purpose
 
 TastyStyles is a purpose-first **project brief builder**, design token workbench, and autonomous AI coding agent specification generator. It enables creators, developers, and AI agents to:
-1. Select a high-level **project purpose** (E-Commerce Store, B2B SaaS, Portfolio & Agency, Marketplace, Media & Publication).
+1. Select a high-level **project purpose** (E-Commerce Store, SaaS Platform, Portfolio & Agency, Marketplace, Media & Publication).
 2. Curate and order a comprehensive **sitemap** from 30 domain page archetypes.
 3. Select visual **section-based layout architectures** registered via an open plugin registry (`src/layouts/` and `src/sections/`).
 4. Style canonical design system tokens (colors, typography scales, spacing, surface radii, shadows, and multi-library icon configurations).

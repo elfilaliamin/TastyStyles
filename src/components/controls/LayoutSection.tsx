@@ -112,6 +112,95 @@ const WireframeThumbnail: React.FC<WireframeThumbnailProps> = ({ variant, isSele
         </div>
       );
 
+    // 3c. Warm Editorial AI Landing (Architectural + Code Split)
+    case 'warm-editorial':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex gap-1.5 bg-[#fdfbf7] dark:bg-[#141210] transition-colors overflow-hidden relative`}>
+          <div className="w-1/2 flex flex-col justify-center gap-1">
+            <div className="w-1/2 h-1 rounded-full bg-amber-500" />
+            <div className={`w-4/5 h-2 rounded-[2px] ${accent}`} />
+            <div className={`w-full h-1 rounded-[2px] ${fill}`} />
+            <div className="w-1/3 h-1.5 rounded-[2px] bg-amber-600 dark:bg-amber-500 mt-0.5" />
+          </div>
+          <div className="w-1/2 h-full rounded-[3px] bg-[#1c1917] border border-amber-900/40 p-1 flex flex-col justify-between">
+            <div className="flex gap-0.5">
+              <div className="w-1 h-1 rounded-full bg-red-400" />
+              <div className="w-1 h-1 rounded-full bg-amber-400" />
+              <div className="w-1 h-1 rounded-full bg-green-400" />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <div className="w-3/4 h-1 rounded-[1px] bg-amber-400/80" />
+              <div className="w-1/2 h-1 rounded-[1px] bg-slate-400/60" />
+            </div>
+          </div>
+        </div>
+      );
+
+    // 3d. Organic Wellness Landing (Calm Travertine & Sage)
+    case 'organic-wellness':
+      return (
+        <div className={`w-full h-14 rounded-lg border ${border} p-1.5 flex flex-col justify-between bg-[#f7f5f0] dark:bg-[#121a16] transition-colors relative overflow-hidden`}>
+          <div className="w-full h-5 rounded-[4px] bg-[#4a5d4e]/15 dark:bg-[#4a5d4e]/30 flex items-center justify-between px-1.5">
+            <div className="w-1/3 h-1.5 rounded-full bg-[#3b5e4f] dark:bg-[#84a98c]" />
+            <div className="w-1/4 h-2 rounded-full bg-[#3b5e4f] dark:bg-[#84a98c]" />
+          </div>
+          <div className="flex gap-1">
+            <div className="flex-1 h-3 rounded-[3px] bg-[#4a5d4e]/20 flex flex-col justify-center px-1">
+              <div className="w-2/3 h-0.5 rounded-full bg-[#3b5e4f]" />
+            </div>
+            <div className="flex-1 h-3 rounded-[3px] bg-[#4a5d4e]/20 flex flex-col justify-center px-1">
+              <div className="w-2/3 h-0.5 rounded-full bg-[#3b5e4f]" />
+            </div>
+            <div className="flex-1 h-3 rounded-[3px] bg-[#4a5d4e]/20 flex flex-col justify-center px-1">
+              <div className="w-2/3 h-0.5 rounded-full bg-[#3b5e4f]" />
+            </div>
+          </div>
+        </div>
+      );
+
+    // 3e. Cyber Spotlight Studio Landing (Dark Volumetric Beam)
+    case 'cyber-spotlight':
+      return (
+        <div className="w-full h-14 rounded-lg border border-slate-800 p-1.5 flex flex-col items-center justify-between bg-[#08090c] relative overflow-hidden">
+          {/* Volumetric Spotlight Ray */}
+          <div className="absolute top-0 right-0 w-16 h-14 bg-gradient-to-bl from-indigo-500/25 via-sky-500/10 to-transparent pointer-events-none" />
+          <div className="w-1/2 h-1.5 rounded-full bg-slate-200 mt-0.5" />
+          <div className="w-3/4 h-5 rounded-[3px] bg-[#12131a] border border-indigo-500/40 shadow-[0_0_8px_rgba(99,102,241,0.25)] flex flex-col items-center justify-center gap-0.5 p-1 z-10">
+            <div className="w-2/3 h-1 rounded-full bg-indigo-400" />
+            <div className="w-1/2 h-0.5 rounded-full bg-slate-400" />
+          </div>
+          <div className="flex gap-1 w-full justify-center">
+            <div className="w-3 h-1 rounded-full bg-indigo-500/40" />
+            <div className="w-3 h-1 rounded-full bg-indigo-500/40" />
+            <div className="w-3 h-1 rounded-full bg-indigo-500/40" />
+          </div>
+        </div>
+      );
+
+    // 3f. Fintech Flow & Crypto Operations Landing
+    case 'fintech-flow':
+      return (
+        <div className="w-full h-14 rounded-lg border border-cyan-800/40 flex flex-col bg-slate-900 overflow-hidden relative">
+          {/* Teal Gradient Header with Phone Silhouette */}
+          <div className="w-full h-8 bg-gradient-to-r from-teal-900 via-cyan-900 to-slate-900 p-1 flex items-center justify-between">
+            <div className="w-1/3 flex flex-col gap-0.5">
+              <div className="w-full h-1 rounded-[1px] bg-cyan-300" />
+              <div className="w-2/3 h-0.5 rounded-[1px] bg-cyan-100/60" />
+            </div>
+            {/* Phone Silhouette */}
+            <div className="w-7 h-9 rounded-[3px] bg-slate-950 border border-cyan-400/60 shadow-sm flex flex-col items-center justify-center p-0.5 -mb-2 z-10">
+              <div className="w-4 h-1 rounded-full bg-cyan-400" />
+              <div className="w-3 h-0.5 rounded-full bg-emerald-400 mt-0.5" />
+            </div>
+          </div>
+          <div className="flex-1 bg-white dark:bg-slate-950 p-1 flex items-center justify-around gap-1">
+            <div className="w-3 h-2 rounded-[2px] bg-cyan-500/20 border border-cyan-500/40" />
+            <div className="w-3 h-2 rounded-[2px] bg-cyan-500/20 border border-cyan-500/40" />
+            <div className="w-3 h-2 rounded-[2px] bg-cyan-500/20 border border-cyan-500/40" />
+          </div>
+        </div>
+      );
+
     // 4. Centered Card / Modal Dialog
     case 'centered-card':
     case 'dialog-card':
