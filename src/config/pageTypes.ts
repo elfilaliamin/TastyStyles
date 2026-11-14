@@ -244,6 +244,66 @@ export const PAGE_TYPES_BY_ID = new Map<string, PageTypeDefinition>(
   PAGE_TYPES.map((pt) => [pt.id, pt])
 );
 
+export const PAGE_TYPE_TO_PAGE_LAYOUTS_KEY: Record<string, string> = {
+  landing: 'landing',
+  pricing: 'pricing',
+  auth: 'auth',
+  dashboard: 'dashboard',
+  kanban: 'kanban',
+  chat: 'chat',
+  settings: 'settings',
+  detail: 'detail',
+  onboarding: 'onboarding',
+  'empty-state': 'emptyState',
+  'success-confirm': 'success',
+  error: 'error',
+  'ecommerce-catalog': 'ecommerceCatalog',
+  'product-detail': 'productDetail',
+  checkout: 'checkout',
+  marketplace: 'marketplace',
+  booking: 'booking',
+  editorial: 'editorial',
+  charity: 'charity',
+  forum: 'forum',
+  streaming: 'streaming',
+  portfolio: 'portfolio',
+  'portfolio-project': 'portfolioProject',
+  'portfolio-dashboard': 'portfolioDashboard',
+  navbar: 'navbar',
+  sidebar: 'sidebar',
+  footer: 'footer',
+};
+
+export const PAGE_LAYOUTS_KEY_TO_PAGE_TYPE: Record<string, string> = {
+  landing: 'landing',
+  pricing: 'pricing',
+  auth: 'auth',
+  dashboard: 'dashboard',
+  kanban: 'kanban',
+  chat: 'chat',
+  settings: 'settings',
+  detail: 'detail',
+  onboarding: 'onboarding',
+  emptyState: 'empty-state',
+  success: 'success-confirm',
+  error: 'error',
+  ecommerceCatalog: 'ecommerce-catalog',
+  productDetail: 'product-detail',
+  checkout: 'checkout',
+  marketplace: 'marketplace',
+  booking: 'booking',
+  editorial: 'editorial',
+  charity: 'charity',
+  forum: 'forum',
+  streaming: 'streaming',
+  portfolio: 'portfolio',
+  portfolioProject: 'portfolio-project',
+  portfolioDashboard: 'portfolio-dashboard',
+  navbar: 'navbar',
+  sidebar: 'sidebar',
+  footer: 'footer',
+};
+
 export function getPageTypeDefinition(id: string): PageTypeDefinition | undefined {
   return PAGE_TYPES_BY_ID.get(id);
 }

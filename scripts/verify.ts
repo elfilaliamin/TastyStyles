@@ -15,6 +15,7 @@ import spacingRaw from '../src/config/spacing.json';
 import presetsRaw from '../src/config/presets.json';
 import { compileMarkdown } from '../src/lib/compileMarkdown';
 import { compileProjectBrief } from '../src/lib/compileProjectBrief';
+import { resolveLayout } from '../src/lib/layoutRegistry';
 import { calculateContrastRatio, calculateAPCA, checkColorHarmony } from '../src/lib/contrast';
 import { defaultInitialState, designReducer } from '../src/context/designReducer';
 import { validatePageTypes, PAGE_TYPES } from '../src/config/pageTypes';
@@ -383,6 +384,38 @@ for (const page of ecommerceState.project.pages.filter((p) => p.enabled)) {
   }
 }
 console.log('✅ PROJECT-BRIEF.md verified: Contains Part A sitemap, per-page layout specs, and Part B tokens.');
+
+console.log('--- Testing Layout Parity: Part A Layout ID == Part B Layout ID ---');
+// 1. Test for every purpose
+for (const purpose of PURPOSES) {
+  const pState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: purpose.id });
+  const brief = compileProjectBrief(pState);
+  for (const page of pState.project.pages.filter((p) => p.enabled)) {
+    const canonicalLayout = resolveLayout(pState, page.pageType);
+    if (!brief.includes(page.pageType)) {
+      console.error(`❌ Layout parity failed: Purpose ${purpose.id} missing page ${page.pageType} in brief`);
+      process.exit(1);
+    }
+    if (page.layoutId !== canonicalLayout) {
+      console.error(`❌ Layout parity failed: Purpose ${purpose.id} page ${page.pageType} mismatch: project ${page.layoutId} vs resolved ${canonicalLayout}`);
+      process.exit(1);
+    }
+  }
+}
+
+// 2. Test for every preset with SaaS purpose
+for (const preset of presets) {
+  const saasState = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: 'saas' });
+  const presetState = designReducer(saasState, { type: 'LOAD_PRESET', id: preset.id });
+  for (const page of presetState.project.pages.filter((p) => p.enabled)) {
+    const canonicalLayout = resolveLayout(presetState, page.pageType);
+    if (page.layoutId !== canonicalLayout) {
+      console.error(`❌ Layout parity failed: Preset ${preset.id} page ${page.pageType} mismatch: project ${page.layoutId} vs resolved ${canonicalLayout}`);
+      process.exit(1);
+    }
+  }
+}
+console.log('✅ Layout parity verified: Part A layout ID strictly equals Part B layout ID for all purposes and presets.');
 
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');

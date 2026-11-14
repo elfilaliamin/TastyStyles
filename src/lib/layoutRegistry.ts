@@ -4,7 +4,13 @@ import {
   SectionManifestSchema,
   type LayoutManifest,
   type SectionManifest,
+  type DesignState,
 } from '../config/schema';
+import {
+  PAGE_LAYOUTS_KEY_TO_PAGE_TYPE,
+  PAGE_TYPE_TO_PAGE_LAYOUTS_KEY,
+  PAGE_TYPES_BY_ID,
+} from '../config/pageTypes';
 
 // Module maps loaded via Vite import.meta.glob
 const rawLayoutManifests: Record<string, { manifest?: LayoutManifest }> =
@@ -134,4 +140,39 @@ export function getSectionComponentLoader(
   }
   return undefined;
 }
+
+/**
+ * Resolves the canonical layout ID for a given page type from DesignState.
+ * Prioritizes state.project.pages as the single source of truth,
+ * falling back to state.pageLayouts, and then the page registry default.
+ */
+export function resolveLayout(state: DesignState, pageType: string): string {
+  const canonicalPageType = PAGE_LAYOUTS_KEY_TO_PAGE_TYPE[pageType] ?? pageType;
+  const pageLayoutsKey = PAGE_TYPE_TO_PAGE_LAYOUTS_KEY[canonicalPageType] ?? pageType;
+
+  // 1. Primary canonical source: state.project.pages
+  const pageEntry = state.project?.pages?.find(
+    (p) => p.pageType === canonicalPageType || p.pageType === pageType
+  );
+  if (pageEntry?.layoutId && pageEntry.layoutId !== 'default') {
+    return pageEntry.layoutId;
+  }
+
+  // 2. Secondary source: state.pageLayouts
+  const fromPageLayouts =
+    (state.pageLayouts as any)?.[pageLayoutsKey] ??
+    (state.pageLayouts as any)?.[pageType];
+  if (typeof fromPageLayouts === 'string' && fromPageLayouts.length > 0 && fromPageLayouts !== 'default') {
+    return fromPageLayouts;
+  }
+
+  // 3. Fallback to page entry layoutId if 'default' or defaultLayout from pageTypes
+  if (pageEntry?.layoutId) {
+    return pageEntry.layoutId;
+  }
+
+  const pageDef = PAGE_TYPES_BY_ID.get(canonicalPageType);
+  return pageDef?.defaultLayout ?? 'default';
+}
+
 

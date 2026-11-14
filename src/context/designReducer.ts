@@ -13,6 +13,10 @@ import type {
 import { getPresetEntry, registries } from '../lib/registry';
 import { GOAL_DEFINITIONS } from '../config/previews';
 import { getPurposeDefinition } from '../config/purposes';
+import {
+  PAGE_LAYOUTS_KEY_TO_PAGE_TYPE,
+  PAGE_TYPE_TO_PAGE_LAYOUTS_KEY,
+} from '../config/pageTypes';
 
 export type DesignAction =
   | { type: 'SET_COLOR'; mode: 'light' | 'dark'; token: keyof ColorPalette; value: string }
@@ -219,8 +223,34 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
 
     case 'SET_PAGE_LAYOUT': {
       if ('updates' in action) {
+        const existingPages = state.project?.pages ? [...state.project.pages] : [];
+        for (const [rawKey, val] of Object.entries(action.updates)) {
+          if (typeof val !== 'string') continue;
+          const canonicalPageType = PAGE_LAYOUTS_KEY_TO_PAGE_TYPE[rawKey] ?? rawKey;
+          // Global layout keys or sub-settings are not individual pages in state.project.pages
+          if (
+            ['navbar', 'sidebar', 'footer', 'authSocialButtons', 'authCardStyle', 'errorCode', 'errorShowTrace'].includes(
+              rawKey
+            )
+          ) {
+            continue;
+          }
+          const pageIdx = existingPages.findIndex(
+            (p) => p.pageType === canonicalPageType || p.pageType === rawKey
+          );
+          if (pageIdx >= 0) {
+            existingPages[pageIdx] = { ...existingPages[pageIdx], layoutId: val };
+          } else {
+            existingPages.push({ pageType: canonicalPageType, layoutId: val, enabled: true });
+          }
+        }
+
         return {
           ...state,
+          project: {
+            ...(state.project ?? defaultInitialState.project),
+            pages: existingPages,
+          },
           pageLayouts: {
             ...defaultInitialState.pageLayouts,
             ...state.pageLayouts,
@@ -229,12 +259,18 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         };
       }
 
-      const existingPages = state.project?.pages ?? [];
-      const pageIndex = existingPages.findIndex((p) => p.pageType === action.pageType);
+      const rawPageType = action.pageType;
+      const canonicalPageType = PAGE_LAYOUTS_KEY_TO_PAGE_TYPE[rawPageType] ?? rawPageType;
+      const pageLayoutsKey = PAGE_TYPE_TO_PAGE_LAYOUTS_KEY[canonicalPageType] ?? rawPageType;
+
+      const existingPages = state.project?.pages ? [...state.project.pages] : [];
+      const pageIndex = existingPages.findIndex(
+        (p) => p.pageType === canonicalPageType || p.pageType === rawPageType
+      );
       const updatedPages =
         pageIndex >= 0
           ? existingPages.map((p, idx) => (idx === pageIndex ? { ...p, layoutId: action.layoutId } : p))
-          : [...existingPages, { pageType: action.pageType, layoutId: action.layoutId, enabled: true }];
+          : [...existingPages, { pageType: canonicalPageType, layoutId: action.layoutId, enabled: true }];
 
       return {
         ...state,
@@ -245,7 +281,8 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         pageLayouts: {
           ...defaultInitialState.pageLayouts,
           ...state.pageLayouts,
-          ...(action.pageType in (state.pageLayouts ?? {}) ? { [action.pageType]: action.layoutId } : {}),
+          [pageLayoutsKey]: action.layoutId,
+          [rawPageType]: action.layoutId,
         },
       };
     }
@@ -259,12 +296,27 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
           }))
         : (state.project?.pages ?? []);
 
+      const pageLayoutsUpdates: Record<string, string> = {};
+      if (purposeDef) {
+        for (const p of purposeDef.pages) {
+          const key = PAGE_TYPE_TO_PAGE_LAYOUTS_KEY[p.pageType] ?? p.pageType;
+          if (p.defaultLayout) {
+            pageLayoutsUpdates[key] = p.defaultLayout;
+          }
+        }
+      }
+
       return {
         ...state,
         project: {
           ...(state.project ?? defaultInitialState.project),
           purpose: action.purpose,
           pages: initialPages,
+        },
+        pageLayouts: {
+          ...defaultInitialState.pageLayouts,
+          ...state.pageLayouts,
+          ...pageLayoutsUpdates,
         },
       };
     }

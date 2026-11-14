@@ -3,6 +3,7 @@ import { useDesign } from '../../context/DesignContext';
 import { registries } from '../../lib/registry';
 import type { PageLayouts } from '../../config/schema';
 import { getLayoutsForPage } from '../../config/layoutCatalog';
+import { resolveLayout } from '../../lib/layoutRegistry';
 import {
   PREVIEW_REGISTRY,
   type PreviewDefinition,
@@ -676,168 +677,168 @@ export const LayoutSection: React.FC = () => {
       case 'auth':
         return {
           options: getLayoutsForPage('auth'),
-          selectedId: pageLayouts.auth ?? 'centered-card',
+          selectedId: resolveLayout(state, 'auth'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { auth: id as PageLayouts['auth'] } }),
         };
 
       case 'dashboard':
         return {
           options: getLayoutsForPage('dashboard'),
-          selectedId: pageLayouts.dashboard ?? 'sidebar-grid',
+          selectedId: resolveLayout(state, 'dashboard'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { dashboard: id as PageLayouts['dashboard'] } }),
         };
 
       case 'landing':
         return {
           options: getLayoutsForPage('landing'),
-          selectedId: pageLayouts.landing ?? 'hero-split',
+          selectedId: resolveLayout(state, 'landing'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { landing: id as PageLayouts['landing'] } }),
         };
 
       case 'pricing':
         return {
           options: getLayoutsForPage('pricing'),
-          selectedId: pageLayouts.pricing ?? 'cards-3col',
+          selectedId: resolveLayout(state, 'pricing'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { pricing: id as PageLayouts['pricing'] } }),
         };
 
       case 'kanban':
         return {
           options: getLayoutsForPage('kanban'),
-          selectedId: pageLayouts.kanban ?? 'board-columns',
+          selectedId: resolveLayout(state, 'kanban'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { kanban: id as PageLayouts['kanban'] } }),
         };
 
       case 'chat':
         return {
           options: getLayoutsForPage('chat'),
-          selectedId: pageLayouts.chat ?? 'split-pane',
+          selectedId: resolveLayout(state, 'chat'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { chat: id as PageLayouts['chat'] } }),
         };
 
       case 'settings':
         return {
           options: getLayoutsForPage('settings'),
-          selectedId: pageLayouts.settings ?? 'tabbed',
+          selectedId: resolveLayout(state, 'settings'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { settings: id as PageLayouts['settings'] } }),
         };
 
       case 'error':
         return {
           options: getLayoutsForPage('error'),
-          selectedId: pageLayouts.error ?? 'giant-hero',
+          selectedId: resolveLayout(state, 'error'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { error: id as PageLayouts['error'] } }),
         };
 
       case 'onboarding':
         return {
           options: getLayoutsForPage('onboarding'),
-          selectedId: pageLayouts.onboarding ?? 'wizard-stepper',
+          selectedId: resolveLayout(state, 'onboarding'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { onboarding: id as PageLayouts['onboarding'] } }),
         };
 
       case 'empty-state':
         return {
           options: getLayoutsForPage('emptyState'),
-          selectedId: pageLayouts.emptyState ?? 'centered-action',
+          selectedId: resolveLayout(state, 'empty-state'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { emptyState: id as PageLayouts['emptyState'] } }),
         };
 
       case 'success':
         return {
           options: getLayoutsForPage('success'),
-          selectedId: pageLayouts.success ?? 'celebration-card',
+          selectedId: resolveLayout(state, 'success-confirm'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { success: id as PageLayouts['success'] } }),
         };
 
       case 'detail':
         return {
           options: getLayoutsForPage('detail'),
-          selectedId: pageLayouts.detail ?? 'split-sidepanel',
+          selectedId: resolveLayout(state, 'detail'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { detail: id as PageLayouts['detail'] } }),
         };
 
       case 'ecommerce-catalog':
         return {
           options: getLayoutsForPage('ecommerce-catalog'),
-          selectedId: pageLayouts.ecommerceCatalog ?? 'faceted-sidebar',
+          selectedId: resolveLayout(state, 'ecommerce-catalog'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { ecommerceCatalog: id as PageLayouts['ecommerceCatalog'] } }),
         };
 
       case 'product-detail':
         return {
           options: getLayoutsForPage('product-detail'),
-          selectedId: pageLayouts.productDetail ?? 'split-sticky-buy',
+          selectedId: resolveLayout(state, 'product-detail'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { productDetail: id as PageLayouts['productDetail'] } }),
         };
 
       case 'checkout':
         return {
           options: getLayoutsForPage('checkout'),
-          selectedId: pageLayouts.checkout ?? 'slide-over-cart',
+          selectedId: resolveLayout(state, 'checkout'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { checkout: id as PageLayouts['checkout'] } }),
         };
 
       case 'marketplace':
         return {
           options: getLayoutsForPage('marketplace'),
-          selectedId: pageLayouts.marketplace ?? 'split-map-list',
+          selectedId: resolveLayout(state, 'marketplace'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { marketplace: id as PageLayouts['marketplace'] } }),
         };
 
       case 'booking':
         return {
           options: getLayoutsForPage('booking'),
-          selectedId: pageLayouts.booking ?? 'split-calendar-slots',
+          selectedId: resolveLayout(state, 'booking'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { booking: id as PageLayouts['booking'] } }),
         };
 
       case 'editorial':
         return {
           options: getLayoutsForPage('editorial'),
-          selectedId: pageLayouts.editorial ?? 'masonry-frontpage',
+          selectedId: resolveLayout(state, 'editorial'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { editorial: id as PageLayouts['editorial'] } }),
         };
 
       case 'charity':
         return {
           options: getLayoutsForPage('charity'),
-          selectedId: pageLayouts.charity ?? 'hero-impact-thermometer',
+          selectedId: resolveLayout(state, 'charity'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { charity: id as PageLayouts['charity'] } }),
         };
 
       case 'forum':
         return {
           options: getLayoutsForPage('forum'),
-          selectedId: pageLayouts.forum ?? 'three-column-reddit',
+          selectedId: resolveLayout(state, 'forum'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { forum: id as PageLayouts['forum'] } }),
         };
 
       case 'streaming':
         return {
           options: getLayoutsForPage('streaming'),
-          selectedId: pageLayouts.streaming ?? 'cinema-theater',
+          selectedId: resolveLayout(state, 'streaming'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { streaming: id as PageLayouts['streaming'] } }),
         };
 
       case 'portfolio':
         return {
           options: getLayoutsForPage('portfolio'),
-          selectedId: pageLayouts.portfolio ?? 'bento-developer',
+          selectedId: resolveLayout(state, 'portfolio'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolio: id as PageLayouts['portfolio'] } }),
         };
 
       case 'portfolio-project':
         return {
           options: getLayoutsForPage('portfolio-project'),
-          selectedId: pageLayouts.portfolioProject ?? 'case-study-narrative',
+          selectedId: resolveLayout(state, 'portfolio-project'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolioProject: id as PageLayouts['portfolioProject'] } }),
         };
 
       case 'portfolio-dashboard':
         return {
           options: getLayoutsForPage('portfolio-dashboard'),
-          selectedId: pageLayouts.portfolioDashboard ?? 'analytics-cms-split',
+          selectedId: resolveLayout(state, 'portfolio-dashboard'),
           onSelect: (id) => dispatch({ type: 'SET_PAGE_LAYOUT', updates: { portfolioDashboard: id as PageLayouts['portfolioDashboard'] } }),
         };
 

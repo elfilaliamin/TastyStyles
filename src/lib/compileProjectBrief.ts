@@ -2,7 +2,7 @@ import type { DesignState } from '../config/schema';
 import { compileMarkdown } from './compileMarkdown';
 import { getPurposeDefinition } from '../config/purposes';
 import { PAGE_TYPES_BY_ID } from '../config/pageTypes';
-import { getLayout } from './layoutRegistry';
+import { getLayout, resolveLayout } from './layoutRegistry';
 
 /**
  * Compiles a comprehensive PROJECT-BRIEF.md:
@@ -55,7 +55,8 @@ Below is the ordered user journey sequence. Pages should be routed and linked in
 ${effectivePages
   .map((p, idx) => {
     const pageDef = PAGE_TYPES_BY_ID.get(p.pageType);
-    return `${idx + 1}. **${pageDef?.label ?? p.pageType}** (\`/${p.pageType}\`) — Layout: \`${p.layoutId}\``;
+    const resolvedLayoutId = resolveLayout(state, p.pageType);
+    return `${idx + 1}. **${pageDef?.label ?? p.pageType}** (\`/${p.pageType}\`) — Layout: \`${resolvedLayoutId}\``;
   })
   .join('\n')}
 
@@ -63,7 +64,8 @@ ${effectivePages
 ${effectivePages
   .map((p, idx) => {
     const pageDef = PAGE_TYPES_BY_ID.get(p.pageType);
-    const layout = getLayout(p.layoutId) ?? getLayout(`${p.pageType}:${p.layoutId}`);
+    const layoutId = resolveLayout(state, p.pageType);
+    const layout = getLayout(layoutId) ?? getLayout(`${p.pageType}:${layoutId}`);
     const sections = layout?.sections && layout.sections.length > 0
       ? layout.sections
       : ['header-navbar', `${p.pageType}-main`, 'footer'];
@@ -71,8 +73,8 @@ ${effectivePages
     return `#### 3.${idx + 1} ${pageDef?.label ?? p.pageType} (\`${p.pageType}\`)
 - **Route / Anchor**: \`/${p.pageType}\`
 - **Archetype Category**: ${pageDef?.category ?? 'core'}
-- **Layout Architecture ID**: \`${p.layoutId}\`
-- **Layout Title**: ${layout?.label ?? p.layoutId}
+- **Layout Architecture ID**: \`${layoutId}\`
+- **Layout Title**: ${layout?.label ?? layoutId}
 - **Layout Blueprint Description**:
   ${layout?.description ?? pageDef?.description ?? 'Standard archetype view.'}
 - **Ordered Section Breakdown**:

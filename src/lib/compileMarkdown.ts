@@ -4,6 +4,7 @@ import { LAYOUT_CATALOG, type LayoutCatalogItem } from '../config/layoutCatalog'
 import { GOAL_DEFINITIONS } from '../config/previews';
 import { COMPONENT_RECIPES } from '../config/recipes';
 import { generateTailwindConfig } from './exportUtils';
+import { resolveLayout } from './layoutRegistry';
 
 /**
  * Compiles a live DesignState into an exact, comprehensive Design System Specification (DESIGN.md v2)
@@ -43,7 +44,7 @@ export function compileMarkdown(state: DesignState): string {
 
   const activePageEntries: LayoutCatalogItem[] = [];
   pageKeys.forEach((key) => {
-    const chosenVariantId = pageLayouts[key];
+    const chosenVariantId = resolveLayout(state, key as string);
     const catalogKey = key === 'ecommerceCatalog' ? 'ecommerce-catalog' : key === 'productDetail' ? 'product-detail' : key;
     const catalogForPage = LAYOUT_CATALOG[catalogKey] ?? LAYOUT_CATALOG[key] ?? [];
     const item =
