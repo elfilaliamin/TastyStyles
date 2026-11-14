@@ -96,7 +96,7 @@ export function compileMarkdown(state: DesignState): string {
     }
   }
 
-  return `# ${tokens.name} — Design System Specification
+  return `## ${tokens.name} — Design System Specification
 
 ## 0. Agent Contract
 - **Single Source of Truth**: This document is the definitive specification for all frontend UI development in this repository. Read it completely before generating code.
@@ -302,6 +302,8 @@ ${COMPONENT_RECIPES.map(
 
 ## 7. Page Inventory & Wireframe Architecture
 
+> **Notice on Wireframe Content**: Wireframe copy and sample data shown below are illustrative placeholders. Implementations must replace them with real project domain content and preserve existing product copy.
+
 ### 7.0 Active Target Project Goal: ${(state.projectGoal ?? 'saas').toUpperCase()}
 This application architecture is configured specifically for the **${GOAL_DEFINITIONS[state.projectGoal ?? 'saas']?.label ?? 'SaaS Platform'}** sector:
 > *${GOAL_DEFINITIONS[state.projectGoal ?? 'saas']?.tagline ?? 'Multi-tenant analytics, permissions & subscription operations'}*
@@ -419,7 +421,8 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
 ---
 
 ### 7.3 Specific Page Archetype Wireframes & Guidelines
-Implement the specific application pages according to their chosen wireframe architecture and responsive specifications:
+Implement the specific application pages according to their chosen wireframe architecture and responsive specifications.
+> *Notice: If an archetype originated from another sector catalog, use its layout structure only; ignore any sector-specific sample copy and imagery.*
 
 ${activePageEntries
   .map(
@@ -450,6 +453,15 @@ ${item.ascii}
 - **Desktop (>=1024px)**:
   - Full-fidelity multi-column workspaces, master-detail split views, and inspector panels.
   - Max-width content boundary capped at \`${tokens.breakpoints.wide}\` with \`--spacing-xl\` margins.
+- **Theme & Dark Mode**:
+  - Implement dark mode toggle via \`data-theme="dark"\` on \`<html>\` or \`<body>\`.
+  - Default to user system preference via \`@media (prefers-color-scheme: dark)\`.
+  - Ensure zero flash of unstyled content (FOUC) on page load via inline theme script.
+- **Accessibility & Motion**:
+  - Provide a keyboard-accessible skip link (\`<a href="#main-content" class="sr-only focus:not-sr-only ...">Skip to main content</a>\`) as the first focusable element.
+  - Respect \`@media (prefers-reduced-motion: reduce)\` by disabling all animations or reducing transition durations to \`<= 0.01ms\`.
+  - Modal dialogs and off-canvas drawers must implement a focus trap, have \`aria-modal="true"\`, dismiss on \`Escape\` key, and return focus to the trigger element on close.
+  - Use proper ARIA landmarks and roles: \`role="navigation"\` on sidebar/header, \`role="tablist"\` / \`role="tab"\` / \`aria-selected\` on tabs, and \`role="dialog"\` on modals.
 
 ---
 
@@ -465,10 +477,11 @@ ${item.ascii}
 
 ### 9.2 Acceptance Sign-Off Checklist
 Before marking frontend implementation complete, verify that:
-- [ ] \`tokens.css\` is created and imported at the root of the project.
-- [ ] Every page declared in the sitemap that exists in the project is restyled; missing feature pages were NOT created; missing system pages were added as visual shells and reported.
-- [ ] Every component adheres to its defined states in Section 6 (hover, active, focus, disabled).
-- [ ] Viewport simulation at 375px (Mobile) exhibits zero horizontal overflow.
-- [ ] Automated linting and TypeScript builds compile with zero errors.
+- [ ] 1. **Token Verification**: All colors, radii, shadows, and fonts bind strictly to \`tokens.css\` variables with no ad-hoc hex values or hardcoded font sizes.
+- [ ] 2. **Responsive Integrity**: Zero horizontal overflow from 375px mobile through 1440px desktop; 2-column form fields use \`minmax(0, 1fr)\`.
+- [ ] 3. **Theme & Contrast**: Dark/light mode toggle functions without flash; all text meets WCAG AA contrast (4.5:1 body, 3:1 large text/UI components).
+- [ ] 4. **Accessibility & Motion**: Skip link present; modals trap focus and dismiss on Esc; \`prefers-reduced-motion\` suppresses transitions; interactive controls have visible focus rings.
+- [ ] 5. **Layout & Scope Adherence**: Every page declared in the sitemap that exists in the project is restyled; missing feature pages were NOT created; missing system pages were added as visual shells and reported. Wireframe structural zones match prescribed archetype without invented sections.
+- [ ] 6. **Zero Logic Regression**: Application routes, data fetching, form handlers, state, and test IDs remain intact; test suite passes without regressions.
 `;
 }

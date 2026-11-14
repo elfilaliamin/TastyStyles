@@ -49,7 +49,7 @@ export type DesignAction =
 
 export const defaultInitialState: DesignState = {
   version: 1,
-  name: 'TastyStyles Spec',
+  name: 'My Project',
   activeMode: 'light',
   colors: {
     light: {

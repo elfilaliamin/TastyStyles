@@ -619,6 +619,74 @@ for (const preset of presets) {
 }
 console.log('✅ Batch 6 verified: No unconditional AAA claims, contrast report generated with computed ratios for all presets.');
 
+console.log('--- Testing Batch 7: Content Hygiene, Single H1 & Redesign Invariants ---');
+// 1. Single H1 check in PROJECT-BRIEF.md
+const defaultBrief = compileProjectBrief(defaultInitialState);
+const h1Matches = defaultBrief.split('\n').filter((l) => /^#\s/.test(l));
+if (h1Matches.length !== 1 || !h1Matches[0].includes('Project Brief & Site Architecture Specification')) {
+  console.error(`❌ Batch 7 check failed: PROJECT-BRIEF.md has ${h1Matches.length} H1 headers, expected exactly 1.`);
+  process.exit(1);
+}
+
+// 2. Content hygiene check
+const forbiddenPatterns = [
+  'alex@tastystyles.io',
+  'Alex Rivers',
+  'Rp 1.457.078.000',
+  '#TS-',
+  'DTCG v2',
+  '[TS] Brand',
+  '[TS] App',
+  'Tokens [3]',
+  'No Design Tokens Yet',
+  'Create Token Palette',
+];
+
+for (const p of PURPOSES) {
+  const pSt = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: p.id });
+  const pBrief = compileProjectBrief(pSt);
+  const pSpec = compileMarkdown(pSt);
+  for (const forbidden of forbiddenPatterns) {
+    if (pBrief.includes(forbidden) || pSpec.includes(forbidden)) {
+      console.error(`❌ Batch 7 check failed: Purpose ${p.id} leaked '${forbidden}'`);
+      process.exit(1);
+    }
+  }
+}
+
+// 3. Redesign Invariants & Conflict Precedence in Part A
+if (!defaultBrief.includes('### 5. Conflict Precedence & Redesign Invariants')) {
+  console.error("❌ Batch 7 check failed: Part A missing '### 5. Conflict Precedence & Redesign Invariants'");
+  process.exit(1);
+}
+if (!defaultBrief.includes('Existing application routes, features, and domain content')) {
+  console.error("❌ Batch 7 check failed: Part A missing 'Existing application routes, features, and domain content'");
+  process.exit(1);
+}
+
+// 4. Section 8 Accessibility, Dark Mode & Section 9.2 Checklist
+const defaultSpec = compileMarkdown(defaultInitialState);
+if (!defaultSpec.includes('Theme & Dark Mode') || !defaultSpec.includes('Accessibility & Motion')) {
+  console.error('❌ Batch 7 check failed: Section 8 missing Theme & Dark Mode or Accessibility & Motion rules');
+  process.exit(1);
+}
+
+const requiredChecklistItems = [
+  'Token Verification',
+  'Responsive Integrity',
+  'Theme & Contrast',
+  'Accessibility & Motion',
+  'Layout & Scope Adherence',
+  'Zero Logic Regression',
+];
+for (const item of requiredChecklistItems) {
+  if (!defaultSpec.includes(item)) {
+    console.error(`❌ Batch 7 check failed: Section 9.2 checklist missing '${item}'`);
+    process.exit(1);
+  }
+}
+console.log('✅ Batch 7 verified: Content hygiene confirmed, single H1 enforced, redesign invariants and checkable acceptance checklist validated.');
+
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');
 if (!fs.existsSync(workflowDoc)) {

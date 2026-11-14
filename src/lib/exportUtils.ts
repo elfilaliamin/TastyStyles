@@ -82,7 +82,7 @@ export function generateTailwindConfig(state: DesignState): string {
 
   return `import type { Config } from 'tailwindcss';
 
-// TastyStyles Tailwind Theme Configuration for: ${state.name}
+// Tailwind Theme Configuration for: ${state.name}
 const config: Config = {
   darkMode: ['class', '[data-theme="dark"]'],
   content: ['./src/**/*.{js,ts,jsx,tsx}', './index.html'],
@@ -170,7 +170,7 @@ export default config;
  */
 export function generateTypeScriptTokens(state: DesignState): string {
   return `/**
- * TastyStyles Design System Tokens: ${state.name}
+ * Design System Tokens: ${state.name}
  * Typed constant contract for React / React Native / Node
  */
 

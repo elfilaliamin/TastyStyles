@@ -51,6 +51,7 @@ export function compileProjectBrief(state: DesignState): string {
 > 3. **UI Redesign Guidance**: When using this brief to redesign an existing web application, map existing features directly onto these clean layouts and token variables—delivering a modern, world-class UI without breaking existing business logic.
 > 4. **Strict Token Binding**: All styles MUST bind to the CSS variables in \`tokens.css\` / Part B below. Never hardcode arbitrary hex colors, ad-hoc font families, or raw border-radius values.
 > 5. **Dual-Radius Isolation**: Interactive elements use \`var(--radius-base)\`, while surface containers (cards, modals, form panels) strictly use \`var(--radius-surface)\` (derived from radius preset, max 20px). Never apply extreme pill radius to surface cards.
+> 6. **Illustrative Content & Sample Copy**: Wireframe copy and sample data are illustrative. Replace them with the project's real content and keep existing product copy.
 
 ---
 
@@ -113,6 +114,24 @@ ${usesSidebar ? `- **Sidebar Application Rail**: \`${state.pageLayouts?.sidebar 
   - Interactive controls (buttons, badges, pills, avatar circles): use \`var(--radius-base)\`.
   - Surface containers (cards, modals, drawers, form panels): strictly use \`var(--radius-surface)\` (derived from radius preset, max 20px).
 - **Form Overflow Safeguard**: Two-column form grids must use \`gridTemplateColumns: repeat(2, minmax(0, 1fr))\` with \`boxSizing: border-box\` and \`minWidth: 0\` on all inputs.
+
+### 5. Conflict Precedence & Redesign Invariants
+
+#### Conflict Resolution Order
+When instructions, archetype layouts, or existing codebases conflict, resolve in this strict precedence order:
+1. **Existing application routes, features, and domain content** (highest priority)
+2. **Part A sitemap sequence and scope directives**
+3. **Canonical CSS tokens** (\`tokens.css\`)
+4. **Component recipes** (Section 6)
+5. **Wireframe structural zones** (Section 7.3) as structural hints
+6. **General prose descriptions** (lowest priority)
+
+#### Invariant Constraints for AI Agents
+- **Preserve Business Logic**: Never break, delete, or alter application routes, data-fetching logic, state machines, event handlers, props, DOM IDs, or \`data-testid\` attributes.
+- **Presentation Only**: Restyling must strictly alter visual presentation (CSS classes, layout containers, typography, spacing, colors).
+- **Approval Required**: Stop and request user confirmation before modifying any functional logic or omitting established product features.
+- **Incremental Execution**: Refactor page-by-page. Run existing test suites after each page to verify zero functional regressions.
+- **Transparency**: Explicitly report all skipped pages (due to feature scope) and all newly created system/utility pages to the user.
 
 ---
 

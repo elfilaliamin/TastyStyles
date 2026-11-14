@@ -182,7 +182,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Full-width app header with brand breadcrumbs, command bar (Cmd+K), and user profile drawer.',
       variant: 'navbar-saas',
       ascii: `+-------------------------------------------------------+
-| [TS] App / Project   [Search or Cmd+K]   (+) [Bell] [User]|
+| [Brand] / Project    [Search or Cmd+K]   (+) [Bell] [User]|
 +-------------------------------------------------------+`,
       mobile: 'Search collapses to search icon button; breadcrumb shortens to current entity.',
       tablet: 'Compact search bar with breadcrumb trail and quick action buttons.',
@@ -247,11 +247,11 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Categorized collapsible navigation groups with unread notification badges and workspace switcher.',
       variant: 'sidebar-content',
       ascii: `+---------------+---------------------------------------+
-| [TS] Brand    | Main Workspace Content                |
+| [Brand]       | Main Workspace Content                |
 |               |                                       |
 | CORE SYSTEM   |                                       |
 | - Dashboard   |                                       |
-| - Tokens [3]  |                                       |
+| - Reports [3] |                                       |
 |               |                                       |
 | ADMIN         |                                       |
 | - Settings    |                                       |
@@ -582,7 +582,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 | "Powering Secure Crypto Payments & Financial Ops"     |
 |       [Open Account]          [Explore Contract]      |
 |       +---------------------------------------+       |
-|       |  [ Floating Phone: Rp 1.457.078.000 ] |       |
+|       |  [ Floating Phone: $1,250.00 ]        |       |
 |       +---------------------------------------+       |
 +-------------------------------------------------------+
 | [4 Banking Feature Cards: Account, Payments, API...]  |
@@ -745,8 +745,8 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       ascii: `+-------------------------------------------------------+
 | [General & Profile]   [Notifications & Alerts]   [Security & Access] |
 |                                                       |
-| Display Name: [Alex Rivers                          ] |
-| Email:        [alex@tastystyles.io                  ] |
+| Display Name: [Jane Doe                             ] |
+| Email:        [user@example.com                     ] |
 | [Save Changes]                                        |
 +-------------------------------------------------------+`,
       mobile: 'Tabs become horizontally scrollable strip with bottom border indicator.',
@@ -884,7 +884,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'minimal-modal',
       ascii: `+-------------------------------------------------------+
 |        +-------------------------------------+        |
-|        | Welcome to TastyStyles!             |        |
+|        | Welcome to the Platform!            |        |
 |        | Let us tailor your workspace setup. |        |
 |        | [Get Started ->]          [Skip]    |        |
 |        +-------------------------------------+        |
@@ -903,9 +903,9 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'centered-action',
       ascii: `+-------------------------------------------------------+
 |                     [Empty Box Icon]                  |
-|                    No Design Tokens Yet               |
-|      Get started by creating your first token palette |
-|                 [ + Create Token Palette ]            |
+|                    No Items Yet                       |
+|      Get started by creating your first item          |
+|                 [ + Create Item ]                     |
 +-------------------------------------------------------+`,
       mobile: 'Button takes full container width with accessible 44px height.',
       tablet: 'Centered element group with generous whitespace.',
@@ -954,8 +954,8 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       ascii: `+-------------------------------------------------------+
 |        +-------------------------------------+        |
 |        |           [Check Circle]            |        |
-|        |         Tokens Exported!            |        |
-|        | Receipt ID: #TS-94827               |        |
+|        |         Export Complete!            |        |
+|        | Receipt ID: INV-1001                |        |
 |        | [Download ZIP Bundle]  [Close]      |        |
 |        +-------------------------------------+        |
 +-------------------------------------------------------+`,
@@ -969,7 +969,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Itemized transaction breakdown with next steps and audit trail details.',
       variant: 'table-matrix',
       ascii: `+-------------------------------------------------------+
-| Transaction Receipt: #TS-88219                        |
+| Transaction Receipt: #INV-88219                       |
 | - Spec File: DESIGN.md                      Included  |
 | - Tailwind Config: tailwind.config.ts       Included  |
 | - CSS Custom Properties: tokens.css         Included  |
@@ -1164,7 +1164,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       title: 'Masonry News Frontpage',
       description: 'NYT standard: 2-column lead story with headline + 1-column trending list + 3-col topic grid.',
       variant: 'bento-grid',
-      ascii: '+-------------------+-----------+\n| Lead Story Hero   | Trending  |\n| Large Cover Photo | 1. DTCG v2|\n+-------------------+-----------+',
+      ascii: '+-------------------+-----------+\n| Lead Story Hero   | Trending  |\n| Large Cover Photo | 1. Release notes|\n+-------------------+-----------+',
       mobile: 'Stories stack vertically in chronological order.',
       tablet: '2-column responsive masonry.',
     },
@@ -1311,7 +1311,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Single-column resume storytelling with career timeline, education milestones, skills matrix, and project list.',
       variant: 'timeline-list',
       ascii: `+-------------------------------------------------------+
-| [Avatar] Alex Rivers — Staff Design Technologist      |
+| [Avatar] Jane Doe — Staff Design Technologist         |
 | Career Experiences: 2024-Present, 2021-2024...        |
 | Education, Degrees & Certifications                   |
 | Projects Showcase & Spoken / Code Languages           |
@@ -1342,7 +1342,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'split-terminal',
       ascii: `+-------------------------------------------------------+
 | > cat profile.json | grep -E "experiences|skills"     |
-| > run demo --project=tastystyles                      |
+| > run demo --project=my-app                           |
 | [Live Project Output & Metrics Dashboard]             |
 +-------------------------------------------------------+`,
       mobile: 'Full-bleed monospace console with tabbed command buttons.',
@@ -1354,7 +1354,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       title: 'Case Study Hero & Metrics',
       description: 'ReadCV benchmark: statement typography intro + 2-column full-bleed project cards with impact metrics.',
       variant: 'bento-grid',
-      ascii: '+-------------------------------------------------------+\n| Statement: Alex Rivers — Staff Product Designer       |\n+---------------------------+---------------------------+\n| [Project 1: +340% Veloc.] | [Project 2: 65% Latency]  |\n+---------------------------+---------------------------+',
+      ascii: '+-------------------------------------------------------+\n| Statement: Jane Doe — Staff Product Designer          |\n+---------------------------+---------------------------+\n| [Project 1: +340% Veloc.] | [Project 2: 65% Latency]  |\n+---------------------------+---------------------------+',
       mobile: 'Project cards stack in single column.',
       tablet: '2-column responsive grid.',
     },
@@ -1364,7 +1364,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       title: 'Minimalist Editorial',
       description: 'Substack standard: text-first chronological narrative of work, speaking engagements, and patents.',
       variant: 'minimal',
-      ascii: '+-------------------------------------------------------+\n| Chronological Career Narrative & Selected Writing     |\n| - 2026: TastyStyles Autonomous Token Engine           |\n+-------------------------------------------------------+',
+      ascii: '+-------------------------------------------------------+\n| Chronological Career Narrative & Selected Writing     |\n| - 2026: Design System Engine                          |\n+-------------------------------------------------------+',
       mobile: 'Single column with comfortable line length.',
       tablet: 'Centered 720px max reading width.',
     },
@@ -1417,8 +1417,8 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       description: 'Longform developer essay explaining the technical why, design decisions, and retrospective learnings.',
       variant: 'minimal',
       ascii: `+-------------------------------------------------------+
-| Deep Dive: Building an Autonomous Design Token Engine |
-| By Alex Rivers • 8 min read • React, TypeScript       |
+| Deep Dive: Modern System Architecture & Design        |
+| By Jane Doe • 8 min read • React, TypeScript          |
 | In-depth narrative prose with inline code snippets... |
 +-------------------------------------------------------+`,
       mobile: 'Single column with generous line-height and readable font scale.',
@@ -1449,7 +1449,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'board-columns',
       ascii: `+---------------+---------------+---------------+
 | Ideas & Drafts| In Review     | Published Live|
-| - Project Alpha| - Project Beta| - TastyStyles |
+| - Project Alpha| - Project Beta| - Project Gamma|
 | - Blog Post 1 | - Video Demo  | - Agent Token |
 +---------------+---------------+---------------+`,
       mobile: 'Lanes stack or horizontally swipe on mobile.',
@@ -1480,8 +1480,8 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
       variant: 'sidebar-content',
       ascii: `+-------------------------------+-----------------------+
 | Main Entity Summary           | Metadata Inspector    |
-| - Token Name: Primary Brand   | Created: 2026-11-04   |
-| - Value: #0284c7              | Author: Alex Rivers   |
+| - Item Name: Primary Asset    | Created: 2026-11-04   |
+| - Value: #0284c7              | Author: Jane Doe      |
 | - Status: Active              | [Edit Item] [Delete]  |
 +-------------------------------+-----------------------+`,
       mobile: 'Metadata panel collapses below entity summary in single vertical column.',

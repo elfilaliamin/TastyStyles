@@ -200,10 +200,12 @@ export const DesignStateSchema = z.object({
     dark: ColorPaletteSchema,
   }),
   typography: TypographyStateSchema,
+  /** @deprecated Legacy global layout. Use project.pageLayouts or pageLayouts instead. */
   layout: z.string().min(1),
   radius: z.string().min(1),
   shadow: z.string().min(1),
   spacing: z.string().min(1),
+  /** @deprecated Legacy icon style string. Use icons configuration instead. */
   iconStyle: z.enum(['clean-outline', 'bold-stroke', 'minimal-thin', 'duotone', 'solid-badge']).default('clean-outline'),
   icons: IconConfigSchema.optional().default(() => IconConfigSchema.parse({})),
   pageLayouts: PageLayoutsSchema.optional().default(() => PageLayoutsSchema.parse({})),
