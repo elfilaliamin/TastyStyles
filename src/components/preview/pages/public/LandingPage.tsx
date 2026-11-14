@@ -54,8 +54,9 @@ export const LandingPage: React.FC = () => {
                 alignItems: 'center',
                 gap: '6px',
                 padding: '4px 12px',
-                borderRadius: '9999px',
-                backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                borderRadius: 'var(--ts-radius-button, 9999px)',
+                backgroundColor: 'var(--ts-color-surface)',
+                border: '1px solid var(--ts-color-border)',
                 color: 'var(--ts-color-primary)',
                 fontSize: 'calc(var(--ts-base-size) * 0.78)',
                 fontWeight: 600,
@@ -85,7 +86,7 @@ export const LandingPage: React.FC = () => {
                 style={{
                   backgroundColor: 'var(--ts-color-primary)',
                   color: primaryTextColor,
-                  borderRadius: 'var(--ts-radius-surface, 16px)',
+                  borderRadius: 'var(--ts-radius-button, 9999px)',
                   padding: 'var(--ts-space-sm) var(--ts-space-lg)',
                   border: 'none',
                   fontSize: 'calc(var(--ts-base-size) * 0.9)',
@@ -126,7 +127,7 @@ export const LandingPage: React.FC = () => {
               <div>--radius-brand: <span>{state.radius}</span></div>
               <div>--font-heading: <span>{state.typography.headingFont}</span></div>
             </div>
-            <div style={{ padding: '8px', borderRadius: 'var(--ts-radius-surface, 8px)', backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981', fontSize: '11px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ padding: '8px', borderRadius: 'var(--ts-radius-surface, 8px)', backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)', color: 'var(--ts-color-primary)', fontSize: '11px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
               <AppIcon name="checkCircle" size={14} />
               <span>WCAG 2.1 Contrast Verified</span>
             </div>
@@ -156,8 +157,9 @@ export const LandingPage: React.FC = () => {
               alignItems: 'center',
               gap: '6px',
               padding: '4px 12px',
-              borderRadius: '9999px',
-              backgroundColor: 'rgba(2, 132, 199, 0.1)',
+              borderRadius: 'var(--ts-radius-button, 9999px)',
+              backgroundColor: 'var(--ts-color-surface)',
+              border: '1px solid var(--ts-color-border)',
               color: 'var(--ts-color-primary)',
               fontSize: 'calc(var(--ts-base-size) * 0.78)',
               fontWeight: 600,
@@ -189,7 +191,7 @@ export const LandingPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-primary)',
                 color: primaryTextColor,
-                borderRadius: 'var(--ts-radius-surface, 16px)',
+                borderRadius: 'var(--ts-radius-button, 9999px)',
                 padding: 'var(--ts-space-sm) var(--ts-space-lg)',
                 border: 'none',
                 fontSize: 'calc(var(--ts-base-size) * 0.9)',
@@ -274,10 +276,11 @@ export const LandingPage: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span
                   style={{
-                    backgroundColor: 'rgba(217, 119, 6, 0.12)',
-                    color: '#d97706',
+                    backgroundColor: 'var(--ts-color-surface)',
+                    border: '1px solid var(--ts-color-border)',
+                    color: 'var(--ts-color-primary)',
                     padding: '4px 12px',
-                    borderRadius: '9999px',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     fontSize: '12px',
                     fontWeight: 700,
                     display: 'inline-flex',
@@ -300,7 +303,7 @@ export const LandingPage: React.FC = () => {
                 }}
               >
                 Build Smarter Products with AI That{' '}
-                <span style={{ color: '#d97706' }}>Actually Works</span>
+                <span style={{ color: 'var(--ts-color-accent)' }}>Actually Works</span>
               </h1>
               <p style={{ margin: 0, fontSize: '15px', lineHeight: 1.6, opacity: 0.8, maxWidth: '460px' }}>
                 Deliver personalized AI assistants in minutes — seamlessly integrated with your stack, production guardrails, and real-time observability.
@@ -309,14 +312,15 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   style={{
-                    backgroundColor: '#18181b',
-                    color: '#ffffff',
+                    backgroundColor: 'var(--ts-color-primary)',
+                    color: primaryTextColor,
                     border: 'none',
-                    borderRadius: 'var(--ts-radius-surface, 10px)',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     padding: '12px 24px',
                     fontWeight: 700,
                     fontSize: '13px',
                     cursor: 'pointer',
+                    boxShadow: 'var(--ts-shadow)',
                   }}
                 >
                   Start Free Trial
@@ -324,10 +328,10 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   style={{
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'var(--ts-color-surface)',
                     color: 'var(--ts-color-text)',
                     border: '1px solid var(--ts-color-border)',
-                    borderRadius: 'var(--ts-radius-surface, 10px)',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     padding: '12px 24px',
                     fontWeight: 600,
                     fontSize: '13px',
@@ -339,53 +343,65 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Architectural Backing + Dark Floating Code Mockup */}
+            {/* Right Architectural 3D Structure + Floating Glass Interface Widget */}
             <div
               style={{
                 position: 'relative',
-                borderRadius: '24px',
-                padding: '28px',
-                background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.15) 0%, rgba(180, 83, 9, 0.05) 100%)',
-                border: '1px solid rgba(217, 119, 6, 0.25)',
+                borderRadius: 'var(--ts-radius-surface, 24px)',
+                overflow: 'hidden',
+                boxShadow: 'var(--ts-shadow)',
+                border: '1px solid var(--ts-color-border)',
+                minHeight: '360px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                minHeight: '340px',
+                background: `linear-gradient(135deg, rgba(0,0,0,0.15) 0%, transparent 60%), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80') center/cover no-repeat`,
               }}
             >
+              {/* Floating UI Widget Card */}
               <div
                 style={{
-                  width: '100%',
-                  maxWidth: '440px',
-                  backgroundColor: '#18181b',
-                  color: '#f4f4f5',
-                  borderRadius: '14px',
-                  padding: '18px',
+                  width: '90%',
+                  maxWidth: '380px',
+                  backgroundColor: 'var(--ts-color-surface)',
+                  color: 'var(--ts-color-text)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
+                  padding: '20px',
                   boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
-                  border: '1px solid #27272a',
+                  border: '1px solid var(--ts-color-border)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px',
-                  fontFamily: 'monospace',
-                  fontSize: '12px',
+                  gap: '14px',
+                  backdropFilter: 'blur(12px)',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #27272a', paddingBottom: '8px' }}>
-                  <div style={{ display: 'flex', gap: '6px' }}>
-                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
-                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
-                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--ts-color-border)', paddingBottom: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                    <span style={{ fontWeight: 800, fontSize: '13px' }}>Agentic Pipeline v2.4</span>
                   </div>
-                  <span style={{ color: '#a1a1aa', fontSize: '11px' }}>workflow.agent.ts</span>
+                  <span style={{ fontSize: '11px', color: 'var(--ts-color-primary)', fontWeight: 700 }}>● Active</span>
                 </div>
-                <div style={{ lineHeight: 1.6 }}>
-                  <div><span style={{ color: '#f59e0b' }}>const</span> assistant = <span style={{ color: '#38bdf8' }}>new</span> AIAssistant({`{`}</div>
-                  <div style={{ paddingLeft: '14px' }}>model: <span style={{ color: '#10b981' }}>"agentic-v2"</span>,</div>
-                  <div style={{ paddingLeft: '14px' }}>tokens: <span style={{ color: '#f59e0b' }}>"deterministic"</span>,</div>
-                  <div style={{ paddingLeft: '14px' }}>temperature: <span style={{ color: '#a78bfa' }}>0.0</span>,</div>
-                  <div style={{ paddingLeft: '14px' }}>guardrails: [<span style={{ color: '#10b981' }}>"wcag-aaa"</span>, <span style={{ color: '#10b981' }}>"zero-drift"</span>]</div>
-                  <div>{`});`}</div>
-                  <div style={{ color: '#10b981', marginTop: '6px' }}>✓ Workflow verified & ready to serve</div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', fontSize: '12px' }}>
+                  <div style={{ backgroundColor: 'var(--ts-color-background)', padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--ts-color-border)' }}>
+                    <div style={{ opacity: 0.6, fontSize: '10px' }}>LATENCY SLA</div>
+                    <div style={{ fontWeight: 800, fontSize: '14px', color: 'var(--ts-color-primary)' }}>18ms</div>
+                  </div>
+                  <div style={{ backgroundColor: 'var(--ts-color-background)', padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--ts-color-border)' }}>
+                    <div style={{ opacity: 0.6, fontSize: '10px' }}>ACCURACY</div>
+                    <div style={{ fontWeight: 800, fontSize: '14px', color: 'var(--ts-color-accent)' }}>99.8%</div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', opacity: 0.8 }}>
+                    <span>Deterministic Token Conformance</span>
+                    <span style={{ fontWeight: 700 }}>100%</span>
+                  </div>
+                  <div style={{ width: '100%', height: '6px', borderRadius: '3px', backgroundColor: 'var(--ts-color-border)', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '100%', backgroundColor: 'var(--ts-color-primary)' }} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -416,12 +432,12 @@ export const LandingPage: React.FC = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '20px' }}>
               {[
-                { title: 'Intelligent Workflow Automation', desc: 'Auto-compile multi-step user actions and trigger downstream CRM webhooks with zero manual code.', icon: 'zap' as const, accent: '#d97706' },
-                { title: 'Real-Time Data Intelligence', desc: 'Stream telemetry and vector queries from your data lake directly into low-latency inference buffers.', icon: 'activity' as const, accent: '#2563eb' },
-                { title: 'Built for Scalable Growth', desc: 'Scale seamlessly from prototype to enterprise volumes with multi-tenant workspace isolation.', icon: 'trendingUp' as const, accent: '#10b981' },
-                { title: 'Enterprise-Ready Security Framework', desc: 'End-to-end encryption, SOC2 certified compliance, and audit logging on every agent dispatch.', icon: 'shieldCheck' as const, accent: '#d97706' },
-                { title: 'Developer-Centric Integration Tools', desc: 'Native SDKs for TypeScript, Python, and Go with automatic OpenAPI contract verification.', icon: 'code' as const, accent: '#6366f1' },
-                { title: 'High-Performance AI Engine', desc: 'Sub-50ms token generation with smart speculative decoding and automated model fallbacks.', icon: 'cpu' as const, accent: '#ec4899' },
+                { title: 'Intelligent Workflow Automation', desc: 'Auto-compile multi-step user actions and trigger downstream CRM webhooks with zero manual code.', icon: 'zap' as const },
+                { title: 'Real-Time Data Intelligence', desc: 'Stream telemetry and vector queries from your data lake directly into low-latency inference buffers.', icon: 'activity' as const },
+                { title: 'Built for Scalable Growth', desc: 'Scale seamlessly from prototype to enterprise volumes with multi-tenant workspace isolation.', icon: 'trendingUp' as const },
+                { title: 'Enterprise-Ready Security Framework', desc: 'End-to-end encryption, SOC2 certified compliance, and audit logging on every agent dispatch.', icon: 'shieldCheck' as const },
+                { title: 'Developer-Centric Integration Tools', desc: 'Native SDKs for TypeScript, Python, and Go with automatic OpenAPI contract verification.', icon: 'code' as const },
+                { title: 'High-Performance AI Engine', desc: 'Sub-50ms token generation with smart speculative decoding and automated model fallbacks.', icon: 'cpu' as const },
               ].map((feat, idx) => (
                 <div
                   key={idx}
@@ -441,8 +457,9 @@ export const LandingPage: React.FC = () => {
                       width: '40px',
                       height: '40px',
                       borderRadius: '10px',
-                      backgroundColor: `${feat.accent}15`,
-                      color: feat.accent,
+                      backgroundColor: 'var(--ts-color-background)',
+                      border: '1px solid var(--ts-color-border)',
+                      color: 'var(--ts-color-primary)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -482,10 +499,10 @@ export const LandingPage: React.FC = () => {
                   onClick={() => setActiveWorkflowTab(tab.id as typeof activeWorkflowTab)}
                   style={{
                     padding: '8px 18px',
-                    borderRadius: '9999px',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     border: activeWorkflowTab === tab.id ? 'none' : '1px solid var(--ts-color-border)',
-                    backgroundColor: activeWorkflowTab === tab.id ? '#18181b' : 'transparent',
-                    color: activeWorkflowTab === tab.id ? '#ffffff' : 'var(--ts-color-text)',
+                    backgroundColor: activeWorkflowTab === tab.id ? 'var(--ts-color-primary)' : 'var(--ts-color-surface)',
+                    color: activeWorkflowTab === tab.id ? primaryTextColor : 'var(--ts-color-text)',
                     fontSize: '13px',
                     fontWeight: 600,
                     cursor: 'pointer',
@@ -501,7 +518,7 @@ export const LandingPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: '24px',
+                borderRadius: 'var(--ts-radius-surface, 24px)',
                 padding: '32px',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
@@ -511,7 +528,7 @@ export const LandingPage: React.FC = () => {
               }}
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#d97706', fontWeight: 800 }}>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ts-color-primary)', fontWeight: 800 }}>
                   Active Module: {activeWorkflowTab.toUpperCase()}
                 </span>
                 <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '22px', fontWeight: 900, margin: 0 }}>
@@ -523,66 +540,97 @@ export const LandingPage: React.FC = () => {
                   {activeWorkflowTab === 'pipeline' && 'Transform unstructured logs into structured parquet tables with streaming schema validation and automated alerting.'}
                   {activeWorkflowTab === 'growth' && 'Hyper-personalize customer landing pages and onboarding sequences dynamically based on conversion intent scores.'}
                 </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#d97706', fontSize: '13px', fontWeight: 700 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--ts-color-primary)', fontSize: '13px', fontWeight: 700 }}>
                   Explore {activeWorkflowTab} workflow <AppIcon name="arrowRight" size={14} />
                 </div>
               </div>
 
-              {/* Console Mockup */}
+              {/* Visual Analytics UI Card (Replaces Raw Code Console) */}
               <div
                 style={{
-                  backgroundColor: '#18181b',
-                  borderRadius: '16px',
-                  border: '1px solid #27272a',
-                  padding: '20px',
-                  color: '#f4f4f5',
-                  fontFamily: 'monospace',
-                  fontSize: '12px',
+                  backgroundColor: 'var(--ts-color-background)',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
+                  border: '1px solid var(--ts-color-border)',
+                  padding: '24px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '8px',
+                  gap: '14px',
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #27272a', paddingBottom: '6px' }}>
-                  <span style={{ color: '#a1a1aa' }}>telemetry-inspector.log</span>
-                  <span style={{ color: '#10b981' }}>● LIVE</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--ts-color-border)', paddingBottom: '10px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <AppIcon name="activity" size={16} style={{ color: 'var(--ts-color-primary)' }} />
+                    <span style={{ fontWeight: 800, fontSize: '13px' }}>Live Pipeline Telemetry</span>
+                  </div>
+                  <span style={{ backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)', color: 'var(--ts-color-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 700 }}>
+                    ACTIVE SPRINT
+                  </span>
                 </div>
-                <div>$ query --module {activeWorkflowTab} --status active</div>
-                <div style={{ color: '#38bdf8' }}>→ Matched 1,482 customer sessions in 14ms</div>
-                <div style={{ color: '#10b981' }}>→ Synthesizing automated action dispatch</div>
-                <div style={{ color: '#f59e0b' }}>→ Zero human escalation required</div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
+                  <div style={{ backgroundColor: 'var(--ts-color-surface)', padding: '12px', borderRadius: '10px', border: '1px solid var(--ts-color-border)' }}>
+                    <div style={{ fontSize: '11px', opacity: 0.65 }}>Sessions Ingested</div>
+                    <div style={{ fontSize: '18px', fontWeight: 900, color: 'var(--ts-color-primary)', marginTop: '2px' }}>1,482</div>
+                  </div>
+                  <div style={{ backgroundColor: 'var(--ts-color-surface)', padding: '12px', borderRadius: '10px', border: '1px solid var(--ts-color-border)' }}>
+                    <div style={{ fontSize: '11px', opacity: 0.65 }}>Automation Rate</div>
+                    <div style={{ fontSize: '18px', fontWeight: 900, color: 'var(--ts-color-accent)', marginTop: '2px' }}>99.98%</div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
+                    <span>Inference Resource Load</span>
+                    <span style={{ fontWeight: 700 }}>24%</span>
+                  </div>
+                  <div style={{ width: '100%', height: '6px', borderRadius: '3px', backgroundColor: 'var(--ts-color-border)', overflow: 'hidden' }}>
+                    <div style={{ width: '24%', height: '100%', backgroundColor: 'var(--ts-color-primary)' }} />
+                  </div>
+                </div>
               </div>
             </div>
           </section>
 
-          {/* Dark Confidence Banner */}
+          {/* Confidence Banner */}
           <section
             style={{
-              backgroundColor: '#18181b',
-              color: '#ffffff',
-              padding: '60px 24px',
-              textAlign: 'center',
+              maxWidth: '1120px',
+              margin: '0 auto',
+              width: '100%',
+              padding: '0 24px',
+              boxSizing: 'border-box',
             }}
           >
-            <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              <div>
+            <div
+              style={{
+                backgroundColor: 'var(--ts-color-surface)',
+                border: '1px solid var(--ts-color-border)',
+                borderRadius: 'var(--ts-radius-surface, 24px)',
+                padding: '48px 32px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '32px',
+                boxShadow: 'var(--ts-shadow)',
+              }}
+            >
+              <div style={{ textAlign: 'center' }}>
                 <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '28px', fontWeight: 900, margin: '0 0 8px 0' }}>
                   Designed for Teams That Ship with Confidence
                 </h2>
-                <p style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+                <p style={{ margin: 0, opacity: 0.75, fontSize: '14px' }}>
                   Enterprise reliability, audited permissions, and dedicated SLAs protecting your mission-critical pipelines.
                 </p>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', textAlign: 'left' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
                 {[
                   { title: 'Production-Ready, Day Fifteen', desc: 'Out of the box turnkey integrations with your vector databases, monitoring tools, and CI/CD pipelines.' },
                   { title: 'Built to Scale with Your Business', desc: 'Elastic compute cluster scaling from 10 to 10M concurrent user sessions without throttling.' },
                   { title: 'Designed for Enterprise Security', desc: 'Granular field-level redaction, isolated tenant VPCs, and zero model training on your private data.' },
                 ].map((item, i) => (
-                  <div key={i} style={{ borderLeft: '2px solid #d97706', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <div key={i} style={{ borderLeft: '3px solid var(--ts-color-primary)', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <div style={{ fontWeight: 800, fontSize: '15px' }}>{item.title}</div>
-                    <p style={{ margin: 0, fontSize: '13px', opacity: 0.7, lineHeight: 1.5 }}>{item.desc}</p>
+                    <p style={{ margin: 0, fontSize: '13px', opacity: 0.75, lineHeight: 1.5 }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -604,12 +652,13 @@ export const LandingPage: React.FC = () => {
               style={{
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
-                borderRadius: '20px',
+                borderRadius: 'var(--ts-radius-surface, 20px)',
                 padding: '32px',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
                 gap: '24px',
                 alignItems: 'center',
+                boxShadow: 'var(--ts-shadow)',
               }}
             >
               {/* Sketches Column */}
@@ -617,23 +666,23 @@ export const LandingPage: React.FC = () => {
                 <img
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=140&q=80"
                   alt="Founder Sarah"
-                  style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #d97706' }}
+                  style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--ts-color-primary)' }}
                 />
                 <img
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=140&q=80"
                   alt="Founder Josh"
-                  style={{ width: '74px', height: '74px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #18181b' }}
+                  style={{ width: '74px', height: '74px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--ts-color-accent)' }}
                 />
                 <img
                   src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=140&q=80"
                   alt="Founder Marcus"
-                  style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #d97706' }}
+                  style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--ts-color-primary)' }}
                 />
               </div>
 
               {/* Quote Column */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <span style={{ fontSize: '12px', fontWeight: 800, color: '#d97706' }}>Outreach Tech Group</span>
+                <span style={{ fontSize: '12px', fontWeight: 800, color: 'var(--ts-color-primary)' }}>Outreach Tech Group</span>
                 <p style={{ margin: 0, fontSize: '15px', fontStyle: 'italic', lineHeight: 1.6 }}>
                   "This platform helped us deploy custom AI workflows without touching our backend code. We have reduced customer escalation tickets by 72% in our very first quarter."
                 </p>
@@ -706,7 +755,7 @@ export const LandingPage: React.FC = () => {
           <section style={{ maxWidth: '1000px', margin: '0 auto', width: '100%', padding: '0 24px', boxSizing: 'border-box' }}>
             <div
               style={{
-                borderRadius: '24px',
+                borderRadius: 'var(--ts-radius-surface, 24px)',
                 backgroundColor: 'var(--ts-color-surface)',
                 border: '1px solid var(--ts-color-border)',
                 padding: '48px 24px',
@@ -727,15 +776,16 @@ export const LandingPage: React.FC = () => {
               <button
                 type="button"
                 style={{
-                  backgroundColor: '#18181b',
-                  color: '#ffffff',
+                  backgroundColor: 'var(--ts-color-primary)',
+                  color: primaryTextColor,
                   border: 'none',
-                  borderRadius: 'var(--ts-radius-surface, 10px)',
+                  borderRadius: 'var(--ts-radius-button, 9999px)',
                   padding: '12px 32px',
                   fontWeight: 700,
                   fontSize: '14px',
                   cursor: 'pointer',
                   marginTop: '8px',
+                  boxShadow: 'var(--ts-shadow)',
                 }}
               >
                 Get Started
@@ -762,7 +812,7 @@ export const LandingPage: React.FC = () => {
           >
             <div
               style={{
-                borderRadius: '28px',
+                borderRadius: 'var(--ts-radius-surface, 28px)',
                 overflow: 'hidden',
                 position: 'relative',
                 minHeight: '460px',
@@ -771,12 +821,12 @@ export const LandingPage: React.FC = () => {
                 justifyContent: 'center',
                 padding: '48px 36px',
                 color: '#ffffff',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
-                background: `linear-gradient(to right, rgba(22, 37, 33, 0.85) 0%, rgba(22, 37, 33, 0.35) 60%), url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat`,
+                boxShadow: 'var(--ts-shadow)',
+                background: `linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.35) 60%), url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat`,
               }}
             >
               <div style={{ maxWidth: '520px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
-                <span style={{ fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#a7f3d0', fontWeight: 700 }}>
+                <span style={{ fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--ts-color-accent)', fontWeight: 700 }}>
                   HOLISTIC SANCTUARY & WELLNESS
                 </span>
                 <h1
@@ -797,15 +847,15 @@ export const LandingPage: React.FC = () => {
                   <button
                     type="button"
                     style={{
-                      backgroundColor: '#26362e',
-                      color: '#ffffff',
-                      border: '1px solid rgba(255,255,255,0.3)',
-                      borderRadius: '9999px',
+                      backgroundColor: 'var(--ts-color-primary)',
+                      color: primaryTextColor,
+                      border: 'none',
+                      borderRadius: 'var(--ts-radius-button, 9999px)',
                       padding: '12px 28px',
                       fontSize: '13px',
                       fontWeight: 700,
                       cursor: 'pointer',
-                      boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+                      boxShadow: 'var(--ts-shadow)',
                     }}
                   >
                     Get Free Consultancy
@@ -832,7 +882,7 @@ export const LandingPage: React.FC = () => {
             {/* Left Artisanal Imagery */}
             <div
               style={{
-                borderRadius: '24px',
+                borderRadius: 'var(--ts-radius-surface, 24px)',
                 overflow: 'hidden',
                 height: '320px',
                 boxShadow: 'var(--ts-shadow)',
@@ -867,7 +917,7 @@ export const LandingPage: React.FC = () => {
                     style={{
                       backgroundColor: 'var(--ts-color-surface)',
                       border: '1px solid var(--ts-color-border)',
-                      borderRadius: '16px',
+                      borderRadius: 'var(--ts-radius-surface, 16px)',
                       padding: '16px 20px',
                       display: 'flex',
                       flexDirection: 'column',
@@ -904,7 +954,7 @@ export const LandingPage: React.FC = () => {
                   style={{
                     backgroundColor: 'var(--ts-color-surface)',
                     border: '1px solid var(--ts-color-border)',
-                    borderRadius: '20px',
+                    borderRadius: 'var(--ts-radius-surface, 20px)',
                     overflow: 'hidden',
                     display: 'flex',
                     flexDirection: 'column',
@@ -930,54 +980,54 @@ export const LandingPage: React.FC = () => {
           {/* Alternating Zigzag Stories */}
           <section style={{ maxWidth: '1120px', margin: '0 auto', width: '100%', padding: '0 24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: '48px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', gap: '32px', alignItems: 'center' }}>
-              <div style={{ borderRadius: '20px', overflow: 'hidden', height: '280px' }}>
+              <div style={{ borderRadius: 'var(--ts-radius-surface, 20px)', overflow: 'hidden', height: '280px' }}>
                 <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=700&q=80" alt="Joy in sunlight" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#52796f', fontWeight: 800 }}>EXPERIENCES</span>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--ts-color-primary)', fontWeight: 800 }}>EXPERIENCES</span>
                 <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '24px', fontWeight: 900, margin: 0 }}>What You'll Experience</h3>
                 <p style={{ margin: 0, fontSize: '14px', opacity: 0.8, lineHeight: 1.6 }}>
                   Feel energized, centered, and aligned with passion and joy in every aspect of your life through restorative holistic routines.
                 </p>
-                <div style={{ color: '#52796f', fontSize: '13px', fontWeight: 700 }}>More Info →</div>
+                <div style={{ color: 'var(--ts-color-primary)', fontSize: '13px', fontWeight: 700 }}>More Info →</div>
               </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', gap: '32px', alignItems: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#52796f', fontWeight: 800 }}>OUR METHODS</span>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--ts-color-primary)', fontWeight: 800 }}>OUR METHODS</span>
                 <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '24px', fontWeight: 900, margin: 0 }}>Backed By Science & Spirit</h3>
                 <p style={{ margin: 0, fontSize: '14px', opacity: 0.8, lineHeight: 1.6 }}>
                   We take wellness seriously; every session, tool, and method we use is thoughtfully tailored for your personalized healing journey.
                 </p>
-                <div style={{ color: '#52796f', fontSize: '13px', fontWeight: 700 }}>More Info →</div>
+                <div style={{ color: 'var(--ts-color-primary)', fontSize: '13px', fontWeight: 700 }}>More Info →</div>
               </div>
-              <div style={{ borderRadius: '20px', overflow: 'hidden', height: '280px' }}>
+              <div style={{ borderRadius: 'var(--ts-radius-surface, 20px)', overflow: 'hidden', height: '280px' }}>
                 <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=700&q=80" alt="Meditation peace" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
             </div>
           </section>
 
-          {/* Deep Spruce Green Lead-Gen Banner */}
+          {/* Preset-Themed Lead-Gen Banner */}
           <section style={{ maxWidth: '1120px', margin: '0 auto', width: '100%', padding: '0 24px', boxSizing: 'border-box' }}>
             <div
               style={{
-                backgroundColor: '#162521',
-                color: '#ffffff',
-                borderRadius: '28px',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                borderRadius: 'var(--ts-radius-surface, 28px)',
                 padding: '48px 36px',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
                 gap: '36px',
                 alignItems: 'center',
-                boxShadow: '0 20px 45px rgba(0,0,0,0.3)',
+                boxShadow: 'var(--ts-shadow)',
               }}
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '30px', fontWeight: 900, margin: 0, lineHeight: 1.2 }}>
                   Start Your Wellness Journey Today
                 </h2>
-                <p style={{ margin: 0, fontSize: '14px', opacity: 0.85, lineHeight: 1.6 }}>
+                <p style={{ margin: 0, fontSize: '14px', opacity: 0.9, lineHeight: 1.6 }}>
                   Whether you're seeking inner peace, physical vitality, or spiritual clarity, our certified facilitators will guide you every step of the way.
                 </p>
               </div>
@@ -985,18 +1035,19 @@ export const LandingPage: React.FC = () => {
               {/* Consultation Card Form */}
               <div
                 style={{
-                  backgroundColor: '#ffffff',
-                  color: '#18181b',
-                  borderRadius: '20px',
+                  backgroundColor: 'var(--ts-color-surface)',
+                  color: 'var(--ts-color-text)',
+                  borderRadius: 'var(--ts-radius-surface, 20px)',
                   padding: '24px',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '12px',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+                  boxShadow: 'var(--ts-shadow)',
+                  border: '1px solid var(--ts-color-border)',
                 }}
               >
                 {wellnessInquirySent ? (
-                  <div style={{ color: '#10b981', fontWeight: 700, fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
+                  <div style={{ color: 'var(--ts-color-primary)', fontWeight: 700, fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
                     ✓ Thank you! A dedicated wellness consultant will reach out within 24 hours.
                   </div>
                 ) : (
@@ -1011,26 +1062,27 @@ export const LandingPage: React.FC = () => {
                       type="text"
                       placeholder="Your Name"
                       required
-                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid #d4d4d8', fontSize: '13px', width: '100%', boxSizing: 'border-box' }}
+                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', color: 'var(--ts-color-text)', fontSize: '13px', width: '100%', boxSizing: 'border-box' }}
                     />
                     <input
                       type="email"
                       placeholder="Your Email"
                       required
-                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid #d4d4d8', fontSize: '13px', width: '100%', boxSizing: 'border-box' }}
+                      style={{ padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--ts-color-border)', backgroundColor: 'var(--ts-color-background)', color: 'var(--ts-color-text)', fontSize: '13px', width: '100%', boxSizing: 'border-box' }}
                     />
                     <button
                       type="submit"
                       style={{
-                        backgroundColor: '#162521',
-                        color: '#ffffff',
+                        backgroundColor: 'var(--ts-color-primary)',
+                        color: primaryTextColor,
                         border: 'none',
-                        borderRadius: '9999px',
+                        borderRadius: 'var(--ts-radius-button, 9999px)',
                         padding: '12px',
                         fontWeight: 700,
                         fontSize: '13px',
                         cursor: 'pointer',
                         marginTop: '4px',
+                        boxShadow: 'var(--ts-shadow)',
                       }}
                     >
                       Join a Program
@@ -1047,7 +1099,7 @@ export const LandingPage: React.FC = () => {
           6. CYBER SPOTLIGHT STUDIO ARCHETYPE (INSPIRED BY CERAVE - IMAGE 3)
           ============================================================== */}
       {layout === 'cyber-spotlight' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '70px', width: '100%', backgroundColor: '#08090c', color: '#f8fafc', paddingBottom: '60px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '70px', width: '100%', paddingBottom: '60px' }}>
           {/* Volumetric Spotlight Ray Hero */}
           <section
             style={{
@@ -1060,7 +1112,7 @@ export const LandingPage: React.FC = () => {
               overflow: 'hidden',
             }}
           >
-            {/* Luminous Spotlight Ray from Top-Right */}
+            {/* Luminous Spotlight Ray from Top-Right (Dynamic based on Preset Primary) */}
             <div
               style={{
                 position: 'absolute',
@@ -1068,7 +1120,8 @@ export const LandingPage: React.FC = () => {
                 right: '10%',
                 width: '350px',
                 height: '400px',
-                background: 'radial-gradient(circle at top, rgba(99, 102, 241, 0.25) 0%, rgba(56, 189, 248, 0.08) 40%, transparent 70%)',
+                background: 'radial-gradient(circle at top, var(--ts-color-primary) 0%, transparent 70%)',
+                opacity: 0.15,
                 filter: 'blur(35px)',
                 pointerEvents: 'none',
               }}
@@ -1078,10 +1131,10 @@ export const LandingPage: React.FC = () => {
               <span
                 style={{
                   padding: '4px 14px',
-                  borderRadius: '9999px',
-                  backgroundColor: 'rgba(99, 102, 241, 0.15)',
-                  border: '1px solid rgba(99, 102, 241, 0.35)',
-                  color: '#a5b4fc',
+                  borderRadius: 'var(--ts-radius-button, 9999px)',
+                  backgroundColor: 'var(--ts-color-surface)',
+                  border: '1px solid var(--ts-color-border)',
+                  color: 'var(--ts-color-primary)',
                   fontSize: '12px',
                   fontWeight: 700,
                   display: 'inline-flex',
@@ -1100,14 +1153,14 @@ export const LandingPage: React.FC = () => {
                   fontWeight: 900,
                   lineHeight: 1.15,
                   margin: 0,
-                  color: '#ffffff',
+                  color: 'var(--ts-color-text)',
                   letterSpacing: '-0.02em',
                 }}
               >
                 Smarter Conversations Powered by an Intelligent AI Assistant
               </h1>
 
-              <p style={{ margin: 0, fontSize: '16px', lineHeight: 1.6, color: '#94a3b8', maxWidth: '600px' }}>
+              <p style={{ margin: 0, fontSize: '16px', lineHeight: 1.6, opacity: 0.8, maxWidth: '600px' }}>
                 Streamline workflows, automate conversations, and deliver unmatched customer experiences with conversational AI built for scale.
               </p>
 
@@ -1115,15 +1168,15 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   style={{
-                    backgroundColor: '#6366f1',
-                    color: '#ffffff',
+                    backgroundColor: 'var(--ts-color-primary)',
+                    color: primaryTextColor,
                     border: 'none',
-                    borderRadius: '9999px',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     padding: '12px 28px',
                     fontSize: '14px',
                     fontWeight: 700,
                     cursor: 'pointer',
-                    boxShadow: '0 0 25px rgba(99, 102, 241, 0.5)',
+                    boxShadow: 'var(--ts-shadow)',
                   }}
                 >
                   Get Started
@@ -1131,10 +1184,10 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    color: '#ffffff',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    borderRadius: '9999px',
+                    backgroundColor: 'var(--ts-color-surface)',
+                    color: 'var(--ts-color-text)',
+                    border: '1px solid var(--ts-color-border)',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     padding: '12px 28px',
                     fontSize: '14px',
                     fontWeight: 600,
@@ -1145,41 +1198,41 @@ export const LandingPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* Floating Dark App Shell Mockup */}
+              {/* Central Floating App Shell Mockup */}
               <div
                 style={{
                   marginTop: '32px',
                   width: '100%',
                   maxWidth: '780px',
-                  backgroundColor: '#12131a',
-                  border: '1px solid rgba(99, 102, 241, 0.3)',
-                  borderRadius: '20px',
-                  boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(99, 102, 241, 0.2)',
+                  backgroundColor: 'var(--ts-color-surface)',
+                  border: '1px solid var(--ts-color-border)',
+                  borderRadius: 'var(--ts-radius-surface, 20px)',
+                  boxShadow: 'var(--ts-shadow)',
                   overflow: 'hidden',
                   textAlign: 'left',
                 }}
               >
                 {/* Window Bar */}
-                <div style={{ padding: '12px 18px', borderBottom: '1px solid #1f222e', display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#0c0d12' }}>
+                <div style={{ padding: '12px 18px', borderBottom: '1px solid var(--ts-color-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'var(--ts-color-background)' }}>
                   <div style={{ display: 'flex', gap: '6px' }}>
                     <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
                     <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
                     <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10b981' }} />
                   </div>
-                  <span style={{ fontSize: '11px', color: '#94a3b8' }}>ai-assistant.live/session</span>
+                  <span style={{ fontSize: '11px', opacity: 0.7 }}>ai-assistant.live/session</span>
                 </div>
                 {/* Chat Shell Body */}
                 <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'var(--ts-color-primary)', color: primaryTextColor, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <AppIcon name="bot" size={18} />
                     </div>
-                    <div style={{ backgroundColor: '#1a1d29', padding: '10px 16px', borderRadius: '12px', fontSize: '13px', color: '#e2e8f0' }}>
+                    <div style={{ backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)', padding: '10px 16px', borderRadius: '12px', fontSize: '13px' }}>
                       "How can I help accelerate your development sprint today?"
                     </div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <div style={{ backgroundColor: '#4f46e5', color: '#ffffff', padding: '10px 16px', borderRadius: '12px', fontSize: '13px' }}>
+                    <div style={{ backgroundColor: 'var(--ts-color-primary)', color: primaryTextColor, padding: '10px 16px', borderRadius: '12px', fontSize: '13px' }}>
                       "Audit our design tokens and verify zero CSS drift across repositories."
                     </div>
                   </div>
@@ -1200,39 +1253,40 @@ export const LandingPage: React.FC = () => {
                 <div
                   key={idx}
                   style={{
-                    backgroundColor: '#12131a',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '16px',
+                    backgroundColor: 'var(--ts-color-surface)',
+                    border: '1px solid var(--ts-color-border)',
+                    borderRadius: 'var(--ts-radius-surface, 16px)',
                     padding: '20px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '8px',
+                    boxShadow: 'var(--ts-shadow)',
                   }}
                 >
-                  <div style={{ fontSize: '15px', fontWeight: 800, color: '#ffffff' }}>{p.title}</div>
-                  <p style={{ margin: 0, fontSize: '12px', color: '#94a3b8', lineHeight: 1.5 }}>{p.desc}</p>
+                  <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--ts-color-text)' }}>{p.title}</div>
+                  <p style={{ margin: 0, fontSize: '12px', opacity: 0.75, lineHeight: 1.5 }}>{p.desc}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* 3-Tier Dark Glass Pricing Cards */}
+          {/* 3-Tier Glass Pricing Cards */}
           <section style={{ maxWidth: '1000px', margin: '0 auto', width: '100%', padding: '0 24px', boxSizing: 'border-box' }}>
             <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-              <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '28px', fontWeight: 900, margin: '0 0 8px 0', color: '#ffffff' }}>
+              <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '28px', fontWeight: 900, margin: '0 0 8px 0' }}>
                 Pricing for Smarter AI Conversations
               </h2>
               {/* Monthly / Yearly Toggle */}
-              <div style={{ display: 'inline-flex', padding: '4px', borderRadius: '9999px', backgroundColor: '#12131a', border: '1px solid #1f222e' }}>
+              <div style={{ display: 'inline-flex', padding: '4px', borderRadius: 'var(--ts-radius-button, 9999px)', backgroundColor: 'var(--ts-color-surface)', border: '1px solid var(--ts-color-border)' }}>
                 <button
                   type="button"
                   onClick={() => setPricingCycle('monthly')}
                   style={{
                     padding: '6px 16px',
-                    borderRadius: '9999px',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     border: 'none',
-                    backgroundColor: pricingCycle === 'monthly' ? '#6366f1' : 'transparent',
-                    color: '#ffffff',
+                    backgroundColor: pricingCycle === 'monthly' ? 'var(--ts-color-primary)' : 'transparent',
+                    color: pricingCycle === 'monthly' ? primaryTextColor : 'var(--ts-color-text)',
                     fontSize: '12px',
                     fontWeight: 700,
                     cursor: 'pointer',
@@ -1245,10 +1299,10 @@ export const LandingPage: React.FC = () => {
                   onClick={() => setPricingCycle('yearly')}
                   style={{
                     padding: '6px 16px',
-                    borderRadius: '9999px',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     border: 'none',
-                    backgroundColor: pricingCycle === 'yearly' ? '#6366f1' : 'transparent',
-                    color: '#ffffff',
+                    backgroundColor: pricingCycle === 'yearly' ? 'var(--ts-color-primary)' : 'transparent',
+                    color: pricingCycle === 'yearly' ? primaryTextColor : 'var(--ts-color-text)',
                     fontSize: '12px',
                     fontWeight: 700,
                     cursor: 'pointer',
@@ -1268,32 +1322,32 @@ export const LandingPage: React.FC = () => {
                 <div
                   key={idx}
                   style={{
-                    backgroundColor: '#12131a',
-                    border: tier.highlight ? '2px solid #6366f1' : '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '20px',
+                    backgroundColor: 'var(--ts-color-surface)',
+                    border: tier.highlight ? '2px solid var(--ts-color-primary)' : '1px solid var(--ts-color-border)',
+                    borderRadius: 'var(--ts-radius-surface, 20px)',
                     padding: '28px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     gap: '20px',
-                    boxShadow: tier.highlight ? '0 0 35px rgba(99, 102, 241, 0.35)' : 'none',
+                    boxShadow: tier.highlight ? 'var(--ts-shadow)' : 'none',
                   }}
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <div style={{ fontSize: '16px', fontWeight: 800, color: '#ffffff' }}>{tier.name}</div>
-                    <div style={{ fontSize: '13px', color: '#94a3b8' }}>{tier.desc}</div>
-                    <div style={{ fontSize: '32px', fontWeight: 900, color: '#ffffff', marginTop: '12px' }}>
-                      {tier.price} <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: 500 }}>/ month</span>
+                    <div style={{ fontSize: '16px', fontWeight: 800 }}>{tier.name}</div>
+                    <div style={{ fontSize: '13px', opacity: 0.75 }}>{tier.desc}</div>
+                    <div style={{ fontSize: '32px', fontWeight: 900, color: 'var(--ts-color-primary)', marginTop: '12px' }}>
+                      {tier.price} <span style={{ fontSize: '13px', color: 'var(--ts-color-text)', opacity: 0.6, fontWeight: 500 }}>/ month</span>
                     </div>
                   </div>
 
                   <button
                     type="button"
                     style={{
-                      backgroundColor: tier.highlight ? '#6366f1' : 'rgba(255, 255, 255, 0.08)',
-                      color: '#ffffff',
-                      border: 'none',
-                      borderRadius: '9999px',
+                      backgroundColor: tier.highlight ? 'var(--ts-color-primary)' : 'var(--ts-color-background)',
+                      color: tier.highlight ? primaryTextColor : 'var(--ts-color-text)',
+                      border: tier.highlight ? 'none' : '1px solid var(--ts-color-border)',
+                      borderRadius: 'var(--ts-radius-button, 9999px)',
                       padding: '10px 20px',
                       fontWeight: 700,
                       fontSize: '13px',
@@ -1308,21 +1362,22 @@ export const LandingPage: React.FC = () => {
           </section>
 
           {/* Grand Reflective Brand Typography Footer */}
-          <footer style={{ borderTop: '1px solid #1f222e', paddingTop: '40px', textAlign: 'center' }}>
+          <footer style={{ borderTop: '1px solid var(--ts-color-border)', paddingTop: '40px', textAlign: 'center' }}>
             <div
               style={{
                 fontFamily: 'var(--ts-font-heading)',
                 fontSize: 'clamp(48px, 10vw, 100px)',
                 fontWeight: 900,
                 letterSpacing: '0.08em',
-                color: 'rgba(255, 255, 255, 0.9)',
-                textShadow: '0 0 40px rgba(99, 102, 241, 0.3)',
+                color: 'var(--ts-color-text)',
+                opacity: 0.25,
+                textShadow: '0 0 30px var(--ts-color-primary)',
                 userSelect: 'none',
               }}
             >
               CERAVE
             </div>
-            <p style={{ margin: '12px 0 0 0', fontSize: '12px', color: '#64748b' }}>
+            <p style={{ margin: '12px 0 0 0', fontSize: '12px', opacity: 0.6 }}>
               © 2026 Cerave AI. Autonomous conversational architectures.
             </p>
           </footer>
@@ -1334,11 +1389,11 @@ export const LandingPage: React.FC = () => {
           ============================================================== */}
       {layout === 'fintech-flow' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '64px', width: '100%', paddingBottom: '60px' }}>
-          {/* Cyan-Teal Gradient Hero with Floating Phone */}
+          {/* Preset-Themed Gradient Hero with Floating Phone */}
           <section
             style={{
-              background: 'radial-gradient(ellipse at top, #0e5a77 0%, #0a364a 50%, #061e29 100%)',
-              color: '#ffffff',
+              background: 'linear-gradient(135deg, var(--ts-color-primary) 0%, var(--ts-color-surface) 100%)',
+              color: primaryTextColor,
               padding: '60px 24px 80px',
               textAlign: 'center',
               display: 'flex',
@@ -1361,7 +1416,7 @@ export const LandingPage: React.FC = () => {
                 Powering Secure Crypto Payments and Modern Financial Operations
               </h1>
 
-              <p style={{ margin: 0, fontSize: '15px', lineHeight: 1.6, opacity: 0.85, maxWidth: '640px' }}>
+              <p style={{ margin: 0, fontSize: '15px', lineHeight: 1.6, opacity: 0.9, maxWidth: '640px' }}>
                 An enterprise-grade infrastructure to manage cryptocurrency, digital assets, transfers, and financial workflows — built with security, compliance, and reliability at the core.
               </p>
 
@@ -1369,15 +1424,15 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   style={{
-                    backgroundColor: '#ffffff',
-                    color: '#0a364a',
+                    backgroundColor: 'var(--ts-color-surface)',
+                    color: 'var(--ts-color-text)',
                     border: 'none',
-                    borderRadius: '9999px',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     padding: '12px 28px',
                     fontSize: '13px',
                     fontWeight: 700,
                     cursor: 'pointer',
-                    boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+                    boxShadow: 'var(--ts-shadow)',
                   }}
                 >
                   Open Account
@@ -1385,10 +1440,10 @@ export const LandingPage: React.FC = () => {
                 <button
                   type="button"
                   style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff',
-                    border: '1px solid rgba(255, 255, 255, 0.25)',
-                    borderRadius: '9999px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    color: primaryTextColor,
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: 'var(--ts-radius-button, 9999px)',
                     padding: '12px 28px',
                     fontSize: '13px',
                     fontWeight: 600,
@@ -1404,11 +1459,11 @@ export const LandingPage: React.FC = () => {
                 style={{
                   marginTop: '32px',
                   width: '280px',
-                  backgroundColor: '#ffffff',
-                  color: '#0f172a',
+                  backgroundColor: 'var(--ts-color-surface)',
+                  color: 'var(--ts-color-text)',
                   borderRadius: '32px',
-                  border: '6px solid #1e293b',
-                  boxShadow: '0 25px 60px rgba(0,0,0,0.4)',
+                  border: '4px solid var(--ts-color-border)',
+                  boxShadow: '0 25px 60px rgba(0,0,0,0.3)',
                   padding: '24px 20px',
                   display: 'flex',
                   flexDirection: 'column',
@@ -1417,13 +1472,13 @@ export const LandingPage: React.FC = () => {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '11px', color: '#64748b', fontWeight: 600 }}>Total Balance</span>
+                  <span style={{ fontSize: '11px', opacity: 0.7, fontWeight: 600 }}>Total Balance</span>
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }} />
                 </div>
-                <div style={{ fontSize: '20px', fontWeight: 900, color: '#0a364a' }}>
+                <div style={{ fontSize: '20px', fontWeight: 900, color: 'var(--ts-color-primary)' }}>
                   Rp 1.457.078.000
                 </div>
-                <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', padding: '8px 12px', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#16a34a', fontWeight: 700 }}>
+                <div style={{ backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)', padding: '8px 12px', borderRadius: '10px', display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--ts-color-primary)', fontWeight: 700 }}>
                   <span>+ Rp 1.999.000</span>
                   <span>Received</span>
                 </div>
@@ -1461,10 +1516,10 @@ export const LandingPage: React.FC = () => {
                 <div
                   key={idx}
                   style={{
-                    backgroundColor: card.highlighted ? '#0a364a' : 'var(--ts-color-surface)',
-                    color: card.highlighted ? '#ffffff' : 'var(--ts-color-text)',
-                    border: `1px solid ${card.highlighted ? '#0a364a' : 'var(--ts-color-border)'}`,
-                    borderRadius: '20px',
+                    backgroundColor: card.highlighted ? 'var(--ts-color-primary)' : 'var(--ts-color-surface)',
+                    color: card.highlighted ? primaryTextColor : 'var(--ts-color-text)',
+                    border: `1px solid ${card.highlighted ? 'var(--ts-color-primary)' : 'var(--ts-color-border)'}`,
+                    borderRadius: 'var(--ts-radius-surface, 20px)',
                     padding: '24px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -1485,7 +1540,7 @@ export const LandingPage: React.FC = () => {
           <section style={{ maxWidth: '1000px', margin: '0 auto', width: '100%', padding: '0 24px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: '36px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px', alignItems: 'center' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#0ea5e9', fontWeight: 800 }}>ONBOARDING AGILITY</span>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', color: 'var(--ts-color-primary)', fontWeight: 800 }}>ONBOARDING AGILITY</span>
                 <h3 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '22px', fontWeight: 900, margin: 0 }}>
                   Know Your Customers Before You Even Talk to Them
                 </h3>
@@ -1499,7 +1554,7 @@ export const LandingPage: React.FC = () => {
                 style={{
                   backgroundColor: 'var(--ts-color-surface)',
                   border: '1px solid var(--ts-color-border)',
-                  borderRadius: '16px',
+                  borderRadius: 'var(--ts-radius-surface, 16px)',
                   padding: '20px',
                   display: 'flex',
                   flexDirection: 'column',
@@ -1508,7 +1563,7 @@ export const LandingPage: React.FC = () => {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontWeight: 800, fontSize: '13px' }}>Alex Morgan</span>
-                  <span style={{ backgroundColor: '#dcfce7', color: '#16a34a', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 700 }}>VERIFIED</span>
+                  <span style={{ backgroundColor: 'var(--ts-color-background)', border: '1px solid var(--ts-color-border)', color: 'var(--ts-color-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: 700 }}>VERIFIED</span>
                 </div>
                 <div style={{ fontSize: '12px', opacity: 0.7 }}>Risk Assessment: Low • Sanction Match: None</div>
               </div>
@@ -1575,16 +1630,16 @@ export const LandingPage: React.FC = () => {
           <section style={{ maxWidth: '1000px', margin: '0 auto', width: '100%', padding: '0 24px', boxSizing: 'border-box' }}>
             <div
               style={{
-                borderRadius: '24px',
-                background: 'linear-gradient(135deg, #0a364a 0%, #0e5a77 100%)',
-                color: '#ffffff',
+                borderRadius: 'var(--ts-radius-surface, 24px)',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
                 padding: '48px 24px',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '16px',
-                boxShadow: '0 20px 40px rgba(10, 54, 74, 0.3)',
+                boxShadow: 'var(--ts-shadow)',
               }}
             >
               <h2 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: '28px', fontWeight: 900, margin: 0 }}>
@@ -1596,10 +1651,10 @@ export const LandingPage: React.FC = () => {
               <button
                 type="button"
                 style={{
-                  backgroundColor: '#ffffff',
-                  color: '#0a364a',
+                  backgroundColor: 'var(--ts-color-surface)',
+                  color: 'var(--ts-color-text)',
                   border: 'none',
-                  borderRadius: '9999px',
+                  borderRadius: 'var(--ts-radius-button, 9999px)',
                   padding: '12px 32px',
                   fontWeight: 700,
                   fontSize: '14px',
