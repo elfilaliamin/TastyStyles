@@ -334,13 +334,13 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
       info: lightInfo,
       infoBg: 'rgba(2, 132, 199, 0.12)',
       infoText: lightInfoText,
-      onPrimary: getBestContrastingColor(lightPrimary),
-      onSecondary: getBestContrastingColor(lightSecondary),
-      onAccent: getBestContrastingColor(lightAccent),
-      onSuccess: '#ffffff',
-      onWarning: '#000000',
-      onDanger: '#ffffff',
-      onInfo: '#ffffff',
+      onPrimary: getBestContrastingColor(lightPrimary, ['#ffffff', '#000000']),
+      onSecondary: getBestContrastingColor(lightSecondary, ['#ffffff', '#000000']),
+      onAccent: getBestContrastingColor(lightAccent, ['#ffffff', '#000000']),
+      onSuccess: getBestContrastingColor(lightSuccess, ['#ffffff', '#000000']),
+      onWarning: getBestContrastingColor(lightWarning, ['#ffffff', '#000000']),
+      onDanger: getBestContrastingColor(lightDanger, ['#ffffff', '#000000']),
+      onInfo: getBestContrastingColor(lightInfo, ['#ffffff', '#000000']),
       muted: '#64748b',
       ring: lightPrimary,
       scrim: 'rgba(0, 0, 0, 0.5)',
@@ -363,13 +363,13 @@ export function resolveTokens(state: DesignState): ResolvedTokenSet {
       info: darkInfo,
       infoBg: 'rgba(56, 189, 248, 0.16)',
       infoText: darkInfoText,
-      onPrimary: getBestContrastingColor(darkPrimary),
-      onSecondary: getBestContrastingColor(darkSecondary),
-      onAccent: getBestContrastingColor(darkAccent),
-      onSuccess: '#000000',
-      onWarning: '#000000',
-      onDanger: '#ffffff',
-      onInfo: '#000000',
+      onPrimary: getBestContrastingColor(darkPrimary, ['#ffffff', '#000000']),
+      onSecondary: getBestContrastingColor(darkSecondary, ['#ffffff', '#000000']),
+      onAccent: getBestContrastingColor(darkAccent, ['#ffffff', '#000000']),
+      onSuccess: getBestContrastingColor(darkSuccess, ['#ffffff', '#000000']),
+      onWarning: getBestContrastingColor(darkWarning, ['#ffffff', '#000000']),
+      onDanger: getBestContrastingColor(darkDanger, ['#ffffff', '#000000']),
+      onInfo: getBestContrastingColor(darkInfo, ['#ffffff', '#000000']),
       muted: '#94a3b8',
       ring: darkAccent,
       scrim: 'rgba(0, 0, 0, 0.75)',
@@ -584,6 +584,50 @@ ${tokens.icons.supportsStroke ? `  --icon-stroke: ${tokens.icons.strokeWidth};\n
   --color-on-primary: ${tokens.darkColors.onPrimary};
   --color-on-secondary: ${tokens.darkColors.onSecondary};
   --color-on-accent: ${tokens.darkColors.onAccent};
+}
+
+/* System Dark Mode (Applied when no data-theme is explicitly specified) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-primary: ${tokens.darkColors.primary};
+    --color-primary-bg: ${tokens.darkColors.primaryBg};
+    --color-primary-text: ${tokens.darkColors.primaryText};
+    --color-secondary: ${tokens.darkColors.secondary};
+    --color-secondary-text: ${tokens.darkColors.secondaryText};
+    --color-accent: ${tokens.darkColors.accent};
+    --color-accent-text: ${tokens.darkColors.accentText};
+    --color-background: ${tokens.darkColors.background};
+    --color-surface: ${tokens.darkColors.surface};
+    --color-text: ${tokens.darkColors.text};
+    --color-border: ${tokens.darkColors.border};
+    --color-muted: ${tokens.darkColors.muted};
+    --color-ring: ${tokens.darkColors.ring};
+    --color-scrim: ${tokens.darkColors.scrim};
+
+    --color-success: ${tokens.darkColors.success};
+    --color-success-bg: ${tokens.darkColors.successBg};
+    --color-success-text: ${tokens.darkColors.successText};
+    --color-on-success: ${tokens.darkColors.onSuccess};
+
+    --color-warning: ${tokens.darkColors.warning};
+    --color-warning-bg: ${tokens.darkColors.warningBg};
+    --color-warning-text: ${tokens.darkColors.warningText};
+    --color-on-warning: ${tokens.darkColors.onWarning};
+
+    --color-danger: ${tokens.darkColors.danger};
+    --color-danger-bg: ${tokens.darkColors.dangerBg};
+    --color-danger-text: ${tokens.darkColors.dangerText};
+    --color-on-danger: ${tokens.darkColors.onDanger};
+
+    --color-info: ${tokens.darkColors.info};
+    --color-info-bg: ${tokens.darkColors.infoBg};
+    --color-info-text: ${tokens.darkColors.infoText};
+    --color-on-info: ${tokens.darkColors.onInfo};
+
+    --color-on-primary: ${tokens.darkColors.onPrimary};
+    --color-on-secondary: ${tokens.darkColors.onSecondary};
+    --color-on-accent: ${tokens.darkColors.onAccent};
+  }
 }`;
 }
 

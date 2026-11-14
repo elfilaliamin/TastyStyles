@@ -7,6 +7,7 @@ export interface LayoutCatalogItem {
   ascii: string;
   mobile: string;
   tablet: string;
+  sectors?: string[];
 }
 
 export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
@@ -475,6 +476,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Hero content stacks vertically with headline first, CTA second, mockup third.',
       tablet: 'Mockup scales down proportionately; feature row wraps into 2-column grid.',
+      sectors: ['saas', 'agency-studio'],
     },
     {
       page: 'landing',
@@ -493,6 +495,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Buttons stack full-width; preview scales down to 100% viewport width.',
       tablet: 'Preview container constrained with 24px side gutters; CTAs remain inline.',
+      sectors: ['saas', 'marketplace'],
     },
     {
       page: 'landing',
@@ -506,6 +509,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Bento grid converts into single-column vertical stack with full card widths.',
       tablet: 'Bento grid reorganizes into balanced 2-column layout.',
+      sectors: ['saas', 'marketplace'],
     },
     {
       page: 'landing',
@@ -525,6 +529,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Code window stacks beneath pitch; tabs convert to swipeable pill buttons; feature grid stacks to 1 column.',
       tablet: 'Split hero maintains 45/55 proportion; feature cards flow into 2-column grid.',
+      sectors: ['media-editorial', 'agency-studio', 'portfolio'],
     },
     {
       page: 'landing',
@@ -547,6 +552,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Travertine hero text stacks centered; courses convert to single-column card deck; consultation form full width.',
       tablet: 'Why-us section remains 50/50 split; course cards scale to 2-column flow with wrap.',
+      sectors: ['ecommerce', 'agency-studio'],
     },
     {
       page: 'landing',
@@ -570,6 +576,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Spotlight beam soft fades; app shell preview shrinks fluidly; 4 pillars stack vertically; pricing cards stack 1 per row.',
       tablet: 'Pillars display as 2x2 grid; pricing tiers display responsive cards with horizontal scroll.',
+      sectors: ['saas', 'portfolio'],
     },
     {
       page: 'landing',
@@ -593,6 +600,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 +-------------------------------------------------------+`,
       mobile: 'Floating phone scales to viewport; banking cards stack 1 per row; alternating mockups stack device above copy.',
       tablet: 'Banking feature cards align in 2x2 grid; alternating mockups retain side-by-side format with compact gutters.',
+      sectors: ['saas', 'ecommerce'],
     },
   ],
 

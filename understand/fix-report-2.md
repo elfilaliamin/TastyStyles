@@ -213,3 +213,23 @@ To give users direct visual control over which pages are enabled in the export w
 ```
 
 This seamlessly dispatches the existing `TOGGLE_PAGE` reducer action, automatically updating the active sitemap and instantly reflecting in both `PROJECT-BRIEF.md` and `DESIGN.md`.
+
+---
+
+## 7. Final Export Polish Items (Items 1–12)
+
+1. **Dynamic `on-*` Contrast Computation**: All `--color-on-*` tokens (`onPrimary`, `onSecondary`, `onAccent`, `onSuccess`, `onWarning`, `onDanger`, `onInfo`) are dynamically computed via `getBestContrastingColor(val, ['#ffffff', '#000000'])` across both light and dark modes. Every single pair is included in the Section 2.1b contrast matrix and verified >= 4.5:1 (AA) across all 20 presets.
+2. **Landing Sector Alignment Note**: Added `sectors` tagging to all landing archetypes. Emits `"Structure only. Sections and copy are illustrative; map them to the project's real content and do not build sector-specific sections that the project does not have."` in Part A and Section 7.3 wireframe whenever the archetype's sector tags do not match the project purpose.
+3. **Spliced Sentence Rectification**: Smoothed Part A Directive 2 and Part B Section 0 so that WCAG AA contrast targets read as complete, grammatically sound sentences.
+4. **Starter Shell Contextual Footer**: In Section 7.2 starter boilerplate, footer is wrapped in an `isPublic` flag (rendered strictly for public/content pages; omitted for authenticated sidebar app views).
+5. **Mobile 44px Hit Area Rule**: Added execution rule that controls smaller than 44px (e.g. 32px or 36px icon buttons, checkboxes, chips) must provide a 44px minimum touch hit area on viewports <640px.
+6. **Recipe Checked State**: Renamed "Active" to "Checked" for toggle-switch and checkbox-control recipes.
+7. **System Dark Mode in `tokens.css`**: Added `@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { ... } }` block to `tokens.css` and Section 3 CSS block, applying dark tokens when no explicit `data-theme` is set.
+8. **Icon Stroke Accuracy**: Removed inaccurate `; bound to \`--icon-stroke\`` claim from Section 5.1 geometry description.
+9. **Token Table & Tailwind Extension**: Added `--color-primary-bg`, all `on-*` tokens, and all `*-bg` tokens to Section 2.1 table and `tailwind.config.ts`.
+10. **Part B Sub-Header Level**: Demoted Part B title to `### Part B: Canonical Design System Tokens & Recipes` (and `### ${tokens.name} — Design System Specification`) so it is not an H2 peer of its own `## 0.` through `## 9.` sections.
+11. **Runnable Acceptance Checks**: Embedded runnable verification commands in Section 9.2:
+    - Hex search: `grep -rnE "#[0-9a-fA-F]{3,8}\b" src --include=*.{ts,tsx,css} --exclude=tokens.css`
+    - Viewport overflow: `document.documentElement.scrollWidth <= window.innerWidth` at 375, 768, 1280.
+12. **Preset Color Immutability**: 100% of brand, surface, and semantic colors in `src/config/presets.json` remain identical to saved defaults (0 changed).
+

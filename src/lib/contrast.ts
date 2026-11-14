@@ -227,6 +227,10 @@ export interface ContrastReportColors {
   onPrimary: string;
   onSecondary: string;
   onAccent: string;
+  onSuccess: string;
+  onWarning: string;
+  onDanger: string;
+  onInfo: string;
 }
 
 export function generateContrastReport(
@@ -242,6 +246,10 @@ export function generateContrastReport(
       { pair: 'on-primary on primary', fgName: 'on-primary', fgHex: colors.onPrimary, bgName: 'primary', bgHex: colors.primary },
       { pair: 'on-secondary on secondary', fgName: 'on-secondary', fgHex: colors.onSecondary, bgName: 'secondary', bgHex: colors.secondary },
       { pair: 'on-accent on accent', fgName: 'on-accent', fgHex: colors.onAccent, bgName: 'accent', bgHex: colors.accent },
+      { pair: 'on-success on success', fgName: 'on-success', fgHex: colors.onSuccess, bgName: 'success', bgHex: colors.success },
+      { pair: 'on-warning on warning', fgName: 'on-warning', fgHex: colors.onWarning, bgName: 'warning', bgHex: colors.warning },
+      { pair: 'on-danger on danger', fgName: 'on-danger', fgHex: colors.onDanger, bgName: 'danger', bgHex: colors.danger },
+      { pair: 'on-info on info', fgName: 'on-info', fgHex: colors.onInfo, bgName: 'info', bgHex: colors.info },
       { pair: 'primary-text on background', fgName: 'primary-text', fgHex: colors.primaryText, bgName: 'background', bgHex: colors.background },
       { pair: 'primary-text on surface', fgName: 'primary-text', fgHex: colors.primaryText, bgName: 'surface', bgHex: colors.surface },
       { pair: 'secondary-text on background', fgName: 'secondary-text', fgHex: colors.secondaryText, bgName: 'background', bgHex: colors.background },

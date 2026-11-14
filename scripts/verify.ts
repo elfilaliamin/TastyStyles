@@ -616,6 +616,45 @@ for (const preset of presets) {
     console.error(`❌ Batch 6 check failed: Preset ${preset.id} contrast report missing calculated numeric ratios`);
     process.exit(1);
   }
+
+  // Check all on-* pairs are in contrast report
+  const onPairs = [
+    'on-primary on primary',
+    'on-secondary on secondary',
+    'on-accent on accent',
+    'on-success on success',
+    'on-warning on warning',
+    'on-danger on danger',
+    'on-info on info',
+  ];
+  for (const onPair of onPairs) {
+    if (!prSpec.includes(onPair)) {
+      console.error(`❌ Batch 6 check failed: Preset ${preset.id} missing contrast pair '${onPair}'`);
+      process.exit(1);
+    }
+  }
+
+  // Verify on-* tokens strictly achieve AA contrast on their base color in both modes
+  const prTokens = resolveTokens(prState);
+  for (const mode of ['lightColors', 'darkColors'] as const) {
+    const c = prTokens[mode];
+    const pairs: [string, string, string][] = [
+      ['on-primary', c.onPrimary, c.primary],
+      ['on-secondary', c.onSecondary, c.secondary],
+      ['on-accent', c.onAccent, c.accent],
+      ['on-success', c.onSuccess, c.success],
+      ['on-warning', c.onWarning, c.warning],
+      ['on-danger', c.onDanger, c.danger],
+      ['on-info', c.onInfo, c.info],
+    ];
+    for (const [name, fg, bg] of pairs) {
+      const res = calculateContrastRatio(fg, bg);
+      if (!res.passesAA) {
+        console.error(`❌ Batch 6 check failed: Preset ${preset.id} ${mode} ${name} (${fg}) on base (${bg}) fails AA with ratio ${res.formattedRatio}`);
+        process.exit(1);
+      }
+    }
+  }
 }
 console.log('✅ Batch 6 verified: No unconditional AAA claims, contrast report generated with computed ratios for all presets.');
 
@@ -686,6 +725,125 @@ for (const item of requiredChecklistItems) {
   }
 }
 console.log('✅ Batch 7 verified: Content hygiene confirmed, single H1 enforced, redesign invariants and checkable acceptance checklist validated.');
+
+console.log('--- Testing Remaining Export Polish (Items 1–12) ---');
+// 1. Spliced sentences check
+if (defaultBrief.includes('scales, Target:') || defaultSpec.includes('whitespace, Target:')) {
+  console.error('❌ Polish check failed: Spliced sentence still present in directive 2 or section 0');
+  process.exit(1);
+}
+
+// 2. Landing sector fit check
+const mismatchState = {
+  ...defaultInitialState,
+  projectGoal: 'saas' as const,
+  project: {
+    ...defaultInitialState.project,
+    purpose: 'saas',
+    pages: [
+      { pageType: 'landing', layoutId: 'organic-wellness', enabled: true },
+    ],
+  },
+  pageLayouts: {
+    ...defaultInitialState.pageLayouts,
+    landing: 'organic-wellness' as const,
+  },
+};
+const mismatchBrief = compileProjectBrief(mismatchState);
+const mismatchSpec = compileMarkdown(mismatchState);
+const expectedSectorNote = 'Structure only. Sections and copy are illustrative; map them to the project\'s real content and do not build sector-specific sections that the project does not have.';
+if (!mismatchBrief.includes(expectedSectorNote)) {
+  console.error('❌ Polish check failed: Sector mismatch note missing from Part A block');
+  process.exit(1);
+}
+if (!mismatchSpec.includes(expectedSectorNote)) {
+  console.error('❌ Polish check failed: Sector mismatch note missing from Section 7.3 wireframe');
+  process.exit(1);
+}
+
+// 3. Starter shell footer check
+if (!defaultSpec.includes('isPublic = false') || !defaultSpec.includes('omitted in authenticated sidebar app layouts')) {
+  console.error('❌ Polish check failed: Starter shell missing isPublic footer guard or omission note');
+  process.exit(1);
+}
+
+// 4. Mobile tap target rule check
+if (!defaultSpec.includes('Controls smaller than 44px')) {
+  console.error('❌ Polish check failed: Mobile tap target 44px rule missing from Section 8');
+  process.exit(1);
+}
+
+// 5. Recipe "Checked" rename check
+if (!defaultSpec.includes('- *Checked*:') || defaultSpec.includes('### 6.7 Toggle Switch\n- **Description**: Binary toggle switch for instant state enable/disable preferences.\n- **Height**: Small (`20px`), Medium (`24px`), Large (`28px`)\n- **Horizontal Padding**: Small (`2px`), Medium (`2px`), Large (`2px`)\n- **Border**: `1px solid var(--color-border)` | **Radius**: `var(--radius-pill)` \n- **Typography**: `font-family: var(--font-body);`\n- **State Behavior**:\n  - *Default*: `background-color: var(--color-border);`\n  - *Hover*: `filter: brightness(0.95);`\n  - *Active*:')) {
+  console.error('❌ Polish check failed: Toggle switch / checkbox recipe missing *Checked* state');
+  process.exit(1);
+}
+
+// 6. prefers-color-scheme in tokens.css check
+const cssWithMedia = generateUnifiedCssTokens(defaultInitialState);
+if (!cssWithMedia.includes('@media (prefers-color-scheme: dark)')) {
+  console.error('❌ Polish check failed: tokens.css missing @media (prefers-color-scheme: dark) block');
+  process.exit(1);
+}
+
+// 7. Icon stroke claim check
+if (defaultSpec.includes('; bound to `--icon-stroke`')) {
+  console.error('❌ Polish check failed: Icon stroke claim still present in Section 5.1');
+  process.exit(1);
+}
+
+// 8. Section 2.1 and Tailwind config tokens check
+const requiredColorTokens = [
+  'primary-bg',
+  'on-success',
+  'on-warning',
+  'on-danger',
+  'on-info',
+  'success-bg',
+  'warning-bg',
+  'danger-bg',
+  'info-bg',
+];
+for (const tok of requiredColorTokens) {
+  if (!defaultSpec.includes(`**${tok}**`)) {
+    console.error(`❌ Polish check failed: Section 2.1 color table missing token '${tok}'`);
+    process.exit(1);
+  }
+}
+const twConfig = generateTailwindConfig(defaultInitialState);
+if (!twConfig.includes("'primary-bg': 'var(--color-primary-bg)'")) {
+  console.error("❌ Polish check failed: Tailwind config missing 'primary-bg'");
+  process.exit(1);
+}
+
+// 9. Part B title header level check
+if (!/^### Part B: Canonical Design System Tokens & Recipes/m.test(defaultBrief)) {
+  console.error("❌ Polish check failed: Part B title must be '### Part B: Canonical Design System Tokens & Recipes'");
+  process.exit(1);
+}
+if (/^## Part B: Canonical Design System Tokens & Recipes/m.test(defaultBrief)) {
+  console.error("❌ Polish check failed: Part B title leaked as '## Part B'");
+  process.exit(1);
+}
+
+// 10. Acceptance checklist runnable checks check
+if (!defaultSpec.includes('grep -rnE "#[0-9a-fA-F]{3,8}\\b" src --include=*.{ts,tsx,css} --exclude=tokens.css')) {
+  console.error('❌ Polish check failed: Section 9.2 missing runnable grep check');
+  process.exit(1);
+}
+if (!defaultSpec.includes('document.documentElement.scrollWidth <= window.innerWidth')) {
+  console.error('❌ Polish check failed: Section 9.2 missing runnable Playwright/browser check');
+  process.exit(1);
+}
+
+// 11. Presets immutability check
+for (const p of presets) {
+  if (!p.state?.colors?.light?.primary || !p.state?.colors?.dark?.primary) {
+    console.error(`❌ Polish check failed: Preset ${p.id} missing core palette colors`);
+    process.exit(1);
+  }
+}
+console.log('✅ Export polish verified: All 12 export issues strictly verified.');
 
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');

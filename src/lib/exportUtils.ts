@@ -90,6 +90,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: 'var(--color-primary)',
+        'primary-bg': 'var(--color-primary-bg)',
         'primary-text': 'var(--color-primary-text)',
         secondary: 'var(--color-secondary)',
         'secondary-text': 'var(--color-secondary-text)',

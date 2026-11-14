@@ -2,6 +2,7 @@ import type { DesignState } from '../config/schema';
 import { compileMarkdown } from './compileMarkdown';
 import { getPurposeDefinition } from '../config/purposes';
 import { PAGE_TYPES_BY_ID } from '../config/pageTypes';
+import { LAYOUT_CATALOG } from '../config/layoutCatalog';
 import { getLayout, resolveLayout } from './layoutRegistry';
 
 /**
@@ -47,7 +48,7 @@ export function compileProjectBrief(state: DesignState): string {
 
 > **AI AGENT IMPLEMENTATION DIRECTIVE & DESIGN CONTRACT**
 > 1. **Page Scope & Restyling Contract**: A page listed in this brief is NOT an instruction to create it. If the page already exists in the target project, restyle it (UI/UX only, no logic changes). If a feature page does NOT exist in the target project, DO NOT create it unprompted (e.g. a free SaaS without payments must not get /pricing or /billing). EXCEPTION: System/utility pages (login, sign up, forgot/reset password, email verification, MFA/OTP, error pages 404/403/500, offline, maintenance) may be created if missing, visual only (mark 'not wired' and report). For prescribed pages, DO NOT INVENT SECTIONS outside their declared layout manifests.
-> 2. **Extensibility & User-Requested Views**: You may only synthesize additional views, sub-routes, or specialized screens that the user has explicitly requested, or essential system/utility pages. Do NOT invent new feature pages unprompted. Ensure all new views strictly adhere to the active design theme, typography scales, Target: WCAG AA (4.5:1 body text, 3:1 large text and UI components); AAA where the palette allows (see the contrast report), surface radii, and component styling rules.
+> 2. **Extensibility & User-Requested Views**: You may only synthesize additional views, sub-routes, or specialized screens that the user has explicitly requested, or essential system/utility pages. Do NOT invent new feature pages unprompted. Ensure all new views strictly adhere to the active design theme, typography scales, surface radii, and component styling rules. All views must target WCAG AA contrast (4.5:1 body text, 3:1 large text and UI components; AAA where the palette allows—see the contrast report).
 > 3. **UI Redesign Guidance**: When using this brief to redesign an existing web application, map existing features directly onto these clean layouts and token variables—delivering a modern, world-class UI without breaking existing business logic.
 > 4. **Strict Token Binding**: All styles MUST bind to the CSS variables in \`tokens.css\` / Part B below. Never hardcode arbitrary hex colors, ad-hoc font families, or raw border-radius values.
 > 5. **Dual-Radius Isolation**: Interactive elements use \`var(--radius-base)\`, while surface containers (cards, modals, form panels) strictly use \`var(--radius-surface)\` (derived from radius preset, max 20px). Never apply extreme pill radius to surface cards.
@@ -90,13 +91,22 @@ ${effectivePages
         : 'restyle if exists; do not create if missing';
     const layoutTitle = layout?.label ?? pageDef?.label ?? layoutId;
     const layoutDescription = layout?.description ?? pageDef?.description ?? 'Standard archetype view.';
+    const catalogItem = LAYOUT_CATALOG[p.pageType]?.find((l) => l.id === layoutId);
+    const sectorMismatch = Boolean(
+      catalogItem?.sectors &&
+      catalogItem.sectors.length > 0 &&
+      !catalogItem.sectors.includes(purposeId)
+    );
+    const sectorNote = sectorMismatch
+      ? '\n- **Sector Alignment Note**: Structure only. Sections and copy are illustrative; map them to the project\'s real content and do not build sector-specific sections that the project does not have.'
+      : '';
 
     return `#### 3.${idx + 1} ${pageDef?.label ?? p.pageType} (\`${p.pageType}\`)
 - **Route / Anchor**: \`/${p.pageType}\`
 - **Scope**: ${scopeDirective}
 - **Archetype Category**: ${pageDef?.category ?? 'core'}
 - **Layout Architecture ID**: \`${layoutId}\`
-- **Layout Title**: ${layoutTitle}
+- **Layout Title**: ${layoutTitle}${sectorNote}
 - **Layout Blueprint Description**:
   ${layoutDescription}
 - **Ordered Section Breakdown**:
@@ -135,7 +145,7 @@ When instructions, archetype layouts, or existing codebases conflict, resolve in
 
 ---
 
-## Part B: Canonical Design System Tokens & Recipes
+### Part B: Canonical Design System Tokens & Recipes
 
 `;
 

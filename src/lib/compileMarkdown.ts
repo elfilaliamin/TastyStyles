@@ -96,14 +96,14 @@ export function compileMarkdown(state: DesignState): string {
     }
   }
 
-  return `## ${tokens.name} — Design System Specification
+  return `### ${tokens.name} — Design System Specification
 
 ## 0. Agent Contract
 - **Single Source of Truth**: This document is the definitive specification for all frontend UI development in this repository. Read it completely before generating code.
 - **Directing AI Implementation & UI Redesigns**:
   - **Scope & Restyling Contract**: A page listed in this specification is NOT an instruction to create it. If the page already exists in the target project, restyle it (UI/UX only, no logic changes). If a feature page does NOT exist in the project, DO NOT create it unprompted. System/utility pages (auth, 404/500 error screens) may be created if missing, as visual presentation shells only. For existing pages, follow the declared architectural layouts, responsive patterns, and component recipes.
   - **Extensibility & User-Requested Views**: Do NOT invent new feature pages unprompted. You may only synthesize specialized views or sub-routes that the user has explicitly requested, or essential system/utility pages. Ensure all views follow the active theme's tokens, typography scales, contrast, and component styling rules.
-  - **Aesthetic Quality Standard**: Direct all implementation toward high-end, responsive UI with harmonious hierarchy, intentional whitespace, Target: WCAG AA (4.5:1 body text, 3:1 large text and UI components); AAA where the palette allows (see the contrast report), and fluid adaptability from mobile (375px) to desktop (1440px).
+  - **Aesthetic Quality Standard**: Direct all implementation toward high-end, responsive UI with harmonious hierarchy, intentional whitespace, and fluid adaptability from mobile (375px) to desktop (1440px). Ensure all text and interactive components target WCAG AA contrast (4.5:1 body text, 3:1 large text and UI components; AAA where the palette allows—see the contrast report).
 - **Strict Token Adherence**: Create \`src/styles/tokens.css\` matching **Section 3** verbatim. Never write raw hex codes, arbitrary margins, or ad-hoc pixel font-sizes outside this token file.
 - **Reference Variables**: In styles or components, exclusively use \`var(--color-*)\`, \`var(--font-*)\`, and \`var(--spacing-*)\` (or their configured Tailwind counterparts).
 - **Execution Order**: Tokens (\`tokens.css\`) → Fonts & Icons → Root Layout Shell → Shared Component Recipes (§6) → Page Archetypes (§7) → Responsive Verification (§8) → Acceptance Checklist (§9).
@@ -126,6 +126,7 @@ The **${tokens.name}** visual system pairs **${tokens.typography.headingFamily}*
 | Token | Light Value | Dark Value | Semantic Role |
 | :--- | :--- | :--- | :--- |
 | **primary** | \`${tokens.lightColors.primary}\` | \`${tokens.darkColors.primary}\` | Brand anchor, primary call-to-actions, prominent buttons (fills/borders) |
+| **primary-bg** | \`${tokens.lightColors.primaryBg}\` | \`${tokens.darkColors.primaryBg}\` | Brand tinted translucent background (cards, hero badges) |
 | **primary-text** | \`${tokens.lightColors.primaryText}\` | \`${tokens.darkColors.primaryText}\` | Accessible body/link text on background & surface (>= 4.5:1) |
 | **secondary** | \`${tokens.lightColors.secondary}\` | \`${tokens.darkColors.secondary}\` | Supporting elements, subtle badges, secondary buttons |
 | **secondary-text** | \`${tokens.lightColors.secondaryText}\` | \`${tokens.darkColors.secondaryText}\` | Accessible secondary copy & links (>= 4.5:1) |
@@ -136,16 +137,24 @@ The **${tokens.name}** visual system pairs **${tokens.typography.headingFamily}*
 | **text** | \`${tokens.lightColors.text}\` | \`${tokens.darkColors.text}\` | High-contrast body copy, titles, and iconography |
 | **border** | \`${tokens.lightColors.border}\` | \`${tokens.darkColors.border}\` | Structural dividers, input strokes, container borders |
 | **success** | \`${tokens.lightColors.success}\` | \`${tokens.darkColors.success}\` | Positive confirmations, successful task milestones (fills/icons) |
+| **success-bg** | \`${tokens.lightColors.successBg}\` | \`${tokens.darkColors.successBg}\` | Success status badge and notification surface background |
 | **success-text** | \`${tokens.lightColors.successText}\` | \`${tokens.darkColors.successText}\` | Accessible success text & status notices (>= 4.5:1) |
 | **warning** | \`${tokens.lightColors.warning}\` | \`${tokens.darkColors.warning}\` | Attention notices, non-fatal alert warnings (fills/icons) |
+| **warning-bg** | \`${tokens.lightColors.warningBg}\` | \`${tokens.darkColors.warningBg}\` | Warning alert and attention banner surface background |
 | **warning-text** | \`${tokens.lightColors.warningText}\` | \`${tokens.darkColors.warningText}\` | Accessible warning text (>= 4.5:1) |
 | **danger** | \`${tokens.lightColors.danger}\` | \`${tokens.darkColors.danger}\` | Destructive actions, validation errors, system failures (fills/icons) |
+| **danger-bg** | \`${tokens.lightColors.dangerBg}\` | \`${tokens.darkColors.dangerBg}\` | Destructive badge and validation error surface background |
 | **danger-text** | \`${tokens.lightColors.dangerText}\` | \`${tokens.darkColors.dangerText}\` | Accessible error & danger text (>= 4.5:1) |
 | **info** | \`${tokens.lightColors.info}\` | \`${tokens.darkColors.info}\` | Informational announcements, telemetry badges (fills/icons) |
+| **info-bg** | \`${tokens.lightColors.infoBg}\` | \`${tokens.darkColors.infoBg}\` | Information banner and telemetry surface background |
 | **info-text** | \`${tokens.lightColors.infoText}\` | \`${tokens.darkColors.infoText}\` | Accessible info text (>= 4.5:1) |
 | **on-primary** | \`${tokens.lightColors.onPrimary}\` | \`${tokens.darkColors.onPrimary}\` | High-contrast accessible text sitting on Primary |
 | **on-secondary**| \`${tokens.lightColors.onSecondary}\` | \`${tokens.darkColors.onSecondary}\` | High-contrast accessible text sitting on Secondary |
 | **on-accent** | \`${tokens.lightColors.onAccent}\` | \`${tokens.darkColors.onAccent}\` | High-contrast accessible text sitting on Accent |
+| **on-success** | \`${tokens.lightColors.onSuccess}\` | \`${tokens.darkColors.onSuccess}\` | High-contrast accessible text sitting on Success |
+| **on-warning** | \`${tokens.lightColors.onWarning}\` | \`${tokens.darkColors.onWarning}\` | High-contrast accessible text sitting on Warning |
+| **on-danger** | \`${tokens.lightColors.onDanger}\` | \`${tokens.darkColors.onDanger}\` | High-contrast accessible text sitting on Danger |
+| **on-info** | \`${tokens.lightColors.onInfo}\` | \`${tokens.darkColors.onInfo}\` | High-contrast accessible text sitting on Info |
 | **muted** | \`${tokens.lightColors.muted}\` | \`${tokens.darkColors.muted}\` | Secondary helper labels, timestamps, disabled hints |
 | **ring** | \`${tokens.lightColors.ring}\` | \`${tokens.darkColors.ring}\` | Accessible keyboard focus outline ring (2px offset) |
 | **scrim** | \`${tokens.lightColors.scrim}\` | \`${tokens.darkColors.scrim}\` | Modal & drawer backdrop overlay mask |
@@ -226,7 +235,7 @@ ${generateTailwindConfig(state).trim()}
 - **Style Mode**: \`${tokens.icons.mode.toUpperCase()}\`
 - **Stroke Geometry**: ${
   tokens.icons.supportsStroke
-    ? `\`${tokens.icons.strokeWidth}\` (${tokens.icons.strokeWidthNum}px line width; bound to \`--icon-stroke\`)`
+    ? `\`${tokens.icons.strokeWidth}\` (${tokens.icons.strokeWidthNum}px line width)`
     : 'Not applicable (geometry rendered via icon library vector shapes)'
 }
 - **Duotone Depth**: ${tokens.icons.duotone ? 'Enabled (22% opacity accent fill beneath stroke)' : 'Disabled'}
@@ -292,7 +301,7 @@ ${COMPONENT_RECIPES.map(
 - **State Behavior**:
   - *Default*: \`${r.states.default}\`
   ${r.states.hover ? `- *Hover*: \`${r.states.hover}\`` : ''}
-  ${r.states.active ? `- *Active*: \`${r.states.active}\`` : ''}
+  ${r.states.active ? `- *${r.id === 'toggle-switch' || r.id === 'checkbox-control' ? 'Checked' : 'Active'}*: \`${r.states.active}\`` : ''}
   ${r.states.focus ? `- *Focus*: \`${r.states.focus}\`` : ''}
   ${r.states.disabled ? `- *Disabled*: \`${r.states.disabled}\`` : ''}
   ${r.states.error ? `- *Error*: \`${r.states.error}\`` : ''}`
@@ -333,7 +342,7 @@ When creating **ANY** new page, dashboard module, or custom view not explicitly 
     ? 'Renders as a detached floating pill container with rounded pill curvature, surface elevation, and backdrop blur.'
     : 'Renders as a full-width header bar (`h-16`, border-b `var(--color-border)`).'
 } Contains brand logo, search palette trigger, notification bell, and user avatar.
-- **Global / Contextual Footer**: Configured **\`${pageLayouts.footer ?? 'columns-mega'}\`** footer archetype applied across public and content-centric surfaces.
+- **Global / Contextual Footer**: Configured **\`${pageLayouts.footer ?? 'columns-mega'}\`** footer archetype applied across public and content-centric surfaces (omitted in authenticated sidebar app layouts).
 - **Main Viewport Canvas**: Fluid scrollable container (\`flex-1 overflow-y-auto\`), bounded by wide container cap (\`${tokens.breakpoints.wide}\`) with standard padding (\`var(--spacing-lg)\` = \`${tokens.spacing.lg}\`).
 
 #### B. Default New Page Structural Zones
@@ -362,6 +371,7 @@ export interface NewPageProps {
   category?: string;
   actions?: React.ReactNode;
   children: React.ReactNode;
+  isPublic?: boolean;
 }
 
 export const StandardPageShell: React.FC<NewPageProps> = ({
@@ -369,6 +379,7 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
   category = 'Application',
   actions,
   children,
+  isPublic = false,
 }) => {
   return (
     <div className="flex h-screen w-full bg-[var(--color-background)] text-[var(--color-text)] font-[var(--font-body)] overflow-hidden">
@@ -408,10 +419,12 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
           </section>
         </main>
 
-        {/* 4. Global / Contextual Footer: ${pageLayouts.footer ?? 'columns-mega'} */}
-        <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--spacing-md)] text-[var(--font-size-step-sub1)] text-[var(--color-muted)] flex items-center justify-between">
-          {/* Render ${pageLayouts.footer ?? 'columns-mega'} */}
-        </footer>
+        {/* 4. Global / Contextual Footer: rendered ONLY for public/content pages */}
+        {isPublic && (
+          <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--spacing-md)] text-[var(--font-size-step-sub1)] text-[var(--color-muted)] flex items-center justify-between">
+            {/* Render ${pageLayouts.footer ?? 'columns-mega'} */}
+          </footer>
+        )}
       </div>
     </div>
   );
@@ -426,7 +439,16 @@ Implement the specific application pages according to their chosen wireframe arc
 
 ${activePageEntries
   .map(
-    (item) => `#### 7.3.${activePageEntries.indexOf(item) + 1} ${item.title} (\`${item.page}\`)
+    (item) => {
+      const sectorMismatch = Boolean(
+        item.sectors &&
+        item.sectors.length > 0 &&
+        !item.sectors.includes(purposeId)
+      );
+      const sectorNote = sectorMismatch
+        ? `\n> **Sector Alignment Note**: Structure only. Sections and copy are illustrative; map them to the project's real content and do not build sector-specific sections that the project does not have.\n`
+        : '';
+      return `#### 7.3.${activePageEntries.indexOf(item) + 1} ${item.title} (\`${item.page}\`)${sectorNote}
 - **Configured Archetype**: \`${item.id}\`
 - **Description**: ${item.description}
 - **Structural Wireframe**:
@@ -435,7 +457,8 @@ ${item.ascii}
 \`\`\`
 - **Mobile (<640px) Responsive Rule**: ${item.mobile}
 - **Tablet (640px–1023px) Responsive Rule**: ${item.tablet}
-`
+`;
+    }
   )
   .join('\n')}
 
@@ -444,7 +467,7 @@ ${item.ascii}
 ## 8. Responsive Breakpoints & Execution Rules
 - **Mobile (<640px)**:
   - Strict single-column vertical flow with full-width container bounds.
-  - Interactive targets must have at least \`44px\` minimum tap target dimension.
+  - Interactive targets must have at least \`44px\` minimum tap target dimension. Controls smaller than 44px (e.g. 32px or 36px icon buttons, checkboxes, chips) must provide a 44px minimum touch hit area on viewports <640px (using transparent padding, negative margin offsets, or \`min-h-[44px] min-w-[44px] flex items-center justify-center\`).
   - Fixed-width sidebars or columns must collapse off-screen into drawer sheets or bottom navigation bars.
   - Data tables must be wrapped inside an \`overflow-x: auto\` scrolling box.
 - **Tablet (640px to 1023px)**:
@@ -471,16 +494,27 @@ ${item.ascii}
 - [ ] **DO** verify that all colors, font sizes, paddings, and borders reference tokens from \`tokens.css\`.
 - [ ] **DO** ensure high-contrast accessible text colors on colored backgrounds using \`--color-on-*\`.
 - [ ] **DO** enforce visible focus rings (\`outline: 2px solid var(--color-ring)\`) on all interactive controls.
+- [ ] **DO** ensure controls smaller than 44px receive at least a 44px minimum hit area on Mobile (<640px).
 - [ ] **DON'T** hardcode raw hex values (e.g. \`#0284c7\`) or arbitrary pixel values outside \`tokens.css\`.
 - [ ] **DON'T** use undeclared font weights; stick to the verified weights loaded from Google Fonts.
 - [ ] **DON'T** allow horizontal page scrollbars on Mobile (375px) or Tablet (768px).
 
 ### 9.2 Acceptance Sign-Off Checklist
-Before marking frontend implementation complete, verify that:
+Before marking frontend implementation complete, run and verify these checks:
 - [ ] 1. **Token Verification**: All colors, radii, shadows, and fonts bind strictly to \`tokens.css\` variables with no ad-hoc hex values or hardcoded font sizes.
+  - Run verification command:
+    \`\`\`bash
+    grep -rnE "#[0-9a-fA-F]{3,8}\\b" src --include=*.{ts,tsx,css} --exclude=tokens.css
+    \`\`\`
+    *(Expected: 0 matches outside \`tokens.css\`)*
 - [ ] 2. **Responsive Integrity**: Zero horizontal overflow from 375px mobile through 1440px desktop; 2-column form fields use \`minmax(0, 1fr)\`.
+  - Run browser/Playwright verification at 375, 768, and 1280 viewports:
+    \`\`\`javascript
+    document.documentElement.scrollWidth <= window.innerWidth
+    \`\`\`
+    *(Expected: \`true\` at 375px, 768px, and 1280px widths)*
 - [ ] 3. **Theme & Contrast**: Dark/light mode toggle functions without flash; all text meets WCAG AA contrast (4.5:1 body, 3:1 large text/UI components).
-- [ ] 4. **Accessibility & Motion**: Skip link present; modals trap focus and dismiss on Esc; \`prefers-reduced-motion\` suppresses transitions; interactive controls have visible focus rings.
+- [ ] 4. **Accessibility & Motion**: Skip link present; modals trap focus and dismiss on Esc; \`prefers-reduced-motion\` suppresses transitions; interactive controls have visible focus rings; touch targets on mobile (<640px) achieve 44px minimum hit area.
 - [ ] 5. **Layout & Scope Adherence**: Every page declared in the sitemap that exists in the project is restyled; missing feature pages were NOT created; missing system pages were added as visual shells and reported. Wireframe structural zones match prescribed archetype without invented sections.
 - [ ] 6. **Zero Logic Regression**: Application routes, data fetching, form handlers, state, and test IDs remain intact; test suite passes without regressions.
 `;
