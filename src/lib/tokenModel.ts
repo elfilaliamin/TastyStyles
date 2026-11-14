@@ -100,6 +100,7 @@ const ICON_PACKAGES: Record<string, string> = {
   phosphor: '@phosphor-icons/react',
   heroicons: '@heroicons/react',
   remix: '@remixicon/react',
+  'react-icons': 'react-icons',
 };
 
 const ICON_STROKE_MAP: Record<string, { px: string; num: number }> = {
@@ -413,6 +414,7 @@ export function getPreviewCssVariables(state: DesignState): Record<string, strin
     '--ts-text-caption': tokens.typography.steps.find((s) => s.step === -1)?.fontSizeRem ?? '0.8rem',
 
     '--ts-radius': tokens.radius,
+    '--ts-radius-button': tokens.radius,
     '--ts-radius-surface': parseInt(tokens.radius, 10) > 20 || tokens.radius === '9999px' ? '20px' : tokens.radius,
     '--ts-shadow': tokens.shadow,
 

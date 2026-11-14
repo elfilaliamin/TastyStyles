@@ -37,6 +37,8 @@ export type DesignAction =
   | { type: 'SET_ICON_WEIGHT'; weight: IconWeight }
   | { type: 'SET_NAME'; name: string }
   | { type: 'LOAD_PRESET'; id: string }
+  | { type: 'SET_COLOR_PRESET'; colors: { light: ColorPalette; dark: ColorPalette }; name?: string }
+  | { type: 'SET_TYPOGRAPHY_PRESET'; typography: TypographyState }
   | { type: 'RANDOMIZE_PALETTE' }
   | { type: 'RESET_DEFAULTS' }
   | { type: 'IMPORT_STATE'; state: DesignState };
@@ -392,6 +394,19 @@ export function designReducer(state: DesignState, action: DesignAction): DesignS
         pageLayouts: state.pageLayouts ?? defaultInitialState.pageLayouts,
         projectGoal: state.projectGoal ?? 'saas',
         project: state.project ?? defaultInitialState.project,
+      };
+    }
+    case 'SET_COLOR_PRESET': {
+      return {
+        ...state,
+        colors: action.colors,
+        ...(action.name ? { name: action.name } : {}),
+      };
+    }
+    case 'SET_TYPOGRAPHY_PRESET': {
+      return {
+        ...state,
+        typography: action.typography,
       };
     }
     case 'RANDOMIZE_PALETTE': {

@@ -2,6 +2,8 @@ import React from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const ContactPage: React.FC = () => {
   const { activeColors } = useDesign();
@@ -15,14 +17,25 @@ export const ContactPage: React.FC = () => {
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-lg)',
-        maxWidth: '860px',
-        margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--ts-space-lg)',
       }}
     >
+      <DynamicNavbar />
+
+      <div
+        style={{
+          width: '100%',
+          flex: 1,
+          padding: 'var(--ts-space-lg)',
+          maxWidth: '860px',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'var(--ts-space-lg)',
+          boxSizing: 'border-box',
+        }}
+      >
       <div>
         <h1
           style={{
@@ -220,5 +233,8 @@ export const ContactPage: React.FC = () => {
         </div>
       </div>
     </div>
-  );
+
+    <DynamicFooter />
+  </div>
+);
 };

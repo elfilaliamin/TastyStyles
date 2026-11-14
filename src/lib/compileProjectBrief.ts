@@ -32,11 +32,12 @@ export function compileProjectBrief(state: DesignState): string {
   // Build Part A: Project & Site Specification
   const partA = `# ${state.name} — Project Brief & Site Architecture Specification
 
-> **MANDATORY AI AGENT PRIME DIRECTIVE**
-> 1. Build this site using the EXACT sitemap, section architecture, and token system defined below.
-> 2. **DO NOT INVENT SECTIONS**: Every page MUST adhere strictly to its declared layout and ordered sections list.
-> 3. All styles MUST bind to the CSS variables in \`tokens.css\` / Part B below. Never hardcode arbitrary hex colors, font-families, or raw border-radius values.
-> 4. All surface containers must use \`var(--radius-surface, 16px)\` (clamped to 20px max). Never apply extreme pill radius to surface containers.
+> **AI AGENT IMPLEMENTATION DIRECTIVE & DESIGN CONTRACT**
+> 1. **Core Sitemap & Prescribed Pages**: Build pages declared in the sitemap following their exact architectural layouts and ordered sections. For prescribed pages, DO NOT INVENT SECTIONS outside their declared layout manifests.
+> 2. **Extensibility & Synthesizing New Pages**: If your project requires an additional page type, sub-route, or specialized view that does NOT currently exist in this brief, you are fully empowered to create it. Ensure all new views strictly adhere to the active design theme, typography scales, WCAG AAA contrast, surface radii, and component styling rules.
+> 3. **UI Redesign Guidance**: When using this brief to redesign an existing web application, map existing features directly onto these clean layouts and token variables—delivering a modern, world-class UI without breaking existing business logic.
+> 4. **Strict Token Binding**: All styles MUST bind to the CSS variables in \`tokens.css\` / Part B below. Never hardcode arbitrary hex colors, ad-hoc font families, or raw border-radius values.
+> 5. **Dual-Radius Isolation**: Interactive elements use \`var(--radius-base)\`, while surface containers (cards, modals, form panels) strictly use \`var(--radius-surface, 16px)\` (never exceed 20px). Never apply extreme pill radius to surface cards.
 
 ---
 

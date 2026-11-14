@@ -56,6 +56,13 @@ const LIBRARIES: LibraryOption[] = [
     pkg: 'remixicon-react',
     description: 'Neutral-style system icons with balanced visual rhythm for web, iOS, and Android.',
   },
+  {
+    id: 'react-icons',
+    name: 'React Icons',
+    badge: 'Popular Universal',
+    pkg: 'react-icons',
+    description: 'Universal icon library for React. Direct access to Lucide (Lu), Remix (Ri), FontAwesome (Fa6), Tabler (Tb) & Feather (Fi).',
+  },
 ];
 
 interface WeightOption {

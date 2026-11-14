@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 import { FilterToolbarBlock } from '../../../blocks/FilterToolbarBlock';
 import { AppIcon } from '../../../common/AppIcon';
 import { MEDIA_CATALOG } from '../../../../config/mediaCatalog';
@@ -313,6 +314,8 @@ export const ProductCatalogPage: React.FC = () => {
           </div>
         )}
       </main>
+
+      <DynamicFooter />
     </div>
   );
 };

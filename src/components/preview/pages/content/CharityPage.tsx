@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 import { ProgressMeterBlock } from '../../../blocks/ProgressMeterBlock';
 import { CheckoutInvoiceBlock } from '../../../blocks/CheckoutInvoiceBlock';
 import { MediaHeroBlock } from '../../../blocks/MediaHeroBlock';
@@ -367,6 +368,8 @@ export const CharityPage: React.FC = () => {
           </div>
         )}
       </main>
+
+      <DynamicFooter />
     </div>
   );
 };

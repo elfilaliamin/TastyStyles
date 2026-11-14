@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 import { AppIcon } from '../../../common/AppIcon';
 import { MEDIA_CATALOG, type PortfolioProjectItem } from '../../../../config/mediaCatalog';
 
@@ -696,6 +697,9 @@ STANDARDS: WCAG 2.1 AAA Accessibility, APCA Contrast Engine`}
           </div>
         )}
       </main>
+
+      {/* Responsive Footer */}
+      <DynamicFooter brandName="Alex Rivers" tagline="Staff Design Technologist building deterministic, accessible UI architectures." />
     </div>
   );
 };

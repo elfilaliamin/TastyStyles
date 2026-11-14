@@ -58,6 +58,10 @@ export function compileMarkdown(state: DesignState): string {
 
 ## 0. Agent Contract
 - **Single Source of Truth**: This document is the definitive specification for all frontend UI development in this repository. Read it completely before generating code.
+- **Directing AI Implementation & UI Redesigns**:
+  - **Existing & Defined Pages**: When building page archetypes defined in §7, follow the declared architectural layouts, responsive patterns, and component recipes.
+  - **Synthesizing New Pages**: If your project requires an additional page type or feature not explicitly defined here, you are empowered to design and create it following the active theme's colors, typography scales, contrast, and component styling rules.
+  - **Aesthetic Quality Standard**: Direct all implementation toward high-end, responsive UI with harmonious hierarchy, intentional whitespace, WCAG AAA contrast, and fluid adaptability from mobile (375px) to desktop (1440px).
 - **Strict Token Adherence**: Create \`src/styles/tokens.css\` matching **Section 3** verbatim. Never write raw hex codes, arbitrary margins, or ad-hoc pixel font-sizes outside this token file.
 - **Reference Variables**: In styles or components, exclusively use \`var(--color-*)\`, \`var(--font-*)\`, and \`var(--spacing-*)\` (or their configured Tailwind counterparts).
 - **Execution Order**: Tokens (\`tokens.css\`) → Fonts & Icons → Root Layout Shell → Shared Component Recipes (§6) → Page Archetypes (§7) → Responsive Verification (§8) → Acceptance Checklist (§9).
@@ -162,7 +166,7 @@ ${generateTailwindConfig(state).trim()}
 - **Duotone Depth**: ${tokens.icons.duotone ? 'Enabled (22% opacity accent fill beneath stroke)' : 'Disabled'}
 - **Component Import Example**:
   \`\`\`tsx
-  import { Sparkles, Shield } from '${tokens.icons.pkg}';
+  ${tokens.icons.pkg === 'react-icons' ? `import { LuSparkles as Sparkles } from 'react-icons/lu';` : `import { Sparkles } from '${tokens.icons.pkg}';`}
 
   export const ActionIcon = () => (
     <Sparkles

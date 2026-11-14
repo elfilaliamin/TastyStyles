@@ -111,6 +111,7 @@ export const IconLibrarySchema = z.enum([
   'phosphor',
   'heroicons',
   'remix',
+  'react-icons',
 ]).default('lucide');
 
 export const IconModeSchema = z.enum(['outline', 'solid']).default('outline');

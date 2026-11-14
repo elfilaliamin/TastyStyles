@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDesign } from '../../context/DesignContext';
 import { ContrastBadge } from '../layout/ContrastBadge';
-import { Dices, Sparkles, AlertCircle } from 'lucide-react';
+import { Dices, Sparkles, AlertCircle, Palette } from 'lucide-react';
 import type { ColorPalette } from '../../config/schema';
 import { getBestContrastingColor, checkColorHarmony } from '../../lib/contrast';
+import { registries } from '../../lib/registry';
 
 const COLOR_TOKENS: Array<{ key: keyof ColorPalette; label: string; desc: string }> = [
   { key: 'primary', label: 'Primary Brand', desc: 'Main interactive elements & buttons' },
@@ -71,6 +72,68 @@ export const ColorSection: React.FC = () => {
 
   return (
     <div className="space-y-4">
+      {/* Presets for Colors Only */}
+      <div className="space-y-2 p-3 rounded-xl bg-slate-100/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800">
+        <div className="flex items-center justify-between">
+          <label htmlFor="color-preset-select" className="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+            <Palette className="w-3.5 h-3.5 text-sky-500" />
+            <span>Color Presets</span>
+          </label>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Palette Only</span>
+        </div>
+        <select
+          id="color-preset-select"
+          defaultValue=""
+          onChange={(e) => {
+            const presetId = e.target.value;
+            if (!presetId) return;
+            const found = registries.presets.find((p) => p.id === presetId);
+            if (found) {
+              dispatch({
+                type: 'SET_COLOR_PRESET',
+                colors: found.state.colors,
+                name: found.state.name,
+              });
+              e.target.value = '';
+            }
+          }}
+          className="w-full min-h-[36px] px-3 py-1.5 text-xs rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 focus-ring cursor-pointer"
+        >
+          <option value="" disabled>Apply Color Preset (Palettes only)...</option>
+          {registries.presets.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.label}
+            </option>
+          ))}
+        </select>
+
+        {/* Quick swatch pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5" style={{ scrollbarWidth: 'none' }}>
+          {registries.presets.slice(0, 8).map((p) => {
+            const pal = p.state.colors[currentMode];
+            return (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() =>
+                  dispatch({
+                    type: 'SET_COLOR_PRESET',
+                    colors: p.state.colors,
+                    name: p.state.name,
+                  })
+                }
+                className="flex items-center gap-1 px-2 py-1 rounded-md bg-white dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-[10px] font-medium text-slate-700 dark:text-slate-300 transition-colors whitespace-nowrap flex-shrink-0 cursor-pointer"
+                title={`${p.label}: Apply colors only`}
+              >
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: pal.primary }} />
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: pal.accent }} />
+                <span>{p.label.split(' ')[0]}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Palette Info & Randomize button */}
       <div className="flex items-center justify-between gap-2 bg-slate-100 dark:bg-slate-900/90 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 transition-colors">
         <div className="flex items-center gap-2">

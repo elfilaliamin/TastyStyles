@@ -3,6 +3,7 @@ import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const LandingPage: React.FC = () => {
   const { activeColors, state } = useDesign();
@@ -1706,6 +1707,9 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
       )}
+
+      {/* Responsive Footer */}
+      <DynamicFooter />
     </div>
   );
 };
