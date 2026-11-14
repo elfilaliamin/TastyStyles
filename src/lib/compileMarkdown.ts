@@ -403,10 +403,10 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
           {/* Zone 1: Breadcrumb & Title Header */}
           <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-[var(--spacing-md)] pb-[var(--spacing-md)] border-b border-[var(--color-border)]">
             <div>
-              <div className="text-[var(--font-size-step-sub1)] font-semibold text-[var(--color-muted)] uppercase tracking-wider mb-1">
+              <div className="text-[length:var(--font-size-step-sub1)] font-semibold text-[color:var(--color-muted)] uppercase tracking-wider mb-1">
                 {category}
               </div>
-              <h1 className="text-[var(--font-size-step-4)] font-bold font-[var(--font-heading)] text-[var(--color-text)]">
+              <h1 className="text-[length:var(--font-size-step-4)] font-bold font-[var(--font-heading)] text-[color:var(--color-text)]">
                 {title}
               </h1>
             </div>
@@ -421,7 +421,7 @@ export const StandardPageShell: React.FC<NewPageProps> = ({
 
         {/* 4. Global / Contextual Footer: rendered ONLY for public/content pages */}
         {isPublic && (
-          <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--spacing-md)] text-[var(--font-size-step-sub1)] text-[var(--color-muted)] flex items-center justify-between">
+          <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] p-[var(--spacing-md)] text-[length:var(--font-size-step-sub1)] text-[color:var(--color-muted)] flex items-center justify-between">
             {/* Render ${pageLayouts.footer ?? 'columns-mega'} */}
           </footer>
         )}
