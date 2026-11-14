@@ -586,6 +586,39 @@ if (!badgeRecipe || badgeRecipe.radius !== 'var(--radius-pill)') {
 }
 console.log('✅ Batch 5 verified: Tokens, text-safe pairs, recipes, and font weights verified.');
 
+console.log('--- Testing Batch 6: Contrast Honesty & Report Generation ---');
+// 1. Verify no unconditional "WCAG AAA contrast" or "AAA contrast" claims
+for (const p of PURPOSES) {
+  const pSt = designReducer(defaultInitialState, { type: 'SET_PURPOSE', purpose: p.id });
+  const pBrief = compileProjectBrief(pSt);
+  const pSpec = compileMarkdown(pSt);
+  if (pBrief.includes('WCAG AAA contrast') || pSpec.includes('WCAG AAA contrast') || pBrief.includes('AAA contrast') || pSpec.includes('AAA contrast')) {
+    console.error(`❌ Batch 6 check failed: Purpose ${p.id} leaked unconditional 'AAA contrast' claim`);
+    process.exit(1);
+  }
+}
+
+// 2. Verify contrast report with real numbers across presets
+for (const preset of presets) {
+  const prState = designReducer(defaultInitialState, { type: 'LOAD_PRESET', id: preset.id });
+  const prSpec = compileMarkdown(prState);
+  if (!prSpec.includes('### 2.1b Contrast Report')) {
+    console.error(`❌ Batch 6 check failed: Preset ${preset.id} missing '### 2.1b Contrast Report'`);
+    process.exit(1);
+  }
+  if (!prSpec.includes('Target: WCAG AA (4.5:1 body text, 3:1 large text and UI components)')) {
+    console.error(`❌ Batch 6 check failed: Preset ${preset.id} missing realistic WCAG AA target statement`);
+    process.exit(1);
+  }
+  // Check that real numbers (e.g. ratio pattern :1) are present
+  const ratioMatches = prSpec.match(/\*\*\d+\.\d{2}:1\*\*/g);
+  if (!ratioMatches || ratioMatches.length < 20) {
+    console.error(`❌ Batch 6 check failed: Preset ${preset.id} contrast report missing calculated numeric ratios`);
+    process.exit(1);
+  }
+}
+console.log('✅ Batch 6 verified: No unconditional AAA claims, contrast report generated with computed ratios for all presets.');
+
 console.log('--- Testing Phase 6: Layout Scaffolding & Quality Gates ---');
 const workflowDoc = path.resolve('.agent/workflows/add-layout-from-image.md');
 if (!fs.existsSync(workflowDoc)) {

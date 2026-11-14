@@ -1,5 +1,6 @@
 import type { DesignState } from '../config/schema';
 import { resolveTokens, generateUnifiedCssTokens } from './tokenModel';
+import { generateContrastReport } from './contrast';
 import { LAYOUT_CATALOG, type LayoutCatalogItem } from '../config/layoutCatalog';
 import { GOAL_DEFINITIONS } from '../config/previews';
 import { getPurposeDefinition } from '../config/purposes';
@@ -102,7 +103,7 @@ export function compileMarkdown(state: DesignState): string {
 - **Directing AI Implementation & UI Redesigns**:
   - **Scope & Restyling Contract**: A page listed in this specification is NOT an instruction to create it. If the page already exists in the target project, restyle it (UI/UX only, no logic changes). If a feature page does NOT exist in the project, DO NOT create it unprompted. System/utility pages (auth, 404/500 error screens) may be created if missing, as visual presentation shells only. For existing pages, follow the declared architectural layouts, responsive patterns, and component recipes.
   - **Extensibility & User-Requested Views**: Do NOT invent new feature pages unprompted. You may only synthesize specialized views or sub-routes that the user has explicitly requested, or essential system/utility pages. Ensure all views follow the active theme's tokens, typography scales, contrast, and component styling rules.
-  - **Aesthetic Quality Standard**: Direct all implementation toward high-end, responsive UI with harmonious hierarchy, intentional whitespace, WCAG AAA contrast, and fluid adaptability from mobile (375px) to desktop (1440px).
+  - **Aesthetic Quality Standard**: Direct all implementation toward high-end, responsive UI with harmonious hierarchy, intentional whitespace, Target: WCAG AA (4.5:1 body text, 3:1 large text and UI components); AAA where the palette allows (see the contrast report), and fluid adaptability from mobile (375px) to desktop (1440px).
 - **Strict Token Adherence**: Create \`src/styles/tokens.css\` matching **Section 3** verbatim. Never write raw hex codes, arbitrary margins, or ad-hoc pixel font-sizes outside this token file.
 - **Reference Variables**: In styles or components, exclusively use \`var(--color-*)\`, \`var(--font-*)\`, and \`var(--spacing-*)\` (or their configured Tailwind counterparts).
 - **Execution Order**: Tokens (\`tokens.css\`) → Fonts & Icons → Root Layout Shell → Shared Component Recipes (§6) → Page Archetypes (§7) → Responsive Verification (§8) → Acceptance Checklist (§9).
@@ -150,6 +151,8 @@ The **${tokens.name}** visual system pairs **${tokens.typography.headingFamily}*
 | **scrim** | \`${tokens.lightColors.scrim}\` | \`${tokens.darkColors.scrim}\` | Modal & drawer backdrop overlay mask |
 
 > **Color Application Rule**: Use \`*-text\` tokens (\`--color-primary-text\`, \`--color-success-text\`, etc.) for text, labels, and links; use base colors for component fills, borders, and icons.
+
+${generateContrastReport(tokens.lightColors, tokens.darkColors)}
 
 ### 2.2 Typography Scale
 - **Heading Font**: \`${tokens.typography.headingFamily}\` (${tokens.typography.headingCategory})

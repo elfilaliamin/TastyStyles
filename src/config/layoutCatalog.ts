@@ -1482,7 +1482,7 @@ export const LAYOUT_CATALOG: Record<string, LayoutCatalogItem[]> = {
 | Main Entity Summary           | Metadata Inspector    |
 | - Token Name: Primary Brand   | Created: 2026-11-04   |
 | - Value: #0284c7              | Author: Alex Rivers   |
-| - Contrast: 21.0:1 AAA Pass   | [Edit Token] [Delete] |
+| - Status: Active              | [Edit Item] [Delete]  |
 +-------------------------------+-----------------------+`,
       mobile: 'Metadata panel collapses below entity summary in single vertical column.',
       tablet: 'Sidepanel narrows to 240px; main view adapts gracefully.',
