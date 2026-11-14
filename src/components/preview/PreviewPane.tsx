@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, Suspense, lazy } from 'rea
 import { useDesign } from '../../context/DesignContext';
 import { ViewportSwitcher } from './ViewportSwitcher';
 import { getPreviewCssVariables } from '../../lib/tokenModel';
-import type { ViewportMode, PreviewComponentType } from '../../types';
+import type { PreviewComponentType } from '../../types';
 import { ChevronLeft, ChevronRight, ChevronDown, AlertTriangle, Compass } from 'lucide-react';
 import {
   PREVIEW_REGISTRY,
@@ -82,8 +82,7 @@ const preloadComponent = (type: string) => {
 };
 
 export const PreviewPane: React.FC = () => {
-  const { state, activePreview, setActivePreview } = useDesign();
-  const [viewportMode, setViewportMode] = useState<ViewportMode>('desktop');
+  const { state, activePreview, setActivePreview, viewportMode, setViewportMode } = useDesign();
   const [hasOverflow, setHasOverflow] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -383,6 +382,7 @@ export const PreviewPane: React.FC = () => {
                   boxShadow: '0 20px 40px -15px rgba(0,0,0,0.3)',
                   overflow: 'hidden',
                   containerType: 'inline-size',
+                  position: 'relative',
                 } as React.CSSProperties
               }
             >
@@ -394,6 +394,7 @@ export const PreviewPane: React.FC = () => {
                   height: '100%',
                   overflowY: 'auto',
                   overflowX: 'hidden',
+                  position: 'relative',
                   padding: 0,
                   boxSizing: 'border-box',
                   display: 'flex',

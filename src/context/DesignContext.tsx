@@ -7,7 +7,7 @@ import { updateDynamicFonts, loadAllPreviewFonts } from '../lib/fonts';
 import { getFontEntry, registries } from '../lib/registry';
 import { getPurposeDefinition } from '../config/purposes';
 import { PAGE_TYPE_TO_PAGE_LAYOUTS_KEY } from '../config/pageTypes';
-import type { PreviewComponentType } from '../types';
+import type { PreviewComponentType, ViewportMode } from '../types';
 
 interface DesignContextType {
   state: DesignState;
@@ -16,6 +16,9 @@ interface DesignContextType {
   compiledMarkdown: string;
   activePreview: PreviewComponentType;
   setActivePreview: (preview: PreviewComponentType) => void;
+  viewportMode: ViewportMode;
+  setViewportMode: (mode: ViewportMode) => void;
+  isMobile: boolean;
   canUndo: boolean;
   canRedo: boolean;
   undo: () => void;
@@ -203,6 +206,22 @@ const DesignContext = createContext<DesignContextType | undefined>(undefined);
 export const DesignProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(designReducer, undefined, getInitialState);
   const [activePreview, setActivePreview] = useState<PreviewComponentType>('landing');
+  const [viewportMode, setViewportMode] = useState<ViewportMode>('desktop');
+  const [isWindowMobile, setIsWindowMobile] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth < 640;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => {
+      setIsWindowMobile(window.innerWidth < 640);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = viewportMode === 'mobile' || isWindowMobile;
 
   // History stack for Undo / Redo
   const [past, setPast] = useState<DesignState[]>([]);
@@ -314,6 +333,9 @@ export const DesignProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         compiledMarkdown,
         activePreview,
         setActivePreview,
+        viewportMode,
+        setViewportMode,
+        isMobile,
         canUndo: past.length > 0,
         canRedo: future.length > 0,
         undo,

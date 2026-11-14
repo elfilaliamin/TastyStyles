@@ -6,7 +6,7 @@ import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 
 export const BillingPage: React.FC = () => {
-  const { activeColors } = useDesign();
+  const { activeColors, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
 
   const invoices = [
@@ -30,8 +30,17 @@ export const BillingPage: React.FC = () => {
     >
       <DynamicNavbar />
 
-      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-        <DynamicSidebar className="hidden md:flex shrink-0" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          flex: 1,
+          minHeight: 0,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        <DynamicSidebar />
 
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
           <div

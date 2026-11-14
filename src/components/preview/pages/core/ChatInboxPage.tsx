@@ -17,7 +17,7 @@ interface ChatThread {
 }
 
 export const ChatInboxPage: React.FC = () => {
-  const { state, activeColors } = useDesign();
+  const { state, activeColors, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = state.pageLayouts?.chat ?? 'split-pane';
 
@@ -108,8 +108,17 @@ export const ChatInboxPage: React.FC = () => {
       >
         <DynamicNavbar />
 
-        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-          <DynamicSidebar className="hidden md:flex shrink-0" />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            flex: 1,
+            minHeight: 0,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          <DynamicSidebar />
 
           <main style={{ flex: 1, padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div
@@ -257,8 +266,17 @@ export const ChatInboxPage: React.FC = () => {
       >
         <DynamicNavbar />
 
-        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-          <DynamicSidebar className="hidden md:flex shrink-0" />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            flex: 1,
+            minHeight: 0,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          <DynamicSidebar />
 
           <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 'var(--ts-space-md)', overflowY: 'auto' }}>
             <div
@@ -397,8 +415,18 @@ export const ChatInboxPage: React.FC = () => {
     >
       <DynamicNavbar />
 
-      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%', overflow: 'hidden' }}>
-        <DynamicSidebar className="hidden md:flex shrink-0" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          flex: 1,
+          minHeight: 0,
+          width: '100%',
+          overflow: 'hidden',
+          position: 'relative',
+        }}
+      >
+        <DynamicSidebar />
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'row', overflow: 'hidden', minWidth: 0 }}>
           {/* Left Column: Thread List */}

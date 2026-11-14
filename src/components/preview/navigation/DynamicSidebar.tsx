@@ -3,6 +3,7 @@ import { useDesign } from '../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../lib/contrast';
 import { AppIcon, type IconName } from '../../common/AppIcon';
 import type { PageLayouts } from '../../../config/schema';
+import { Menu, X } from 'lucide-react';
 
 export interface DynamicSidebarProps {
   variant?: PageLayouts['sidebar'];
@@ -35,17 +36,630 @@ export const DynamicSidebar: React.FC<DynamicSidebarProps> = ({
   className = '',
   style: userStyle = {},
 }) => {
-  const { activeColors, state } = useDesign();
+  const { activeColors, state, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = variant ?? state.pageLayouts?.sidebar ?? 'classic-grouped';
   const name = brandName ?? state.name ?? 'ApexDesign';
 
   const [localActiveItem, setLocalActiveItem] = useState('dashboard');
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const activeItem = controlledActiveItem ?? localActiveItem;
   const handleItemClick = (id: string) => {
     setLocalActiveItem(id);
     onSelectItem?.(id);
+    setIsMobileDrawerOpen(false);
   };
+
+  const itemLabels: Record<string, string> = {
+    dashboard: 'Dashboard',
+    tokens: 'Design Tokens',
+    typography: 'Typography',
+    components: 'Components',
+    wcag: 'Accessibility WCAG',
+    tokens_export: 'Export DTCG',
+    team: 'Team Roles',
+    settings: 'System Settings',
+    governance: 'Governance',
+    code: 'Code',
+    database: 'Database',
+  };
+  const activeLabel = itemLabels[activeItem] ?? activeItem;
+
+  const renderDrawerContent = () => {
+    if (layout === 'floating-card') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '16px' }}>
+              {['Overview', 'Tokens', 'Components', 'Accessibility', 'Settings'].map((item) => {
+                const id = item.toLowerCase();
+                const isSelected = activeItem === id || (id === 'overview' && activeItem === 'dashboard');
+                return (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => handleItemClick(id === 'overview' ? 'dashboard' : id)}
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px',
+                      borderRadius: 'var(--ts-radius)',
+                      border: 'none',
+                      backgroundColor: isSelected ? 'var(--ts-color-primary)' : 'transparent',
+                      color: isSelected ? primaryTextColor : 'var(--ts-color-text)',
+                      fontWeight: isSelected ? 700 : 500,
+                      fontSize: '13px',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {item}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div
+            style={{
+              padding: '12px',
+              borderRadius: 'var(--ts-radius-surface, 12px)',
+              backgroundColor: 'var(--ts-color-background)',
+              border: '1px solid var(--ts-color-border)',
+              fontSize: '11px',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontWeight: 600 }}>
+              <span>Token Storage</span>
+              <span>84%</span>
+            </div>
+            <div style={{ width: '100%', height: '4px', borderRadius: '2px', backgroundColor: 'var(--ts-color-border)', overflow: 'hidden' }}>
+              <div style={{ width: '84%', height: '100%', backgroundColor: 'var(--ts-color-primary)' }} />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (layout === 'compact-rail') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {[
+              { id: 'dashboard', label: 'Dashboard' },
+              { id: 'tokens', label: 'Design Tokens' },
+              { id: 'typography', label: 'Typography' },
+              { id: 'components', label: 'Components' },
+              { id: 'governance', label: 'Security & Governance' },
+              { id: 'settings', label: 'Settings' },
+            ].map((item) => {
+              const isSelected = activeItem === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => handleItemClick(item.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    width: '100%',
+                    padding: '10px 12px',
+                    borderRadius: 'var(--ts-radius)',
+                    border: 'none',
+                    backgroundColor: isSelected ? 'var(--ts-color-primary)' : 'transparent',
+                    color: isSelected ? primaryTextColor : 'var(--ts-color-text)',
+                    fontWeight: isSelected ? 700 : 500,
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                  }}
+                >
+                  <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={18} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div
+            style={{
+              paddingTop: 'var(--ts-space-sm)',
+              borderTop: '1px solid var(--ts-color-border)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            <div
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '11px',
+              }}
+            >
+              AR
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '13px' }}>Alex Rivera</div>
+              <div style={{ fontSize: '11px', opacity: 0.6 }}>alex@company.com</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (layout === 'dual-pane') {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.5, marginBottom: '8px', paddingLeft: '4px' }}>
+              System Navigation
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '16px' }}>
+              {[
+                { id: 'dashboard', label: 'Dashboard' },
+                { id: 'tokens', label: 'Tokens' },
+                { id: 'components', label: 'Components' },
+                { id: 'settings', label: 'Settings' },
+              ].map((item) => {
+                const isSelected = activeItem === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleItemClick(item.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      width: '100%',
+                      padding: '8px 10px',
+                      borderRadius: 'var(--ts-radius)',
+                      border: 'none',
+                      backgroundColor: isSelected ? 'var(--ts-color-primary)' : 'transparent',
+                      color: isSelected ? primaryTextColor : 'var(--ts-color-text)',
+                      fontWeight: isSelected ? 700 : 500,
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                    }}
+                  >
+                    <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={16} />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ fontSize: '10px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.5, marginBottom: '8px', paddingLeft: '4px' }}>
+              Files Explorer
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '12px' }}>
+              {['src/styles/tokens.css', 'src/config/schema.ts', 'src/lib/contrast.ts', 'DESIGN.md'].map((file, idx) => (
+                <div
+                  key={file}
+                  style={{
+                    padding: '6px 8px',
+                    borderRadius: 'var(--ts-radius)',
+                    backgroundColor: idx === 0 ? 'rgba(2, 132, 199, 0.12)' : 'transparent',
+                    color: idx === 0 ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
+                    fontWeight: idx === 0 ? 600 : 400,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <AppIcon name="folder" size={12} />
+                  <span style={{ fontFamily: 'monospace', fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {file}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            style={{
+              paddingTop: 'var(--ts-space-sm)',
+              borderTop: '1px solid var(--ts-color-border)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            <div
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '11px',
+              }}
+            >
+              AR
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '13px' }}>Alex Rivera</div>
+              <div style={{ fontSize: '11px', opacity: 0.6 }}>Admin Developer</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Default / classic-grouped / workspace-shell:
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+        <div>
+          {/* Section 1: CORE */}
+          <div>
+            <div
+              style={{
+                fontSize: '10px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                opacity: 0.5,
+                marginBottom: '6px',
+                paddingLeft: '8px',
+              }}
+            >
+              Core System
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {[
+                { id: 'dashboard', label: 'Dashboard' },
+                { id: 'tokens', label: 'Design Tokens', badge: 'Live' },
+                { id: 'typography', label: 'Typography' },
+                { id: 'components', label: 'Components', badge: '24' },
+              ].map((item) => {
+                const isSelected = activeItem === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleItemClick(item.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      padding: '8px 10px',
+                      borderRadius: 'var(--ts-radius)',
+                      border: 'none',
+                      backgroundColor: isSelected ? 'var(--ts-color-primary)' : 'transparent',
+                      color: isSelected ? primaryTextColor : 'var(--ts-color-text)',
+                      fontWeight: isSelected ? 700 : 500,
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={16} />
+                      <span>{item.label}</span>
+                    </div>
+                    {item.badge && (
+                      <span
+                        style={{
+                          fontSize: '10px',
+                          fontWeight: 700,
+                          padding: '2px 6px',
+                          borderRadius: '9999px',
+                          backgroundColor: isSelected ? 'rgba(255,255,255,0.25)' : 'var(--ts-color-background)',
+                          border: isSelected ? 'none' : '1px solid var(--ts-color-border)',
+                        }}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Section 2: GOVERNANCE */}
+          <div style={{ marginTop: 'var(--ts-space-md)' }}>
+            <div
+              style={{
+                fontSize: '10px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                opacity: 0.5,
+                marginBottom: '6px',
+                paddingLeft: '8px',
+              }}
+            >
+              Governance & Ops
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {[
+                { id: 'wcag', label: 'Accessibility WCAG' },
+                { id: 'tokens_export', label: 'Export DTCG' },
+                { id: 'team', label: 'Team Roles' },
+                { id: 'settings', label: 'System Settings' },
+              ].map((item) => {
+                const isSelected = activeItem === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleItemClick(item.id)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      padding: '8px 10px',
+                      borderRadius: 'var(--ts-radius)',
+                      border: 'none',
+                      backgroundColor: isSelected ? 'var(--ts-color-primary)' : 'transparent',
+                      color: isSelected ? primaryTextColor : 'var(--ts-color-text)',
+                      fontWeight: isSelected ? 700 : 500,
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <AppIcon name={sidebarIconMap[item.id] ?? 'folder'} size={16} />
+                      <span>{item.label}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* User Footer Profile Pill */}
+        <div
+          style={{
+            paddingTop: 'var(--ts-space-sm)',
+            borderTop: '1px solid var(--ts-color-border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div
+              style={{
+                width: '30px',
+                height: '30px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '11px',
+              }}
+            >
+              AR
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '13px', lineHeight: 1.2 }}>Alex Rivera</div>
+              <div style={{ fontSize: '10px', opacity: 0.6 }}>alex@company.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // MOBILE RESPONSIVE SIDEBAR: Converts to top header bar with slide-over drawer
+  if (isMobile) {
+    return (
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          flexShrink: 0,
+          boxSizing: 'border-box',
+          ...userStyle,
+        }}
+      >
+        {/* Mobile Navigation Trigger Bar */}
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '8px 12px',
+            backgroundColor: 'var(--ts-color-surface)',
+            borderBottom: '1px solid var(--ts-color-border)',
+            boxSizing: 'border-box',
+            flexShrink: 0,
+            zIndex: 15,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 1 }}>
+            <div
+              style={{
+                width: '26px',
+                height: '26px',
+                borderRadius: 'var(--ts-radius)',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 800,
+                fontSize: '11px',
+                flexShrink: 0,
+              }}
+            >
+              {name.substring(0, 2).toUpperCase()}
+            </div>
+            <span
+              style={{
+                fontSize: '12px',
+                fontWeight: 700,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {name}
+            </span>
+            <span style={{ opacity: 0.4, fontSize: '12px' }}>/</span>
+            <span
+              style={{
+                fontSize: '12px',
+                fontWeight: 600,
+                color: 'var(--ts-color-primary)',
+                textTransform: 'capitalize',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {activeLabel}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsMobileDrawerOpen(true)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '5px 10px',
+              borderRadius: 'var(--ts-radius)',
+              border: '1px solid var(--ts-color-border)',
+              backgroundColor: 'var(--ts-color-background)',
+              color: 'var(--ts-color-text)',
+              fontSize: '12px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              flexShrink: 0,
+            }}
+            aria-label="Open sidebar menu"
+          >
+            <Menu size={14} />
+            <span>Menu</span>
+          </button>
+        </div>
+
+        {/* Mobile Slide-Over Overlay Drawer */}
+        {isMobileDrawerOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 50,
+              display: 'flex',
+            }}
+          >
+            {/* Backdrop Scrim */}
+            <div
+              onClick={() => setIsMobileDrawerOpen(false)}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.55)',
+                backdropFilter: 'blur(3px)',
+                WebkitBackdropFilter: 'blur(3px)',
+              }}
+            />
+
+            {/* Slide-over Drawer Panel */}
+            <div
+              style={{
+                position: 'relative',
+                width: '280px',
+                maxWidth: '85%',
+                height: '100%',
+                backgroundColor: 'var(--ts-color-surface)',
+                borderRight: '1px solid var(--ts-color-border)',
+                boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.4)',
+                display: 'flex',
+                flexDirection: 'column',
+                zIndex: 51,
+                overflowY: 'auto',
+                boxSizing: 'border-box',
+              }}
+            >
+              {/* Header with Close Button */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '12px 16px',
+                  borderBottom: '1px solid var(--ts-color-border)',
+                  flexShrink: 0,
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      borderRadius: 'var(--ts-radius)',
+                      backgroundColor: 'var(--ts-color-primary)',
+                      color: primaryTextColor,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 800,
+                      fontSize: '11px',
+                    }}
+                  >
+                    {name.substring(0, 2).toUpperCase()}
+                  </div>
+                  <span style={{ fontWeight: 800, fontSize: '13px' }}>{name}</span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsMobileDrawerOpen(false)}
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                    borderRadius: 'var(--ts-radius)',
+                    border: '1px solid var(--ts-color-border)',
+                    backgroundColor: 'var(--ts-color-background)',
+                    color: 'var(--ts-color-text)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                  }}
+                  aria-label="Close sidebar menu"
+                >
+                  <X size={15} />
+                </button>
+              </div>
+
+              {/* Drawer Content */}
+              <div style={{ flex: 1, padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflowY: 'auto' }}>
+                {renderDrawerContent()}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   // 1. CLASSIC GROUPED SIDEBAR
   if (layout === 'classic-grouped') {

@@ -6,7 +6,7 @@ import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 
 export const DashboardPage: React.FC = () => {
-  const { activeColors, state } = useDesign();
+  const { activeColors, state, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = state.pageLayouts?.dashboard ?? 'sidebar-grid';
 
@@ -262,10 +262,12 @@ export const DashboardPage: React.FC = () => {
         height: '100%',
         minHeight: '100%',
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
-      <DynamicSidebar className="hidden lg:flex" />
+      <DynamicSidebar />
       <main
         style={{
           flex: 1,

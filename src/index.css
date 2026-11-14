@@ -167,6 +167,29 @@
 /* Base mobile font adjustments */
 .ts-preview-frame[data-viewport='mobile'] {
   font-size: calc(var(--ts-base-size) * 0.9);
+  overflow-x: hidden !important;
+}
+
+/* Ensure mobile preview forces collapse of desktop Tailwind breakpoint utility classes */
+.ts-preview-frame[data-viewport='mobile'] .hidden.md\:flex,
+.ts-preview-frame[data-viewport='mobile'] .hidden.lg\:flex,
+.ts-preview-frame[data-viewport='mobile'] .hidden.sm\:flex,
+.ts-preview-frame[data-viewport='mobile'] .hidden.md\:block,
+.ts-preview-frame[data-viewport='mobile'] .hidden.lg\:block,
+.ts-preview-frame[data-viewport='mobile'] .hidden.sm\:block {
+  display: none !important;
+}
+
+.ts-preview-frame[data-viewport='mobile'] .flex.md\:hidden,
+.ts-preview-frame[data-viewport='mobile'] .flex.lg\:hidden,
+.ts-preview-frame[data-viewport='mobile'] .flex.sm\:hidden {
+  display: flex !important;
+}
+
+.ts-preview-frame[data-viewport='mobile'] .block.md\:hidden,
+.ts-preview-frame[data-viewport='mobile'] .block.lg\:hidden,
+.ts-preview-frame[data-viewport='mobile'] .block.sm\:hidden {
+  display: block !important;
 }
 
 .ts-preview-frame[data-viewport='mobile'] h1 {

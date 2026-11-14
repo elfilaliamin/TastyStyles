@@ -16,7 +16,7 @@ interface SectionVisibility {
 }
 
 export const PortfolioDashboardPage: React.FC = () => {
-  const { state, activeColors } = useDesign();
+  const { state, activeColors, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = state.pageLayouts?.portfolioDashboard ?? 'analytics-cms-split';
 
@@ -75,13 +75,14 @@ export const PortfolioDashboardPage: React.FC = () => {
         height: '100%',
         minHeight: '100%',
         display: 'flex',
-        flexDirection: layout === 'compact-overview' ? 'column' : 'row',
+        flexDirection: layout === 'compact-overview' || isMobile ? 'column' : 'row',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
       {/* Sidebar for sidebar-grid layout */}
       {layout === 'analytics-cms-split' && (
-        <DynamicSidebar className="hidden md:flex shrink-0" brandName="Portfolio CMS" />
+        <DynamicSidebar brandName="Portfolio CMS" />
       )}
 
       {/* Main Content Area */}

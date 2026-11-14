@@ -7,7 +7,7 @@ import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const ItemDetailPage: React.FC = () => {
-  const { state, activeColors } = useDesign();
+  const { state, activeColors, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = state.pageLayouts?.detail ?? 'split-sidepanel';
   const [activeTab, setActiveTab] = useState<'overview' | 'logs' | 'network' | 'security'>('overview');
@@ -188,8 +188,17 @@ export const ItemDetailPage: React.FC = () => {
     >
       <DynamicNavbar />
 
-      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-        <DynamicSidebar className="hidden md:flex shrink-0" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          flex: 1,
+          minHeight: 0,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        <DynamicSidebar />
 
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
           <div

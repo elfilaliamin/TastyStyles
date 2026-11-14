@@ -22,7 +22,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
   className = '',
   style: userStyle = {},
 }) => {
-  const { activeColors, state } = useDesign();
+  const { activeColors, state, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = variant ?? state.pageLayouts?.navbar ?? 'saas-header';
   const name = brandName ?? state.name ?? 'ApexDesign';
@@ -46,19 +46,19 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             backgroundColor: 'var(--ts-color-surface)',
             borderBottom: '1px solid var(--ts-color-border)',
             boxShadow: 'var(--ts-shadow)',
-            padding: '0 var(--ts-space-lg)',
+            padding: isMobile ? '0 12px' : '0 var(--ts-space-lg)',
             minHeight: '64px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: 'var(--ts-space-md)',
+            gap: isMobile ? '8px' : 'var(--ts-space-md)',
             boxSizing: 'border-box',
             width: '100%',
           }}
         >
           {/* Left: Brand + Monogram + Breadcrumb */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-md)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : 'var(--ts-space-md)', minWidth: 0, flexShrink: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
               <div
                 style={{
                   width: '32px',
@@ -72,109 +72,129 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
                   fontWeight: 800,
                   fontSize: 'calc(var(--ts-base-size) * 0.85)',
                   boxShadow: 'var(--ts-shadow)',
+                  flexShrink: 0,
                 }}
               >
                 {name.substring(0, 2).toUpperCase()}
               </div>
-              <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: 'calc(var(--ts-base-size) * 0.95)' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--ts-font-heading)',
+                  fontWeight: 800,
+                  fontSize: 'calc(var(--ts-base-size) * 0.95)',
+                  maxWidth: isMobile ? '130px' : undefined,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
                 {name}
               </span>
             </div>
 
-            <div style={{ height: '18px', width: '1px', backgroundColor: 'var(--ts-color-border)' }} className="hidden sm:block" />
-
-            <div className="hidden md:flex items-center gap-1.5 text-xs opacity-75">
-              <span>Platform</span>
-              <span>/</span>
-              <span style={{ fontWeight: 600, color: 'var(--ts-color-primary)' }}>Overview</span>
-            </div>
+            {!isMobile && (
+              <>
+                <div style={{ height: '18px', width: '1px', backgroundColor: 'var(--ts-color-border)' }} className="hidden sm:block" />
+                <div className="hidden md:flex items-center gap-1.5 text-xs opacity-75">
+                  <span>Platform</span>
+                  <span>/</span>
+                  <span style={{ fontWeight: 600, color: 'var(--ts-color-primary)' }}>Overview</span>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Center: Global Search Input with Command Key Shortcut (Desktop) */}
-          <div className="hidden lg:flex items-center" style={{ flex: '0 1 360px' }}>
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                backgroundColor: 'var(--ts-color-background)',
-                border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
-                padding: '6px 12px',
-                fontSize: 'calc(var(--ts-base-size) * 0.82)',
-              }}
-            >
-              <AppIcon name="search" size={14} style={{ opacity: 0.5 }} />
-              <input
-                type="text"
-                readOnly
-                value="Search resources, tokens, docs..."
+          {!isMobile && (
+            <div className="hidden lg:flex items-center" style={{ flex: '0 1 360px' }}>
+              <div
                 style={{
-                  border: 'none',
-                  background: 'transparent',
-                  outline: 'none',
-                  color: 'var(--ts-color-text)',
                   width: '100%',
-                  cursor: 'pointer',
-                  fontSize: 'inherit',
-                }}
-              />
-              <span
-                style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '2px',
-                  backgroundColor: 'var(--ts-color-surface)',
+                  gap: '8px',
+                  backgroundColor: 'var(--ts-color-background)',
                   border: '1px solid var(--ts-color-border)',
-                  borderRadius: '4px',
-                  padding: '2px 5px',
-                  fontSize: '10px',
-                  fontWeight: 600,
-                  opacity: 0.7,
+                  borderRadius: 'var(--ts-radius)',
+                  padding: '6px 12px',
+                  fontSize: 'calc(var(--ts-base-size) * 0.82)',
                 }}
               >
-                ⌘K
-              </span>
+                <AppIcon name="search" size={14} style={{ opacity: 0.5 }} />
+                <input
+                  type="text"
+                  readOnly
+                  value="Search resources, tokens, docs..."
+                  style={{
+                    border: 'none',
+                    background: 'transparent',
+                    outline: 'none',
+                    color: 'var(--ts-color-text)',
+                    width: '100%',
+                    cursor: 'pointer',
+                    fontSize: 'inherit',
+                  }}
+                />
+                <span
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '2px',
+                    backgroundColor: 'var(--ts-color-surface)',
+                    border: '1px solid var(--ts-color-border)',
+                    borderRadius: '4px',
+                    padding: '2px 5px',
+                    fontSize: '10px',
+                    fontWeight: 600,
+                    opacity: 0.7,
+                  }}
+                >
+                  ⌘K
+                </span>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Right: Actions, Notifications, Avatar & Hamburger Toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-sm)' }}>
-            <div
-              className="hidden sm:flex items-center gap-1.5"
-              style={{
-                backgroundColor: 'var(--ts-color-surface)',
-                border: '1px solid var(--ts-color-border)',
-                borderRadius: 'var(--ts-radius)',
-                padding: '4px 8px',
-                fontSize: 'calc(var(--ts-base-size) * 0.75)',
-                fontWeight: 600,
-                color: 'var(--ts-color-primary)',
-              }}
-            >
-              <AppIcon name="sparkles" size={12} />
-              <span>AI Ready</span>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ts-space-sm)', flexShrink: 0 }}>
+            {!isMobile && (
+              <>
+                <div
+                  className="hidden sm:flex items-center gap-1.5"
+                  style={{
+                    backgroundColor: 'var(--ts-color-surface)',
+                    border: '1px solid var(--ts-color-border)',
+                    borderRadius: 'var(--ts-radius)',
+                    padding: '4px 8px',
+                    fontSize: 'calc(var(--ts-base-size) * 0.75)',
+                    fontWeight: 600,
+                    color: 'var(--ts-color-primary)',
+                  }}
+                >
+                  <AppIcon name="sparkles" size={12} />
+                  <span>AI Ready</span>
+                </div>
 
-            <button
-              type="button"
-              className="hidden md:flex items-center gap-1.5"
-              style={{
-                backgroundColor: 'var(--ts-color-primary)',
-                color: primaryTextColor,
-                borderRadius: 'var(--ts-radius)',
-                padding: '6px 14px',
-                border: 'none',
-                fontSize: 'calc(var(--ts-base-size) * 0.82)',
-                fontWeight: 600,
-                boxShadow: 'var(--ts-shadow)',
-                cursor: 'pointer',
-              }}
-            >
-              <AppIcon name="plus" size={14} />
-              <span>Create</span>
-            </button>
+                <button
+                  type="button"
+                  className="hidden md:flex items-center gap-1.5"
+                  style={{
+                    backgroundColor: 'var(--ts-color-primary)',
+                    color: primaryTextColor,
+                    borderRadius: 'var(--ts-radius)',
+                    padding: '6px 14px',
+                    border: 'none',
+                    fontSize: 'calc(var(--ts-base-size) * 0.82)',
+                    fontWeight: 600,
+                    boxShadow: 'var(--ts-shadow)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <AppIcon name="plus" size={14} />
+                  <span>Create</span>
+                </button>
+              </>
+            )}
 
             <button
               type="button"
@@ -243,7 +263,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex lg:hidden items-center justify-center"
+              className={isMobile ? 'flex items-center justify-center' : 'flex lg:hidden items-center justify-center'}
               style={{
                 width: '34px',
                 height: '34px',
@@ -265,7 +285,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
         {/* Responsive Mobile / Tablet Drawer */}
         {isMobileMenuOpen && (
           <div
-            className="flex lg:hidden flex-col gap-3"
+            className={isMobile ? 'flex flex-col gap-3' : 'flex lg:hidden flex-col gap-3'}
             style={{
               backgroundColor: 'var(--ts-color-surface)',
               borderBottom: '1px solid var(--ts-color-border)',
@@ -370,7 +390,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             backgroundColor: 'var(--ts-color-surface)',
             borderBottom: '1px solid var(--ts-color-border)',
             boxShadow: 'var(--ts-shadow)',
-            padding: '0 var(--ts-space-lg)',
+            padding: isMobile ? '0 12px' : '0 var(--ts-space-lg)',
             minHeight: '60px',
             display: 'flex',
             alignItems: 'center',
@@ -380,7 +400,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
           }}
         >
           {/* Left: Brand Monogram */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 1 }}>
             <div
               style={{
                 width: '30px',
@@ -393,77 +413,94 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
                 justifyContent: 'center',
                 fontWeight: 800,
                 fontSize: '12px',
+                flexShrink: 0,
               }}
             >
               {name.substring(0, 2).toUpperCase()}
             </div>
-            <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: 'calc(var(--ts-base-size) * 0.95)' }}>
+            <span
+              style={{
+                fontFamily: 'var(--ts-font-heading)',
+                fontWeight: 800,
+                fontSize: 'calc(var(--ts-base-size) * 0.95)',
+                maxWidth: isMobile ? '160px' : undefined,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {name}
             </span>
           </div>
 
           {/* Center: Nav Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-1" style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 600 }}>
-            {['Product', 'Documentation', 'Tokens', 'Changelog', 'Pricing'].map((item, idx) => (
-              <button
-                key={item}
-                type="button"
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  padding: '6px 12px',
-                  borderRadius: 'var(--ts-radius)',
-                  color: idx === 0 ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
-                  backgroundColor: idx === 0 ? 'var(--ts-color-background)' : 'transparent',
-                  fontWeight: idx === 0 ? 700 : 500,
-                  cursor: 'pointer',
-                }}
-              >
-                {item}
-              </button>
-            ))}
-          </nav>
+          {!isMobile && (
+            <nav className="hidden md:flex items-center gap-1" style={{ fontSize: 'calc(var(--ts-base-size) * 0.85)', fontWeight: 600 }}>
+              {['Product', 'Documentation', 'Tokens', 'Changelog', 'Pricing'].map((item, idx) => (
+                <button
+                  key={item}
+                  type="button"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    padding: '6px 12px',
+                    borderRadius: 'var(--ts-radius)',
+                    color: idx === 0 ? 'var(--ts-color-primary)' : 'var(--ts-color-text)',
+                    backgroundColor: idx === 0 ? 'var(--ts-color-background)' : 'transparent',
+                    fontWeight: idx === 0 ? 700 : 500,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {item}
+                </button>
+              ))}
+            </nav>
+          )}
 
           {/* Right: Direct CTAs & Hamburger Toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <button
-              type="button"
-              className="hidden sm:block"
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'var(--ts-color-text)',
-                padding: '6px 12px',
-                fontSize: 'calc(var(--ts-base-size) * 0.82)',
-                fontWeight: 600,
-                cursor: 'pointer',
-              }}
-            >
-              Sign In
-            </button>
-            <button
-              type="button"
-              className="hidden sm:block"
-              style={{
-                backgroundColor: 'var(--ts-color-primary)',
-                color: primaryTextColor,
-                border: 'none',
-                borderRadius: 'var(--ts-radius)',
-                padding: '6px 14px',
-                fontSize: 'calc(var(--ts-base-size) * 0.82)',
-                fontWeight: 700,
-                cursor: 'pointer',
-                boxShadow: 'var(--ts-shadow)',
-              }}
-            >
-              Get Started
-            </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+            {!isMobile && (
+              <>
+                <button
+                  type="button"
+                  className="hidden sm:block"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'var(--ts-color-text)',
+                    padding: '6px 12px',
+                    fontSize: 'calc(var(--ts-base-size) * 0.82)',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  className="hidden sm:block"
+                  style={{
+                    backgroundColor: 'var(--ts-color-primary)',
+                    color: primaryTextColor,
+                    border: 'none',
+                    borderRadius: 'var(--ts-radius)',
+                    padding: '6px 14px',
+                    fontSize: 'calc(var(--ts-base-size) * 0.82)',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    boxShadow: 'var(--ts-shadow)',
+                  }}
+                >
+                  Get Started
+                </button>
+              </>
+            )}
 
             {/* Hamburger Toggle */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex md:hidden items-center justify-center"
+              className={isMobile ? 'flex items-center justify-center' : 'flex md:hidden items-center justify-center'}
               style={{
                 width: '34px',
                 height: '34px',
@@ -484,7 +521,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
         {/* Mobile Flyout */}
         {isMobileMenuOpen && (
           <div
-            className="flex md:hidden flex-col gap-2"
+            className={isMobile ? 'flex flex-col gap-2' : 'flex md:hidden flex-col gap-2'}
             style={{
               backgroundColor: 'var(--ts-color-surface)',
               borderBottom: '1px solid var(--ts-color-border)',
@@ -514,9 +551,10 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
                 {item}
               </button>
             ))}
-            <div style={{ display: 'flex', gap: '8px', paddingTop: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px', paddingTop: '8px', borderTop: '1px solid var(--ts-color-border)' }}>
               <button
                 type="button"
+                onClick={() => setIsMobileMenuOpen(false)}
                 style={{
                   flex: 1,
                   padding: '10px',
@@ -533,6 +571,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
               </button>
               <button
                 type="button"
+                onClick={() => setIsMobileMenuOpen(false)}
                 style={{
                   flex: 1,
                   padding: '10px',
@@ -564,7 +603,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '12px 16px',
+          padding: isMobile ? '8px 10px' : '12px 16px',
           boxSizing: 'border-box',
           zIndex: 20,
           ...userStyle,
@@ -587,7 +626,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             boxSizing: 'border-box',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexShrink: 1 }}>
             <div
               style={{
                 width: '26px',
@@ -600,52 +639,68 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
                 justifyContent: 'center',
                 fontWeight: 800,
                 fontSize: '10px',
+                flexShrink: 0,
               }}
             >
               {name.substring(0, 2).toUpperCase()}
             </div>
-            <span style={{ fontWeight: 800, fontSize: '13px' }}>{name}</span>
-          </div>
-
-          <nav className="hidden sm:flex items-center gap-1" style={{ fontSize: '12px', fontWeight: 600 }}>
-            {['Features', 'Docs', 'Pricing'].map((item) => (
-              <span
-                key={item}
-                style={{
-                  padding: '4px 10px',
-                  borderRadius: '9999px',
-                  cursor: 'pointer',
-                  opacity: 0.8,
-                }}
-              >
-                {item}
-              </span>
-            ))}
-          </nav>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <button
-              type="button"
-              className="hidden sm:block"
+            <span
               style={{
-                backgroundColor: 'var(--ts-color-primary)',
-                color: primaryTextColor,
-                border: 'none',
-                borderRadius: '9999px',
-                padding: '6px 14px',
-                fontSize: '12px',
-                fontWeight: 700,
-                cursor: 'pointer',
+                fontWeight: 800,
+                fontSize: '13px',
+                maxWidth: isMobile ? '140px' : undefined,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
               }}
             >
-              Launch App
-            </button>
+              {name}
+            </span>
+          </div>
+
+          {!isMobile && (
+            <nav className="hidden sm:flex items-center gap-1" style={{ fontSize: '12px', fontWeight: 600 }}>
+              {['Features', 'Docs', 'Pricing'].map((item) => (
+                <span
+                  key={item}
+                  style={{
+                    padding: '4px 10px',
+                    borderRadius: '9999px',
+                    cursor: 'pointer',
+                    opacity: 0.8,
+                  }}
+                >
+                  {item}
+                </span>
+              ))}
+            </nav>
+          )}
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+            {!isMobile && (
+              <button
+                type="button"
+                className="hidden sm:block"
+                style={{
+                  backgroundColor: 'var(--ts-color-primary)',
+                  color: primaryTextColor,
+                  border: 'none',
+                  borderRadius: '9999px',
+                  padding: '6px 14px',
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                Launch App
+              </button>
+            )}
 
             {/* Hamburger Toggle */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex sm:hidden items-center justify-center"
+              className={isMobile ? 'flex items-center justify-center' : 'flex sm:hidden items-center justify-center'}
               style={{
                 width: '28px',
                 height: '28px',
@@ -666,7 +721,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
         {/* Floating Pill Mobile Menu */}
         {isMobileMenuOpen && (
           <div
-            className="flex sm:hidden flex-col gap-2 mt-2"
+            className={isMobile ? 'flex flex-col gap-2 mt-2' : 'flex sm:hidden flex-col gap-2 mt-2'}
             style={{
               width: '100%',
               maxWidth: '760px',
@@ -745,11 +800,11 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '12px var(--ts-space-lg)',
+            padding: isMobile ? '8px 12px' : '12px var(--ts-space-lg)',
             borderBottom: '1px solid var(--ts-color-border)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flexShrink: 1 }}>
             <div
               style={{
                 width: '28px',
@@ -762,29 +817,42 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
                 justifyContent: 'center',
                 fontWeight: 800,
                 fontSize: '11px',
+                flexShrink: 0,
               }}
             >
               {name.substring(0, 2).toUpperCase()}
             </div>
-            <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: '14px' }}>
+            <span
+              style={{
+                fontFamily: 'var(--ts-font-heading)',
+                fontWeight: 800,
+                fontSize: '14px',
+                maxWidth: isMobile ? '140px' : undefined,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
               {name} Workspace
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div
-              className="hidden sm:flex items-center gap-1.5"
-              style={{
-                padding: '3px 8px',
-                borderRadius: 'var(--ts-radius)',
-                backgroundColor: 'var(--ts-color-background)',
-                border: '1px solid var(--ts-color-border)',
-                fontSize: '11px',
-              }}
-            >
-              <AppIcon name="activity" size={13} style={{ color: '#10b981' }} />
-              <span style={{ fontWeight: 600 }}>v2.4.0 Live</span>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+            {!isMobile && (
+              <div
+                className="hidden sm:flex items-center gap-1.5"
+                style={{
+                  padding: '3px 8px',
+                  borderRadius: 'var(--ts-radius)',
+                  backgroundColor: 'var(--ts-color-background)',
+                  border: '1px solid var(--ts-color-border)',
+                  fontSize: '11px',
+                }}
+              >
+                <AppIcon name="activity" size={13} style={{ color: '#10b981' }} />
+                <span style={{ fontWeight: 600 }}>v2.4.0 Live</span>
+              </div>
+            )}
             <div
               style={{
                 width: '28px',
@@ -801,17 +869,37 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             >
               AR
             </div>
+            {/* Hamburger Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className={isMobile ? 'flex items-center justify-center' : 'flex md:hidden items-center justify-center'}
+              style={{
+                width: '30px',
+                height: '30px',
+                borderRadius: 'var(--ts-radius)',
+                backgroundColor: 'var(--ts-color-background)',
+                border: '1px solid var(--ts-color-border)',
+                color: 'var(--ts-color-text)',
+                cursor: 'pointer',
+              }}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? <X size={15} /> : <Menu size={15} />}
+            </button>
           </div>
         </div>
 
         {/* Row 2: Navigation Tabs (Scrollable on Mobile & Tablet) */}
         <div
           style={{
-            padding: '0 var(--ts-space-lg)',
+            padding: isMobile ? '0 12px' : '0 var(--ts-space-lg)',
             display: 'flex',
             gap: 'var(--ts-space-md)',
             overflowX: 'auto',
             scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
           }}
         >
           {[
@@ -847,6 +935,52 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             );
           })}
         </div>
+
+        {/* Mobile Dropdown Menu for Tabbed Nav */}
+        {isMobileMenuOpen && (
+          <div
+            className={isMobile ? 'flex flex-col gap-1' : 'flex md:hidden flex-col gap-1'}
+            style={{
+              backgroundColor: 'var(--ts-color-surface)',
+              borderBottom: '1px solid var(--ts-color-border)',
+              padding: '12px 16px',
+              boxShadow: '0 12px 24px -6px rgba(0,0,0,0.18)',
+              width: '100%',
+              boxSizing: 'border-box',
+            }}
+          >
+            {[
+              { id: 'overview', label: 'Overview' },
+              { id: 'tokens', label: 'Token Matrix' },
+              { id: 'components', label: 'Components' },
+              { id: 'wcag', label: 'Accessibility Audit' },
+              { id: 'releases', label: 'Releases' },
+              { id: 'settings', label: 'Settings' },
+            ].map((tab) => {
+              const isSelected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => handleTabClick(tab.id)}
+                  style={{
+                    padding: '10px 12px',
+                    borderRadius: 'var(--ts-radius)',
+                    backgroundColor: isSelected ? 'var(--ts-color-primary)' : 'transparent',
+                    border: 'none',
+                    color: isSelected ? primaryTextColor : 'var(--ts-color-text)',
+                    fontWeight: isSelected ? 700 : 500,
+                    fontSize: '13px',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </header>
     );
   }
@@ -859,16 +993,16 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
           backgroundColor: 'var(--ts-color-surface)',
           borderBottom: '1px solid var(--ts-color-border)',
           boxShadow: 'var(--ts-shadow)',
-          padding: '12px var(--ts-space-lg)',
+          padding: isMobile ? '8px 12px' : '12px var(--ts-space-lg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: 'var(--ts-space-md)',
+          gap: isMobile ? '8px' : 'var(--ts-space-md)',
           boxSizing: 'border-box',
           width: '100%',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flexShrink: 1 }}>
           <div
             style={{
               width: '32px',
@@ -881,98 +1015,115 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
               justifyContent: 'center',
               fontWeight: 800,
               fontSize: '12px',
+              flexShrink: 0,
             }}
           >
             {name.substring(0, 2).toUpperCase()}
           </div>
-          <span style={{ fontFamily: 'var(--ts-font-heading)', fontWeight: 800, fontSize: '15px' }}>
+          <span
+            style={{
+              fontFamily: 'var(--ts-font-heading)',
+              fontWeight: 800,
+              fontSize: '15px',
+              maxWidth: isMobile ? '130px' : undefined,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {name} Store
           </span>
         </div>
 
         {/* Broad Search Bar with Category Dropdown (Desktop) */}
-        <div
-          className="hidden md:flex items-center flex-1"
-          style={{
-            maxWidth: '520px',
-            backgroundColor: 'var(--ts-color-background)',
-            border: '1px solid var(--ts-color-border)',
-            borderRadius: 'var(--ts-radius)',
-            overflow: 'hidden',
-          }}
-        >
-          <span
+        {!isMobile && (
+          <div
+            className="hidden md:flex items-center flex-1"
             style={{
-              padding: '8px 12px',
-              backgroundColor: 'var(--ts-color-surface)',
-              borderRight: '1px solid var(--ts-color-border)',
-              fontSize: '12px',
-              fontWeight: 600,
-              opacity: 0.8,
-              cursor: 'pointer',
+              maxWidth: '520px',
+              backgroundColor: 'var(--ts-color-background)',
+              border: '1px solid var(--ts-color-border)',
+              borderRadius: 'var(--ts-radius)',
+              overflow: 'hidden',
             }}
           >
-            All Categories
-          </span>
-          <div style={{ display: 'flex', alignItems: 'center', padding: '0 10px', flex: 1, gap: '6px' }}>
-            <AppIcon name="search" size={14} style={{ opacity: 0.5 }} />
-            <input
-              type="text"
-              readOnly
-              value="Search design kits, themes, presets..."
+            <span
               style={{
-                border: 'none',
-                background: 'transparent',
-                outline: 'none',
-                color: 'var(--ts-color-text)',
-                width: '100%',
+                padding: '8px 12px',
+                backgroundColor: 'var(--ts-color-surface)',
+                borderRight: '1px solid var(--ts-color-border)',
                 fontSize: '12px',
-                padding: '6px 0',
+                fontWeight: 600,
+                opacity: 0.8,
                 cursor: 'pointer',
               }}
-            />
+            >
+              All Categories
+            </span>
+            <div style={{ display: 'flex', alignItems: 'center', padding: '0 10px', flex: 1, gap: '6px' }}>
+              <AppIcon name="search" size={14} style={{ opacity: 0.5 }} />
+              <input
+                type="text"
+                readOnly
+                value="Search design kits, themes, presets..."
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                  outline: 'none',
+                  color: 'var(--ts-color-text)',
+                  width: '100%',
+                  fontSize: '12px',
+                  padding: '6px 0',
+                  cursor: 'pointer',
+                }}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Right Action Icons, Basket & Hamburger */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <button
-            type="button"
-            className="hidden sm:flex items-center gap-1.5"
-            style={{
-              backgroundColor: 'var(--ts-color-primary)',
-              color: primaryTextColor,
-              borderRadius: 'var(--ts-radius)',
-              padding: '6px 12px',
-              border: 'none',
-              fontSize: '12px',
-              fontWeight: 700,
-              cursor: 'pointer',
-            }}
-          >
-            <AppIcon name="plus" size={13} />
-            <span>New Order</span>
-          </button>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+          {!isMobile && (
             <button
               type="button"
+              className="hidden sm:flex items-center gap-1.5"
               style={{
-                width: '32px',
-                height: '32px',
+                backgroundColor: 'var(--ts-color-primary)',
+                color: primaryTextColor,
                 borderRadius: 'var(--ts-radius)',
-                border: '1px solid var(--ts-color-border)',
-                background: 'transparent',
-                color: 'var(--ts-color-text)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                padding: '6px 12px',
+                border: 'none',
+                fontSize: '12px',
+                fontWeight: 700,
                 cursor: 'pointer',
               }}
-              title="Wishlist"
             >
-              <AppIcon name="heart" size={15} />
+              <AppIcon name="plus" size={13} />
+              <span>New Order</span>
             </button>
+          )}
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {!isMobile && (
+              <button
+                type="button"
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: 'var(--ts-radius)',
+                  border: '1px solid var(--ts-color-border)',
+                  background: 'transparent',
+                  color: 'var(--ts-color-text)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                }}
+                title="Wishlist"
+              >
+                <AppIcon name="heart" size={15} />
+              </button>
+            )}
             <button
               type="button"
               style={{
@@ -1016,7 +1167,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex md:hidden items-center justify-center"
+              className={isMobile ? 'flex items-center justify-center' : 'flex md:hidden items-center justify-center'}
               style={{
                 width: '32px',
                 height: '32px',
@@ -1038,7 +1189,7 @@ export const DynamicNavbar: React.FC<DynamicNavbarProps> = ({
       {/* Mobile E-Commerce Search & Navigation */}
       {isMobileMenuOpen && (
         <div
-          className="flex md:hidden flex-col gap-3"
+          className={isMobile ? 'flex flex-col gap-3' : 'flex md:hidden flex-col gap-3'}
           style={{
             backgroundColor: 'var(--ts-color-surface)',
             borderBottom: '1px solid var(--ts-color-border)',

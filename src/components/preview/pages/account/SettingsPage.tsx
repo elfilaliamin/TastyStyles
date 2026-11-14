@@ -6,7 +6,7 @@ import { DynamicNavbar } from '../../navigation/DynamicNavbar';
 import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 
 export const SettingsPage: React.FC = () => {
-  const { state, activeColors } = useDesign();
+  const { state, activeColors, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = state.pageLayouts?.settings ?? 'tabbed';
 
@@ -227,8 +227,17 @@ export const SettingsPage: React.FC = () => {
       >
         <DynamicNavbar />
 
-        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-          <DynamicSidebar className="hidden md:flex shrink-0" />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            flex: 1,
+            minHeight: 0,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          <DynamicSidebar />
 
           <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
             <div
@@ -298,8 +307,17 @@ export const SettingsPage: React.FC = () => {
       >
         <DynamicNavbar />
 
-        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-          <DynamicSidebar className="hidden md:flex shrink-0" />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            flex: 1,
+            minHeight: 0,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          <DynamicSidebar />
 
           <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
             <div
@@ -399,8 +417,17 @@ export const SettingsPage: React.FC = () => {
     >
       <DynamicNavbar />
 
-      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-        <DynamicSidebar className="hidden md:flex shrink-0" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          flex: 1,
+          minHeight: 0,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        <DynamicSidebar />
 
         <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
           <div

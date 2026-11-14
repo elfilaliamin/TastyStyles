@@ -24,7 +24,7 @@ interface KanbanColumn {
 }
 
 export const KanbanPage: React.FC = () => {
-  const { state, activeColors } = useDesign();
+  const { state, activeColors, isMobile } = useDesign();
   const primaryTextColor = getBestContrastingColor(activeColors.primary);
   const layout = state.pageLayouts?.kanban ?? 'board-columns';
   const [searchQuery, setSearchQuery] = useState('');
@@ -151,8 +151,17 @@ export const KanbanPage: React.FC = () => {
     >
       <DynamicNavbar />
 
-      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
-        <DynamicSidebar className="hidden md:flex shrink-0" />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          flex: 1,
+          minHeight: 0,
+          width: '100%',
+          position: 'relative',
+        }}
+      >
+        <DynamicSidebar />
 
         <main
           style={{
