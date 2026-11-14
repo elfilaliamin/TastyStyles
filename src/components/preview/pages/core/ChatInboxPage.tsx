@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicSidebar } from '../../navigation/DynamicSidebar';
 
 interface ChatThread {
   id: string;
@@ -99,18 +101,32 @@ export const ChatInboxPage: React.FC = () => {
           color: 'var(--ts-color-text)',
           fontFamily: 'var(--ts-font-body)',
           width: '100%',
-          height: '100%',
-          minHeight: '520px',
+          minHeight: '100%',
           display: 'flex',
           flexDirection: 'column',
-          maxWidth: '800px',
-          margin: '0 auto',
-          boxShadow: 'var(--ts-shadow)',
-          borderRadius: 'var(--ts-radius-surface, 16px)',
-          overflow: 'hidden',
-          border: '1px solid var(--ts-color-border)',
         }}
       >
+        <DynamicNavbar />
+
+        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+          <DynamicSidebar className="hidden md:flex shrink-0" />
+
+          <main style={{ flex: 1, padding: 'var(--ts-space-md)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div
+              style={{
+                width: '100%',
+                maxWidth: '800px',
+                height: '100%',
+                minHeight: '520px',
+                display: 'flex',
+                flexDirection: 'column',
+                boxShadow: 'var(--ts-shadow)',
+                borderRadius: 'var(--ts-radius-surface, 16px)',
+                overflow: 'hidden',
+                border: '1px solid var(--ts-color-border)',
+                backgroundColor: 'var(--ts-color-surface)',
+              }}
+            >
         {/* Stream Header */}
         <div
           style={{
@@ -219,6 +235,9 @@ export const ChatInboxPage: React.FC = () => {
           </button>
         </div>
       </div>
+          </main>
+        </div>
+      </div>
     );
   }
 
@@ -231,16 +250,28 @@ export const ChatInboxPage: React.FC = () => {
           color: 'var(--ts-color-text)',
           fontFamily: 'var(--ts-font-body)',
           width: '100%',
-          height: '100%',
-          minHeight: '520px',
+          minHeight: '100%',
           display: 'flex',
           flexDirection: 'column',
-          maxWidth: '680px',
-          margin: '0 auto',
-          padding: 'var(--ts-space-md)',
-          gap: 'var(--ts-space-md)',
         }}
       >
+        <DynamicNavbar />
+
+        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+          <DynamicSidebar className="hidden md:flex shrink-0" />
+
+          <main style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 'var(--ts-space-md)', overflowY: 'auto' }}>
+            <div
+              style={{
+                width: '100%',
+                maxWidth: '680px',
+                minHeight: '520px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--ts-space-md)',
+                flex: 1,
+              }}
+            >
         <div style={{ textAlign: 'center', opacity: 0.6, fontSize: 'calc(var(--ts-base-size) * 0.75)' }}>
           Today — Chat Session with {activeThread.name}
         </div>
@@ -344,6 +375,9 @@ export const ChatInboxPage: React.FC = () => {
             <AppIcon name="send" size={14} />
           </button>
         </div>
+            </div>
+          </main>
+        </div>
       </div>
     );
   }
@@ -356,14 +390,18 @@ export const ChatInboxPage: React.FC = () => {
         color: 'var(--ts-color-text)',
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
-        height: '100%',
-        minHeight: '520px',
+        minHeight: '100%',
         display: 'flex',
-        flexDirection: 'row',
-        overflow: 'hidden',
+        flexDirection: 'column',
       }}
     >
-      {/* Left Column: Thread List */}
+      <DynamicNavbar />
+
+      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%', overflow: 'hidden' }}>
+        <DynamicSidebar className="hidden md:flex shrink-0" />
+
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'row', overflow: 'hidden', minWidth: 0 }}>
+          {/* Left Column: Thread List */}
       <div
         className="ts-chat-thread-column"
         style={{
@@ -732,6 +770,8 @@ export const ChatInboxPage: React.FC = () => {
           >
             <AppIcon name="send" size={14} />
           </button>
+        </div>
+      </div>
         </div>
       </div>
     </div>

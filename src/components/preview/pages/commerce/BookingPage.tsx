@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 import { CalendarAvailabilityBlock } from '../../../blocks/CalendarAvailabilityBlock';
 import { CheckoutInvoiceBlock } from '../../../blocks/CheckoutInvoiceBlock';
 import { IdentityBadgeBlock } from '../../../blocks/IdentityBadgeBlock';
@@ -117,6 +118,8 @@ export const BookingPage: React.FC = () => {
           </div>
         </div>
       </main>
+
+      <DynamicFooter />
     </div>
   );
 };

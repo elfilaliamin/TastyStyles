@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDesign } from '../../../../context/DesignContext';
 import { getBestContrastingColor } from '../../../../lib/contrast';
 import { AppIcon } from '../../../common/AppIcon';
+import { DynamicNavbar } from '../../navigation/DynamicNavbar';
+import { DynamicSidebar } from '../../navigation/DynamicSidebar';
+import { DynamicFooter } from '../../navigation/DynamicFooter';
 
 export const SettingsPage: React.FC = () => {
   const { state, activeColors } = useDesign();
@@ -219,14 +222,29 @@ export const SettingsPage: React.FC = () => {
           fontFamily: 'var(--ts-font-body)',
           width: '100%',
           minHeight: '100%',
-          padding: 'var(--ts-space-md)',
-          maxWidth: '820px',
-          margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--ts-space-md)',
         }}
       >
+        <DynamicNavbar />
+
+        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+          <DynamicSidebar className="hidden md:flex shrink-0" />
+
+          <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+            <div
+              style={{
+                flex: 1,
+                padding: 'var(--ts-space-md)',
+                maxWidth: '820px',
+                margin: '0 auto',
+                width: '100%',
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--ts-space-md)',
+              }}
+            >
         <div>
           <h1 style={{ fontFamily: 'var(--ts-font-heading)', fontSize: 'calc(var(--ts-base-size) * var(--ts-scale) * var(--ts-scale))', fontWeight: 800, margin: 0 }}>
             Workspace Settings
@@ -259,8 +277,12 @@ export const SettingsPage: React.FC = () => {
           {renderSecuritySection()}
         </div>
       </div>
-    );
-  }
+          <DynamicFooter />
+        </main>
+      </div>
+    </div>
+  );
+}
 
   // VARIANT 3: SIDEBAR NAV
   if (layout === 'sidebar-nav') {
@@ -272,15 +294,30 @@ export const SettingsPage: React.FC = () => {
           fontFamily: 'var(--ts-font-body)',
           width: '100%',
           minHeight: '100%',
-          padding: 'var(--ts-space-md)',
-          maxWidth: '920px',
-          margin: '0 auto',
           display: 'flex',
-          gap: 'var(--ts-space-md)',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
+          flexDirection: 'column',
         }}
       >
+        <DynamicNavbar />
+
+        <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+          <DynamicSidebar className="hidden md:flex shrink-0" />
+
+          <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+            <div
+              style={{
+                flex: 1,
+                padding: 'var(--ts-space-md)',
+                maxWidth: '920px',
+                margin: '0 auto',
+                width: '100%',
+                boxSizing: 'border-box',
+                display: 'flex',
+                gap: 'var(--ts-space-md)',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+              }}
+            >
         {/* Left Sub-nav */}
         <div
           style={{
@@ -342,6 +379,10 @@ export const SettingsPage: React.FC = () => {
             </button>
           </div>
         </div>
+            </div>
+            <DynamicFooter />
+          </main>
+        </div>
       </div>
     );
   }
@@ -355,15 +396,30 @@ export const SettingsPage: React.FC = () => {
         fontFamily: 'var(--ts-font-body)',
         width: '100%',
         minHeight: '100%',
-        padding: 'var(--ts-space-lg)',
-        maxWidth: '860px',
-        margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--ts-space-md)',
       }}
     >
-      {/* Title & Description */}
+      <DynamicNavbar />
+
+      <div style={{ display: 'flex', flex: 1, minHeight: 0, width: '100%' }}>
+        <DynamicSidebar className="hidden md:flex shrink-0" />
+
+        <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
+          <div
+            style={{
+              flex: 1,
+              padding: 'var(--ts-space-lg)',
+              maxWidth: '860px',
+              margin: '0 auto',
+              width: '100%',
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--ts-space-md)',
+            }}
+          >
+            {/* Title & Description */}
       <div>
         <h1
           style={{
@@ -482,6 +538,10 @@ export const SettingsPage: React.FC = () => {
             <span>Save Preferences</span>
           </button>
         </div>
+      </div>
+          </div>
+          <DynamicFooter />
+        </main>
       </div>
     </div>
   );
